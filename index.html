@@ -242,6 +242,85 @@
   .code-inp { width: 100%; height: 46px; border: 1.5px solid #94A3B8; border-radius: 11px; text-align: center; font: inherit; font-size: 20px; font-weight: 800; letter-spacing: 6px; color: #0F172A; background: #F8FAFC; }
   .name-inp { width: 100%; height: 40px; border: 1.5px solid #CBD5E1; border-radius: 9px; padding: 0 11px; font: inherit; font-size: 14.5px; font-weight: 700; color: #0F172A; background: #fff; }
 
+  /* D1 Home Quick-Vault Strip (★ स्टार · ✗ गलत · 📜 1v1 इतिहास) */
+  .vault-strip3 { background: #FFFFFF; border-bottom: 1px solid #DCE5EC; padding: 6px 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; flex: none; }
+  .vs-btn { border-radius: 9px; padding: 6px 7px; font: inherit; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 4px; text-align: left; min-width: 0; }
+  .vs-lbl { font-size: 11.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vs-star { background: linear-gradient(180deg,#FFFBEB,#FEF3C7); border: 1.5px solid #F59E0B; color: #78350F; }
+  .vs-wrong { background: linear-gradient(180deg,#FFF1F2,#FFE4E6); border: 1.5px solid #F43F5E; color: #881337; }
+  .vs-hist { background: linear-gradient(180deg,#F5F3FF,#EDE9FE); border: 1.5px solid #8B5CF6; color: #4C1D95; }
+  .vs-cnt { border-radius: 99px; padding: 1px 6px; font-size: 10.5px; font-weight: 800; flex: none; color: #fff; }
+  .vs-star .vs-cnt { background: #D97706; }
+  .vs-wrong .vs-cnt { background: #E11D48; }
+  .vs-hist .vs-cnt { background: #7C3AED; }
+  .rem-pill { display: inline-block; background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; border-radius: 6px; padding: 1px 6px; font-size: 10px; font-weight: 800; margin-top: 3px; margin-right: 4px; }
+  .rem-pill.zero { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
+  .rem-pill.duel { background: #F3E8FF; color: #6B21A8; border-color: #D8B4FE; }
+
+  /* Unified Vault & 1v1 History Screens */
+  .v-tabs { background: #fff; border-bottom: 1px solid #DCE5EC; padding: 7px 9px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; flex: none; }
+  .vt-b { border: 1.5px solid #CBD5E1; background: #F8FAFC; color: #334155; border-radius: 9px; padding: 7px 4px; font: inherit; font-size: 11.5px; font-weight: 800; cursor: pointer; text-align: center; }
+  .vt-b.on-star { background: #F59E0B; border-color: #B45309; color: #fff; }
+  .vt-b.on-wrong { background: #E11D48; border-color: #9F1239; color: #fff; }
+  .vt-b.on-skip { background: #475569; border-color: #1E293B; color: #fff; }
+  .ch-chips { background: #F8FAFC; border-bottom: 1px solid #E2E8F0; padding: 6px 9px; display: flex; gap: 5px; overflow-x: auto; flex: none; }
+  .c-chip { border: 1px solid #CBD5E1; background: #fff; color: #334155; border-radius: 99px; padding: 4px 10px; font: inherit; font-size: 11px; font-weight: 800; white-space: nowrap; cursor: pointer; flex: none; }
+  .c-chip.on { background: #0794C7; border-color: #0794C7; color: #fff; }
+  .v-actions { padding: 8px 10px 4px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 6px; flex: none; background: #F5F8FA; }
+  .vq-card { background: #fff; border: 1.5px solid #DCE5EC; border-radius: 13px; padding: 11px 12px; margin-bottom: 9px; }
+  .src-tag { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: #E0F2FE; color: #0369A1; }
+  .src-tag.duel { background: #F3E8FF; color: #6B21A8; }
+  .hm-card { width: 100%; background: #fff; border: 1.5px solid #DCE5EC; border-radius: 13px; padding: 11px 12px; margin-bottom: 9px; text-align: left; font: inherit; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+  .hm-card.win { border-left: 5px solid #16A34A; }
+  .hm-card.lose { border-left: 5px solid #E11D48; }
+  .hm-card.draw { border-left: 5px solid #0794C7; }
+
+  /* Maths Mock (CLASSIFICATION_MOCK an2 + sv) Style 1v1 Score Overview & Q-by-Q Solution */
+  .m-h2 { background: #FFFFFF; border: 1px solid #E3E8EE; border-radius: 16px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 2px 8px rgba(15,23,42,.05); }
+  .m-h2-l { flex: 1; min-width: 0; }
+  .m-hk { color: #64748B; font-size: 11.5px; font-weight: 800; letter-spacing: .2px; }
+  .m-hbig { font-size: 34px; font-weight: 800; color: #2E7D32; line-height: 1.08; margin: 4px 0 2px; }
+  .m-hbig.neg { color: #C62828; }
+  .m-hbig span { font-size: 15px; color: #607D8B; font-weight: 700; margin-left: 4px; }
+  .m-hpills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .m-pill { background: #F3F6F8; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; color: #455A64; }
+  .m-pill b { color: #1E293B; margin-right: 2px; }
+  .m-pill.g { background: #E8F5E9; color: #1B5E20; }
+  .m-pill.g b { color: #1B5E20; }
+  .m-pill.r { background: #FFEBEE; color: #B71C1C; }
+  .m-pill.r b { color: #B71C1C; }
+  .m-htk { font-size: 12px; color: #475569; margin-top: 7px; font-weight: 700; }
+  .m-htk .up { color: #2E7D32; }
+  .m-htk .dn { color: #C62828; }
+  .m-h2-go { background: #1565C0; color: #FFFFFF; border: none; border-radius: 14px; padding: 13px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 114px; cursor: pointer; flex: none; box-shadow: 0 3px 10px rgba(21,101,192,.28); font: inherit; }
+  .m-h2-go span { font-size: 24px; line-height: 1.1; }
+  .m-h2-go b { font-size: 13.5px; font-weight: 800; white-space: nowrap; }
+  .m-h2-go small { opacity: .88; font-size: 11px; font-weight: 700; }
+  .m-rr { background: #FFFFFF; border: 1px solid #E3E8EE; border-radius: 14px; padding: 12px 13px; box-shadow: 0 1px 5px rgba(15,23,42,.04); }
+  .m-rr-t { font-size: 12px; font-weight: 800; color: #64748B; margin-bottom: 6px; }
+  .m-rr-blk { padding: 9px 0; border-top: 1px solid #EEF2F6; }
+  .m-rr-blk:first-of-type { border-top: none; padding-top: 4px; }
+  .m-rr-hd { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 7px; font-size: 12.5px; }
+  .m-chips2 { display: flex; flex-wrap: wrap; gap: 6px; }
+  .m-ch { width: 36px; height: 34px; border-radius: 7px; border: 1px solid #CFD8DC; background: #FFFFFF; font: inherit; font-weight: 800; font-size: 13px; position: relative; padding: 0; color: #37474F; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .m-ch.g { background: #43A047; color: #FFFFFF; border-color: #2E7D32; }
+  .m-ch.r { background: #E53935; color: #FFFFFF; border-color: #B71C1C; }
+  .m-ch .sqi { position: absolute; top: -6px; right: -4px; font-size: 11px; font-style: normal; color: #F59E0B; text-shadow: 0 0 2px #fff, 0 0 2px #fff; line-height: 1; }
+  .sv-score-btn { background: #0A6F97; color: #FFFFFF; border: 1px solid rgba(255,255,255,.45); font: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: .4px; padding: 5px 10px; border-radius: 6px; cursor: pointer; flex: none; }
+  .sv-tabs-bar { display: flex; align-items: center; gap: 5px; border-bottom: 1px solid #DDE3E6; padding: 6px 10px; background: #FFFFFF; overflow-x: auto; flex: none; }
+  .sv-tab-b { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 5px 11px; font: inherit; font-size: 12px; font-weight: 800; color: #334155; border-radius: 6px; cursor: pointer; white-space: nowrap; flex: none; }
+  .sv-tab-b.on { background: #1F6F8B; border-color: #1F6F8B; color: #FFFFFF; }
+  .sv-o-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 12px; border-radius: 9px; border: 1.5px solid #E2E8F0; background: #FFFFFF; margin-bottom: 8px; line-height: 1.5; }
+  .sv-o-row.ok { background: #E8F5E9; border-color: #2E7D32; color: #14532D; font-weight: 800; }
+  .sv-o-row.bad { background: #FFEBEE; border-color: #C62828; color: #991B1B; font-weight: 800; }
+  .sv-rd { width: 18px; height: 18px; border: 2px solid #78909C; border-radius: 50%; flex: 0 0 18px; margin-top: 3px; }
+  .sv-rd.on-bad { border-color: #C62828; background: radial-gradient(circle,#C62828 45%,transparent 50%); }
+  .sv-rd.on-ok { border-color: #2E7D32; background: radial-gradient(circle,#2E7D32 45%,transparent 50%); }
+  .sv-o-row.ok .sv-rd { border-color: #2E7D32; }
+  .p-pick { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 99px; white-space: nowrap; }
+  .p-pick.me { background: #0794C7; color: #FFFFFF; }
+  .p-pick.op { background: #7C3AED; color: #FFFFFF; }
+
   .toast { position: absolute; left: 12px; right: 12px; bottom: 54px; z-index: 60; background: #1E293B; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 9px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); pointer-events: none; }
 </style>
 </head>
@@ -516,12 +595,16 @@ const DEFAULT_USER_DATA = () => ({
   fontSize: 15,
   zoomPct: 100,
   lastChId: 'ch03',
-  progress: {}
+  progress: {},
+  duelHistory: []
 });
 
 function loadUserData(uid) {
   const d = safeLS('tgt_gk_user_v1_' + uid, null);
-  return Object.assign(DEFAULT_USER_DATA(), d || {});
+  const out = Object.assign(DEFAULT_USER_DATA(), d || {});
+  if (!Array.isArray(out.duelHistory)) out.duelHistory = [];
+  if (!out.progress || typeof out.progress !== 'object') out.progress = {};
+  return out;
 }
 function saveUserData(uid, data) {
   saveLS('tgt_gk_user_v1_' + uid, data);
@@ -536,10 +619,29 @@ const app = {
   doneTwigCh: '',
   toast: '',
   toastT: null,
+  vault: {
+    tab: 'star',
+    chFilter: 'all',
+    openAns: {},
+    zoomOpen: false
+  },
+  duelHist: {
+    activeId: ''
+  },
+  duelSol: {
+    matchId: '',
+    fromLive: false,
+    filter: 'all',
+    idx: 0,
+    zoomOpen: false
+  },
   quiz: {
     chId: 'ch01',
     title: '',
     mode: 'full',
+    isVault: false,
+    vaultRefs: [],
+    vaultAns: {},
     qIds: [],
     cur: 0,
     palOpen: false,
@@ -556,6 +658,8 @@ const app = {
   duel: {
     stage: 'menu',
     scope: 'ch01',
+    customRefs: null,
+    customTitle: '',
     count: 30,
     allScope: false,
     code: '',
@@ -578,7 +682,7 @@ const app = {
     palFilter: 'all',
     zoomOpen: false,
     leaveOpen: false,
-    showReview: true,
+    showReview: false,
     resOpenIdx: null,
     timerId: null,
     roomPollId: null,
@@ -632,9 +736,183 @@ function speakHindi(text) {
 
 function getChProg(chId) {
   if (!app.userData.progress[chId]) {
-    app.userData.progress[chId] = { answers: {}, stars: {}, curIdx: 0, finished: false };
+    app.userData.progress[chId] = { answers: {}, stars: {}, starFrom: {}, duelWrongs: {}, duelSkips: {}, duelSeen: {}, curIdx: 0, finished: false };
   }
-  return app.userData.progress[chId];
+  const p = app.userData.progress[chId];
+  if (!p.answers) p.answers = {};
+  if (!p.stars) p.stars = {};
+  if (!p.starFrom) p.starFrom = {};
+  if (!p.duelWrongs) p.duelWrongs = {};
+  if (!p.duelSkips) p.duelSkips = {};
+  if (!p.duelSeen) p.duelSeen = {};
+  return p;
+}
+
+function orderedChapterIds() {
+  const seen = new Set();
+  const out = [];
+  ROADMAP.forEach(s => s.chapters.forEach(c => {
+    if (c.liveId && CHAPTER_BANK[c.liveId] && !seen.has(c.liveId)) {
+      seen.add(c.liveId);
+      out.push(c.liveId);
+    }
+  }));
+  Object.keys(CHAPTER_BANK).forEach(cid => {
+    if (!seen.has(cid)) { seen.add(cid); out.push(cid); }
+  });
+  return out;
+}
+
+function getVaultItems(kind, chFilter) {
+  const out = [];
+  const f = chFilter || 'all';
+  orderedChapterIds().forEach(cid => {
+    if (f !== 'all' && f !== cid) return;
+    const ch = CHAPTER_BANK[cid];
+    if (!ch) return;
+    const prog = getChProg(cid);
+    ch.questions.forEach(q => {
+      const sAns = prog.answers[q.id];
+      const dWrong = prog.duelWrongs[q.id];
+      const dSkip = prog.duelSkips[q.id];
+      if (kind === 'star') {
+        if (prog.stars && prog.stars[q.id]) {
+          const fromDuel = prog.starFrom && prog.starFrom[q.id] === 'duel';
+          out.push({ key: cid + ':' + q.id, chId: cid, chTitle: ch.title, ch, q, from: fromDuel ? '1v1 मुक़ाबला' : 'पाठ टेस्ट', isDuel: fromDuel });
+        }
+      } else if (kind === 'wrong') {
+        const soloWr = (sAns !== undefined && sAns >= 0 && sAns !== q.ans);
+        const duelWr = (dWrong !== undefined && dWrong >= 0 && dWrong !== q.ans);
+        if (soloWr || duelWr) {
+          const wPick = duelWr ? dWrong : sAns;
+          out.push({ key: cid + ':' + q.id, chId: cid, chTitle: ch.title, ch, q, wrongPick: wPick, from: duelWr ? '1v1 मुक़ाबला' : 'पाठ टेस्ट', isDuel: !!duelWr });
+        }
+      } else if (kind === 'skip') {
+        const soloSk = (sAns === -1);
+        const duelSk = (!!dSkip && (sAns === undefined || sAns === -1));
+        if (soloSk || duelSk) {
+          out.push({ key: cid + ':' + q.id, chId: cid, chTitle: ch.title, ch, q, from: duelSk ? '1v1 मुक़ाबला' : 'पाठ टेस्ट', isDuel: !!duelSk });
+        }
+      }
+    });
+  });
+  return out;
+}
+
+function getVaultCounts() {
+  return {
+    star: getVaultItems('star', 'all').length,
+    wrong: getVaultItems('wrong', 'all').length,
+    skip: getVaultItems('skip', 'all').length,
+    hist: Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory.length : 0
+  };
+}
+
+function getDuelScopeCounts(scope) {
+  if (scope && String(scope).startsWith('vault_')) {
+    const n = Array.isArray(app.duel.customRefs) ? app.duel.customRefs.length : 0;
+    return { total: n, unseen: n, seen: 0 };
+  }
+  if (scope === 'mix') {
+    let total = 0, unseen = 0;
+    Object.keys(CHAPTER_BANK).forEach(cid => {
+      const ch = CHAPTER_BANK[cid];
+      const p = getChProg(cid);
+      ch.questions.forEach(q => {
+        total++;
+        if (!p.duelSeen[q.id]) unseen++;
+      });
+    });
+    return { total, unseen, seen: total - unseen };
+  }
+  const ch = CHAPTER_BANK[scope];
+  if (!ch) return { total: 0, unseen: 0, seen: 0 };
+  const p = getChProg(scope);
+  let unseen = 0;
+  ch.questions.forEach(q => {
+    if (!p.duelSeen[q.id]) unseen++;
+  });
+  return { total: ch.questions.length, unseen, seen: ch.questions.length - unseen };
+}
+
+function resetDuelScopePool(scope) {
+  if (scope === 'mix') {
+    Object.keys(CHAPTER_BANK).forEach(cid => { getChProg(cid).duelSeen = {}; });
+  } else if (CHAPTER_BANK[scope]) {
+    getChProg(scope).duelSeen = {};
+  }
+  saveUserData(app.userId, app.userData);
+}
+
+function getQuizItem(idx) {
+  const qz = app.quiz;
+  if (qz.isVault && Array.isArray(qz.vaultRefs)) {
+    const ref = qz.vaultRefs[idx];
+    const ch = ref && CHAPTER_BANK[ref.chId];
+    const q = ch ? ch.questions.find(x => x.id === ref.qId) : null;
+    return q ? { ch, chId: ch.id, q } : null;
+  }
+  const ch = CHAPTER_BANK[qz.chId];
+  const qId = qz.qIds[idx];
+  const q = ch ? ch.questions.find(x => x.id === qId) : null;
+  return q ? { ch, chId: ch.id, q } : null;
+}
+
+function getQuizLength() {
+  return app.quiz.isVault ? (app.quiz.vaultRefs ? app.quiz.vaultRefs.length : 0) : (app.quiz.qIds ? app.quiz.qIds.length : 0);
+}
+
+function getQuizPicked(idx) {
+  if (app.quiz.isVault) return app.quiz.vaultAns[idx];
+  const it = getQuizItem(idx);
+  return it ? getChProg(it.chId).answers[it.q.id] : undefined;
+}
+
+function openVaultQuiz(kind, chFilter) {
+  const items = getVaultItems(kind, chFilter || 'all');
+  if (!items.length) {
+    showToast('अभी इस सूची में कोई सवाल नहीं है!');
+    return;
+  }
+  const ttl = kind === 'star' ? '★ स्टार सवाल अभ्यास' : (kind === 'wrong' ? '✗ गलत सवाल सुधार' : '⏭ छोड़े सवाल अभ्यास');
+  app.quiz = {
+    chId: items[0].chId,
+    title: ttl + ' (' + items.length + ')',
+    mode: kind,
+    isVault: true,
+    vaultRefs: items.map(it => ({ chId: it.chId, qId: it.q.id })),
+    vaultAns: {},
+    qIds: items.map(it => it.q.id),
+    cur: 0,
+    palOpen: false,
+    palFilter: 'all',
+    zoomOpen: false,
+    showQInSol: false,
+    showOther: false
+  };
+  app.view = 'quiz';
+  render();
+}
+
+function launchVaultDuel(kind, chFilter) {
+  const items = getVaultItems(kind, chFilter || 'all');
+  if (!items.length) {
+    showToast('1 vs 1 के लिए कोई सवाल नहीं है!');
+    return;
+  }
+  const ttl = kind === 'star' ? '★ स्टार सवाल' : (kind === 'wrong' ? '✗ गलत सवाल' : '⏭ छोड़े सवाल');
+  app.duel.scope = 'vault_' + kind;
+  app.duel.customRefs = items.map(it => ({ chId: it.chId, qId: it.q.id }));
+  app.duel.customTitle = ttl;
+  app.duel.allScope = false;
+  app.duel.count = Math.min(30, items.length);
+  if (!app.duel.customName) app.duel.customName = defaultPlayerName();
+  app.duel.stage = 'menu';
+  app.duel.err = '';
+  app.view = 'duel';
+  render();
+  sendPresence(true);
+  syncLiveState();
 }
 
 function getUserStats(uid) {
@@ -707,6 +985,7 @@ function renderHomeView() {
   const myName = app.userId === 'p' ? 'प्रियंका' : 'मंजू';
   const otherId = app.userId === 'p' ? 'm' : 'p';
   const otherName = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
+  const vc = getVaultCounts();
 
   // Resume bar target
   const resCh = CHAPTER_BANK[ud.lastChId] || CHAPTER_BANK['ch03'] || CHAPTER_BANK['ch01'] || Object.values(CHAPTER_BANK)[0];
@@ -714,11 +993,19 @@ function renderHomeView() {
   if (resCh) {
     const rp = getChProg(resCh.id);
     const ansCnt = Object.keys(rp.answers || {}).length;
+    const soloRem = Math.max(0, resCh.total_questions - ansCnt);
     resHtml = '<button class="cm-res" data-act="open-ch" data-cid="' + resCh.id + '" data-mode="resume">' +
-      '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:800;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">▶ ' + esc(resCh.title) + '</div><div style="font-size:11px;color:#0578A3;font-weight:700;">' + ansCnt + ' / ' + resCh.total_questions + ' सवाल देखे गए</div></div>' +
-      '<span class="cm-res-b">' + (ansCnt > 0 ? 'जारी रखें' : 'शुरू करें') + '</span>' +
+      '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:800;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">▶ ' + esc(resCh.title) + '</div><div style="font-size:11px;color:#0578A3;font-weight:700;">' + (ansCnt > 0 ? (ansCnt + ' हो गए · ' + soloRem + ' बाकी (कुल ' + resCh.total_questions + ')') : ('कुल ' + resCh.total_questions + ' सवाल')) + '</div></div>' +
+      '<span class="cm-res-b">' + (ansCnt > 0 ? (soloRem > 0 ? 'बाकी ' + soloRem + ' ›' : 'दोहराएँ') : 'शुरू करें') + '</span>' +
     '</button>';
   }
+
+  // Locked D1 Quick-Vault Strip: ★ स्टार · ✗ गलत · 📜 1v1 इतिहास
+  const vaultStripHtml = '<div class="vault-strip3">' +
+    '<button type="button" class="vs-btn vs-star" data-act="open-vault" data-v="star"><span class="vs-lbl">★ स्टार</span><span class="vs-cnt tnum">' + vc.star + '</span></button>' +
+    '<button type="button" class="vs-btn vs-wrong" data-act="open-vault" data-v="wrong"><span class="vs-lbl">✗ गलत</span><span class="vs-cnt tnum">' + vc.wrong + '</span></button>' +
+    '<button type="button" class="vs-btn vs-hist" data-act="open-dhist"><span class="vs-lbl">📜 1v1</span><span class="vs-cnt tnum">' + vc.hist + '</span></button>' +
+  '</div>';
 
   const railHtml = ROADMAP.map(s => {
     const sr = s.chapters.filter(c => c.liveId && CHAPTER_BANK[c.liveId]).length;
@@ -760,9 +1047,14 @@ function renderHomeView() {
     if (bank) {
       const p = getChProg(bank.id);
       const ansCount = Object.keys(p.answers || {}).length;
+      const soloRem = Math.max(0, bank.total_questions - ansCount);
       const rightCount = bank.questions.filter(q => p.answers && p.answers[q.id] === q.ans).length;
-      const wrongCount = bank.questions.filter(q => p.answers && p.answers[q.id] !== undefined && p.answers[q.id] >= 0 && p.answers[q.id] !== q.ans).length;
+      const wrongCount = bank.questions.filter(q => (p.answers && p.answers[q.id] !== undefined && p.answers[q.id] >= 0 && p.answers[q.id] !== q.ans) || (p.duelWrongs && p.duelWrongs[q.id] !== undefined)).length;
       const starCount = Object.keys(p.stars || {}).filter(k => p.stars[k]).length;
+      const dCnt = getDuelScopeCounts(bank.id);
+      const duelPill = dCnt.seen > 0
+        ? '<span class="rem-pill ' + (dCnt.unseen === 0 ? 'zero' : 'duel') + '">⚔️ 1v1: ' + (dCnt.unseen === 0 ? '0 बाकी ✅' : dCnt.unseen + ' बाकी / ' + dCnt.total) + '</span>'
+        : '';
       const isDone = p.finished || ansCount >= bank.total_questions;
       const inProg = !isDone && ansCount > 0;
 
@@ -770,7 +1062,7 @@ function renderHomeView() {
         cls = 'done';
         const exp = app.doneTwigCh === bank.id;
         inner = '<button type="button" class="cm-lbtn" data-act="tog-twig" data-cid="' + bank.id + '">' +
-          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">✅ ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · ' + bank.total_questions + ' सवाल</div></div>' +
+          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">✅ ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · ' + bank.total_questions + ' सवाल पूरा</div>' + (duelPill ? '<div>' + duelPill + '</div>' : '') + '</div>' +
           '<span style="background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;border-radius:6px;padding:2px 7px;font-size:11px;font-weight:800;flex:none;">' + rightCount + '/' + bank.total_questions + ' ' + (exp ? '▴' : '▾') + '</span>' +
         '</button>' +
         (exp ? '<div class="cm-twigs">' +
@@ -778,14 +1070,16 @@ function renderHomeView() {
           '<div class="cm-tw-row">' +
             '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="wrong" style="background:#FDECEA;color:#C62828;border:1px solid #F5C6C3;">✗ गलत (' + wrongCount + ')</button>' +
             '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="star" style="background:#FFF8E1;color:#8D6E00;border:1px solid #F9A825;">⭐ (' + starCount + ')</button>' +
-            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="full" style="background:#E3F3FA;color:#0A6F97;border:1px solid #93C5FD;">🔄 पूरे</button>' +
+            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="full" style="background:#E3F3FA;color:#0A6F97;border:1px solid #93C5FD;">📖 पूरे</button>' +
+            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="reset" style="background:#ECFDF5;color:#166534;border:1px solid #86EFAC;">🔄 नया</button>' +
           '</div>' +
         '</div>' : '');
       } else {
         cls = inProg ? 'glow' : 'rdy';
+        const soloPill = inProg ? '<span class="rem-pill">' + ansCount + ' हुए · ' + soloRem + ' बाकी</span>' : '';
         inner = '<button type="button" class="cm-lbtn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="resume">' +
-          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">🟢 ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · ' + bank.total_questions + ' सवाल' + (inProg ? ' · ' + ansCount + ' हुए' : '') + '</div></div>' +
-          '<span style="background:#0794C7;color:#fff;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:800;flex:none;">' + (inProg ? 'जारी' : 'शुरू') + '</span>' +
+          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">🟢 ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · कुल ' + bank.total_questions + ' सवाल</div>' + ((soloPill || duelPill) ? '<div>' + soloPill + duelPill + '</div>' : '') + '</div>' +
+          '<span style="background:#0794C7;color:#fff;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:800;flex:none;">' + (inProg ? 'बाकी ' + soloRem : 'शुरू') + '</span>' +
         '</button>';
       }
     } else {
@@ -804,14 +1098,105 @@ function renderHomeView() {
       '<button type="button" class="usr-pill" data-act="open-welcome">' + avImg(app.userId, 'av-xs') + ' ' + myName + ' · ' + tot.rdy + '/' + tot.tot + '</button>' +
     '</div>' +
     resHtml +
+    vaultStripHtml +
     '<div class="cm-book">' +
       '<div class="cm-rail scr">' + railHtml + '</div>' +
       '<div class="cm-page" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
     '</div>' +
     '<div class="ft">' +
-      '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;">⚔️ 1 vs 1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b>' + (app.duel.opOnline ? ' <span style="background:#DCFCE7;color:#15803D;padding:1px 6px;border-radius:99px;font-size:10px;font-weight:800;">🟢 ऑनलाइन</span>' : '') + '</span>' +
-      '<button type="button" class="btn-grn" style="padding:6px 12px;" data-act="open-duel">चैलेंज ›</button>' +
+      '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;min-width:0;">⚔️ 1v1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b>' + (app.duel.opOnline ? ' <span style="background:#DCFCE7;color:#15803D;padding:1px 6px;border-radius:99px;font-size:10px;font-weight:800;">🟢 ऑनलाइन</span>' : '') + '</span>' +
+      '<div style="display:flex;gap:5px;flex:none;">' +
+        (vc.hist > 0 ? '<button type="button" class="btn-sec" style="padding:6px 9px;font-size:11.5px;font-weight:800;border-color:#8B5CF6;color:#5B21B6;background:#F5F3FF;" data-act="open-dhist">📜 रिज़ल्ट (' + vc.hist + ')</button>' : '') +
+        '<button type="button" class="btn-grn" style="padding:6px 12px;" data-act="open-duel">चैलेंज ›</button>' +
+      '</div>' +
     '</div>';
+}
+
+function renderVaultView() {
+  const v = app.vault;
+  const z = app.zoomPct || 100;
+  const vc = getVaultCounts();
+  const allTabItems = getVaultItems(v.tab, 'all');
+  const chCountMap = {};
+  allTabItems.forEach(it => { chCountMap[it.chId] = (chCountMap[it.chId] || 0) + 1; });
+  if (v.chFilter !== 'all' && !chCountMap[v.chFilter]) v.chFilter = 'all';
+  const items = v.chFilter === 'all' ? allTabItems : allTabItems.filter(it => it.chId === v.chFilter);
+
+  const titleTxt = v.tab === 'star' ? '★ मेरे स्टार सवाल' : (v.tab === 'wrong' ? '✗ मेरे गलत सवाल' : '⏭ छोड़े सवाल');
+  const chipsHtml = '<button type="button" class="c-chip ' + (v.chFilter === 'all' ? 'on' : '') + '" data-act="v-ch" data-v="all">सभी पाठ (' + allTabItems.length + ')</button>' +
+    orderedChapterIds().filter(cid => chCountMap[cid]).map(cid =>
+      '<button type="button" class="c-chip ' + (v.chFilter === cid ? 'on' : '') + '" data-act="v-ch" data-v="' + cid + '">' + esc(CHAPTER_BANK[cid].title) + ' (' + chCountMap[cid] + ')</button>'
+    ).join('');
+
+  let zoomBar = '';
+  if (v.zoomOpen) {
+    const presets = [[85, 'छोटा (85%)'], [100, 'सामान्य (100%)'], [120, 'बड़ा (120%)']];
+    zoomBar = '<div class="zoom-bar"><div class="z-presets">' +
+      presets.map(([val, lbl]) => '<button type="button" class="z-pre ' + (z === val ? 'on' : '') + '" data-act="q-zset" data-v="' + val + '">' + lbl + '</button>').join('') +
+      '</div><div class="z-row"><div class="z-fine"><button type="button" class="z-step" data-act="q-zstep" data-d="-5">अ−</button><span class="z-num">' + z + '%</span><button type="button" class="z-step" data-act="q-zstep" data-d="5">अ+</button></div><button type="button" class="z-rst" data-act="q-zset" data-v="100">↺ रीसेट</button></div></div>';
+  }
+
+  const cardsHtml = items.length ? items.map(it => {
+    const q = it.q;
+    const prog = getChProg(it.chId);
+    const isStar = !!(prog.stars && prog.stars[q.id]);
+    const isOpen = !!v.openAns[it.key];
+    const pts = splitReadablePoints(q.exp);
+    const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
+    const pageLbl = extractPageLabel(q, it.ch);
+    const matchHtml = (q.match && q.match.length)
+      ? '<table class="mtab" style="font-size:' + zPx(15) + ';margin-top:8px;"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+        '</tbody></table>'
+      : '';
+    return '<div class="vq-card">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">' +
+        '<span style="font-size:11.5px;font-weight:800;color:#0578A3;">📘 ' + esc(it.chTitle) + '</span>' +
+        '<div style="display:flex;align-items:center;gap:5px;">' +
+          '<span class="src-tag ' + (it.isDuel ? 'duel' : '') + '">' + esc(it.from) + ' से</span>' +
+          '<button type="button" class="u-btn" style="padding:2px 8px;font-size:12px;font-weight:800;' + (isStar ? 'background:#F59E0B;border-color:#B45309;color:#fff;' : 'background:#FFFBEB;border-color:#D97706;color:#92400E;') + '" data-act="v-star" data-cid="' + it.chId + '" data-qid="' + q.id + '">' + (isStar ? '★ स्टार' : '☆ स्टार') + '</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="q-stem" style="font-size:' + zPx(18.5) + ';">' + esc(q.q) + '</div>' +
+      matchHtml +
+      (v.tab === 'wrong' && it.wrongPick !== undefined && q.opts[it.wrongPick]
+        ? '<div style="margin-top:7px;background:#FFF1F2;border:1px solid #FECDD3;color:#BE123C;border-radius:8px;padding:5px 9px;font-size:' + zPx(14) + ';font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px;"><span>✗ पिछला गलत जवाब: ' + esc(q.opts[it.wrongPick]) + '</span><button type="button" class="u-btn" style="background:#fff;color:#15803D;border-color:#86EFAC;font-weight:800;" data-act="v-clear-wr" data-cid="' + it.chId + '" data-qid="' + q.id + '">✓ सीख लिया</button></div>'
+        : '') +
+      '<div style="display:flex;gap:6px;margin-top:8px;">' +
+        '<button type="button" class="btn-sec" style="flex:1;font-weight:800;" data-act="v-tog-ans" data-k="' + esc(it.key) + '">' + (isOpen ? '🙈 उत्तर छुपाएँ' : '👁 सही उत्तर व मुख्य बिंदु देखें') + '</button>' +
+        (isOpen ? '<button type="button" class="speak-pill" data-act="v-speak" data-cid="' + it.chId + '" data-qid="' + q.id + '">🔊 सुनें</button>' : '') +
+      '</div>' +
+      (isOpen ? '<div style="margin-top:8px;">' +
+        '<div class="ans-banner" style="margin-bottom:8px;padding:9px 12px;"><div style="font-size:11.5px;font-weight:800;color:#15803D;">✅ सही उत्तर (विकल्प ' + (q.ans + 1) + ')</div><div style="margin-top:3px;font-size:' + zPx(17.5) + ';font-weight:800;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div></div>' +
+        '<div class="kp-box" style="padding:11px 13px;"><div class="kp-hd">📌 मुख्य बिंदु (' + esc(pageLbl) + ')</div><ul class="kp-ul">' +
+          kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(17) + ';margin-bottom:9px;">' + highlightHindiFacts(pt) + '</li>').join('') +
+        '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15.5) + ';margin-top:9px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + '</div>' +
+      '</div>' : '') +
+    '</div>';
+  }).join('') : '<div style="background:#fff;border:1.5px dashed #CBD5E1;border-radius:14px;padding:24px 16px;text-align:center;color:#475569;font-size:13.5px;font-weight:700;line-height:1.6;">' +
+    (v.tab === 'star'
+      ? '⭐ अभी कोई स्टार सवाल नहीं है!<br><span style="font-size:12px;font-weight:600;color:#64748B;">पाठ टेस्ट या 1 vs 1 में जिस सवाल पर ☆ स्टार दबाएँगी, वह तुरंत यहाँ दिखेगा।</span>'
+      : (v.tab === 'wrong'
+          ? '🎉 शानदार! अभी कोई गलत सवाल बाकी नहीं है!'
+          : '👍 अभी कोई छोड़ा गया सवाल नहीं है!')) +
+  '</div>';
+
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">← होम</button><span class="hd-ttl">' + titleTxt + '</span></div>' +
+      '<div class="hd-r"><button type="button" class="hd-btn ' + (v.zoomOpen ? 'zoom-on' : '') + '" data-act="v-ztog">अ ' + z + '%</button></div>' +
+    '</div>' +
+    zoomBar +
+    '<div class="v-tabs">' +
+      '<button type="button" class="vt-b ' + (v.tab === 'star' ? 'on-star' : '') + '" data-act="v-tab" data-v="star">★ स्टार (' + vc.star + ')</button>' +
+      '<button type="button" class="vt-b ' + (v.tab === 'wrong' ? 'on-wrong' : '') + '" data-act="v-tab" data-v="wrong">✗ गलत (' + vc.wrong + ')</button>' +
+      '<button type="button" class="vt-b ' + (v.tab === 'skip' ? 'on-skip' : '') + '" data-act="v-tab" data-v="skip">⏭ छोड़े (' + vc.skip + ')</button>' +
+    '</div>' +
+    '<div class="ch-chips scr">' + chipsHtml + '</div>' +
+    (items.length ? '<div class="v-actions">' +
+      '<button type="button" class="btn-pri" data-act="v-solve">▶ क्विज़ की तरह हल करें (' + items.length + ')</button>' +
+      '<button type="button" class="btn-grn" data-act="v-duel">⚔️ इन्हीं पर 1 vs 1 (' + items.length + ')</button>' +
+    '</div>' : '') +
+    '<div class="body-scr scr" style="padding:9px 10px 18px;background:#F5F8FA;">' + cardsHtml + '</div>';
 }
 
 function splitReadablePoints(rawExp) {
@@ -858,15 +1243,16 @@ function buildExpTimeline(rawExp) {
 }
 
 function renderQuizView() {
-  const ch = CHAPTER_BANK[app.quiz.chId];
-  if (!ch) return renderHomeView();
-  const prog = getChProg(ch.id);
-  const list = app.quiz.qIds.map(qid => ch.questions.find(q => q.id === qid)).filter(Boolean);
-  if (!list.length) return renderHomeView();
-  const curIdx = Math.max(0, Math.min(app.quiz.cur, list.length - 1));
+  const totalLen = getQuizLength();
+  if (!totalLen) return renderHomeView();
+  const curIdx = Math.max(0, Math.min(app.quiz.cur, totalLen - 1));
   app.quiz.cur = curIdx;
-  const q = list[curIdx];
-  const picked = prog.answers[q.id];
+  const curItem = getQuizItem(curIdx);
+  if (!curItem) return renderHomeView();
+  const ch = curItem.ch;
+  const q = curItem.q;
+  const prog = getChProg(curItem.chId);
+  const picked = getQuizPicked(curIdx);
   const hasPick = picked !== undefined;
   const isSkipped = picked === -1;
   const isOk = hasPick && !isSkipped && picked === q.ans;
@@ -874,13 +1260,15 @@ function renderQuizView() {
   const z = app.zoomPct || 100;
 
   // Auto-centered Testbook Q Strip circles (green/red/skip + golden star badge)
-  const circles = list.map((item, idx) => {
-    const p = prog.answers[item.id];
+  const itemsArr = Array.from({ length: totalLen }, (_, idx) => getQuizItem(idx)).filter(Boolean);
+  const circles = itemsArr.map((it, idx) => {
+    const p = getQuizPicked(idx);
+    const pr = getChProg(it.chId);
     let cls = 'q-num';
     if (idx === curIdx) cls += ' cur';
     if (p === -1) cls += ' skip';
-    else if (p !== undefined) cls += (p === item.ans ? ' ok' : ' bad');
-    if (prog.stars && prog.stars[item.id]) cls += ' has-star';
+    else if (p !== undefined) cls += (p === it.q.ans ? ' ok' : ' bad');
+    if (pr.stars && pr.stars[it.q.id]) cls += ' has-star';
     return '<button type="button" class="' + cls + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
   }).join('');
 
@@ -916,11 +1304,13 @@ function renderQuizView() {
   let subBarHtml = '';
   let bodyHtml = '';
   if (!hasPick) {
-    const modeTag = (app.quiz.mode !== 'full' && app.quiz.mode !== 'resume')
-      ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : (app.quiz.mode === 'skip' ? 'नहीं आता' : '⭐ स्टार'))
-      : '';
+    const modeTag = app.quiz.isVault
+      ? ' · ' + ch.title
+      : ((app.quiz.mode !== 'full' && app.quiz.mode !== 'resume')
+          ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : (app.quiz.mode === 'skip' ? 'नहीं आता' : '⭐ स्टार'))
+          : (app.quiz.mode === 'resume' && totalLen < ch.total_questions ? ' · बाकी सवाल' : ''));
     subBarHtml = '<div class="sub-bar">' +
-      '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + list.length + esc(modeTag) + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' +
+      '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + totalLen + esc(modeTag) + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' +
       starBtnHtml +
     '</div>';
     const optsHtml = q.opts.map((opt, idx) =>
@@ -939,7 +1329,7 @@ function renderQuizView() {
     const statusTxt = isSkipped ? '⏭ नहीं आता (0 अंक)' : (isOk ? '✓ सही' : '✗ गलत');
     const pageLbl = extractPageLabel(q, ch);
     subBarHtml = '<div class="sub-bar">' +
-      '<div class="sub-l"><span class="st-pill ' + statusCls + '">' + statusTxt + '</span><span>' + esc(pageLbl) + '</span></div>' +
+      '<div class="sub-l"><span class="st-pill ' + statusCls + '">' + statusTxt + '</span><span>' + esc(app.quiz.isVault ? (ch.title + ' · ' + pageLbl) : pageLbl) + '</span></div>' +
       '<div style="display:flex;gap:5px;align-items:center;">' +
         '<button type="button" class="speak-pill" data-act="q-speak">🔊 सुनें</button>' +
         starBtnHtml +
@@ -983,32 +1373,35 @@ function renderQuizView() {
   let palSheet = '';
   if (app.quiz.palOpen) {
     const f = app.quiz.palFilter;
-    const wrongN = list.filter(x => prog.answers[x.id] !== undefined && prog.answers[x.id] >= 0 && prog.answers[x.id] !== x.ans).length;
-    const skipN = list.filter(x => prog.answers[x.id] === -1).length;
-    const starN = list.filter(x => prog.stars && prog.stars[x.id]).length;
-    const restN = list.filter(x => prog.answers[x.id] === undefined).length;
-    const filt = list.map((x, idx) => ({ x, idx })).filter(({ x }) => {
-      const p = prog.answers[x.id];
-      if (f === 'wrong') return p !== undefined && p >= 0 && p !== x.ans;
+    const wrongN = itemsArr.filter((it, i) => { const p = getQuizPicked(i); return p !== undefined && p >= 0 && p !== it.q.ans; }).length;
+    const skipN = itemsArr.filter((it, i) => getQuizPicked(i) === -1).length;
+    const starN = itemsArr.filter(it => { const pr = getChProg(it.chId); return !!(pr.stars && pr.stars[it.q.id]); }).length;
+    const restN = itemsArr.filter((it, i) => getQuizPicked(i) === undefined).length;
+    const filt = itemsArr.map((it, idx) => ({ it, idx })).filter(({ it, idx }) => {
+      const p = getQuizPicked(idx);
+      const pr = getChProg(it.chId);
+      if (f === 'wrong') return p !== undefined && p >= 0 && p !== it.q.ans;
       if (f === 'skip') return p === -1;
-      if (f === 'star') return !!(prog.stars && prog.stars[x.id]);
+      if (f === 'star') return !!(pr.stars && pr.stars[it.q.id]);
       if (f === 'rest') return p === undefined;
       return true;
     });
     palSheet = '<div class="sheet-bg" data-act="q-pal-bg">' +
       '<div class="sheet-box">' +
         '<div style="width:36px;height:4px;background:#CBD5E1;border-radius:99px;margin:0 auto;"></div>' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;"><span>सवाल सूची (' + list.length + ')</span><button type="button" class="u-btn" data-act="q-pal-tog">✖ बंद</button></div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;"><span>सवाल सूची (' + itemsArr.length + ')</span><button type="button" class="u-btn" data-act="q-pal-tog">✖ बंद</button></div>' +
         '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">' +
-          [['all','सभी ' + list.length],['wrong','गलत ' + wrongN],['skip','नहीं आता ' + skipN],['star','⭐ ' + starN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
+          [['all','सभी ' + itemsArr.length],['wrong','गलत ' + wrongN],['skip','नहीं आता ' + skipN],['star','⭐ ' + starN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
             '<button type="button" style="border:none;border-radius:8px;padding:7px 2px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (f === fk ? 'background:#0794C7;color:#fff;' : 'background:#F1F5F9;color:#475569;') + '" data-act="q-pal-f" data-v="' + fk + '">' + fl + '</button>'
           ).join('') +
         '</div>' +
-        '<div class="pal-grid5 scr">' + (filt.length ? filt.map(({ x, idx }) => {
-          const p = prog.answers[x.id], isS = !!(prog.stars && prog.stars[x.id]);
+        '<div class="pal-grid5 scr">' + (filt.length ? filt.map(({ it, idx }) => {
+          const p = getQuizPicked(idx);
+          const pr = getChProg(it.chId);
+          const isS = !!(pr.stars && pr.stars[it.q.id]);
           let stCss = 'background:#fff;color:#334155;border:1px solid #CBD5E1;';
           if (p === -1) stCss = 'background:#E2E8F0;color:#334155;border:1.5px dashed #64748B;';
-          else if (p !== undefined) stCss = (p === x.ans) ? 'background:#1E8E3E;color:#fff;border:none;' : 'background:#D93025;color:#fff;border:none;';
+          else if (p !== undefined) stCss = (p === it.q.ans) ? 'background:#1E8E3E;color:#fff;border:none;' : 'background:#D93025;color:#fff;border:none;';
           if (isS) stCss += 'box-shadow:0 0 0 2.5px #F59E0B;';
           if (idx === curIdx) stCss += 'outline:3px solid #FF6F00;outline-offset:1px;';
           return '<button type="button" style="height:35px;border-radius:99px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;' + stCss + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + (p === -1 ? '⏭' : '') + (isS ? '★' : '') + '</button>';
@@ -1018,13 +1411,13 @@ function renderQuizView() {
     '</div>';
   }
 
-  const isLast = curIdx === list.length - 1;
+  const isLast = curIdx === totalLen - 1;
   const centerBtn = hasPick
     ? '<button type="button" class="f-retry" data-act="q-retry">🔄 फिर हल करें</button>'
     : '<button type="button" class="f-skip" data-act="q-skip">⏭ नहीं आता</button>';
 
   return '<div class="hd">' +
-      '<div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button><span class="hd-ttl">' + esc(app.quiz.title) + '</span></div>' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="' + (app.quiz.isVault ? 'open-vault-back' : 'back-home') + '">←</button><span class="hd-ttl">' + esc(app.quiz.title) + '</span></div>' +
       '<div class="hd-r">' +
         '<button type="button" class="hd-btn ' + (app.quiz.zoomOpen ? 'zoom-on' : '') + '" data-act="q-ztog">अ ' + z + '%</button>' +
         '<button type="button" class="hd-btn" data-act="q-pal-tog">▦ सूची</button>' +
@@ -1050,25 +1443,48 @@ function calcMarks(right, wrong, total, mode) {
 }
 
 function renderResultView() {
+  const isV = !!app.quiz.isVault;
   const ch = CHAPTER_BANK[app.quiz.chId];
-  if (!ch) return renderHomeView();
-  const prog = getChProg(ch.id);
-  const qs = ch.questions;
-  let right = 0, wrong = 0, skip = 0;
+  if (!isV && !ch) return renderHomeView();
+  let right = 0, wrong = 0, skip = 0, totalN = 0;
   const reviewItems = [];
-  qs.forEach((q, idx) => {
-    const p = prog.answers[q.id];
-    if (p === undefined || p === -1) {
-      skip++;
-      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
-    } else if (p === q.ans) {
-      right++;
-    } else {
-      wrong++;
-      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
-    }
-  });
-  const sc = calcMarks(right, wrong, qs.length, app.result.marking);
+
+  if (isV) {
+    totalN = app.quiz.vaultRefs.length;
+    app.quiz.vaultRefs.forEach((ref, idx) => {
+      const cObj = CHAPTER_BANK[ref.chId];
+      const q = cObj ? cObj.questions.find(x => x.id === ref.qId) : null;
+      if (!q) return;
+      const p = app.quiz.vaultAns[idx];
+      if (p === undefined || p === -1) {
+        skip++;
+        reviewItems.push({ qNum: idx + 1, id: idx + 1, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
+      } else if (p === q.ans) {
+        right++;
+      } else {
+        wrong++;
+        reviewItems.push({ qNum: idx + 1, id: idx + 1, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
+      }
+    });
+  } else {
+    const prog = getChProg(ch.id);
+    const qs = ch.questions;
+    totalN = qs.length;
+    qs.forEach((q, idx) => {
+      const p = prog.answers[q.id];
+      if (p === undefined || p === -1) {
+        skip++;
+        reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
+      } else if (p === q.ans) {
+        right++;
+      } else {
+        wrong++;
+        reviewItems.push({ qNum: idx + 1, id: q.id, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
+      }
+    });
+  }
+
+  const sc = calcMarks(right, wrong, totalN, app.result.marking);
   const markRow = '<div style="display:inline-flex;background:#F1F5F9;padding:2px;border-radius:8px;gap:2px;">' +
     [['simple','सरल'],['up','UP +3/−1'],['delhi','दिल्ली']].map(([mk,l]) =>
       '<button type="button" style="border:none;border-radius:6px;padding:3px 7px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (app.result.marking === mk ? 'background:#fff;color:#0578A3;box-shadow:0 1px 3px rgba(0,0,0,.1);' : 'background:transparent;color:#475569;') + '" data-act="r-mark" data-k="' + mk + '">' + l + '</button>'
@@ -1093,7 +1509,8 @@ function renderResultView() {
     '</div>';
   }).join('') : '<div style="background:#ECFDF5;border-radius:14px;padding:16px;text-align:center;font-weight:800;color:#166534;">🌟 अद्भुत! एक भी सवाल गलत या छूटा नहीं!</div>';
 
-  return '<div class="hd"><div class="hd-l">' + avImg(app.userId, 'av-xs') + '<span class="hd-ttl">परिणाम · ' + esc(ch.title) + '</span></div><button type="button" class="hd-btn" data-act="back-home">🏠 होम</button></div>' +
+  const hdrTitle = isV ? app.quiz.title : ch.title;
+  return '<div class="hd"><div class="hd-l">' + avImg(app.userId, 'av-xs') + '<span class="hd-ttl">परिणाम · ' + esc(hdrTitle) + '</span></div><button type="button" class="hd-btn" data-act="back-home">🏠 होम</button></div>' +
     '<div class="body-scr scr" style="padding:11px;">' +
       '<div style="border-radius:16px;padding:13px;background:linear-gradient(180deg,#ECFDF5 0%,#FFFFFF 100%);box-shadow:0 2px 10px rgba(15,23,42,.05);margin-bottom:12px;">' +
         '<div style="display:flex;align-items:center;gap:10px;">' + avImg(app.userId, 'av-md') + '<div><div style="font-size:20px;font-weight:800;color:#14532D;">' + sc.big + '</div><div style="font-size:11.5px;font-weight:700;color:#15803D;">' + sc.sub + '</div></div></div>' +
@@ -1107,7 +1524,9 @@ function renderResultView() {
     '</div>' +
     '<div class="ft">' +
       '<button type="button" class="btn-sec" data-act="back-home">🏠 होम</button>' +
-      (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : (skip > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="skip">🔁 छोड़े सवाल (' + skip + ') देखें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>')) +
+      (isV
+        ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-vault-back">← वापस मेरे स्टार/गलत में जाएँ</button>'
+        : (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : (skip > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="skip">🔁 छोड़े सवाल (' + skip + ') देखें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>'))) +
     '</div>';
 }
 
@@ -1130,14 +1549,12 @@ function defaultPlayerName() {
 }
 
 function duelPoolMax(scope) {
-  if (scope === 'mix') {
-    return Object.values(CHAPTER_BANK).reduce((a, c) => a + c.questions.length, 0);
-  }
-  return CHAPTER_BANK[scope] ? CHAPTER_BANK[scope].questions.length : 0;
+  return getDuelScopeCounts(scope).unseen;
 }
 
 function duelEffCount() {
-  const mx = Math.max(1, duelPoolMax(app.duel.scope) || 30);
+  const mx = duelPoolMax(app.duel.scope);
+  if (mx <= 0) return 0;
   if (app.duel.allScope) return mx;
   const n = Math.round(Number(app.duel.count) || 30);
   return Math.max(1, Math.min(mx, n));
@@ -1145,13 +1562,22 @@ function duelEffCount() {
 
 function buildDuelRefs(scope, count) {
   let pool = [];
-  if (scope === 'mix') {
-    Object.keys(CHAPTER_BANK).forEach(cid => CHAPTER_BANK[cid].questions.forEach(q => {
-      pool.push({ chId: cid, qId: q.id });
-    }));
+  if (scope && String(scope).startsWith('vault_')) {
+    pool = Array.isArray(app.duel.customRefs) ? app.duel.customRefs.slice() : [];
+  } else if (scope === 'mix') {
+    orderedChapterIds().forEach(cid => {
+      const p = getChProg(cid);
+      CHAPTER_BANK[cid].questions.forEach(q => {
+        if (!p.duelSeen[q.id]) pool.push({ chId: cid, qId: q.id });
+      });
+    });
   } else if (CHAPTER_BANK[scope]) {
-    pool = CHAPTER_BANK[scope].questions.map(q => ({ chId: scope, qId: q.id }));
+    const p = getChProg(scope);
+    CHAPTER_BANK[scope].questions.forEach(q => {
+      if (!p.duelSeen[q.id]) pool.push({ chId: scope, qId: q.id });
+    });
   }
+  if (!pool.length) return [];
   const arr = pool.slice();
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -1159,6 +1585,134 @@ function buildDuelRefs(scope, count) {
   }
   const want = Math.max(1, Math.min(Number(count) || 30, arr.length));
   return arr.slice(0, want);
+}
+
+function markDuelQuestionSeen(qObj) {
+  if (!qObj) return;
+  if (String(app.duel.scope || '').startsWith('vault_')) return;
+  const cid = qObj._chId || (CHAPTER_BANK[app.duel.scope] ? app.duel.scope : '');
+  if (cid && CHAPTER_BANK[cid]) {
+    getChProg(cid).duelSeen[qObj.id] = 1;
+  }
+}
+
+function formatHindiStamp(ts) {
+  try {
+    const d = new Date(ts || Date.now());
+    const months = ['जनवरी','फरवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'];
+    const h24 = d.getHours();
+    const mins = String(d.getMinutes()).padStart(2, '0');
+    const period = h24 < 12 ? 'सुबह' : (h24 < 17 ? 'दोपहर' : 'शाम');
+    const h12 = (h24 % 12) || 12;
+    return d.getDate() + ' ' + months[d.getMonth()] + ' · ' + period + ' ' + h12 + ':' + mins;
+  } catch (_) {
+    return 'आज';
+  }
+}
+
+function currentDuelMatchId() {
+  const d = app.duel;
+  return d.code ? ('rm_' + d.code + '_r' + Number(d.round || 0)) : ('solo_' + Number(d.startedAt || 1) + '_r' + Number(d.round || 0));
+}
+
+function ansOfMap(ansMap, idx) {
+  if (!ansMap || typeof ansMap !== 'object') return undefined;
+  if (ansMap[idx] !== undefined && ansMap[idx] !== null) return Number(ansMap[idx]);
+  if (ansMap[String(idx)] !== undefined && ansMap[String(idx)] !== null) return Number(ansMap[String(idx)]);
+  return undefined;
+}
+
+function upsertDuelHistoryFromCurrent() {
+  const d = app.duel;
+  if (!d.qs || !d.qs.length) return null;
+  const mid = currentDuelMatchId();
+  if (!Array.isArray(app.userData.duelHistory)) app.userData.duelHistory = [];
+  const existIdx = app.userData.duelHistory.findIndex(x => x && x.id === mid);
+  const existing = existIdx >= 0 ? app.userData.duelHistory[existIdx] : null;
+
+  const myS = calcMyDuelStats();
+  const myMs = d.finishedMs || d.elapsedMs || (existing && existing.me ? existing.me.ms : 0) || 0;
+  const curName = d.customName || defaultPlayerName();
+  const meP = duelMePlayer() || { name: curName, who: app.userId };
+  const opP = duelOppPlayer();
+  const opDefaultName = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
+  const opId = app.userId === 'p' ? 'm' : 'p';
+
+  const scopeTitle = (d.room && d.room.scopeTitle)
+    || (String(d.scope || '').startsWith('vault_') ? (d.customTitle || 'मेरे सवाल') : (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ')));
+
+  const rec = {
+    id: mid,
+    ts: existing ? existing.ts : Date.now(),
+    dateStr: existing ? existing.dateStr : formatHindiStamp(Date.now()),
+    code: d.code || '',
+    round: Number(d.round || 0),
+    scope: d.scope,
+    title: scopeTitle,
+    solo: !!d.soloPractice,
+    total: d.qs.length,
+    qRefs: d.qs.map(q => ({ chId: q._chId || (CHAPTER_BANK[d.scope] ? d.scope : 'ch01'), qId: q.id })),
+    me: {
+      name: meP.name || curName,
+      who: app.userId,
+      pts: myS.pts,
+      ok: myS.ok,
+      wr: myS.wr,
+      sk: myS.sk,
+      k: myS.k,
+      ms: myMs,
+      ans: Object.assign({}, d.myAns)
+    },
+    op: opP ? {
+      name: opP.name || opDefaultName,
+      who: opP.who || opId,
+      pts: Number(opP.pts || 0),
+      ok: Number(opP.ok || 0),
+      wr: Number(opP.wr || 0),
+      sk: Number(opP.sk || 0),
+      k: Number(opP.k || 0),
+      ms: Number(opP.ms || 0),
+      fin: !!opP.fin,
+      ans: Object.assign({}, opP.ans || {})
+    } : (existing ? existing.op : null)
+  };
+
+  if (existIdx >= 0) {
+    app.userData.duelHistory[existIdx] = rec;
+  } else {
+    app.userData.duelHistory.unshift(rec);
+    if (app.userData.duelHistory.length > 80) app.userData.duelHistory.length = 80;
+  }
+  saveUserData(app.userId, app.userData);
+  return rec;
+}
+
+function getDuelRecordById(mid) {
+  const list = Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory : [];
+  if (mid) {
+    const found = list.find(x => x && x.id === mid);
+    if (found) return found;
+  }
+  if (app.duel.qs && app.duel.qs.length && (!mid || mid === currentDuelMatchId())) {
+    return upsertDuelHistoryFromCurrent();
+  }
+  return list[0] || null;
+}
+
+function verdictOfRecord(rec) {
+  if (!rec) return ['—', 'draw'];
+  const myS = rec.me || { pts: 0, ms: 0, name: defaultPlayerName() };
+  const op = rec.op;
+  if (!op || rec.solo) return ['⚡ अभ्यास पूरा! (' + myS.pts + ' अंक)', 'win'];
+  if (!op.fin) return ['⏳ ' + (op.name || 'दोस्त') + ' अभी खेल रही हैं… (' + (op.k || 0) + '/' + rec.total + ')', 'wait'];
+  const mp = Number(myS.pts || 0), opp = Number(op.pts || 0);
+  const myNm = myS.name || defaultPlayerName();
+  const opNm = op.name || 'दोस्त';
+  if (mp !== opp) return mp > opp ? ['🏆 ' + myNm + ' जीतीं!', 'win'] : ['🏆 ' + opNm + ' जीतीं — अगली बार पक्का! 💪', 'lose'];
+  if (myS.ms && op.ms && myS.ms !== op.ms) {
+    return myS.ms < op.ms ? ['🏆 बराबर अंक — कम समय से ' + myNm + ' जीतीं!', 'win'] : ['🏆 बराबर अंक — कम समय से ' + opNm + ' जीतीं!', 'lose'];
+  }
+  return ['🤝 बराबरी का शानदार मुक़ाबला!', 'draw'];
 }
 
 function buildDuelPool(scope, count) {
@@ -1453,15 +2007,24 @@ function onDuelRoomUpdate() {
     runDuelCountdown();
     return;
   }
-  if (r.st === 'wait' && d.stage === 'result' && Number(r.round || 0) !== Number(d.round || 0)) {
+  if (r.st === 'wait' && (d.stage === 'result' || d.stage === 'live') && Number(r.round || 0) !== Number(d.round || 0)) {
+    stopDuelTimer();
+    if (d.qs && d.qs.length) {
+      d.qs.forEach(markDuelQuestionSeen);
+      upsertDuelHistoryFromCurrent();
+    }
     d.round = Number(r.round || 0);
     d.myAns = {};
     d.fin = 0;
     d.stage = 'lobby';
     if (r.qRefs) d.qs = resolveDuelQuestions(r.qRefs);
+    app.view = 'duel';
     render();
     showToast('⚔️ नया राउंड तैयार है!');
     return;
+  }
+  if (d.stage === 'result') {
+    upsertDuelHistoryFromCurrent();
   }
   if (app.view === 'duel') {
     if (d.stage === 'live') {
@@ -1469,6 +2032,8 @@ function onDuelRoomUpdate() {
     } else if (d.stage === 'lobby' || d.stage === 'result') {
       if (!hasFocusedInputInRoot()) render();
     }
+  } else if ((app.view === 'duel_sol' && app.duelSol.fromLive) || app.view === 'duel_hist_res') {
+    if (!hasFocusedInputInRoot()) render();
   }
 }
 
@@ -1569,11 +2134,18 @@ async function createDuelRoom(soloDirect) {
   if (app.duel.submitting) return null;
   const d = app.duel;
   const nm = readAndSaveDuelName();
+  const scCounts = getDuelScopeCounts(d.scope);
+  if (scCounts.unseen <= 0) {
+    showToast('इस पाठ के सभी सवाल पूरे हो चुके हैं — पहले नया चक्र रीसेट करें!');
+    return null;
+  }
   const cnt = duelEffCount();
   const qRefs = buildDuelRefs(d.scope, cnt);
   if (!qRefs.length) { showToast('इस पाठ में सवाल उपलब्ध नहीं हैं'); return null; }
 
-  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  const scopeTitle = String(d.scope || '').startsWith('vault_')
+    ? (d.customTitle || 'मेरे सवाल')
+    : (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
   d.qRefs = qRefs;
   d.qs = resolveDuelQuestions(qRefs);
   d.count = qRefs.length;
@@ -1654,7 +2226,10 @@ async function updateHostLobbySetup() {
   if (!d.code || !isDuelHost() || !d.room || d.room.st !== 'wait') return;
   const cnt = duelEffCount();
   const qRefs = buildDuelRefs(d.scope, cnt);
-  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  if (!qRefs.length) return;
+  const scopeTitle = String(d.scope || '').startsWith('vault_')
+    ? (d.customTitle || 'मेरे सवाल')
+    : (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
   d.qRefs = qRefs;
   d.qs = resolveDuelQuestions(qRefs);
   d.count = qRefs.length;
@@ -1795,7 +2370,21 @@ async function handleDuelPick(idx) {
   const q = d.qs[d.qIdx];
   if (!q) return;
   if (d.myAns[d.qIdx] !== undefined) return;
-  d.myAns[d.qIdx] = Number(idx);
+  const chosen = Number(idx);
+  d.myAns[d.qIdx] = chosen;
+  markDuelQuestionSeen(q);
+  const cid = q._chId || (CHAPTER_BANK[d.scope] ? d.scope : '');
+  if (cid && CHAPTER_BANK[cid]) {
+    const prog = getChProg(cid);
+    if (chosen === q.ans) {
+      delete prog.duelWrongs[q.id];
+      delete prog.duelSkips[q.id];
+    } else {
+      prog.duelWrongs[q.id] = chosen;
+      delete prog.duelSkips[q.id];
+    }
+  }
+  saveUserData(app.userId, app.userData);
   render();
   await pushMyDuelProgress(false);
 }
@@ -1807,6 +2396,12 @@ async function handleDuelSkip() {
   if (!q) return;
   if (d.myAns[d.qIdx] !== undefined) return;
   d.myAns[d.qIdx] = -1;
+  markDuelQuestionSeen(q);
+  const cid = q._chId || (CHAPTER_BANK[d.scope] ? d.scope : '');
+  if (cid && CHAPTER_BANK[cid]) {
+    getChProg(cid).duelSkips[q.id] = 1;
+  }
+  saveUserData(app.userId, app.userData);
   showToast('⏭ नहीं आता (0 निगेटिव अंक) · नीचे सही उत्तर व व्याख्या देखें');
   await pushMyDuelProgress(false);
 }
@@ -1836,19 +2431,40 @@ async function finishDuelRun() {
   d.fin = 1;
   d.palOpen = false;
   d.leaveOpen = false;
+  if (Array.isArray(d.qs)) {
+    d.qs.forEach(markDuelQuestionSeen);
+  }
   d.stage = 'result';
+  upsertDuelHistoryFromCurrent();
   render();
   await pushMyDuelProgress(true);
 }
 
 async function rematchDuelRoom() {
   const d = app.duel;
-  const cnt = duelEffCount();
+  const scCounts = getDuelScopeCounts(d.scope);
+  if (scCounts.unseen <= 0) {
+    showToast('इस पाठ के सभी सवाल पूरे हो चुके हैं — नया चक्र रीसेट करें!');
+    return;
+  }
+  const cnt = Math.max(1, Math.min(scCounts.unseen, d.allScope ? scCounts.unseen : (Number(d.count) || 30)));
   const qRefs = buildDuelRefs(d.scope, cnt);
-  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  if (!qRefs.length) {
+    showToast('बचे हुए सवाल नहीं मिले — नया चक्र रीसेट करें!');
+    return;
+  }
+  const scopeTitle = String(d.scope || '').startsWith('vault_')
+    ? (d.customTitle || 'मेरे सवाल')
+    : (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
   if (d.soloPractice || !d.code) {
+    const nextSoloRound = Number(d.round || 0) + 1;
+    d.round = nextSoloRound;
     d.qRefs = qRefs;
     d.qs = resolveDuelQuestions(qRefs);
+    d.room = {
+      v: 2, st: 'go', round: nextSoloRound, scope: d.scope, scopeTitle, count: qRefs.length, qRefs,
+      p: { [duelPid()]: { name: d.customName || defaultPlayerName(), who: app.userId, role: 'host', pts: 0, k: 0, ok: 0, wr: 0, sk: 0, fin: 0, ans: {} } }
+    };
     beginDuelLivePlay();
     return;
   }
@@ -1979,24 +2595,412 @@ function renderDuelZoomBar() {
 
 function renderDuelCountSelector() {
   const d = app.duel;
-  const mx = Math.max(1, duelPoolMax(d.scope) || 30);
+  const sc = getDuelScopeCounts(d.scope);
+  const isVaultScope = String(d.scope || '').startsWith('vault_');
+  if (sc.unseen <= 0) {
+    return '<div style="background:#ECFDF5;border:1.5px solid #16A34A;border-radius:12px;padding:12px;text-align:center;display:flex;flex-direction:column;gap:8px;">' +
+      '<div style="font-size:14px;font-weight:800;color:#14532D;">🎉 इस पाठ के सभी ' + sc.total + ' सवाल पूरे हो चुके हैं! (0 बाकी)</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#166534;">एक भी सवाल दोबारा नहीं आया। नया चक्र शुरू करने पर सभी ' + sc.total + ' सवाल फिर खुल जाएँगे।</div>' +
+      '<button type="button" class="btn-grn" style="width:100%;padding:11px;font-size:13.5px;" data-act="d-reset-pool">🔄 नया चक्र शुरू करें (सभी ' + sc.total + ' सवाल फिर खोलें)</button>' +
+    '</div>';
+  }
+  const mx = sc.unseen;
   const eff = duelEffCount();
   const presets = [15, 30, 50].filter(n => n < mx);
-  return '<div style="font-size:12.5px;font-weight:800;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
-      '<span>सवालों की संख्या (डिफ़ॉल्ट 30 · मनचाही चुनें):</span>' +
-      '<span style="color:#0794C7;">कुल उपलब्ध: ' + mx + '</span>' +
+  const seenStrip = (!isVaultScope && sc.seen > 0)
+    ? '<div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:9px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:11.5px;font-weight:800;color:#92400E;">' +
+        '<span>📉 ' + sc.seen + ' हो चुके · अब सिर्फ़ <b>' + sc.unseen + ' बचे नए सवाल</b> आएंगे!</span>' +
+        '<button type="button" class="u-btn" style="background:#fff;border-color:#F59E0B;color:#92400E;font-weight:800;flex:none;" data-act="d-reset-pool">↺ रीसेट</button>' +
+      '</div>'
+    : '';
+  return seenStrip +
+    '<div style="font-size:12.5px;font-weight:800;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span>सवालों की संख्या (डिफ़ॉल्ट 30):</span>' +
+      '<span style="color:#0794C7;">बाकी नए उपलब्ध: ' + mx + (sc.seen > 0 ? ' / ' + sc.total : '') + '</span>' +
     '</div>' +
     '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
       presets.map(c =>
         '<button type="button" class="u-btn ' + (!d.allScope && eff === c ? 'on' : '') + '" style="flex:1;min-width:64px;padding:7px 6px;font-size:12px;font-weight:800;" data-act="d-cnt" data-v="' + c + '">' + c + (c === 30 ? ' (डिफ़ॉल्ट)' : '') + '</button>'
       ).join('') +
-      '<button type="button" class="u-btn ' + (d.allScope || eff === mx ? 'on' : '') + '" style="flex:1;min-width:82px;padding:7px 6px;font-size:12px;font-weight:800;" data-act="d-cnt-all">पूरे (' + mx + ')</button>' +
+      '<button type="button" class="u-btn ' + (d.allScope || eff === mx ? 'on' : '') + '" style="flex:1;min-width:82px;padding:7px 6px;font-size:12px;font-weight:800;" data-act="d-cnt-all">' + (sc.seen > 0 ? 'बचे पूरे (' + mx + ')' : 'पूरे (' + mx + ')') + '</button>' +
     '</div>' +
     '<div class="cnt-stepper">' +
       '<span style="font-size:12px;font-weight:700;color:#475569;flex:1;">मनचाहे सवाल (1 से ' + mx + '):</span>' +
       '<button type="button" class="z-step" data-act="d-cnt-step" data-d="-5">−5</button>' +
       '<input id="duelCntInp" class="cnt-inp tnum" type="number" inputmode="numeric" min="1" max="' + mx + '" value="' + eff + '">' +
       '<button type="button" class="z-step" data-act="d-cnt-step" data-d="5">+5</button>' +
+    '</div>';
+}
+
+/* ================= MATHS MOCK (CLASSIFICATION_MOCK) STYLE 1v1 OVERVIEW, SOLUTION & HISTORY ================= */
+function renderDuelOverviewBody(rec, isLive) {
+  if (!rec) return '<div style="padding:20px;text-align:center;">कोई परिणाम उपलब्ध नहीं है।</div>';
+  const qs = resolveDuelQuestions(rec.qRefs);
+  const total = qs.length || rec.total || 1;
+  const me = rec.me || { name: defaultPlayerName(), who: app.userId, pts: 0, ok: 0, wr: 0, sk: 0, k: 0, ms: 0, ans: {} };
+  const op = rec.op || null;
+  const isFinal = !op || !!op.fin || !!rec.solo;
+  const [vTxt, vKind] = verdictOfRecord(rec);
+  const vColor = vKind === 'win' ? '#15803D' : (vKind === 'lose' ? '#C62828' : (vKind === 'wait' ? '#0578A3' : '#0F172A'));
+
+  let blankCnt = 0, starCnt = 0;
+  qs.forEach((q, k) => {
+    const mp = ansOfMap(me.ans, k);
+    if (mp === undefined || mp === -1) blankCnt++;
+    const cid = q._chId || rec.scope;
+    if (CHAPTER_BANK[cid] && getChProg(cid).stars[q.id]) starCnt++;
+  });
+
+  // Previous match delta on same scope (Maths Mock .h2-tk style)
+  const histArr = Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory : [];
+  const curPos = histArr.findIndex(x => x && x.id === rec.id);
+  const prevSame = histArr.slice(curPos >= 0 ? curPos + 1 : 0).find(x => x && x.id !== rec.id && x.scope === rec.scope && x.total === rec.total);
+  let deltaHtml = '';
+  if (prevSame && prevSame.me) {
+    const diff = me.pts - Number(prevSame.me.pts || 0);
+    deltaHtml = '<div class="m-htk">पिछला मैच: ' + prevSame.me.pts + ' → ' + me.pts + ' <b class="' + (diff >= 0 ? 'up' : 'dn') + '">(' + (diff >= 0 ? '+' : '') + diff + ')</b></div>';
+  }
+
+  const chipFor = (ansMap, k) => {
+    const q = qs[k];
+    if (!q) return '';
+    const p = ansOfMap(ansMap, k);
+    const cls = p === q.ans ? 'g' : (p !== undefined && p >= 0 ? 'r' : '');
+    const cid = q._chId || rec.scope;
+    const isS = CHAPTER_BANK[cid] && getChProg(cid).stars[q.id];
+    return '<button type="button" class="m-ch ' + cls + ' tnum" title="सवाल #' + (k + 1) + '" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="all" data-i="' + k + '" data-live="' + (isLive ? '1' : '0') + '">' + (k + 1) + (isS ? '<i class="sqi">★</i>' : '') + '</button>';
+  };
+
+  // 1) Top .m-h2 Hero Card (Marks + Status Pills + Big Royal Blue Solution CTA)
+  const heroHtml = '<div class="m-h2">' +
+    '<div class="m-h2-l">' +
+      '<div class="m-hk">📘 ' + esc(rec.title) + ' · ' + esc(rec.dateStr || '') + (rec.code ? ' · Room ' + esc(rec.code) : '') + '</div>' +
+      '<div style="font-size:13.5px;font-weight:800;color:' + vColor + ';margin-top:3px;">' + esc(vTxt) + '</div>' +
+      '<div class="m-hbig ' + (me.pts < 0 ? 'neg' : '') + ' tnum">' + me.pts + '<span>/ ' + (total * 3) + ' अंक</span></div>' +
+      (op ? '<div style="font-size:12px;font-weight:800;color:#334155;margin-top:2px;">⚔️ बनाम ' + esc(op.name) + ': <b class="tnum">' + Number(op.pts || 0) + ' अंक</b> ' + (op.fin ? '(' + (op.ok || 0) + ' सही · ' + (op.wr || 0) + ' गलत)' : '(खेल रही हैं ' + (op.k || 0) + '/' + total + ')') + '</div>' : '') +
+      '<div class="m-hpills">' +
+        '<span class="m-pill g">✅ <b>' + me.ok + '</b> सही</span>' +
+        '<span class="m-pill r">❌ <b>' + me.wr + '</b> गलत</span>' +
+        '<span class="m-pill">⬜ <b>' + blankCnt + '</b> छोड़े</span>' +
+        '<span class="m-pill">⏱ <b>' + fmtDuelDur(me.ms) + '</b></span>' +
+      '</div>' +
+      deltaHtml +
+    '</div>' +
+    '<button type="button" class="m-h2-go" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="all" data-i="0" data-live="' + (isLive ? '1' : '0') + '">' +
+      '<span>📖</span><b>Solution देखो</b><small>Q by Q</small>' +
+    '</button>' +
+  '</div>';
+
+  // 2) Quick Filter Jump Bar (Maths Mock filter style)
+  const quickFltHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
+    '<button type="button" class="c-chip on" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="all" data-i="0" data-live="' + (isLive ? '1' : '0') + '">📖 सभी सवाल (' + total + ')</button>' +
+    (me.wr > 0 ? '<button type="button" class="c-chip" style="border-color:#F43F5E;color:#BE123C;background:#FFF1F2;" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="wrong" data-i="0" data-live="' + (isLive ? '1' : '0') + '">❌ सिर्फ़ गलत (' + me.wr + ')</button>' : '') +
+    (blankCnt > 0 ? '<button type="button" class="c-chip" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="skip" data-i="0" data-live="' + (isLive ? '1' : '0') + '">⬜ छोड़े (' + blankCnt + ')</button>' : '') +
+    (starCnt > 0 ? '<button type="button" class="c-chip" style="border-color:#F59E0B;color:#92400E;background:#FFFBEB;" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="star" data-i="0" data-live="' + (isLive ? '1' : '0') + '">★ स्टार (' + starCnt + ')</button>' : '') +
+  '</div>';
+
+  // 3) Maths Mock .rr Numbered Clickable Question Chips Card
+  const rrHtml = '<div class="m-rr">' +
+    '<div class="m-rr-t">हर सवाल का रिज़ल्ट · <span style="color:#0794C7;">नंबर दबाओ तो वही सवाल खुलेगा</span></div>' +
+    '<div class="m-rr-blk">' +
+      '<div class="m-rr-hd">' +
+        '<span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;color:#0F172A;">' + playerAvatarHtml(me, 'av-xs') + ' ' + esc(me.name) + '</span>' +
+        '<span style="font-size:11.5px;font-weight:700;color:#475569;" class="tnum">' + me.ok + '/' + total + ' सही · <b>' + me.pts + ' अंक</b> · ⏱ ' + fmtDuelDur(me.ms) + '</span>' +
+      '</div>' +
+      '<div class="m-chips2">' + qs.map((_, k) => chipFor(me.ans, k)).join('') + '</div>' +
+    '</div>' +
+    (op ? '<div class="m-rr-blk">' +
+      '<div class="m-rr-hd">' +
+        '<span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;color:#0F172A;">' + playerAvatarHtml(op, 'av-xs') + ' ' + esc(op.name) + '</span>' +
+        '<span style="font-size:11.5px;font-weight:700;color:#475569;" class="tnum">' + (isFinal ? ((op.ok || 0) + '/' + total + ' सही · <b>' + Number(op.pts || 0) + ' अंक</b> · ⏱ ' + fmtDuelDur(op.ms)) : ('⏳ खेल रही हैं… (' + (op.k || 0) + '/' + total + ')')) + '</span>' +
+      '</div>' +
+      (isFinal
+        ? '<div class="m-chips2">' + qs.map((_, k) => chipFor(op.ans, k)).join('') + '</div>'
+        : '<div style="font-size:11.5px;color:#64748B;font-weight:700;background:#F8FAFC;border-radius:8px;padding:7px 9px;">⏳ ' + esc(op.name) + ' का खेल पूरा होते ही उनके नंबर अपने-आप यहाँ दिख जाएँगे।</div>') +
+    '</div>' : '') +
+  '</div>';
+
+  // 4) Compact Comparison Table
+  const cmpHtml = op ? '<div style="background:#fff;border:1px solid #E3E8EE;border-radius:14px;padding:10px 12px;">' +
+    '<table class="chtab">' +
+      '<tr><th>तुलना</th><td><b>' + esc(me.name) + '</b></td><td><b>' + esc(op.name) + '</b></td></tr>' +
+      '<tr><th>अंक (+3 / −1)</th><td class="tnum"><b>' + me.pts + '</b></td><td class="tnum"><b>' + Number(op.pts || 0) + '</b></td></tr>' +
+      '<tr><th>सही / गलत / छोड़े</th><td class="tnum">' + me.ok + ' / ' + me.wr + ' / ' + blankCnt + '</td><td class="tnum">' + (op.ok || 0) + ' / ' + (op.wr || 0) + ' / ' + (op.sk || 0) + '</td></tr>' +
+      '<tr><th>समय</th><td class="tnum">' + fmtDuelDur(me.ms) + '</td><td class="tnum">' + (op.fin && op.ms ? fmtDuelDur(op.ms) : '—') + '</td></tr>' +
+    '</table>' +
+  '</div>' : '';
+
+  // 5) Bottom Action Controls (Shrinking-Pool Rematch + WhatsApp + History)
+  let actionsHtml = '';
+  if (isLive) {
+    const sc = getDuelScopeCounts(rec.scope);
+    const nextN = sc.unseen > 0 ? Math.min(sc.unseen, app.duel.allScope ? sc.unseen : (Number(app.duel.count) || 30)) : 0;
+    const rematchBlk = (isDuelHost() || app.duel.soloPractice)
+      ? (sc.unseen > 0
+          ? '<button type="button" class="btn-pri" style="width:100%;height:48px;font-size:14px;border-radius:11px;" data-act="d-rematch">⚔️ अगला राउंड — बचे हुए ' + nextN + ' नए सवाल (' + sc.unseen + ' बाकी)</button>'
+          : '<div style="background:#ECFDF5;border:1.5px solid #16A34A;border-radius:12px;padding:11px;text-align:center;display:flex;flex-direction:column;gap:7px;">' +
+              '<div style="font-size:13px;font-weight:800;color:#14532D;">🎉 इस पाठ के सभी ' + sc.total + ' सवाल पूरे हो गए! (0 बाकी)</div>' +
+              '<button type="button" class="btn-grn" style="width:100%;padding:10px;" data-act="d-reset-rematch">🔄 नया चक्र रीसेट करके फिर खेलें (' + Math.min(30, sc.total) + ' सवाल)</button>' +
+            '</div>')
+      : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700;color:#475569;">बचे हुए सवालों पर अगले राउंड के लिए Host "अगला राउंड" दबाएँगी</div>';
+
+    actionsHtml = rematchBlk +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+        '<button type="button" class="btn-grn" data-act="d-wa-share" data-mid="' + esc(rec.id) + '">📲 WhatsApp परिणाम</button>' +
+        '<button type="button" class="btn-sec" style="border-color:#8B5CF6;color:#5B21B6;background:#F5F3FF;font-weight:800;" data-act="open-dhist">📜 1v1 इतिहास (' + histArr.length + ')</button>' +
+      '</div>' +
+      '<button type="button" class="btn-sec" style="width:100%;padding:10px;font-weight:800;" data-act="d-leave-home">🏠 होम पर जाएँ</button>';
+  } else {
+    const sc = getDuelScopeCounts(rec.scope);
+    actionsHtml = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+        '<button type="button" class="btn-sec" style="font-weight:800;" data-act="open-dhist">← सभी 1v1 मैच</button>' +
+        '<button type="button" class="btn-grn" data-act="d-wa-share" data-mid="' + esc(rec.id) + '">📲 WhatsApp परिणाम</button>' +
+      '</div>' +
+      (CHAPTER_BANK[rec.scope]
+        ? '<button type="button" class="btn-pri" style="width:100%;padding:11px;font-size:13.5px;" data-act="dhist-play-scope" data-v="' + esc(rec.scope) + '">⚔️ ' + esc(rec.title) + ' पर 1v1 खोलें (' + (sc.unseen > 0 ? sc.unseen + ' बाकी' : '0 बाकी · रीसेट') + ')</button>'
+        : '');
+  }
+
+  return '<div style="display:flex;flex-direction:column;gap:10px;">' +
+    heroHtml + quickFltHtml + rrHtml + cmpHtml + actionsHtml +
+  '</div>';
+}
+
+function renderDuelHistListView() {
+  const list = Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory : [];
+  let wins = 0, totQs = 0;
+  list.forEach(r => {
+    if (!r) return;
+    totQs += Number(r.total || 0);
+    const [, vk] = verdictOfRecord(r);
+    if (vk === 'win') wins++;
+  });
+
+  const kpiHtml = list.length ? '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;">' +
+    '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:800;color:#0794C7;" class="tnum">' + list.length + '</div><div style="font-size:11px;font-weight:700;color:#475569;">कुल 1v1 मैच</div></div>' +
+    '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:800;color:#16A34A;" class="tnum">' + wins + '</div><div style="font-size:11px;font-weight:700;color:#475569;">जीते / पूरे 🏆</div></div>' +
+    '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:800;color:#7C3AED;" class="tnum">' + totQs + '</div><div style="font-size:11px;font-weight:700;color:#475569;">कुल सवाल</div></div>' +
+  '</div>' : '';
+
+  const cards = list.length ? list.map(m => {
+    const [vTxt, vKind] = verdictOfRecord(m);
+    const me = m.me || { name: defaultPlayerName(), pts: 0, ok: 0, wr: 0, sk: 0, ms: 0 };
+    const op = m.op;
+    const vCol = vKind === 'win' ? '#15803D' : (vKind === 'lose' ? '#BE123C' : '#0578A3');
+    return '<button type="button" class="hm-card ' + (vKind === 'win' ? 'win' : (vKind === 'lose' ? 'lose' : 'draw')) + '" data-act="open-dhist-res" data-mid="' + esc(m.id) + '">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11px;font-weight:800;color:#64748B;">' +
+        '<span>📅 ' + esc(m.dateStr || 'आज') + (m.code ? ' · Room ' + esc(m.code) : ' · प्रैक्टिस') + '</span>' +
+        '<span style="color:#1565C0;">Score व सवाल खोलें ›</span>' +
+      '</div>' +
+      '<div style="font-size:14.5px;font-weight:800;color:#0F172A;">📘 ' + esc(m.title || 'पाठ') + ' (' + (m.total || 0) + ' सवाल)</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;padding:7px 10px;flex-wrap:wrap;">' +
+        '<span style="font-size:13px;font-weight:800;color:' + vCol + ';">' + esc(vTxt) + '</span>' +
+        '<span style="font-size:13.5px;font-weight:800;color:#0F172A;" class="tnum">' + esc(me.name) + ' ' + me.pts + (op ? ' — ' + Number(op.pts || 0) + ' ' + esc(op.name) : ' अंक') + '</span>' +
+      '</div>' +
+      '<div style="font-size:11.5px;color:#475569;font-weight:700;">✅ ' + me.ok + ' सही · ❌ ' + me.wr + ' गलत · ⏱ ' + fmtDuelDur(me.ms) + '</div>' +
+    '</button>';
+  }).join('') : '<div style="background:#fff;border:1.5px dashed #CBD5E1;border-radius:14px;padding:26px 16px;text-align:center;color:#475569;font-size:13.5px;font-weight:700;line-height:1.6;">' +
+    '📜 अभी कोई 1 vs 1 रिज़ल्ट सेव नहीं है!<br><span style="font-size:12px;font-weight:600;color:#64748B;">जैसे ही आप कोई भी 1 vs 1 मुक़ाबला पूरा करेंगी, उसका पूरा स्कोर व हर सवाल हमेशा के लिए यहीं सेव हो जाएगा।</span>' +
+    '<div style="margin-top:12px;"><button type="button" class="btn-grn" data-act="open-duel">⚔️ अभी 1 vs 1 शुरू करें</button></div>' +
+  '</div>';
+
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">← होम</button><span class="hd-ttl">📜 1v1 मुक़ाबलों का इतिहास (' + list.length + ')</span></div>' +
+      '<div class="hd-r"><button type="button" class="hd-btn" data-act="open-duel">⚔️ नया</button></div>' +
+    '</div>' +
+    '<div class="body-scr scr" style="padding:11px;background:#F5F8FA;">' +
+      kpiHtml +
+      (list.length ? '<div style="font-size:11.5px;font-weight:800;color:#475569;margin-bottom:8px;">किसी भी मैच पर टैप करें ➔ Maths Mock जैसा पूरा Score व हर सवाल खुलेगा:</div>' : '') +
+      cards +
+    '</div>';
+}
+
+function renderDuelHistResView() {
+  const rec = getDuelRecordById(app.duelHist.activeId);
+  if (!rec) return renderDuelHistListView();
+  const z = app.zoomPct || 100;
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="open-dhist">← इतिहास</button><span class="hd-ttl">Score · ' + esc(rec.title) + '</span></div>' +
+      '<div class="hd-r">' +
+        '<button type="button" class="hd-btn ' + (app.duel.zoomOpen ? 'zoom-on' : '') + '" data-act="d-ztog">अ ' + z + '%</button>' +
+        '<button type="button" class="hd-btn" data-act="back-home">🏠</button>' +
+      '</div>' +
+    '</div>' +
+    renderDuelZoomBar() +
+    '<div class="body-scr scr" style="padding:11px;background:#F5F8FA;">' + renderDuelOverviewBody(rec, false) + '</div>';
+}
+
+function getDuelSolFilteredList(rec, qs, filterKey) {
+  const meAns = (rec && rec.me && rec.me.ans) || {};
+  const out = [];
+  qs.forEach((q, k) => {
+    const p = ansOfMap(meAns, k);
+    const cid = q._chId || (rec && rec.scope) || 'ch01';
+    const isS = !!(CHAPTER_BANK[cid] && getChProg(cid).stars[q.id]);
+    if (filterKey === 'wrong') {
+      if (p !== undefined && p >= 0 && p !== q.ans) out.push(k);
+    } else if (filterKey === 'skip') {
+      if (p === undefined || p === -1) out.push(k);
+    } else if (filterKey === 'star') {
+      if (isS) out.push(k);
+    } else {
+      out.push(k);
+    }
+  });
+  return out;
+}
+
+function stepDuelSol(delta, viaSwipe) {
+  const s = app.duelSol;
+  const rec = getDuelRecordById(s.matchId);
+  if (!rec) return;
+  const qs = resolveDuelQuestions(rec.qRefs);
+  const list = getDuelSolFilteredList(rec, qs, s.filter);
+  if (!list.length) return;
+  const pos = list.indexOf(s.idx);
+  const nxtPos = (pos < 0 ? 0 : pos) + delta;
+  if (nxtPos < 0) { showToast('यह इस फ़िल्टर का पहला सवाल है'); return; }
+  if (nxtPos >= list.length) { showToast('यह आख़िरी सवाल है'); return; }
+  s.idx = list[nxtPos];
+  if (viaSwipe) {
+    showToast(delta > 0 ? '👉 सवाल #' + (s.idx + 1) : '👈 सवाल #' + (s.idx + 1));
+  } else {
+    render();
+  }
+}
+
+function renderDuelSolView() {
+  const s = app.duelSol;
+  const rec = getDuelRecordById(s.matchId);
+  if (!rec) return renderDuelHistListView();
+  const qs = resolveDuelQuestions(rec.qRefs);
+  if (!qs.length) return renderDuelHistListView();
+  const z = app.zoomPct || 100;
+  const me = rec.me || { name: defaultPlayerName(), ans: {} };
+  const op = rec.op || null;
+  const isFinal = !op || !!op.fin || !!rec.solo;
+
+  const wrList = getDuelSolFilteredList(rec, qs, 'wrong');
+  const skList = getDuelSolFilteredList(rec, qs, 'skip');
+  const stList = getDuelSolFilteredList(rec, qs, 'star');
+  let activeList = getDuelSolFilteredList(rec, qs, s.filter);
+  if (!activeList.length) {
+    s.filter = 'all';
+    activeList = qs.map((_, i) => i);
+  }
+  if (!activeList.includes(s.idx)) {
+    s.idx = activeList[0];
+  }
+  const k = s.idx;
+  const pos = activeList.indexOf(k);
+  const q = qs[k];
+  const cid = q._chId || rec.scope || 'ch01';
+  const chObj = CHAPTER_BANK[cid];
+  const prog = chObj ? getChProg(cid) : null;
+  const isStar = !!(prog && prog.stars && prog.stars[q.id]);
+
+  const mPick = ansOfMap(me.ans, k);
+  const oPick = (op && isFinal) ? ansOfMap(op.ans, k) : undefined;
+  const mSkipped = mPick === undefined || mPick === -1;
+  const mOk = !mSkipped && mPick === q.ans;
+
+  let zoomBar = '';
+  if (s.zoomOpen) {
+    const presets = [[85, 'छोटा (85%)'], [100, 'सामान्य (100%)'], [120, 'बड़ा (120%)']];
+    zoomBar = '<div class="zoom-bar"><div class="z-presets">' +
+      presets.map(([val, lbl]) => '<button type="button" class="z-pre ' + (z === val ? 'on' : '') + '" data-act="q-zset" data-v="' + val + '">' + lbl + '</button>').join('') +
+      '</div><div class="z-row"><div class="z-fine"><button type="button" class="z-step" data-act="q-zstep" data-d="-5">अ−</button><span class="z-num">' + z + '%</span><button type="button" class="z-step" data-act="q-zstep" data-d="5">अ+</button></div><button type="button" class="z-rst" data-act="q-zset" data-v="100">↺ रीसेट</button></div></div>';
+  }
+
+  const tabsHtml = '<div class="sv-tabs-bar scr">' +
+    [['all', 'सभी (' + qs.length + ')'], ['wrong', '❌ गलत (' + wrList.length + ')'], ['skip', '⬜ छोड़े (' + skList.length + ')'], ['star', '★ स्टार (' + stList.length + ')']].map(([fk, lbl]) =>
+      '<button type="button" class="sv-tab-b ' + (s.filter === fk ? 'on' : '') + '" data-act="dsol-flt" data-v="' + fk + '">' + lbl + '</button>'
+    ).join('') +
+  '</div>';
+
+  const stripHtml = '<div class="q-strip scr">' + activeList.map(qi => {
+    const item = qs[qi];
+    const p = ansOfMap(me.ans, qi);
+    const icid = item._chId || cid;
+    const stS = CHAPTER_BANK[icid] && getChProg(icid).stars[item.id];
+    let cls = 'q-num';
+    if (qi === k) cls += ' cur';
+    if (p === undefined || p === -1) cls += ' skip';
+    else cls += (p === item.ans ? ' ok' : ' bad');
+    if (stS) cls += ' has-star';
+    return '<button type="button" class="' + cls + '" data-act="dsol-jump" data-i="' + qi + '">' + (qi + 1) + '</button>';
+  }).join('') + '</div>';
+
+  const stCls = mSkipped ? 'skip' : (mOk ? 'ok' : 'bad');
+  const stTxt = mSkipped ? '⬜ छोड़ा (0 अंक)' : (mOk ? '✓ सही (+3 अंक)' : '✗ गलत (−1 अंक)');
+  const pageLbl = extractPageLabel(q, chObj);
+
+  const matchHtml = (q.match && q.match.length)
+    ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+        q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+      '</tbody></table>'
+    : '';
+
+  const optsHtml = q.opts.map((opt, j) => {
+    const isRight = j === q.ans;
+    const isMyWrong = !mSkipped && mPick === j && !isRight;
+    const isMyRight = !mSkipped && mPick === j && isRight;
+    const rowCls = 'sv-o-row' + (isRight ? ' ok' : (isMyWrong ? ' bad' : ''));
+    const rdCls = 'sv-rd' + (isMyRight ? ' on-ok' : (isMyWrong ? ' on-bad' : ''));
+    const badges = [];
+    if (isRight) badges.push('<span style="font-size:11.5px;font-weight:800;color:#15803D;white-space:nowrap;">✓ सही</span>');
+    if (!mSkipped && mPick === j) badges.push('<span class="p-pick me">' + esc(me.name) + ' ' + (isRight ? '✓' : '✗') + '</span>');
+    if (op && isFinal && oPick !== undefined && oPick >= 0 && oPick === j) badges.push('<span class="p-pick op">' + esc(op.name) + ' ' + (isRight ? '✓' : '✗') + '</span>');
+    return '<div class="' + rowCls + '" style="font-size:' + zPx(19) + ';">' +
+      '<span class="' + rdCls + '"></span>' +
+      '<div style="flex:1;min-width:0;">' + (j + 1) + '. ' + esc(opt) + '</div>' +
+      (badges.length ? '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none;">' + badges.join('') + '</div>' : '') +
+    '</div>';
+  }).join('');
+
+  const skipNotes = [];
+  if (mSkipped) skipNotes.push('⬜ <b>' + esc(me.name) + '</b> ने यह सवाल छोड़ा (0 अंक)');
+  if (op && isFinal && (oPick === undefined || oPick === -1)) skipNotes.push('⬜ <b>' + esc(op.name) + '</b> ने यह सवाल छोड़ा (0 अंक)');
+
+  const pts = splitReadablePoints(q.exp);
+  const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
+  const explHtml = '<div class="kp-box" style="margin-top:12px;">' +
+    '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
+    '<ul class="kp-ul">' + kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(18.5) + ';">' + highlightHindiFacts(pt) + '</li>').join('') + '</ul>' +
+    (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+  '</div>';
+
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="dsol-score">←</button><span class="hd-ttl">Solution · ' + esc(rec.title) + '</span></div>' +
+      '<div class="hd-r">' +
+        '<button type="button" class="hd-btn ' + (s.zoomOpen ? 'zoom-on' : '') + '" data-act="dsol-ztog">अ ' + z + '%</button>' +
+        '<button type="button" class="sv-score-btn" data-act="dsol-score">SCORE</button>' +
+        '<button type="button" class="hd-btn" data-act="dsol-home">🏠</button>' +
+      '</div>' +
+    '</div>' +
+    zoomBar +
+    tabsHtml +
+    stripHtml +
+    '<div class="sub-bar">' +
+      '<div class="sub-l"><span>प्रश्न #' + (k + 1) + '</span><span class="st-pill ' + stCls + '">' + stTxt + '</span></div>' +
+      '<div style="display:flex;gap:5px;align-items:center;">' +
+        '<button type="button" class="speak-pill" data-act="dsol-speak">🔊 सुनें</button>' +
+        '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="dsol-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="body-scr scr quiz-body">' +
+      '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
+      '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc((chObj ? chObj.title + ' · ' : '') + q.src) + '</div>' +
+      matchHtml +
+      optsHtml +
+      (skipNotes.length ? '<div style="background:#F8FAFC;border:1px solid #CBD5E1;border-radius:9px;padding:7px 11px;margin:8px 0;font-size:12.5px;color:#334155;">' + skipNotes.join(' &nbsp;·&nbsp; ') + '</div>' : '') +
+      explHtml +
+      '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल (' + (pos + 1) + '/' + activeList.length + ')</div>' +
+    '</div>' +
+    '<div class="q-ft">' +
+      '<button type="button" class="f-prev" ' + (pos <= 0 ? 'disabled style="opacity:.45;"' : '') + ' data-act="dsol-step" data-d="-1">‹ पिछला</button>' +
+      '<button type="button" class="f-retry" data-act="dsol-score">📊 Score कार्ड</button>' +
+      '<button type="button" class="f-next" ' + (pos >= activeList.length - 1 ? 'disabled style="opacity:.45;"' : '') + ' data-act="dsol-step" data-d="1">अगला ›</button>' +
     '</div>';
 }
 
@@ -2166,11 +3170,27 @@ function renderDuelView() {
 
   let body = '';
   if (d.stage === 'menu') {
-    const chOpts = Object.values(CHAPTER_BANK).map(ch =>
-      '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="' + ch.id + '">' + esc(ch.title) + ' (' + ch.total_questions + ')</button>'
-    ).join('') + '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="mix">सभी मिक्स (' + duelPoolMax('mix') + ')</button>';
+    const isVaultScope = String(d.scope || '').startsWith('vault_');
+    const vaultChip = isVaultScope
+      ? '<button type="button" class="u-btn on" style="padding:6px 9px;font-size:12px;border-color:#7C3AED;background:#7C3AED;" data-act="d-scope" data-v="' + esc(d.scope) + '">' + esc(d.customTitle || 'मेरे सवाल') + ' (' + duelPoolMax(d.scope) + ')</button>'
+      : '';
+    const chOpts = vaultChip + orderedChapterIds().map(cid => {
+      const ch = CHAPTER_BANK[cid];
+      const sc = getDuelScopeCounts(cid);
+      const lbl = sc.seen === 0
+        ? (esc(ch.title) + ' (' + sc.total + ')')
+        : (sc.unseen === 0
+            ? ('✅ ' + esc(ch.title) + ' (0 बाकी)')
+            : (esc(ch.title) + ' (' + sc.unseen + ' बाकी / ' + sc.total + ')'));
+      return '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="' + ch.id + '">' + lbl + '</button>';
+    }).join('') + (() => {
+      const msc = getDuelScopeCounts('mix');
+      const mlbl = msc.seen === 0 ? ('सभी मिक्स (' + msc.total + ')') : ('सभी मिक्स (' + msc.unseen + ' बाकी / ' + msc.total + ')');
+      return '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="mix">' + mlbl + '</button>';
+    })();
 
     const eff = duelEffCount();
+    const scCur = getDuelScopeCounts(d.scope);
     const statusPill = d.opOnline
       ? '<span style="background:#DCFCE7;color:#15803D;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:800;">🟢 ' + opDefaultName + ' ऑनलाइन</span>'
       : '<span style="background:#F1F5F9;color:#475569;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;">⚪ ' + opDefaultName + ' ऑफ़लाइन</span>';
@@ -2184,7 +3204,7 @@ function renderDuelView() {
 
     body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border:1px solid #DCE5EC;border-radius:13px;padding:10px 12px;">' +
-        '<div style="display:flex;align-items:center;gap:9px;"><span style="width:36px;height:36px;border-radius:10px;background:#7C3AED;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;">⚔</span><div><div style="font-size:15px;font-weight:800;">1v1 Challenge (JOD Lab)</div><div style="font-size:11px;color:#475569;font-weight:700;">समान सवाल · अपनी रफ़्तार · +3 / −1</div></div></div>' +
+        '<div style="display:flex;align-items:center;gap:9px;"><span style="width:36px;height:36px;border-radius:10px;background:#7C3AED;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;">⚔</span><div><div style="font-size:15px;font-weight:800;">1v1 Challenge (JOD Lab)</div><div style="font-size:11px;color:#475569;font-weight:700;">समान सवाल · अपनी रफ़्तार · किया सवाल दोबारा नहीं</div></div></div>' +
         statusPill +
       '</div>' +
       openInvBanner +
@@ -2192,15 +3212,17 @@ function renderDuelView() {
       '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
         '<div style="font-size:12px;font-weight:800;color:#334155;">तुम्हारा नाम (दूसरे फ़ोन पर यही दिखेगा):</div>' +
         '<input id="duelNameInp" class="name-inp" type="text" maxlength="16" value="' + esc(curName) + '" placeholder="जैसे मंजू / NITESH">' +
-        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">पाठ / विषय चुनें:</div>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:5px;max-height:148px;overflow-y:auto;" class="scr">' + chOpts + '</div>' +
+        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">पाठ चुनें (बाकी बचे नए सवाल दिख रहे हैं):</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;max-height:152px;overflow-y:auto;" class="scr">' + chOpts + '</div>' +
         renderDuelCountSelector() +
-        '<button type="button" class="btn-pri" id="duelCreateBtn" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;margin-top:4px;" data-act="d-create">' +
-          (d.submitting ? 'Room बन रहा है…' : '⚔️ Room बनाएँ (' + eff + ' सवाल)') +
-        '</button>' +
-        '<button type="button" class="btn-sec" id="duelSoloBtn" style="width:100%;padding:9px;font-size:12.5px;font-weight:800;" data-act="d-solo">' +
-          '⚡ अकेले प्रैक्टिस टेस्ट चलाएँ (' + eff + ' सवाल · बिना इंतज़ार)' +
-        '</button>' +
+        (scCur.unseen > 0 ? (
+          '<button type="button" class="btn-pri" id="duelCreateBtn" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;margin-top:4px;" data-act="d-create">' +
+            (d.submitting ? 'Room बन रहा है…' : '⚔️ Room बनाएँ (' + eff + ' सवाल)') +
+          '</button>' +
+          '<button type="button" class="btn-sec" id="duelSoloBtn" style="width:100%;padding:9px;font-size:12.5px;font-weight:800;" data-act="d-solo">' +
+            '⚡ अकेले प्रैक्टिस टेस्ट चलाएँ (' + eff + ' सवाल · बिना इंतज़ार)' +
+          '</button>'
+        ) : '') +
       '</div>' +
       '<div style="font-size:11.5px;font-weight:800;color:#475569;letter-spacing:.4px;padding:0 2px;">दोस्त ने 4 अंक का कोड भेजा है?</div>' +
       '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
@@ -2211,7 +3233,7 @@ function renderDuelView() {
   } else if (d.stage === 'lobby') {
     const ps = duelPlayers();
     const r = d.room || {};
-    const scTitle = r.scopeTitle || (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
+    const scTitle = r.scopeTitle || (String(d.scope || '').startsWith('vault_') ? (d.customTitle || 'मेरे सवाल') : (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ')));
     const cnt = r.count || d.qs.length || duelEffCount();
     const baseHref = (typeof location !== 'undefined' && location.origin && location.origin !== 'null')
       ? (location.origin + location.pathname)
@@ -2251,69 +3273,21 @@ function renderDuelView() {
       '<div style="font-size:14px;font-weight:800;color:#475569;margin-top:8px;">तैयार हो जाओ — दोनों को एक जैसे ' + d.qs.length + ' सवाल!</div>' +
     '</div>';
   } else {
-    // Result screen (JOD Lab exact table + per-question full review & explanations)
-    const myS = calcMyDuelStats();
-    const myMs = d.finishedMs || d.elapsedMs || 0;
-    const meP = duelMePlayer() || { name: curName, who: app.userId };
-    const opP = duelOppPlayer();
-    const isFinal = !opP || !!opP.fin || d.soloPractice;
-    const [vTxt, vKind] = duelVerdict(myS, myMs, opP, isFinal);
-    const vColor = vKind === 'win' ? '#15803D' : (vKind === 'lose' ? '#DC2626' : (vKind === 'wait' ? '#0578A3' : '#0F172A'));
-    const opAnsMap = (opP && opP.ans && typeof opP.ans === 'object') ? opP.ans : {};
-
-    const reviewCards = d.showReview ? d.qs.map((q, idx) => {
-      const mPick = d.myAns[idx];
-      const oPick = opAnsMap[idx] !== undefined ? opAnsMap[idx] : opAnsMap[String(idx)];
-      const mTxt = mPick === undefined ? 'अनदेखा' : (mPick === -1 ? '⏭ नहीं आता (0)' : q.opts[mPick]);
-      const oTxt = !opP ? '—' : (!isFinal && oPick === undefined ? 'खेल रही हैं…' : (oPick === undefined ? 'अनदेखा' : (Number(oPick) === -1 ? '⏭ नहीं आता (0)' : q.opts[Number(oPick)])));
-      const mOk = mPick === q.ans, mSk = mPick === undefined || mPick === -1;
-      const oOk = opP && Number(oPick) === q.ans, oSk = !opP || oPick === undefined || Number(oPick) === -1;
-      const open = d.resOpenIdx === idx;
-      const pts = splitReadablePoints(q.exp);
-      return '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:12px;padding:10px 11px;font-size:12.5px;">' +
-        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:7px;">' +
-          '<div style="font-weight:800;color:#0F172A;line-height:1.45;font-size:' + zPx(15.5) + ';">#' + (idx + 1) + '. ' + esc(q.q) + '</div>' +
-          '<button type="button" class="u-btn" style="flex:none;font-weight:800;" data-act="d-res-exp" data-i="' + idx + '">' + (open ? 'छुपाएँ ▴' : 'व्याख्या ▾') + '</button>' +
-        '</div>' +
-        '<div style="display:grid;grid-template-columns:' + (opP ? '1fr 1fr' : '1fr') + ';gap:6px;margin-top:7px;font-weight:700;font-size:12px;">' +
-          '<div style="background:' + (mOk ? '#ECFDF5;color:#15803D;' : (mSk ? '#F1F5F9;color:#475569;' : '#FFF1F2;color:#BE123C;')) + 'border-radius:7px;padding:5px 8px;">' + esc(meP.name || curName) + ': ' + (mOk ? '✓ ' : (mSk ? '' : '✗ ')) + esc(mTxt) + '</div>' +
-          (opP ? '<div style="background:' + (oOk ? '#ECFDF5;color:#15803D;' : (oSk ? '#F1F5F9;color:#475569;' : '#FFF1F2;color:#BE123C;')) + 'border-radius:7px;padding:5px 8px;">' + esc(opP.name || 'दोस्त') + ': ' + (oOk ? '✓ ' : (oSk ? '' : '✗ ')) + esc(oTxt) + '</div>' : '') +
-        '</div>' +
-        '<div style="margin-top:6px;font-size:12px;font-weight:800;color:#15803D;">✅ सही उत्तर: ' + esc(q.opts[q.ans]) + '</div>' +
-        (open ? '<div class="kp-box" style="margin-top:8px;padding:10px 12px;"><ul class="kp-ul">' + pts.map(pt => '<li class="kp-li" style="font-size:' + zPx(16) + ';margin-bottom:8px;">' + highlightHindiFacts(pt) + '</li>').join('') + '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15) + ';margin-top:8px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + '</div>' : '') +
-      '</div>';
-    }).join('') : '';
-
-    body = '<div style="display:flex;flex-direction:column;gap:10px;">' +
-      '<div style="background:#fff;border:1.5px solid #CBD5E1;border-radius:16px;padding:13px;">' +
-        '<div class="chverd" style="color:' + vColor + ';">' + esc(vTxt) + '</div>' +
-        '<table class="chtab">' +
-          '<tr><th></th><td><b>' + esc(meP.name || curName) + '</b></td><td><b>' + esc(opP ? opP.name : '—') + '</b></td></tr>' +
-          '<tr><th>अंक (+3 / −1)</th><td class="tnum"><b style="font-size:17px;">' + myS.pts + '</b></td><td class="tnum"><b style="font-size:17px;">' + (opP ? Number(opP.pts || 0) : '—') + '</b></td></tr>' +
-          '<tr><th>सही / गलत</th><td class="tnum">' + myS.ok + ' / ' + myS.wr + '</td><td class="tnum">' + (opP ? (opP.ok || 0) + ' / ' + (opP.wr || 0) : '—') + '</td></tr>' +
-          '<tr><th>छोड़े (0 अंक)</th><td class="tnum">' + myS.sk + '</td><td class="tnum">' + (opP ? (opP.sk || 0) : '—') + '</td></tr>' +
-          '<tr><th>किए</th><td class="tnum">' + myS.k + ' / ' + d.qs.length + '</td><td class="tnum">' + (opP ? (opP.k || 0) + ' / ' + d.qs.length : '—') + '</td></tr>' +
-          '<tr><th>समय</th><td class="tnum">' + fmtDuelDur(myMs) + '</td><td class="tnum">' + (opP && opP.fin && opP.ms ? fmtDuelDur(opP.ms) : '—') + '</td></tr>' +
-        '</table>' +
-      '</div>' +
-      ((isDuelHost() || d.soloPractice)
-        ? '<button type="button" class="btn-pri" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;" data-act="d-rematch">⚔️ दोबारा — वही मुक़ाबला (नए ' + d.qs.length + ' सवाल)</button>'
-        : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700;color:#475569;">दोबारा खेलने के लिए Host "दोबारा" दबाएँगी</div>') +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
-        '<button type="button" class="btn-sec" data-act="d-tog-rev">' + (d.showReview ? '📋 सवाल छुपाएँ' : '📋 हर सवाल देखें') + '</button>' +
-        '<button type="button" class="btn-grn" data-act="d-wa-share">📲 WhatsApp परिणाम</button>' +
-      '</div>' +
-      (d.showReview ? '<div style="display:flex;flex-direction:column;gap:8px;">' + reviewCards + '</div>' : '') +
-      '<button type="button" class="btn-sec" style="width:100%;padding:10px;" data-act="d-leave-home">चैलेंज बंद करें (होम)</button>' +
-    '</div>';
+    // Maths Mock (CLASSIFICATION_MOCK an2) Style Result Overview + Clickable Numbered Chips!
+    const rec = upsertDuelHistoryFromCurrent();
+    body = renderDuelOverviewBody(rec, true);
   }
 
+  const histLen = Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory.length : 0;
   return '<div class="hd">' +
-      '<div class="hd-l"><button type="button" class="hd-btn" data-act="d-back">←</button><span class="hd-ttl">⚔️ 1v1 Challenge</span></div>' +
-      '<div class="hd-r"><button type="button" class="hd-btn ' + (d.zoomOpen ? 'zoom-on' : '') + '" data-act="d-ztog">अ ' + z + '%</button></div>' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="d-back">←</button><span class="hd-ttl">' + (d.stage === 'result' ? 'Score · 1v1 परिणाम' : '⚔️ 1v1 Challenge') + '</span></div>' +
+      '<div class="hd-r">' +
+        (d.stage === 'menu' ? '<button type="button" class="hd-btn" data-act="open-dhist">📜 रिज़ल्ट (' + histLen + ')</button>' : '') +
+        '<button type="button" class="hd-btn ' + (d.zoomOpen ? 'zoom-on' : '') + '" data-act="d-ztog">अ ' + z + '%</button>' +
+      '</div>' +
     '</div>' +
     renderDuelZoomBar() +
-    '<div class="body-scr scr" style="padding:11px;">' + body + '</div>';
+    '<div class="body-scr scr" style="padding:11px;background:#F5F8FA;">' + body + '</div>';
 }
 
 function render() {
@@ -2326,21 +3300,31 @@ function render() {
 
   let renderKey = app.view;
   if (app.view === 'quiz') {
-    const ch = CHAPTER_BANK[app.quiz.chId];
-    const qId = app.quiz.qIds[app.quiz.cur];
-    const p = ch ? getChProg(ch.id).answers[qId] : undefined;
-    renderKey = 'quiz:' + app.quiz.chId + ':' + app.quiz.cur + ':' + (p !== undefined ? 'sol' : 'q');
+    const p = getQuizPicked(app.quiz.cur);
+    renderKey = 'quiz:' + (app.quiz.isVault ? 'vault' : app.quiz.chId) + ':' + app.quiz.cur + ':' + (p !== undefined ? 'sol' : 'q');
   } else if (app.view === 'home') {
     renderKey = 'home:' + app.userData.tabId;
+  } else if (app.view === 'vault') {
+    renderKey = 'vault:' + app.vault.tab + ':' + app.vault.chFilter;
   } else if (app.view === 'duel') {
     renderKey = 'duel:' + app.duel.stage + ':' + app.duel.qIdx;
+  } else if (app.view === 'duel_hist') {
+    renderKey = 'duel_hist';
+  } else if (app.view === 'duel_hist_res') {
+    renderKey = 'duel_hist_res:' + app.duelHist.activeId;
+  } else if (app.view === 'duel_sol') {
+    renderKey = 'duel_sol:' + app.duelSol.matchId + ':' + app.duelSol.filter + ':' + app.duelSol.idx;
   }
 
   let html = '';
   if (app.view === 'welcome') html = renderWelcomeView();
   else if (app.view === 'home') html = renderHomeView();
+  else if (app.view === 'vault') html = renderVaultView();
   else if (app.view === 'quiz') html = renderQuizView();
   else if (app.view === 'result') html = renderResultView();
+  else if (app.view === 'duel_hist') html = renderDuelHistListView();
+  else if (app.view === 'duel_hist_res') html = renderDuelHistResView();
+  else if (app.view === 'duel_sol') html = renderDuelSolView();
   else html = renderDuelView();
   const popupHtml = hasIncomingChallenge() ? renderIncomingModal(app.duel.activeInvite) : '';
   root.innerHTML = html + popupHtml + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
@@ -2353,7 +3337,7 @@ function render() {
   }
   app._lastRenderKey = renderKey;
 
-  if ((app.view === 'quiz' || (app.view === 'duel' && app.duel.stage === 'live')) && root.querySelector) {
+  if ((app.view === 'quiz' || app.view === 'duel_sol' || (app.view === 'duel' && app.duel.stage === 'live')) && root.querySelector) {
     const strip = root.querySelector('.q-strip');
     const active = strip && strip.querySelector ? strip.querySelector('.q-num.cur') : null;
     if (strip && active && typeof active.offsetLeft === 'number') {
@@ -2367,10 +3351,30 @@ function openChapter(chId, mode) {
   const ch = CHAPTER_BANK[chId];
   if (!ch) return;
   const prog = getChProg(chId);
+  if (mode === 'reset') {
+    prog.answers = {};
+    prog.finished = false;
+    prog.curIdx = 0;
+    saveUserData(app.userId, app.userData);
+    mode = 'full';
+    showToast('🔄 नया चक्र शुरू: सभी ' + ch.total_questions + ' सवाल फिर से खुले!');
+  }
   let ids = [];
-  if (mode === 'wrong') ids = ch.questions.filter(q => prog.answers[q.id] !== undefined && prog.answers[q.id] >= 0 && prog.answers[q.id] !== q.ans).map(q => q.id);
-  else if (mode === 'skip') ids = ch.questions.filter(q => prog.answers[q.id] === -1 || prog.answers[q.id] === undefined).map(q => q.id);
-  else if (mode === 'star') ids = ch.questions.filter(q => prog.stars && prog.stars[q.id]).map(q => q.id);
+  if (mode === 'wrong') {
+    ids = ch.questions.filter(q => (prog.answers[q.id] !== undefined && prog.answers[q.id] >= 0 && prog.answers[q.id] !== q.ans) || (prog.duelWrongs && prog.duelWrongs[q.id] !== undefined)).map(q => q.id);
+  } else if (mode === 'skip') {
+    ids = ch.questions.filter(q => prog.answers[q.id] === -1 || prog.answers[q.id] === undefined).map(q => q.id);
+  } else if (mode === 'star') {
+    ids = ch.questions.filter(q => prog.stars && prog.stars[q.id]).map(q => q.id);
+  } else if (mode === 'resume') {
+    const ansCnt = Object.keys(prog.answers || {}).length;
+    const unseenIds = ch.questions.filter(q => prog.answers[q.id] === undefined).map(q => q.id);
+    if (ansCnt > 0 && unseenIds.length > 0) {
+      ids = unseenIds;
+    } else {
+      ids = ch.questions.map(q => q.id);
+    }
+  }
   if (!ids.length) {
     if (mode === 'wrong' || mode === 'star' || mode === 'skip') {
       showToast(mode === 'wrong' ? 'कोई गलत सवाल बाकी नहीं!' : (mode === 'skip' ? 'कोई छोड़ा गया सवाल बाकी नहीं!' : 'अभी कोई स्टार सवाल नहीं है!'));
@@ -2384,8 +3388,11 @@ function openChapter(chId, mode) {
     chId,
     title: ch.title,
     mode,
+    isVault: false,
+    vaultRefs: [],
+    vaultAns: {},
     qIds: ids,
-    cur: mode === 'resume' ? Math.min(prog.curIdx || 0, ids.length - 1) : 0,
+    cur: (mode === 'resume' && ids.length === ch.questions.length && Object.keys(prog.answers || {}).length === 0) ? 0 : 0,
     palOpen: false,
     palFilter: 'all',
     zoomOpen: false,
@@ -2397,16 +3404,19 @@ function openChapter(chId, mode) {
 }
 
 function stepQuiz(delta, viaSwipe) {
+  const len = getQuizLength();
   const nxt = app.quiz.cur + delta;
   if (nxt < 0) { showToast('यह पहला सवाल है'); return; }
-  if (nxt >= app.quiz.qIds.length) {
+  if (nxt >= len) {
     showToast('यह आख़िरी सवाल है — नीचे "परिणाम देखें" दबाएँ');
     return;
   }
   app.quiz.cur = nxt;
   app.quiz.showQInSol = false;
-  getChProg(app.quiz.chId).curIdx = nxt;
-  saveUserData(app.userId, app.userData);
+  if (!app.quiz.isVault && CHAPTER_BANK[app.quiz.chId]) {
+    getChProg(app.quiz.chId).curIdx = nxt;
+    saveUserData(app.userId, app.userData);
+  }
   if (viaSwipe) {
     showToast(delta > 0 ? '👉 स्वाइप: अगला सवाल #' + (nxt + 1) : '👈 स्वाइप: पिछला सवाल #' + (nxt + 1));
   } else {
@@ -2459,34 +3469,116 @@ function handleAction(el, ev) {
   if (act === 'open-ch') { openChapter(el.getAttribute('data-cid'), el.getAttribute('data-mode') || 'full'); return; }
   if (act === 'trigger-import') { const inp = document.getElementById('jsonImportInput'); if (inp && inp.click) inp.click(); return; }
 
-  // Quiz actions
+  // Unified D1 Vault actions (★ स्टार · ✗ गलत · ⏭ छोड़े)
+  if (act === 'open-vault') {
+    app.vault.tab = el.getAttribute('data-v') || 'star';
+    app.vault.chFilter = 'all';
+    app.view = 'vault';
+    render(); return;
+  }
+  if (act === 'open-vault-back') {
+    app.view = 'vault';
+    render(); return;
+  }
+  if (act === 'v-tab') { app.vault.tab = el.getAttribute('data-v') || 'star'; app.vault.chFilter = 'all'; render(); return; }
+  if (act === 'v-ch') { app.vault.chFilter = el.getAttribute('data-v') || 'all'; render(); return; }
+  if (act === 'v-ztog') { app.vault.zoomOpen = !app.vault.zoomOpen; render(); return; }
+  if (act === 'v-tog-ans') {
+    const k = el.getAttribute('data-k');
+    app.vault.openAns[k] = !app.vault.openAns[k];
+    render(); return;
+  }
+  if (act === 'v-star') {
+    const cid = el.getAttribute('data-cid');
+    const qid = Number(el.getAttribute('data-qid'));
+    if (CHAPTER_BANK[cid]) {
+      const prog = getChProg(cid);
+      prog.stars[qid] = !prog.stars[qid];
+      saveUserData(app.userId, app.userData);
+      showToast(prog.stars[qid] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
+    }
+    return;
+  }
+  if (act === 'v-clear-wr') {
+    const cid = el.getAttribute('data-cid');
+    const qid = Number(el.getAttribute('data-qid'));
+    const ch = CHAPTER_BANK[cid];
+    const q = ch ? ch.questions.find(x => x.id === qid) : null;
+    if (ch && q) {
+      const prog = getChProg(cid);
+      delete prog.duelWrongs[qid];
+      if (prog.answers[qid] !== undefined && prog.answers[qid] !== q.ans) prog.answers[qid] = q.ans;
+      saveUserData(app.userId, app.userData);
+      showToast('✅ यह सवाल "गलत" सूची से हटा दिया गया!');
+    }
+    return;
+  }
+  if (act === 'v-speak') {
+    const cid = el.getAttribute('data-cid');
+    const qid = Number(el.getAttribute('data-qid'));
+    const ch = CHAPTER_BANK[cid];
+    const q = ch ? ch.questions.find(x => x.id === qid) : null;
+    if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
+    return;
+  }
+  if (act === 'v-solve') { openVaultQuiz(app.vault.tab, app.vault.chFilter); return; }
+  if (act === 'v-duel') { launchVaultDuel(app.vault.tab, app.vault.chFilter); return; }
+
+  // Quiz actions (supports both Chapter Quiz & Multi-Chapter Vault Quiz)
   if (act === 'q-pick') {
-    const ch = CHAPTER_BANK[app.quiz.chId];
-    const qId = app.quiz.qIds[app.quiz.cur];
-    const prog = getChProg(ch.id);
-    prog.answers[qId] = Number(el.getAttribute('data-i'));
-    prog.curIdx = app.quiz.cur;
+    const chosen = Number(el.getAttribute('data-i'));
+    const it = getQuizItem(app.quiz.cur);
+    if (!it) return;
+    const prog = getChProg(it.chId);
+    if (app.quiz.isVault) {
+      app.quiz.vaultAns[app.quiz.cur] = chosen;
+      if (chosen === it.q.ans) {
+        delete prog.duelWrongs[it.q.id];
+        delete prog.duelSkips[it.q.id];
+        if (prog.answers[it.q.id] !== undefined && prog.answers[it.q.id] !== it.q.ans) prog.answers[it.q.id] = chosen;
+      } else {
+        prog.duelWrongs[it.q.id] = chosen;
+      }
+    } else {
+      prog.answers[it.q.id] = chosen;
+      prog.curIdx = app.quiz.cur;
+      if (chosen === it.q.ans) {
+        delete prog.duelWrongs[it.q.id];
+        delete prog.duelSkips[it.q.id];
+      } else {
+        delete prog.duelSkips[it.q.id];
+      }
+    }
     saveUserData(app.userId, app.userData);
     app.quiz.showQInSol = false;
     render(); return;
   }
   if (act === 'q-skip') {
-    const ch = CHAPTER_BANK[app.quiz.chId];
-    const qId = app.quiz.qIds[app.quiz.cur];
-    const prog = getChProg(ch.id);
-    prog.answers[qId] = -1;
-    prog.curIdx = app.quiz.cur;
-    saveUserData(app.userId, app.userData);
+    const it = getQuizItem(app.quiz.cur);
+    if (!it) return;
+    const prog = getChProg(it.chId);
+    if (app.quiz.isVault) {
+      app.quiz.vaultAns[app.quiz.cur] = -1;
+    } else {
+      prog.answers[it.q.id] = -1;
+      prog.curIdx = app.quiz.cur;
+      saveUserData(app.userId, app.userData);
+    }
     app.quiz.showQInSol = false;
     showToast('⏭ नहीं आता (0 निगेटिव अंक) · सही उत्तर देखें');
     return;
   }
   if (act === 'q-retry') {
-    const qId = app.quiz.qIds[app.quiz.cur];
-    const prog = getChProg(app.quiz.chId);
-    delete prog.answers[qId];
+    const it = getQuizItem(app.quiz.cur);
+    if (!it) return;
+    if (app.quiz.isVault) {
+      delete app.quiz.vaultAns[app.quiz.cur];
+    } else {
+      const prog = getChProg(it.chId);
+      delete prog.answers[it.q.id];
+      saveUserData(app.userId, app.userData);
+    }
     app.quiz.showQInSol = false;
-    saveUserData(app.userId, app.userData);
     render(); return;
   }
   if (act === 'q-step') {
@@ -2496,8 +3588,10 @@ function handleAction(el, ev) {
   if (act === 'q-jump') {
     const nxt = Number(el.getAttribute('data-i')) || 0;
     app.quiz.cur = nxt; app.quiz.palOpen = false; app.quiz.showQInSol = false;
-    getChProg(app.quiz.chId).curIdx = nxt;
-    saveUserData(app.userId, app.userData);
+    if (!app.quiz.isVault && CHAPTER_BANK[app.quiz.chId]) {
+      getChProg(app.quiz.chId).curIdx = nxt;
+      saveUserData(app.userId, app.userData);
+    }
     render(); return;
   }
   if (act === 'q-pal-tog' || act === 'q-pal-bg') {
@@ -2518,23 +3612,29 @@ function handleAction(el, ev) {
   }
   if (act === 'q-tog-q' || act === 'q-tog-other') { app.quiz.showQInSol = !app.quiz.showQInSol; render(); return; }
   if (act === 'q-star') {
-    const qId = app.quiz.qIds[app.quiz.cur];
-    const prog = getChProg(app.quiz.chId);
-    prog.stars[qId] = !prog.stars[qId];
+    const it = getQuizItem(app.quiz.cur);
+    if (!it) return;
+    const prog = getChProg(it.chId);
+    prog.stars[it.q.id] = !prog.stars[it.q.id];
+    if (prog.stars[it.q.id] && !prog.starFrom[it.q.id]) prog.starFrom[it.q.id] = 'solo';
     saveUserData(app.userId, app.userData);
-    showToast(prog.stars[qId] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
+    showToast(prog.stars[it.q.id] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
     return;
   }
   if (act === 'q-speak') {
-    const ch = CHAPTER_BANK[app.quiz.chId];
-    const q = ch.questions.find(x => x.id === app.quiz.qIds[app.quiz.cur]);
-    if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
+    const it = getQuizItem(app.quiz.cur);
+    if (it && it.q) speakHindi('सही उत्तर: ' + it.q.opts[it.q.ans] + '। ' + splitReadablePoints(it.q.exp).join(' '));
     return;
   }
   if (act === 'finish-ch') {
-    const prog = getChProg(app.quiz.chId);
-    prog.finished = true;
-    saveUserData(app.userId, app.userData);
+    if (!app.quiz.isVault && CHAPTER_BANK[app.quiz.chId]) {
+      const ch = CHAPTER_BANK[app.quiz.chId];
+      const prog = getChProg(ch.id);
+      if (Object.keys(prog.answers || {}).length >= ch.questions.length || app.quiz.mode === 'full') {
+        prog.finished = true;
+      }
+      saveUserData(app.userId, app.userData);
+    }
     app.quiz.palOpen = false; app.result.openQId = null; app.view = 'result';
     render(); return;
   }
@@ -2543,13 +3643,121 @@ function handleAction(el, ev) {
   if (act === 'r-mark') { app.result.marking = el.getAttribute('data-k'); render(); return; }
   if (act === 'r-tog') { const id = Number(el.getAttribute('data-id')); app.result.openQId = app.result.openQId === id ? null : id; render(); return; }
 
+  // 1v1 History & Maths-Mock Style Q-by-Q Solution actions
+  if (act === 'open-dhist') {
+    app.view = 'duel_hist';
+    render(); return;
+  }
+  if (act === 'open-dhist-res') {
+    app.duelHist.activeId = el.getAttribute('data-mid') || '';
+    app.view = 'duel_hist_res';
+    render(); return;
+  }
+  if (act === 'dhist-play-scope') {
+    const sc = el.getAttribute('data-v') || 'ch01';
+    app.duel.scope = sc;
+    app.duel.customRefs = null;
+    app.duel.allScope = false;
+    const mx = duelPoolMax(sc);
+    app.duel.count = mx > 0 ? Math.min(30, mx) : 30;
+    app.duel.stage = 'menu';
+    app.view = 'duel';
+    render(); return;
+  }
+  if (act === 'open-dsol') {
+    const mid = el.getAttribute('data-mid') || currentDuelMatchId();
+    const flt = el.getAttribute('data-f') || 'all';
+    const qi = Number(el.getAttribute('data-i')) || 0;
+    const fromLive = el.getAttribute('data-live') === '1';
+    app.duelSol.matchId = mid;
+    app.duelSol.fromLive = fromLive;
+    app.duelSol.filter = flt;
+    const rec = getDuelRecordById(mid);
+    if (rec && flt !== 'all') {
+      const qs = resolveDuelQuestions(rec.qRefs);
+      const fl = getDuelSolFilteredList(rec, qs, flt);
+      app.duelSol.idx = fl.length ? (fl.includes(qi) ? qi : fl[0]) : qi;
+    } else {
+      app.duelSol.idx = qi;
+    }
+    app.view = 'duel_sol';
+    render(); return;
+  }
+  if (act === 'dsol-flt') {
+    const flt = el.getAttribute('data-v') || 'all';
+    const rec = getDuelRecordById(app.duelSol.matchId);
+    if (rec) {
+      const qs = resolveDuelQuestions(rec.qRefs);
+      const fl = getDuelSolFilteredList(rec, qs, flt);
+      if (!fl.length) {
+        showToast('इस फ़िल्टर में कोई सवाल नहीं है!');
+        return;
+      }
+      app.duelSol.filter = flt;
+      if (!fl.includes(app.duelSol.idx)) app.duelSol.idx = fl[0];
+    }
+    render(); return;
+  }
+  if (act === 'dsol-jump') {
+    app.duelSol.idx = Number(el.getAttribute('data-i')) || 0;
+    render(); return;
+  }
+  if (act === 'dsol-step') {
+    stepDuelSol(Number(el.getAttribute('data-d')) || 1, false);
+    return;
+  }
+  if (act === 'dsol-ztog') { app.duelSol.zoomOpen = !app.duelSol.zoomOpen; render(); return; }
+  if (act === 'dsol-score') {
+    if (app.duelSol.fromLive && app.duel.stage === 'result') {
+      app.view = 'duel';
+    } else {
+      app.duelHist.activeId = app.duelSol.matchId;
+      app.view = 'duel_hist_res';
+    }
+    render(); return;
+  }
+  if (act === 'dsol-home') {
+    if (app.duelSol.fromLive && app.duel.code) {
+      leaveDuelRoom(true);
+    } else {
+      app.view = 'home';
+      render();
+    }
+    return;
+  }
+  if (act === 'dsol-star') {
+    const rec = getDuelRecordById(app.duelSol.matchId);
+    const qs = rec ? resolveDuelQuestions(rec.qRefs) : [];
+    const q = qs[app.duelSol.idx];
+    const cid = q && (q._chId || (rec && rec.scope) || 'ch01');
+    if (q && CHAPTER_BANK[cid]) {
+      const prog = getChProg(cid);
+      prog.stars[q.id] = !prog.stars[q.id];
+      if (prog.stars[q.id]) prog.starFrom[q.id] = 'duel';
+      saveUserData(app.userId, app.userData);
+      showToast(prog.stars[q.id] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
+    }
+    return;
+  }
+  if (act === 'dsol-speak') {
+    const rec = getDuelRecordById(app.duelSol.matchId);
+    const qs = rec ? resolveDuelQuestions(rec.qRefs) : [];
+    const q = qs[app.duelSol.idx];
+    if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
+    return;
+  }
+
   // JOD 2028 (JOD Lab) 1v1 Challenge actions
   if (act === 'open-duel') {
-    if ((app.view === 'quiz' || app.view === 'result') && CHAPTER_BANK[app.quiz.chId]) {
+    if ((app.view === 'quiz' || app.view === 'result') && !app.quiz.isVault && CHAPTER_BANK[app.quiz.chId]) {
       app.duel.scope = app.quiz.chId;
-    } else if (!CHAPTER_BANK[app.duel.scope] && app.duel.scope !== 'mix') {
-      app.duel.scope = Object.keys(CHAPTER_BANK)[0] || 'ch01';
+      app.duel.customRefs = null;
+    } else if (String(app.duel.scope || '').startsWith('vault_') || (!CHAPTER_BANK[app.duel.scope] && app.duel.scope !== 'mix')) {
+      app.duel.scope = orderedChapterIds()[0] || 'ch01';
+      app.duel.customRefs = null;
     }
+    const mx = duelPoolMax(app.duel.scope);
+    if (mx > 0 && !app.duel.allScope) app.duel.count = Math.min(30, mx);
     if (!app.duel.customName) app.duel.customName = defaultPlayerName();
     if (app.duel.stage !== 'live' && app.duel.stage !== 'lobby' && app.duel.stage !== 'count') {
       app.duel.stage = 'menu';
@@ -2569,10 +3777,30 @@ function handleAction(el, ev) {
   if (act === 'd-ztog') { app.duel.zoomOpen = !app.duel.zoomOpen; render(); return; }
   if (act === 'd-scope') {
     readAndSaveDuelName();
-    app.duel.scope = el.getAttribute('data-v');
+    const sc = el.getAttribute('data-v');
+    app.duel.scope = sc;
+    if (!String(sc || '').startsWith('vault_')) app.duel.customRefs = null;
+    app.duel.allScope = false;
     const mx = duelPoolMax(app.duel.scope);
-    if (!app.duel.allScope && app.duel.count > mx) app.duel.count = Math.min(30, mx);
+    app.duel.count = mx > 0 ? Math.min(30, mx) : 30;
     render(); return;
+  }
+  if (act === 'd-reset-pool') {
+    readAndSaveDuelName();
+    resetDuelScopePool(app.duel.scope);
+    const mx = duelPoolMax(app.duel.scope);
+    app.duel.allScope = false;
+    app.duel.count = Math.min(30, Math.max(1, mx));
+    showToast('🔄 नया चक्र शुरू: सभी ' + mx + ' सवाल फिर से खुल गए!');
+    return;
+  }
+  if (act === 'd-reset-rematch') {
+    resetDuelScopePool(app.duel.scope);
+    const mx = duelPoolMax(app.duel.scope);
+    app.duel.allScope = false;
+    app.duel.count = Math.min(30, Math.max(1, mx));
+    rematchDuelRoom();
+    return;
   }
   if (act === 'd-cnt') {
     readAndSaveDuelName();
@@ -2590,7 +3818,7 @@ function handleAction(el, ev) {
     readAndSaveDuelName();
     app.duel.allScope = false;
     const mx = Math.max(1, duelPoolMax(app.duel.scope) || 30);
-    const cur = duelEffCount();
+    const cur = duelEffCount() || 1;
     app.duel.count = Math.max(1, Math.min(mx, cur + (Number(el.getAttribute('data-d')) || 0)));
     render(); return;
   }
@@ -2621,6 +3849,7 @@ function handleAction(el, ev) {
     if (q && CHAPTER_BANK[cid]) {
       const prog = getChProg(cid);
       prog.stars[q.id] = !prog.stars[q.id];
+      if (prog.stars[q.id]) prog.starFrom[q.id] = 'duel';
       saveUserData(app.userId, app.userData);
       showToast(prog.stars[q.id] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
     }
@@ -2637,15 +3866,16 @@ function handleAction(el, ev) {
   if (act === 'd-res-exp') { const i = Number(el.getAttribute('data-i')); app.duel.resOpenIdx = app.duel.resOpenIdx === i ? null : i; render(); return; }
   if (act === 'd-wa-room' || act === 'd-wa-invite') {
     const link = el.getAttribute('data-link') || 'https://jodexam777-air1.github.io/tgtgk/';
-    const scTitle = app.duel.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[app.duel.scope]?.title || 'पाठ');
+    const scTitle = String(app.duel.scope || '').startsWith('vault_') ? (app.duel.customTitle || 'मेरे सवाल') : (app.duel.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[app.duel.scope]?.title || 'पाठ'));
     openWaUrl('⚔️ TGT GK 1v1 Challenge!\nपाठ: ' + scTitle + ' (' + duelEffCount() + ' सवाल)\nRoom Code: ' + app.duel.code + '\nसीधे जुड़ने के लिए यह लिंक खोलें:\n' + link);
     return;
   }
   if (act === 'd-wa-share') {
-    const myS = calcMyDuelStats();
-    const opP = duelOppPlayer();
-    const myNm = app.duel.customName || defaultPlayerName();
-    openWaUrl('🏆 TGT GK 1v1 परिणाम: ' + myNm + ' ' + myS.pts + ' अंक (' + myS.ok + '/' + app.duel.qs.length + ')' + (opP ? ' vs ' + opP.name + ' ' + (opP.pts || 0) + ' अंक' : '') + '!');
+    const mid = el.getAttribute('data-mid') || currentDuelMatchId();
+    const rec = getDuelRecordById(mid);
+    if (rec && rec.me) {
+      openWaUrl('🏆 TGT GK 1v1 परिणाम (' + rec.title + '): ' + rec.me.name + ' ' + rec.me.pts + ' अंक (' + rec.me.ok + '/' + rec.total + ')' + (rec.op ? ' vs ' + rec.op.name + ' ' + (rec.op.pts || 0) + ' अंक' : '') + '!');
+    }
     return;
   }
 }
@@ -2725,13 +3955,14 @@ function bindQuizSwipe() {
   const canSwipeNow = () => {
     if (hasIncomingChallenge()) return false;
     if (app.view === 'quiz' && !app.quiz.palOpen) return true;
+    if (app.view === 'duel_sol') return true;
     if (app.view === 'duel' && app.duel.stage === 'live' && !app.duel.palOpen && !app.duel.leaveOpen) return true;
     return false;
   };
   root.addEventListener('touchstart', (e) => {
     if (!canSwipeNow()) { tracking = false; return; }
     const tgt = e.target;
-    if (tgt && tgt.closest && tgt.closest('.q-strip, .zoom-bar, .sheet-bg, .modal-bg, .mtab, .battle')) { tracking = false; return; }
+    if (tgt && tgt.closest && tgt.closest('.q-strip, .sv-tabs-bar, .zoom-bar, .sheet-bg, .modal-bg, .mtab, .battle')) { tracking = false; return; }
     const touches = e.touches || e.changedTouches;
     if (touches && touches.length !== 1) { tracking = false; return; }
     const t = touches ? touches[0] : null;
@@ -2747,6 +3978,7 @@ function bindQuizSwipe() {
     const dx = t.clientX - sx, dy = t.clientY - sy, dt = Date.now() - st;
     if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.45 && dt <= 750) {
       if (app.view === 'duel') stepDuel(dx < 0 ? 1 : -1, true);
+      else if (app.view === 'duel_sol') stepDuelSol(dx < 0 ? 1 : -1, true);
       else stepQuiz(dx < 0 ? 1 : -1, true);
     }
   }, { passive: true });
@@ -2778,6 +4010,7 @@ if (typeof globalThis !== 'undefined') {
   globalThis.__TGT_APP = {
     app, ROADMAP, CHAPTER_BANK, openChapter, stepQuiz, loadGlobalZoom, saveGlobalZoom, splitReadablePoints, highlightHindiFacts,
     importChapterData, calcMarks, handleAction, render, getChProg, getUserStats,
+    getVaultItems, getVaultCounts, getDuelScopeCounts, resetDuelScopePool, openVaultQuiz, launchVaultDuel, stepDuelSol,
     createDuelRoom, joinDuelRoom, startDuelRoom, handleDuelPick, handleDuelSkip, stepDuel, finishDuelRun, rematchDuelRoom, leaveDuelRoom,
     startDuelMatch, sendPresence, syncLiveState, sendDuelInvite, acceptDuelInvite, rejectDuelInvite, cancelDuelInvite, advanceDuelNext
   };
