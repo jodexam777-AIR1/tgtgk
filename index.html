@@ -153,11 +153,19 @@
   .star-btn.is-star .st-ic { color: #FFFFFF; }
   .quiz-body { background: #FFFFFF; padding: 14px 14px 26px; touch-action: pan-y; }
   .q-card { background: #fff; border: 1px solid #DCE5EC; border-radius: 13px; padding: 12px; margin-bottom: 9px; }
-  .q-stem { font-weight: 800; color: #0F172A; line-height: 1.55; white-space: pre-line; }
+  .q-stem { font-weight: 800; color: #0F172A; line-height: 1.55; white-space: pre-line; word-break: break-word; }
+  .stmt-box { background: #F8FAFC; border: 1px solid #CBD5E1; border-left: 3.5px solid #0794C7; border-radius: 10px; padding: 8px 11px; margin: 9px 0 6px; display: flex; flex-direction: column; gap: 6px; }
+  .stmt-row { color: #0F172A; font-weight: 600; line-height: 1.52; padding-bottom: 5px; border-bottom: 1px dashed #E2E8F0; word-break: break-word; }
+  .stmt-row:last-child { padding-bottom: 0; border-bottom: 0; }
+  .stmt-tail { font-weight: 800; color: #0578A3; margin-top: 6px; line-height: 1.45; }
   .q-src { font-size: 12.5px; font-weight: 700; color: #334155; margin-top: 7px; margin-bottom: 14px; line-height: 1.45; }
-  .mtab { width: 100%; border-collapse: collapse; margin: 0 0 14px; line-height: 1.55; }
-  .mtab th, .mtab td { border: 1px solid #CBD5E1; padding: 7px 8px; text-align: left; vertical-align: top; color: #0F172A; }
-  .mtab th { background: #E3F3FA; color: #0578A3; font-weight: 800; }
+  .mtab-wrap { border: 1.5px solid #93C5FD; border-radius: 11px; overflow: hidden; margin: 0 0 14px; background: #FFFFFF; }
+  .mtab { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 0; line-height: 1.52; }
+  .mtab th, .mtab td { border-bottom: 1px solid #E2E8F0; padding: 8px 9px; text-align: left; vertical-align: top; color: #0F172A; word-break: break-word; overflow-wrap: anywhere; }
+  .mtab th:first-child, .mtab td:first-child { border-right: 1px solid #CBD5E1; width: 50%; }
+  .mtab tr:last-child td { border-bottom: 0; }
+  .mtab tbody tr:nth-child(even) td { background: #F8FBFF; }
+  .mtab th { background: #E3F3FA; color: #0578A3; font-weight: 800; border-bottom: 1.5px solid #93C5FD; }
 
   .opt-card { background: #fff; border: 1.5px solid #DCE5EC; border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: border-color .15s, background .15s; }
   .opt-card.is-right { background: #E8F5E9; border-color: #1E8E3E; }
@@ -322,11 +330,16 @@
   .p-pick.op { background: #7C3AED; color: #FFFFFF; }
 
   .toast { position: absolute; left: 12px; right: 12px; bottom: 54px; z-index: 60; background: #1E293B; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 9px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); pointer-events: none; }
+  .shell-inner { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .no-anim, .no-anim .cm-draw { animation: none !important; stroke-dashoffset: 0 !important; }
 </style>
 </head>
 <body>
 <div class="app-wrap">
-  <div class="app-shell" id="appRoot"></div>
+  <div class="app-shell">
+    <div class="shell-inner" id="appRoot"></div>
+    <div id="toastRoot"></div>
+  </div>
 </div>
 <input type="file" id="jsonImportInput" accept=".json,application/json" multiple style="display:none;">
 
@@ -460,6 +473,120 @@ function avImg(who, cls, st) {
 
 // Chapter Store (Bundle + LocalStorage imported JSONs)
 const CHAPTER_BANK = {};
+function fixMatchHeaderText(h) {
+  const s = String(h || '').trim();
+  if (/^सूची\s*[-–]?\s*[I1]\s+अनुच्छेद\)$/.test(s)) return 'सूची I (अनुच्छेद)';
+  return s;
+}
+
+function parseStructuredStem(rawStem, existingMatch) {
+  let stem = String(rawStem || '').trim();
+  let match = Array.isArray(existingMatch) && existingMatch.length ? existingMatch : null;
+  let matchHeaders = ['सूची-I', 'सूची-II'];
+  let stmtLines = null;
+  let tailLine = '';
+
+  if (!match && stem.includes('| |')) {
+    const blocks = stem.split(/\s*\|\s*\|\s*/).map(b => b.trim()).filter(Boolean);
+    if (blocks.length >= 3) {
+      const lead = blocks[0].replace(/\s*\|\s*$/, '').trim();
+      const rows = [];
+      let hdrs = null;
+      let tail = '';
+      for (let i = 1; i < blocks.length; i++) {
+        let cells = blocks[i].split('|').map(c => c.trim()).filter(Boolean);
+        if (cells.length === 4 && /^[A-Da-d1-4]\.?$/.test(cells[0]) && /^(?:i{1,3}|iv|v|I{1,3}|IV|V|[1-4a-d])\.?$/.test(cells[2])) {
+          cells = [cells[0] + ' ' + cells[1], cells[2] + ' ' + cells[3]];
+        }
+        if (cells.length === 2) {
+          const isDataRow = /^(?:[A-Da-d1-4]|\([A-Da-d1-4iIvV]+\))[\.\)\s]/.test(cells[0]);
+          if (!hdrs && !isDataRow && rows.length === 0) {
+            hdrs = [fixMatchHeaderText(cells[0]), fixMatchHeaderText(cells[1])];
+          } else {
+            rows.push([cells[0], cells[1]]);
+          }
+        } else if (cells.length === 1 && i === blocks.length - 1) {
+          if (!/^कूट\s*[:：]?$/.test(cells[0])) tail = cells[0];
+        }
+      }
+      if (rows.length >= 2) {
+        stem = lead;
+        match = rows;
+        if (hdrs) matchHeaders = hdrs;
+        tailLine = tail;
+      }
+    }
+  } else if (!match && stem.includes('|')) {
+    const parts = stem.split(/\s*\|\s*/).map(s => s.trim()).filter(Boolean);
+    const rowRx = /^([A-Da-d1-4]\.\s+.+?)\s+((?:i{1,3}|iv|v|I{1,3}|IV|V)\.\s+.+)$/;
+    const candidateRows = [];
+    let hdr = null;
+    for (let i = 1; i < parts.length; i++) {
+      const m = parts[i].match(rowRx);
+      if (m) {
+        candidateRows.push([m[1].trim(), m[2].trim()]);
+      } else if (i === 1 && candidateRows.length === 0) {
+        hdr = parts[i];
+      }
+    }
+    if (candidateRows.length >= 3) {
+      stem = parts[0];
+      match = candidateRows;
+      if (hdr) {
+        const hm = hdr.match(/^(.+?)\s+(अनुच्छेद|विषय|सूची\s*[-–]?\s*II.*)$/);
+        if (hm) matchHeaders = [fixMatchHeaderText(hm[1]), fixMatchHeaderText(hm[2])];
+      }
+    } else if (parts.length >= 2) {
+      stem = parts[0];
+      const rest = parts.slice(1).filter(p => !/^कथन[ः:]?$/.test(p));
+      const last = rest[rest.length - 1] || '';
+      if (rest.length >= 2 && /^(?:उपर्युक्त|नीचे\s+दिए|नीचे\s+दिये|सही\s+कूट|सही\s+विकल्प|कूट)/.test(last)) {
+        stmtLines = rest.slice(0, -1);
+        tailLine = /^कूट\s*[:：]?$/.test(last) ? '' : last;
+      } else {
+        stmtLines = rest;
+      }
+    }
+  } else if (stem.includes('\n')) {
+    const parts = stem.split(/\n+/).map(s => s.trim()).filter(Boolean);
+    if (parts.length >= 2) {
+      stem = parts[0];
+      const rest = parts.slice(1);
+      const last = rest[rest.length - 1] || '';
+      if (rest.length >= 2 && /^(?:उपर्युक्त|नीचे\s+दिए|नीचे\s+दिये|सही\s+कूट|सही\s+विकल्प|कूट)/.test(last)) {
+        stmtLines = rest.slice(0, -1);
+        tailLine = /^कूट\s*[:：]?$/.test(last) ? '' : last;
+      } else {
+        stmtLines = rest;
+      }
+    }
+  }
+  return { stem, match, matchHeaders, stmtLines, tailLine };
+}
+
+function renderStemBlockHtml(q, stemBasePx) {
+  const stHtml = (q.stmtLines && q.stmtLines.length)
+    ? '<div class="stmt-box" style="font-size:' + zPx(Math.max(15, stemBasePx - 1.5)) + ';">' +
+        q.stmtLines.map(ln => '<div class="stmt-row">' + esc(ln) + '</div>').join('') +
+      '</div>'
+    : '';
+  const tlHtml = (q.tailLine && !(q.match && q.match.length))
+    ? '<div class="stmt-tail" style="font-size:' + zPx(Math.max(14.5, stemBasePx - 2)) + ';">' + esc(q.tailLine) + '</div>'
+    : '';
+  return '<div class="q-stem" style="font-size:' + zPx(stemBasePx) + ';">' + esc(q.q) + '</div>' + stHtml + tlHtml;
+}
+
+function renderMatchTableHtml(q, tblBasePx, wrapStyle) {
+  if (!q.match || !q.match.length) return '';
+  const hdrs = (Array.isArray(q.matchHeaders) && q.matchHeaders.length === 2) ? q.matchHeaders : ['सूची-I', 'सूची-II'];
+  const tailNote = q.tailLine ? '<div class="stmt-tail" style="font-size:' + zPx(tblBasePx) + ';margin:-6px 0 11px;">' + esc(q.tailLine) + '</div>' : '';
+  return '<div class="mtab-wrap"' + (wrapStyle ? ' style="' + wrapStyle + '"' : '') + '>' +
+    '<table class="mtab" style="font-size:' + zPx(tblBasePx) + ';"><thead><tr><th>' + esc(hdrs[0]) + '</th><th>' + esc(hdrs[1]) + '</th></tr></thead><tbody>' +
+      q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+    '</tbody></table>' +
+  '</div>' + tailNote;
+}
+
 function normalizeRawChapter(data) {
   if (!data || !data.id || !data.title || !Array.isArray(data.questions) || !data.questions.length) {
     throw new Error('अमान्य पाठ फ़ाइल: id, title या questions गायब हैं।');
@@ -481,18 +608,22 @@ function normalizeRawChapter(data) {
       .replace(/\u092e\u092e\u094d\u092e\u0940,\s*\u0907\u0928 \u0924\u0940\u0928\u094b\u0902/g, 'इन तीनों')
       .replace(/\u092e\u092e\u094d\u092e\u0940 \u0915\u094b \u0938\u094d\u092a\u0937\u094d\u091f \u0909\u0924\u094d\u0924\u0930 \u0938\u093f\u0916\u093e\u0928\u0947 \u0939\u0947\u0924\u0941\s+/g, 'स्पष्ट उत्तर हेतु ')
       .replace(/\u26a0\ufe0f?/g, '').trim();
+    const parsed = parseStructuredStem(stem, q.match);
     return {
       id: q.id != null ? q.id : idx + 1,
       type: q.type || 'BOOK',
       fmt: q.fmt || 'Direct',
-      q: stem,
+      q: parsed.stem,
+      stmtLines: parsed.stmtLines,
+      tailLine: parsed.tailLine,
       src: src,
       opts: q.opts.map(String),
       ans: q.ans,
       exp: cleanExp,
       trick: String(q.trick || '').replace(/\u26a0\ufe0f?/g, '').trim(),
       vip: !!q.vip,
-      match: Array.isArray(q.match) && q.match.length ? q.match : null
+      match: parsed.match,
+      matchHeaders: parsed.matchHeaders
     };
   });
   return {
@@ -616,6 +747,7 @@ const app = {
   userData: DEFAULT_USER_DATA(),
   zoomPct: loadGlobalZoom(),
   _lastRenderKey: '',
+  _homeAnimSub: '',
   doneTwigCh: '',
   toast: '',
   toastT: null,
@@ -623,6 +755,7 @@ const app = {
     tab: 'star',
     chFilter: 'all',
     openAns: {},
+    cardPicks: {},
     zoomOpen: false
   },
   duelHist: {
@@ -640,6 +773,8 @@ const app = {
     title: '',
     mode: 'full',
     isVault: false,
+    useSessionAns: false,
+    sessionAns: {},
     vaultRefs: [],
     vaultAns: {},
     qIds: [],
@@ -682,6 +817,7 @@ const app = {
     palFilter: 'all',
     zoomOpen: false,
     leaveOpen: false,
+    finishConfirmOpen: false,
     showReview: false,
     resOpenIdx: null,
     timerId: null,
@@ -715,11 +851,21 @@ function stopDuelRoomStream() {
   }
 }
 
+function renderToastDom() {
+  if (typeof document === 'undefined') return;
+  const tr = document.getElementById('toastRoot');
+  if (tr) tr.innerHTML = app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '';
+}
+
 function showToast(msg) {
   app.toast = msg;
-  render();
+  renderToastDom();
+  if (!hasFocusedInputInRoot()) render();
   if (app.toastT) clearTimeout(app.toastT);
-  app.toastT = setTimeout(() => { app.toast = ''; render(); }, 2300);
+  app.toastT = setTimeout(() => {
+    app.toast = '';
+    renderToastDom();
+  }, 2200);
 }
 
 function speakHindi(text) {
@@ -864,6 +1010,7 @@ function getQuizLength() {
 
 function getQuizPicked(idx) {
   if (app.quiz.isVault) return app.quiz.vaultAns[idx];
+  if (app.quiz.useSessionAns) return app.quiz.sessionAns[idx];
   const it = getQuizItem(idx);
   return it ? getChProg(it.chId).answers[it.q.id] : undefined;
 }
@@ -1092,6 +1239,8 @@ function renderHomeView() {
     return '<div class="cm-row"><div class="cm-srail"><div class="cm-stem ' + (isLast ? 'last' : '') + '" style="background:' + actSub.color + '"></div><svg class="cm-bsvg" viewBox="0 0 25 38"><path class="cm-draw" pathLength="100" style="animation-delay:' + delay + 'ms" d="M 11,0 C 11,17 16,17 24,17" stroke="' + actSub.color + '"/><circle cx="23" cy="17" r="2.2" fill="' + actSub.color + '"/></svg></div><div class="cm-leaf ' + cls + '" style="animation-delay:' + delay + 'ms">' + inner + '</div></div>';
   }).join('') : '<div style="padding:18px;text-align:center;font-size:12.5px;color:#64748B;">इस विषय में अभी कोई तैयार पाठ नहीं है। "सभी" दबाएँ!</div>';
 
+  const noAnimCls = app._homeAnimSub === actSub.id ? ' no-anim' : '';
+  app._homeAnimSub = actSub.id;
   return '<div class="hd">' +
       '<div class="hd-l"><span style="font-size:17px;">📖</span><span class="hd-ttl">TGT GK अभ्यास</span></div>' +
       '<button type="button" class="hd-btn" data-act="trigger-import" title="नया पाठ जोड़ें">📥</button>' +
@@ -1101,7 +1250,7 @@ function renderHomeView() {
     vaultStripHtml +
     '<div class="cm-book">' +
       '<div class="cm-rail scr">' + railHtml + '</div>' +
-      '<div class="cm-page" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
+      '<div class="cm-page' + noAnimCls + '" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
     '</div>' +
     '<div class="ft">' +
       '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;min-width:0;">⚔️ 1v1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b>' + (app.duel.opOnline ? ' <span style="background:#DCFCE7;color:#15803D;padding:1px 6px;border-radius:99px;font-size:10px;font-weight:800;">🟢 ऑनलाइन</span>' : '') + '</span>' +
@@ -1140,15 +1289,25 @@ function renderVaultView() {
     const q = it.q;
     const prog = getChProg(it.chId);
     const isStar = !!(prog.stars && prog.stars[q.id]);
-    const isOpen = !!v.openAns[it.key];
+    const cPick = v.cardPicks ? v.cardPicks[it.key] : undefined;
+    const hasCPick = cPick !== undefined;
+    const isOpen = hasCPick || !!v.openAns[it.key];
     const pts = splitReadablePoints(q.exp);
     const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
     const pageLbl = extractPageLabel(q, it.ch);
-    const matchHtml = (q.match && q.match.length)
-      ? '<table class="mtab" style="font-size:' + zPx(15) + ';margin-top:8px;"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-        '</tbody></table>'
-      : '';
+    const matchHtml = renderMatchTableHtml(q, 15, 'margin-top:8px;margin-bottom:9px;');
+    const vOptsHtml = '<div style="margin-top:9px;">' + q.opts.map((opt, oi) => {
+      let cls = 'opt-card';
+      if (isOpen) {
+        if (oi === q.ans) cls += ' is-right';
+        else if (hasCPick && oi === cPick) cls += ' is-wrong';
+      }
+      return '<div class="' + cls + '" style="margin-bottom:7px;"><button type="button" class="opt-btn" style="padding:9px 11px;font-size:' + zPx(17.5) + ';" data-act="v-pick" data-k="' + esc(it.key) + '" data-cid="' + it.chId + '" data-qid="' + q.id + '" data-i="' + oi + '">' +
+        '<span class="opt-pill" style="width:24px;height:24px;font-size:12px;">' + (oi + 1) + '</span>' +
+        '<span style="flex:1;min-width:0;">' + esc(opt) + '</span>' +
+      '</button></div>';
+    }).join('') + '</div>';
+
     return '<div class="vq-card">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">' +
         '<span style="font-size:11.5px;font-weight:800;color:#0578A3;">📘 ' + esc(it.chTitle) + '</span>' +
@@ -1157,17 +1316,22 @@ function renderVaultView() {
           '<button type="button" class="u-btn" style="padding:2px 8px;font-size:12px;font-weight:800;' + (isStar ? 'background:#F59E0B;border-color:#B45309;color:#fff;' : 'background:#FFFBEB;border-color:#D97706;color:#92400E;') + '" data-act="v-star" data-cid="' + it.chId + '" data-qid="' + q.id + '">' + (isStar ? '★ स्टार' : '☆ स्टार') + '</button>' +
         '</div>' +
       '</div>' +
-      '<div class="q-stem" style="font-size:' + zPx(18.5) + ';">' + esc(q.q) + '</div>' +
+      renderStemBlockHtml(q, 18.5) +
       matchHtml +
-      (v.tab === 'wrong' && it.wrongPick !== undefined && q.opts[it.wrongPick]
-        ? '<div style="margin-top:7px;background:#FFF1F2;border:1px solid #FECDD3;color:#BE123C;border-radius:8px;padding:5px 9px;font-size:' + zPx(14) + ';font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px;"><span>✗ पिछला गलत जवाब: ' + esc(q.opts[it.wrongPick]) + '</span><button type="button" class="u-btn" style="background:#fff;color:#15803D;border-color:#86EFAC;font-weight:800;" data-act="v-clear-wr" data-cid="' + it.chId + '" data-qid="' + q.id + '">✓ सीख लिया</button></div>'
+      (v.tab === 'wrong' && !hasCPick && it.wrongPick !== undefined && q.opts[it.wrongPick]
+        ? '<div style="margin-top:7px;background:#FFF1F2;border:1px solid #FECDD3;color:#BE123C;border-radius:8px;padding:5px 9px;font-size:' + zPx(13.5) + ';font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px;"><span>✗ पिछला गलत जवाब: ' + esc(q.opts[it.wrongPick]) + '</span><button type="button" class="u-btn" style="background:#fff;color:#15803D;border-color:#86EFAC;font-weight:800;" data-act="v-clear-wr" data-cid="' + it.chId + '" data-qid="' + q.id + '">✓ सीख लिया</button></div>'
         : '') +
-      '<div style="display:flex;gap:6px;margin-top:8px;">' +
-        '<button type="button" class="btn-sec" style="flex:1;font-weight:800;" data-act="v-tog-ans" data-k="' + esc(it.key) + '">' + (isOpen ? '🙈 उत्तर छुपाएँ' : '👁 सही उत्तर व मुख्य बिंदु देखें') + '</button>' +
+      vOptsHtml +
+      '<div style="display:flex;gap:6px;margin-top:6px;">' +
+        (hasCPick
+          ? '<button type="button" class="btn-sec" style="flex:1;font-weight:800;" data-act="v-retry-card" data-k="' + esc(it.key) + '">🔄 फिर हल करें</button>'
+          : '<button type="button" class="btn-sec" style="flex:1;font-weight:800;" data-act="v-tog-ans" data-k="' + esc(it.key) + '">' + (isOpen ? '🙈 उत्तर छुपाएँ' : '👁 सीधा सही उत्तर व व्याख्या देखें') + '</button>') +
+        (v.tab === 'wrong' ? '<button type="button" class="btn-sec" style="background:#ECFDF5;color:#15803D;border-color:#86EFAC;font-weight:800;" data-act="v-clear-wr" data-cid="' + it.chId + '" data-qid="' + q.id + '">✓ सीख लिया</button>' : '') +
         (isOpen ? '<button type="button" class="speak-pill" data-act="v-speak" data-cid="' + it.chId + '" data-qid="' + q.id + '">🔊 सुनें</button>' : '') +
       '</div>' +
-      (isOpen ? '<div style="margin-top:8px;">' +
-        '<div class="ans-banner" style="margin-bottom:8px;padding:9px 12px;"><div style="font-size:11.5px;font-weight:800;color:#15803D;">✅ सही उत्तर (विकल्प ' + (q.ans + 1) + ')</div><div style="margin-top:3px;font-size:' + zPx(17.5) + ';font-weight:800;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div></div>' +
+      (isOpen ? '<div style="margin-top:9px;">' +
+        (hasCPick && cPick !== q.ans ? '<div class="wrong-strip">✗ आपका चुनाव (विकल्प ' + (cPick + 1) + '): ' + esc(q.opts[cPick]) + '</div>' : '') +
+        '<div class="ans-banner" style="margin-bottom:8px;padding:9px 12px;"><div style="font-size:11.5px;font-weight:800;color:#15803D;">' + (hasCPick && cPick === q.ans ? '✅ बिल्कुल सही! · विकल्प ' + (q.ans + 1) : '✅ सही उत्तर (विकल्प ' + (q.ans + 1) + ')') + '</div><div style="margin-top:3px;font-size:' + zPx(17.5) + ';font-weight:800;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div></div>' +
         '<div class="kp-box" style="padding:11px 13px;"><div class="kp-hd">📌 मुख्य बिंदु (' + esc(pageLbl) + ')</div><ul class="kp-ul">' +
           kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(17) + ';margin-bottom:9px;">' + highlightHindiFacts(pt) + '</li>').join('') +
         '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15.5) + ';margin-top:9px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + '</div>' +
@@ -1272,11 +1436,7 @@ function renderQuizView() {
     return '<button type="button" class="' + cls + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
   }).join('');
 
-  const matchHtml = (q.match && q.match.length)
-    ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-        q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-      '</tbody></table>'
-    : '';
+  const matchHtml = renderMatchTableHtml(q, 15.5);
 
   const starBtnHtml = '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="q-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button>';
 
@@ -1301,73 +1461,66 @@ function renderQuizView() {
     '</div>';
   }
 
-  let subBarHtml = '';
-  let bodyHtml = '';
-  if (!hasPick) {
-    const modeTag = app.quiz.isVault
-      ? ' · ' + ch.title
-      : ((app.quiz.mode !== 'full' && app.quiz.mode !== 'resume')
-          ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : (app.quiz.mode === 'skip' ? 'नहीं आता' : '⭐ स्टार'))
-          : (app.quiz.mode === 'resume' && totalLen < ch.total_questions ? ' · बाकी सवाल' : ''));
-    subBarHtml = '<div class="sub-bar">' +
-      '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + totalLen + esc(modeTag) + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' +
-      starBtnHtml +
-    '</div>';
-    const optsHtml = q.opts.map((opt, idx) =>
-      '<div class="opt-card"><button type="button" class="opt-btn" style="font-size:' + zPx(19) + ';" data-act="q-pick" data-i="' + idx + '">' +
-        '<span class="opt-pill">' + (idx + 1) + '</span>' +
-        '<span style="flex:1;min-width:0;">' + esc(opt) + '</span>' +
-      '</button></div>'
-    ).join('');
-    bodyHtml = '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
-      '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
-      matchHtml +
-      optsHtml +
-      '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल</div>';
-  } else {
-    const statusCls = isSkipped ? 'skip' : (isOk ? 'ok' : 'bad');
-    const statusTxt = isSkipped ? '⏭ नहीं आता (0 अंक)' : (isOk ? '✓ सही' : '✗ गलत');
-    const pageLbl = extractPageLabel(q, ch);
-    subBarHtml = '<div class="sub-bar">' +
-      '<div class="sub-l"><span class="st-pill ' + statusCls + '">' + statusTxt + '</span><span>' + esc(app.quiz.isVault ? (ch.title + ' · ' + pageLbl) : pageLbl) + '</span></div>' +
-      '<div style="display:flex;gap:5px;align-items:center;">' +
-        '<button type="button" class="speak-pill" data-act="q-speak">🔊 सुनें</button>' +
-        starBtnHtml +
-      '</div>' +
-    '</div>';
+  const modeTag = app.quiz.isVault
+    ? ' · ' + ch.title
+    : ((app.quiz.mode !== 'full' && app.quiz.mode !== 'resume')
+        ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : (app.quiz.mode === 'skip' ? 'नहीं आता' : '⭐ स्टार'))
+        : (app.quiz.mode === 'resume' && totalLen < ch.total_questions ? ' · बाकी सवाल' : ''));
+
+  const pageLbl = extractPageLabel(q, ch);
+  const statusCls = isSkipped ? 'skip' : (isOk ? 'ok' : 'bad');
+  const statusTxt = isSkipped ? '⏭ नहीं आता (0 अंक)' : (isOk ? '✓ सही' : '✗ गलत');
+
+  const subBarHtml = '<div class="sub-bar">' +
+    (!hasPick
+      ? '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + totalLen + esc(modeTag) + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' + starBtnHtml
+      : '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + totalLen + '</span><span class="st-pill ' + statusCls + '">' + statusTxt + '</span><span>' + esc(app.quiz.isVault ? (ch.title + ' · ' + pageLbl) : pageLbl) + '</span></div>' +
+        '<div style="display:flex;gap:5px;align-items:center;"><button type="button" class="speak-pill" data-act="q-speak">🔊 सुनें</button>' + starBtnHtml + '</div>') +
+  '</div>';
+
+  const optsHtml = q.opts.map((opt, idx) => {
+    let cls = 'opt-card';
+    if (hasPick) {
+      if (idx === q.ans) cls += ' is-right';
+      else if (!isSkipped && idx === picked) cls += ' is-wrong';
+    }
+    return '<div class="' + cls + '"><button type="button" class="opt-btn" style="font-size:' + zPx(19) + ';" data-act="q-pick" data-i="' + idx + '">' +
+      '<span class="opt-pill">' + (idx + 1) + '</span>' +
+      '<span style="flex:1;min-width:0;">' + esc(opt) + '</span>' +
+    '</button></div>';
+  }).join('');
+
+  let nicheExplHtml = '';
+  if (hasPick) {
     const pts = splitReadablePoints(q.exp);
     const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
-    const ansBanner =
+    nicheExplHtml = '<div id="quizExplCard" style="margin-top:12px;">' +
       (!isSkipped && !isOk ? '<div class="wrong-strip">✗ आपका चुनाव (विकल्प ' + (picked + 1) + '): ' + esc(q.opts[picked]) + '</div>' : '') +
-      '<div class="ans-banner ' + (isSkipped ? 'skip-mode' : '') + '">' +
-        '<div style="font-size:12.5px;font-weight:800;color:' + (isSkipped ? '#0369A1' : '#15803D') + ';">' +
-          (isSkipped ? '⏭ नहीं आता चुना गया (0 निगेटिव अंक) · सही उत्तर (विकल्प ' + (q.ans + 1) + ')' : 'सही उत्तर · विकल्प ' + (q.ans + 1)) +
+      '<div class="ans-banner ' + (isSkipped ? 'skip-mode' : '') + '" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
+        '<div style="flex:1;min-width:180px;">' +
+          '<div style="font-size:12.5px;font-weight:800;color:' + (isSkipped ? '#0369A1' : '#15803D') + ';">' +
+            (isSkipped ? '⏭ नहीं आता चुना गया (0 निगेटिव अंक) · सही उत्तर (विकल्प ' + (q.ans + 1) + ')' : (isOk ? '✅ बिल्कुल सही! · विकल्प ' + (q.ans + 1) : '✅ सही उत्तर · विकल्प ' + (q.ans + 1))) +
+          '</div>' +
+          '<div style="margin-top:5px;font-size:' + zPx(19) + ';font-weight:800;line-height:1.55;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div>' +
         '</div>' +
-        '<div style="margin-top:5px;font-size:' + zPx(19) + ';font-weight:800;line-height:1.55;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div>' +
-      '</div>';
-    const explBlock = '<div class="kp-box">' +
-      '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
-      '<ul class="kp-ul">' +
-        kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(19) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
-      '</ul>' +
-      (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(17) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+        '<button type="button" class="speak-pill" data-act="q-speak">🔊 सुनें</button>' +
+      '</div>' +
+      '<div class="kp-box">' +
+        '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
+        '<ul class="kp-ul">' +
+          kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(19) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
+        '</ul>' +
+        (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(17) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+      '</div>' +
     '</div>';
-    const qReviewMatch = (q.match && q.match.length)
-      ? '<table class="mtab" style="font-size:' + zPx(15) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-        '</tbody></table>'
-      : '';
-    const qReviewBlock = '<button type="button" class="tog-q-btn" data-act="q-tog-q">' +
-        '<span>पूरा सवाल व सभी 4 विकल्प देखें</span><span>' + (app.quiz.showQInSol ? '▴' : '▾') + '</span>' +
-      '</button>' +
-      (app.quiz.showQInSol ? '<div style="margin-top:10px;padding:12px;border:1px solid #DCE5EC;border-radius:12px;background:#fff;"><div class="q-stem" style="font-size:' + zPx(18) + ';">' + esc(q.q) + '</div><div class="q-src" style="font-size:' + zPx(13) + ';">' + esc(q.src) + '</div>' + qReviewMatch + q.opts.map((o, i) => {
-        let stRow = 'background:#F8FAFC;color:#334155;';
-        if (i === q.ans) stRow = 'background:#ECFDF5;color:#14532D;font-weight:800;';
-        else if (!isSkipped && i === picked) stRow = 'background:#FFF1F2;color:#991B1B;font-weight:800;';
-        return '<div style="padding:7px 9px;margin-top:6px;border-radius:8px;font-size:' + zPx(16.5) + ';' + stRow + '">' + (i + 1) + '. ' + esc(o) + '</div>';
-      }).join('') + '</div>' : '');
-    bodyHtml = ansBanner + explBlock + qReviewBlock + '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल</div>';
   }
+
+  const bodyHtml = renderStemBlockHtml(q, 20) +
+    '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
+    matchHtml +
+    optsHtml +
+    nicheExplHtml +
+    '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल</div>';
 
   // P1 Clean Dot Sheet Palette (includes 'नहीं आता' filter)
   let palSheet = '';
@@ -1446,49 +1599,46 @@ function renderResultView() {
   const isV = !!app.quiz.isVault;
   const ch = CHAPTER_BANK[app.quiz.chId];
   if (!isV && !ch) return renderHomeView();
-  let right = 0, wrong = 0, skip = 0, totalN = 0;
+  const totalLen = getQuizLength();
+  const itemsArr = Array.from({ length: totalLen }, (_, idx) => getQuizItem(idx)).filter(Boolean);
+  let right = 0, wrong = 0, skip = 0, unseen = 0;
   const reviewItems = [];
 
-  if (isV) {
-    totalN = app.quiz.vaultRefs.length;
-    app.quiz.vaultRefs.forEach((ref, idx) => {
-      const cObj = CHAPTER_BANK[ref.chId];
-      const q = cObj ? cObj.questions.find(x => x.id === ref.qId) : null;
-      if (!q) return;
-      const p = app.quiz.vaultAns[idx];
-      if (p === undefined || p === -1) {
-        skip++;
-        reviewItems.push({ qNum: idx + 1, id: idx + 1, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
-      } else if (p === q.ans) {
-        right++;
-      } else {
-        wrong++;
-        reviewItems.push({ qNum: idx + 1, id: idx + 1, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
-      }
-    });
-  } else {
-    const prog = getChProg(ch.id);
-    const qs = ch.questions;
-    totalN = qs.length;
-    qs.forEach((q, idx) => {
-      const p = prog.answers[q.id];
-      if (p === undefined || p === -1) {
-        skip++;
-        reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
-      } else if (p === q.ans) {
-        right++;
-      } else {
-        wrong++;
-        reviewItems.push({ qNum: idx + 1, id: q.id, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
-      }
-    });
-  }
+  itemsArr.forEach((it, idx) => {
+    const q = it.q;
+    const p = getQuizPicked(idx);
+    if (p === undefined) {
+      unseen++;
+    } else if (p === -1) {
+      skip++;
+      reviewItems.push({ qNum: idx + 1, idx, id: idx + 1, status: 'skip', q: q.q, yours: 'नहीं आता (छोड़ा)', correct: q.opts[q.ans], exp: q.exp });
+    } else if (p === q.ans) {
+      right++;
+    } else {
+      wrong++;
+      reviewItems.push({ qNum: idx + 1, idx, id: idx + 1, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
+    }
+  });
 
-  const sc = calcMarks(right, wrong, totalN, app.result.marking);
+  const denom = itemsArr.length || 1;
+  const sc = calcMarks(right, wrong, denom, app.result.marking);
   const markRow = '<div style="display:inline-flex;background:#F1F5F9;padding:2px;border-radius:8px;gap:2px;">' +
     [['simple','सरल'],['up','UP +3/−1'],['delhi','दिल्ली']].map(([mk,l]) =>
       '<button type="button" style="border:none;border-radius:6px;padding:3px 7px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (app.result.marking === mk ? 'background:#fff;color:#0578A3;box-shadow:0 1px 3px rgba(0,0,0,.1);' : 'background:transparent;color:#475569;') + '" data-act="r-mark" data-k="' + mk + '">' + l + '</button>'
     ).join('') +
+  '</div>';
+
+  // Maths Mock style clickable numbered chips (नंबर दबाओ तो सीधा वही सवाल खुलेगा)
+  const chipsHtml = '<div class="m-rr" style="margin-bottom:12px;">' +
+    '<div class="m-rr-t">हर सवाल का रिज़ल्ट · <span style="color:#0794C7;">नंबर दबाओ तो सीधा वही सवाल खुलेगा</span></div>' +
+    '<div class="m-chips2" style="margin-top:6px;">' +
+      itemsArr.map((it, idx) => {
+        const p = getQuizPicked(idx);
+        const cls = p === it.q.ans ? 'g' : (p !== undefined && p >= 0 ? 'r' : '');
+        const isS = getChProg(it.chId).stars && getChProg(it.chId).stars[it.q.id];
+        return '<button type="button" class="m-ch ' + cls + ' tnum" data-act="r-jump-q" data-i="' + idx + '">' + (idx + 1) + (isS ? '<i class="sqi">★</i>' : '') + '</button>';
+      }).join('') +
+    '</div>' +
   '</div>';
 
   const tl = reviewItems.length ? reviewItems.map(it => {
@@ -1496,37 +1646,51 @@ function renderResultView() {
     const { lead, points } = buildExpTimeline(it.exp);
     return '<div class="tl-item"><span class="tl-dot ' + (it.status === 'skip' ? 'sk' : 'bad') + '"></span>' +
       '<div style="background:#fff;border-radius:12px;padding:10px 11px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
-        '<button type="button" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font:inherit;cursor:pointer;" data-act="r-tog" data-id="' + it.id + '">' +
-          '<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;"><span style="color:' + (it.status === 'wrong' ? '#BE123C' : '#64748B') + ';">सवाल #' + it.qNum + (it.status === 'skip' ? ' · ' + esc(it.yours) : '') + '</span><span style="color:#0794C7;">' + (open ? 'छुपाएँ ▴' : 'समझें ▾') + '</span></div>' +
-          '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:3px;line-height:1.45;">' + esc(it.q) + '</div>' +
-          '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:11px;font-weight:700;">' +
-            '<span style="background:' + (it.status === 'skip' ? '#F1F5F9;color:#334155;' : '#FFF1F2;color:#BE123C;') + 'padding:2px 8px;border-radius:99px;">आपका: ' + esc(it.yours) + '</span>' +
-            '<span style="background:#ECFDF5;color:#15803D;padding:2px 8px;border-radius:99px;">सही: ' + esc(it.correct) + '</span>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;gap:6px;">' +
+          '<span style="color:' + (it.status === 'wrong' ? '#BE123C' : '#64748B') + ';">सवाल #' + it.qNum + (it.status === 'skip' ? ' · छोड़ा' : ' · गलत') + '</span>' +
+          '<div style="display:flex;gap:5px;">' +
+            '<button type="button" class="u-btn" style="color:#0794C7;border-color:#93C5FD;font-weight:800;" data-act="r-jump-q" data-i="' + it.idx + '">सवाल खोलें ›</button>' +
+            '<button type="button" class="u-btn" data-act="r-tog" data-id="' + it.id + '">' + (open ? 'छुपाएँ ▴' : 'व्याख्या ▾') + '</button>' +
           '</div>' +
-        '</button>' +
-        (open ? '<div style="margin-top:7px;padding-top:7px;border-top:1px solid #EEF3F7;font-size:12px;line-height:1.6;color:#334155;">' + esc(lead + (points.length ? ' ' + points.join(' ') : '')) + '</div>' : '') +
+        '</div>' +
+        '<div style="font-size:13px;font-weight:800;color:#0F172A;margin-top:4px;line-height:1.45;">' + esc(it.q) + '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:11px;font-weight:700;">' +
+          '<span style="background:' + (it.status === 'skip' ? '#F1F5F9;color:#334155;' : '#FFF1F2;color:#BE123C;') + 'padding:2px 8px;border-radius:99px;">आपका: ' + esc(it.yours) + '</span>' +
+          '<span style="background:#ECFDF5;color:#15803D;padding:2px 8px;border-radius:99px;">सही: ' + esc(it.correct) + '</span>' +
+        '</div>' +
+        (open ? '<div style="margin-top:7px;padding-top:7px;border-top:1px solid #EEF3F7;font-size:12.5px;line-height:1.6;color:#334155;">' + esc(lead + (points.length ? ' ' + points.join(' ') : '')) + '</div>' : '') +
       '</div>' +
     '</div>';
-  }).join('') : '<div style="background:#ECFDF5;border-radius:14px;padding:16px;text-align:center;font-weight:800;color:#166534;">🌟 अद्भुत! एक भी सवाल गलत या छूटा नहीं!</div>';
+  }).join('') : (unseen === denom
+    ? '<div style="background:#FFFBEB;border-radius:14px;padding:14px;text-align:center;font-weight:800;color:#92400E;">अभी आपने इस सेट में कोई सवाल हल नहीं किया है — ऊपर किसी भी नंबर पर दबाकर शुरू करें!</div>'
+    : '<div style="background:#ECFDF5;border-radius:14px;padding:16px;text-align:center;font-weight:800;color:#166534;">🌟 अद्भुत! किए गए सवालों में एक भी गलत नहीं!</div>');
 
   const hdrTitle = isV ? app.quiz.title : ch.title;
-  return '<div class="hd"><div class="hd-l">' + avImg(app.userId, 'av-xs') + '<span class="hd-ttl">परिणाम · ' + esc(hdrTitle) + '</span></div><button type="button" class="hd-btn" data-act="back-home">🏠 होम</button></div>' +
+  return '<div class="hd"><div class="hd-l"><button type="button" class="hd-btn" data-act="r-jump-q" data-i="' + (app.quiz.cur || 0) + '">← सवाल</button><span class="hd-ttl">परिणाम · ' + esc(hdrTitle) + '</span></div><button type="button" class="hd-btn" data-act="back-home">🏠 होम</button></div>' +
     '<div class="body-scr scr" style="padding:11px;">' +
-      '<div style="border-radius:16px;padding:13px;background:linear-gradient(180deg,#ECFDF5 0%,#FFFFFF 100%);box-shadow:0 2px 10px rgba(15,23,42,.05);margin-bottom:12px;">' +
-        '<div style="display:flex;align-items:center;gap:10px;">' + avImg(app.userId, 'av-md') + '<div><div style="font-size:20px;font-weight:800;color:#14532D;">' + sc.big + '</div><div style="font-size:11.5px;font-weight:700;color:#15803D;">' + sc.sub + '</div></div></div>' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid #D1FAE5;">' +
-          '<div style="display:flex;gap:8px;font-size:11.5px;font-weight:800;"><span style="color:#15803D;">' + right + ' सही</span><span style="color:#BE123C;">' + wrong + ' गलत</span><span style="color:#64748B;">' + skip + ' छोड़े</span></div>' +
-          markRow +
+      '<div class="m-h2" style="margin-bottom:11px;">' +
+        '<div class="m-h2-l">' +
+          '<div class="m-hk">📘 ' + esc(hdrTitle) + '</div>' +
+          '<div style="font-size:24px;font-weight:800;color:#14532D;margin-top:3px;">' + sc.big + '</div>' +
+          '<div style="font-size:11.5px;font-weight:700;color:#15803D;">' + sc.sub + '</div>' +
+          '<div class="m-hpills">' +
+            '<span class="m-pill g">✅ <b>' + right + '</b> सही</span>' +
+            '<span class="m-pill r">❌ <b>' + wrong + '</b> गलत</span>' +
+            '<span class="m-pill">⏭ <b>' + skip + '</b> छोड़े</span>' +
+            (unseen > 0 ? '<span class="m-pill">⏳ <b>' + unseen + '</b> बाकी</span>' : '') +
+          '</div>' +
+          '<div style="margin-top:8px;">' + markRow + '</div>' +
         '</div>' +
+        '<button type="button" class="m-h2-go" data-act="r-jump-q" data-i="0"><span>📖</span><b>Solution देखो</b><small>Q by Q</small></button>' +
       '</div>' +
-      '<div style="font-size:12px;font-weight:800;color:#475569;margin-bottom:4px;">दोहराने योग्य सवाल (' + reviewItems.length + ')</div>' +
-      (reviewItems.length ? '<div class="tl-wrap"><div class="tl-line"></div>' + tl + '</div>' : tl) +
+      chipsHtml +
+      (reviewItems.length ? '<div style="font-size:12px;font-weight:800;color:#475569;margin-bottom:4px;">गलत व छोड़े सवाल (' + reviewItems.length + ')</div><div class="tl-wrap"><div class="tl-line"></div>' + tl + '</div>' : tl) +
     '</div>' +
     '<div class="ft">' +
       '<button type="button" class="btn-sec" data-act="back-home">🏠 होम</button>' +
       (isV
         ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-vault-back">← वापस मेरे स्टार/गलत में जाएँ</button>'
-        : (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : (skip > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="skip">🔁 छोड़े सवाल (' + skip + ') देखें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>'))) +
+        : (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : (unseen > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="resume">▶ बाकी ' + unseen + ' सवाल पूरे करें</button>' : (skip > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="skip">🔁 छोड़े सवाल (' + skip + ') हल करें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>')))) +
     '</div>';
 }
 
@@ -1976,6 +2140,7 @@ function beginDuelLivePlay() {
   d.palOpen = false;
   d.palFilter = 'all';
   d.leaveOpen = false;
+  d.finishConfirmOpen = false;
   d.resOpenIdx = null;
   d.stage = 'live';
   app.view = 'duel';
@@ -2138,6 +2303,16 @@ async function createDuelRoom(soloDirect) {
   if (scCounts.unseen <= 0) {
     showToast('इस पाठ के सभी सवाल पूरे हो चुके हैं — पहले नया चक्र रीसेट करें!');
     return null;
+  }
+  if (typeof document !== 'undefined') {
+    const cInp = document.getElementById('duelCntInp');
+    if (cInp && cInp.value) {
+      const raw = parseInt(cInp.value, 10);
+      if (Number.isFinite(raw) && raw >= 1) {
+        d.allScope = false;
+        d.count = Math.min(scCounts.unseen, raw);
+      }
+    }
   }
   const cnt = duelEffCount();
   const qRefs = buildDuelRefs(d.scope, cnt);
@@ -2379,6 +2554,9 @@ async function handleDuelPick(idx) {
     if (chosen === q.ans) {
       delete prog.duelWrongs[q.id];
       delete prog.duelSkips[q.id];
+      if (prog.answers[q.id] !== undefined && prog.answers[q.id] >= 0 && prog.answers[q.id] !== q.ans) {
+        prog.answers[q.id] = chosen;
+      }
     } else {
       prog.duelWrongs[q.id] = chosen;
       delete prog.duelSkips[q.id];
@@ -2431,6 +2609,7 @@ async function finishDuelRun() {
   d.fin = 1;
   d.palOpen = false;
   d.leaveOpen = false;
+  d.finishConfirmOpen = false;
   if (Array.isArray(d.qs)) {
     d.qs.forEach(markDuelQuestionSeen);
   }
@@ -2478,7 +2657,10 @@ async function rematchDuelRoom() {
     count: qRefs.length,
     qRefs
   };
+  const myPid = duelPid();
   duelPlayers().forEach(p => {
+    const newRole = (p.id === myPid ? 'host' : 'guest');
+    upd['p/' + p.id + '/role'] = newRole;
     upd['p/' + p.id + '/pts'] = 0;
     upd['p/' + p.id + '/k'] = 0;
     upd['p/' + p.id + '/ok'] = 0;
@@ -2487,6 +2669,9 @@ async function rematchDuelRoom() {
     upd['p/' + p.id + '/fin'] = 0;
     upd['p/' + p.id + '/ms'] = null;
     upd['p/' + p.id + '/ans'] = null;
+    if (d.room && d.room.p && d.room.p[p.id]) {
+      d.room.p[p.id].role = newRole;
+    }
   });
   d.round = nextRound;
   d.qRefs = qRefs;
@@ -2515,6 +2700,7 @@ async function leaveDuelRoom(goHome) {
   d.room = null;
   d.soloPractice = false;
   d.leaveOpen = false;
+  d.finishConfirmOpen = false;
   d.palOpen = false;
   d.stage = 'menu';
   d.err = '';
@@ -2730,21 +2916,25 @@ function renderDuelOverviewBody(rec, isLive) {
     '</table>' +
   '</div>' : '';
 
-  // 5) Bottom Action Controls (Shrinking-Pool Rematch + WhatsApp + History)
+  // 5) Bottom Action Controls (Practice Wrong Qs + Shrinking-Pool Rematch + WhatsApp + History)
+  const solveWrongBtn = me.wr > 0
+    ? '<button type="button" class="btn-sec" style="width:100%;padding:10px;border-color:#F43F5E;color:#BE123C;background:#FFF1F2;font-weight:800;" data-act="d-solve-match-wr" data-mid="' + esc(rec.id) + '">🔁 इस मैच के ' + me.wr + ' गलत सवाल अभी हल करें</button>'
+    : '';
   let actionsHtml = '';
   if (isLive) {
     const sc = getDuelScopeCounts(rec.scope);
     const nextN = sc.unseen > 0 ? Math.min(sc.unseen, app.duel.allScope ? sc.unseen : (Number(app.duel.count) || 30)) : 0;
-    const rematchBlk = (isDuelHost() || app.duel.soloPractice)
+    const canRematch = isDuelHost() || app.duel.soloPractice || isFinal;
+    const rematchBlk = canRematch
       ? (sc.unseen > 0
           ? '<button type="button" class="btn-pri" style="width:100%;height:48px;font-size:14px;border-radius:11px;" data-act="d-rematch">⚔️ अगला राउंड — बचे हुए ' + nextN + ' नए सवाल (' + sc.unseen + ' बाकी)</button>'
           : '<div style="background:#ECFDF5;border:1.5px solid #16A34A;border-radius:12px;padding:11px;text-align:center;display:flex;flex-direction:column;gap:7px;">' +
               '<div style="font-size:13px;font-weight:800;color:#14532D;">🎉 इस पाठ के सभी ' + sc.total + ' सवाल पूरे हो गए! (0 बाकी)</div>' +
               '<button type="button" class="btn-grn" style="width:100%;padding:10px;" data-act="d-reset-rematch">🔄 नया चक्र रीसेट करके फिर खेलें (' + Math.min(30, sc.total) + ' सवाल)</button>' +
             '</div>')
-      : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700;color:#475569;">बचे हुए सवालों पर अगले राउंड के लिए Host "अगला राउंड" दबाएँगी</div>';
+      : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700;color:#475569;">⏳ ' + esc(op ? op.name : 'दोस्त') + ' का खेल पूरा होते ही आप अगला राउंड शुरू कर सकेंगी</div>';
 
-    actionsHtml = rematchBlk +
+    actionsHtml = solveWrongBtn + rematchBlk +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
         '<button type="button" class="btn-grn" data-act="d-wa-share" data-mid="' + esc(rec.id) + '">📲 WhatsApp परिणाम</button>' +
         '<button type="button" class="btn-sec" style="border-color:#8B5CF6;color:#5B21B6;background:#F5F3FF;font-weight:800;" data-act="open-dhist">📜 1v1 इतिहास (' + histArr.length + ')</button>' +
@@ -2752,7 +2942,8 @@ function renderDuelOverviewBody(rec, isLive) {
       '<button type="button" class="btn-sec" style="width:100%;padding:10px;font-weight:800;" data-act="d-leave-home">🏠 होम पर जाएँ</button>';
   } else {
     const sc = getDuelScopeCounts(rec.scope);
-    actionsHtml = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+    actionsHtml = solveWrongBtn +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
         '<button type="button" class="btn-sec" style="font-weight:800;" data-act="open-dhist">← सभी 1v1 मैच</button>' +
         '<button type="button" class="btn-grn" data-act="d-wa-share" data-mid="' + esc(rec.id) + '">📲 WhatsApp परिणाम</button>' +
       '</div>' +
@@ -2935,11 +3126,7 @@ function renderDuelSolView() {
   const stTxt = mSkipped ? '⬜ छोड़ा (0 अंक)' : (mOk ? '✓ सही (+3 अंक)' : '✗ गलत (−1 अंक)');
   const pageLbl = extractPageLabel(q, chObj);
 
-  const matchHtml = (q.match && q.match.length)
-    ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-        q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-      '</tbody></table>'
-    : '';
+  const matchHtml = renderMatchTableHtml(q, 15.5);
 
   const optsHtml = q.opts.map((opt, j) => {
     const isRight = j === q.ans;
@@ -2989,7 +3176,7 @@ function renderDuelSolView() {
       '</div>' +
     '</div>' +
     '<div class="body-scr scr quiz-body">' +
-      '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
+      renderStemBlockHtml(q, 20) +
       '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc((chObj ? chObj.title + ' · ' : '') + q.src) + '</div>' +
       matchHtml +
       optsHtml +
@@ -3035,11 +3222,7 @@ function renderDuelView() {
       return '<button type="button" class="' + cls + '" data-act="d-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
     }).join('');
 
-    const matchHtml = (q.match && q.match.length)
-      ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-        '</tbody></table>'
-      : '';
+    const matchHtml = renderMatchTableHtml(q, 15.5);
 
     const optsHtml = q.opts.map((opt, idx) => {
       let cls = 'opt-card';
@@ -3113,14 +3296,27 @@ function renderDuelView() {
       '</div></div>';
     }
 
+    const remUnans = Math.max(0, d.qs.length - myS.k);
     const leaveModal = d.leaveOpen
       ? '<div class="modal-bg"><div class="modal-card" style="border-color:#0794C7;">' +
           '<div style="font-size:16px;font-weight:800;">मुक़ाबला बीच में छोड़ना है?</div>' +
           '<div style="font-size:12.5px;color:#475569;line-height:1.5;">अभी तक आपने <b>' + myS.k + ' / ' + d.qs.length + '</b> सवाल हल किए हैं। आप चाहें तो यहीं परिणाम देख सकती हैं या बाहर निकल सकती हैं।</div>' +
           '<div style="display:flex;flex-direction:column;gap:7px;">' +
             '<button type="button" class="btn-pri" data-act="d-leave-no">▶ खेल जारी रखें</button>' +
-            (myS.k > 0 ? '<button type="button" class="btn-grn" data-act="d-finish">🏆 इतने पर ही परिणाम देखें</button>' : '') +
+            (myS.k > 0 ? '<button type="button" class="btn-grn" data-act="d-finish-force">🏆 इतने पर ही परिणाम देखें</button>' : '') +
             '<button type="button" class="btn-sec" data-act="d-leave-yes">✖ चैलेंज बंद करें</button>' +
+          '</div>' +
+        '</div></div>'
+      : '';
+
+    const finishConfirmModal = d.finishConfirmOpen
+      ? '<div class="modal-bg"><div class="modal-card" style="border-color:#F59E0B;">' +
+          '<div style="font-size:16px;font-weight:800;color:#92400E;">⚠️ अभी ' + remUnans + ' सवाल बाकी हैं!</div>' +
+          '<div style="font-size:12.5px;color:#475569;line-height:1.5;">आपने <b>' + myS.k + ' / ' + d.qs.length + '</b> सवाल हल किए हैं। क्या बचे हुए ' + remUnans + ' सवाल पहले हल करेंगी या अभी परिणाम देखेंगी?</div>' +
+          '<div style="display:flex;flex-direction:column;gap:7px;">' +
+            '<button type="button" class="btn-pri" data-act="d-next-unans">▶ बाकी सवाल हल करें (' + remUnans + ' बाकी)</button>' +
+            '<button type="button" class="btn-grn" data-act="d-finish-force">🏆 हाँ, इतने पर ही परिणाम देखें</button>' +
+            '<button type="button" class="btn-sec" data-act="d-finish-no">✖ बंद</button>' +
           '</div>' +
         '</div></div>'
       : '';
@@ -3128,7 +3324,9 @@ function renderDuelView() {
     const isLast = d.qIdx === d.qs.length - 1;
     const midBtn = !hasPick
       ? '<button type="button" class="f-skip" data-act="d-skip">⏭ नहीं आता</button>'
-      : '<button type="button" class="f-retry" data-act="d-finish">🏆 पूरा करें (' + myS.k + '/' + d.qs.length + ')</button>';
+      : (remUnans > 0
+          ? '<button type="button" class="f-retry" data-act="d-next-unans">⏭ अगला बाकी (' + remUnans + ')</button>'
+          : '<button type="button" class="btn-grn" style="padding:9px 5px;font-size:12.5px;" data-act="d-finish-force">🏆 परिणाम (' + myS.k + '/' + d.qs.length + ')</button>');
 
     return '<div class="hd">' +
         '<div class="hd-l"><button type="button" class="hd-btn" data-act="d-ask-leave">←</button><span class="hd-ttl">⚔️ 1v1 Challenge' + (d.code ? ' · ' + esc(d.code) : '') + '</span></div>' +
@@ -3152,7 +3350,7 @@ function renderDuelView() {
         '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="d-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button>' +
       '</div>' +
       '<div class="body-scr scr quiz-body">' +
-        '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
+        renderStemBlockHtml(q, 20) +
         '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
         matchHtml +
         optsHtml +
@@ -3165,7 +3363,8 @@ function renderDuelView() {
         '<button type="button" class="f-next" data-act="' + (isLast ? 'd-finish' : 'd-step') + '" data-d="1">' + (isLast ? 'परिणाम देखें ›' : 'अगला ›') + '</button>' +
       '</div>' +
       palSheet +
-      leaveModal;
+      leaveModal +
+      finishConfirmModal;
   }
 
   let body = '';
@@ -3290,6 +3489,69 @@ function renderDuelView() {
     '<div class="body-scr scr" style="padding:11px;background:#F5F8FA;">' + body + '</div>';
 }
 
+function syncBackHistoryGuard() {
+  if (typeof window === 'undefined' || window.__DISABLE_TIMERS || !window.history || typeof window.history.pushState !== 'function') return;
+  const needsGuard = app.view !== 'home' && app.view !== 'welcome';
+  if (needsGuard && !app._backArmed) {
+    try {
+      window.history.pushState({ tgtNavGuard: 1 }, '');
+      app._backArmed = true;
+    } catch (_) {}
+  }
+}
+
+function handleBackNavigation() {
+  if (app.view === 'quiz') {
+    if (app.quiz.palOpen) { app.quiz.palOpen = false; render(); return true; }
+    if (app.quiz.zoomOpen) { app.quiz.zoomOpen = false; render(); return true; }
+    app.view = app.quiz.isVault ? 'vault' : 'home';
+    render();
+    return true;
+  }
+  if (app.view === 'result') {
+    app.view = 'quiz';
+    render();
+    return true;
+  }
+  if (app.view === 'vault') {
+    if (app.vault.zoomOpen) { app.vault.zoomOpen = false; render(); return true; }
+    app.view = 'home';
+    render();
+    return true;
+  }
+  if (app.view === 'duel_sol') {
+    if (app.duelSol.zoomOpen) { app.duelSol.zoomOpen = false; render(); return true; }
+    if (app.duelSol.fromLive && app.duel.stage === 'result') app.view = 'duel';
+    else { app.duelHist.activeId = app.duelSol.matchId; app.view = 'duel_hist_res'; }
+    render();
+    return true;
+  }
+  if (app.view === 'duel_hist_res') {
+    if (app.duel.zoomOpen) { app.duel.zoomOpen = false; render(); return true; }
+    app.view = 'duel_hist';
+    render();
+    return true;
+  }
+  if (app.view === 'duel_hist') {
+    app.view = 'home';
+    render();
+    return true;
+  }
+  if (app.view === 'duel') {
+    if (app.duel.palOpen) { app.duel.palOpen = false; render(); return true; }
+    if (app.duel.finishConfirmOpen) { app.duel.finishConfirmOpen = false; render(); return true; }
+    if (app.duel.leaveOpen) { app.duel.leaveOpen = false; render(); return true; }
+    if (app.duel.zoomOpen) { app.duel.zoomOpen = false; render(); return true; }
+    if (app.duel.stage === 'live') { app.duel.leaveOpen = true; render(); return true; }
+    if (app.duel.stage === 'lobby') { leaveDuelRoom(false); return true; }
+    if (app.duel.stage === 'result') { leaveDuelRoom(true); return true; }
+    app.view = 'home';
+    render();
+    return true;
+  }
+  return false;
+}
+
 function render() {
   const root = document.getElementById('appRoot');
   if (!root) return '';
@@ -3300,8 +3562,7 @@ function render() {
 
   let renderKey = app.view;
   if (app.view === 'quiz') {
-    const p = getQuizPicked(app.quiz.cur);
-    renderKey = 'quiz:' + (app.quiz.isVault ? 'vault' : app.quiz.chId) + ':' + app.quiz.cur + ':' + (p !== undefined ? 'sol' : 'q');
+    renderKey = 'quiz:' + (app.quiz.isVault ? 'vault' : app.quiz.chId) + ':' + app.quiz.cur;
   } else if (app.view === 'home') {
     renderKey = 'home:' + app.userData.tabId;
   } else if (app.view === 'vault') {
@@ -3327,15 +3588,19 @@ function render() {
   else if (app.view === 'duel_sol') html = renderDuelSolView();
   else html = renderDuelView();
   const popupHtml = hasIncomingChallenge() ? renderIncomingModal(app.duel.activeInvite) : '';
-  root.innerHTML = html + popupHtml + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
+  root.innerHTML = html + popupHtml;
+  renderToastDom();
 
+  const newBody = root.querySelector ? root.querySelector('.body-scr') : null;
+  const newHome = root.querySelector ? root.querySelector('.cm-scroll') : null;
   if (renderKey === app._lastRenderKey) {
-    const newBody = root.querySelector ? root.querySelector('.body-scr') : null;
-    const newHome = root.querySelector ? root.querySelector('.cm-scroll') : null;
     if (newBody) newBody.scrollTop = prevBodyTop;
     if (newHome) newHome.scrollTop = prevHomeTop;
+  } else {
+    if (newBody) newBody.scrollTop = 0;
   }
   app._lastRenderKey = renderKey;
+  syncBackHistoryGuard();
 
   if ((app.view === 'quiz' || app.view === 'duel_sol' || (app.view === 'duel' && app.duel.stage === 'live')) && root.querySelector) {
     const strip = root.querySelector('.q-strip');
@@ -3382,6 +3647,7 @@ function openChapter(chId, mode) {
     }
     ids = ch.questions.map(q => q.id);
   }
+  const useSess = (mode === 'wrong' || mode === 'star' || mode === 'skip');
   app.userData.lastChId = chId;
   saveUserData(app.userId, app.userData);
   app.quiz = {
@@ -3389,10 +3655,12 @@ function openChapter(chId, mode) {
     title: ch.title,
     mode,
     isVault: false,
+    useSessionAns: useSess,
+    sessionAns: {},
     vaultRefs: [],
     vaultAns: {},
     qIds: ids,
-    cur: (mode === 'resume' && ids.length === ch.questions.length && Object.keys(prog.answers || {}).length === 0) ? 0 : 0,
+    cur: 0,
     palOpen: false,
     palFilter: 'all',
     zoomOpen: false,
@@ -3473,6 +3741,7 @@ function handleAction(el, ev) {
   if (act === 'open-vault') {
     app.vault.tab = el.getAttribute('data-v') || 'star';
     app.vault.chFilter = 'all';
+    app.vault.cardPicks = {};
     app.view = 'vault';
     render(); return;
   }
@@ -3480,9 +3749,25 @@ function handleAction(el, ev) {
     app.view = 'vault';
     render(); return;
   }
-  if (act === 'v-tab') { app.vault.tab = el.getAttribute('data-v') || 'star'; app.vault.chFilter = 'all'; render(); return; }
+  if (act === 'v-tab') { app.vault.tab = el.getAttribute('data-v') || 'star'; app.vault.chFilter = 'all'; app.vault.cardPicks = {}; render(); return; }
   if (act === 'v-ch') { app.vault.chFilter = el.getAttribute('data-v') || 'all'; render(); return; }
   if (act === 'v-ztog') { app.vault.zoomOpen = !app.vault.zoomOpen; render(); return; }
+  if (act === 'v-pick') {
+    const k = el.getAttribute('data-k');
+    const oi = Number(el.getAttribute('data-i'));
+    if (!k || !Number.isFinite(oi)) return;
+    if (app.vault.cardPicks[k] !== undefined) return;
+    app.vault.cardPicks[k] = oi;
+    render(); return;
+  }
+  if (act === 'v-retry-card') {
+    const k = el.getAttribute('data-k');
+    if (k) {
+      delete app.vault.cardPicks[k];
+      delete app.vault.openAns[k];
+    }
+    render(); return;
+  }
   if (act === 'v-tog-ans') {
     const k = el.getAttribute('data-k');
     app.vault.openAns[k] = !app.vault.openAns[k];
@@ -3526,6 +3811,7 @@ function handleAction(el, ev) {
 
   // Quiz actions (supports both Chapter Quiz & Multi-Chapter Vault Quiz)
   if (act === 'q-pick') {
+    if (getQuizPicked(app.quiz.cur) !== undefined) return;
     const chosen = Number(el.getAttribute('data-i'));
     const it = getQuizItem(app.quiz.cur);
     if (!it) return;
@@ -3538,6 +3824,16 @@ function handleAction(el, ev) {
         if (prog.answers[it.q.id] !== undefined && prog.answers[it.q.id] !== it.q.ans) prog.answers[it.q.id] = chosen;
       } else {
         prog.duelWrongs[it.q.id] = chosen;
+      }
+    } else if (app.quiz.useSessionAns) {
+      app.quiz.sessionAns[app.quiz.cur] = chosen;
+      prog.answers[it.q.id] = chosen;
+      if (chosen === it.q.ans) {
+        delete prog.duelWrongs[it.q.id];
+        delete prog.duelSkips[it.q.id];
+      } else {
+        prog.duelWrongs[it.q.id] = chosen;
+        delete prog.duelSkips[it.q.id];
       }
     } else {
       prog.answers[it.q.id] = chosen;
@@ -3559,13 +3855,15 @@ function handleAction(el, ev) {
     const prog = getChProg(it.chId);
     if (app.quiz.isVault) {
       app.quiz.vaultAns[app.quiz.cur] = -1;
+    } else if (app.quiz.useSessionAns) {
+      app.quiz.sessionAns[app.quiz.cur] = -1;
     } else {
       prog.answers[it.q.id] = -1;
       prog.curIdx = app.quiz.cur;
       saveUserData(app.userId, app.userData);
     }
     app.quiz.showQInSol = false;
-    showToast('⏭ नहीं आता (0 निगेटिव अंक) · सही उत्तर देखें');
+    showToast('⏭ नहीं आता (0 निगेटिव अंक) · नीचे सही उत्तर देखें');
     return;
   }
   if (act === 'q-retry') {
@@ -3573,6 +3871,8 @@ function handleAction(el, ev) {
     if (!it) return;
     if (app.quiz.isVault) {
       delete app.quiz.vaultAns[app.quiz.cur];
+    } else if (app.quiz.useSessionAns) {
+      delete app.quiz.sessionAns[app.quiz.cur];
     } else {
       const prog = getChProg(it.chId);
       delete prog.answers[it.q.id];
@@ -3642,8 +3942,52 @@ function handleAction(el, ev) {
   // Result actions
   if (act === 'r-mark') { app.result.marking = el.getAttribute('data-k'); render(); return; }
   if (act === 'r-tog') { const id = Number(el.getAttribute('data-id')); app.result.openQId = app.result.openQId === id ? null : id; render(); return; }
+  if (act === 'r-jump-q') {
+    const len = getQuizLength();
+    app.quiz.cur = Math.max(0, Math.min(len - 1, Number(el.getAttribute('data-i')) || 0));
+    app.view = 'quiz';
+    render(); return;
+  }
 
   // 1v1 History & Maths-Mock Style Q-by-Q Solution actions
+  if (act === 'd-solve-match-wr') {
+    const mid = el.getAttribute('data-mid') || currentDuelMatchId();
+    const rec = getDuelRecordById(mid);
+    if (!rec) return;
+    const qs = resolveDuelQuestions(rec.qRefs);
+    const meAns = (rec.me && rec.me.ans) || {};
+    const wrRefs = [];
+    qs.forEach((q, k) => {
+      const p = ansOfMap(meAns, k);
+      const cid = q._chId || rec.scope || 'ch01';
+      if (p !== undefined && p >= 0 && p !== q.ans && CHAPTER_BANK[cid]) {
+        wrRefs.push({ chId: cid, qId: q.id });
+      }
+    });
+    if (!wrRefs.length) {
+      showToast('इस मैच में कोई गलत सवाल नहीं है!');
+      return;
+    }
+    app.quiz = {
+      chId: wrRefs[0].chId,
+      title: '✗ इस मैच के गलत सवाल (' + wrRefs.length + ')',
+      mode: 'wrong',
+      isVault: true,
+      useSessionAns: false,
+      sessionAns: {},
+      vaultRefs: wrRefs,
+      vaultAns: {},
+      qIds: wrRefs.map(r => r.qId),
+      cur: 0,
+      palOpen: false,
+      palFilter: 'all',
+      zoomOpen: false,
+      showQInSol: false,
+      showOther: false
+    };
+    app.view = 'quiz';
+    render(); return;
+  }
   if (act === 'open-dhist') {
     app.view = 'duel_hist';
     render(); return;
@@ -3860,7 +4204,45 @@ function handleAction(el, ev) {
     if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
     return;
   }
-  if (act === 'd-finish') { finishDuelRun(); return; }
+  if (act === 'd-next-unans') {
+    const d = app.duel;
+    const n = d.qs.length;
+    let found = -1;
+    for (let step = 1; step <= n; step++) {
+      const idx = (d.qIdx + step) % n;
+      if (d.myAns[idx] === undefined) { found = idx; break; }
+    }
+    d.finishConfirmOpen = false;
+    d.palOpen = false;
+    if (found >= 0) {
+      d.qIdx = found;
+      render();
+    } else {
+      finishDuelRun();
+    }
+    return;
+  }
+  if (act === 'd-finish') {
+    const myS = calcMyDuelStats();
+    if (myS.k < app.duel.qs.length) {
+      app.duel.palOpen = false;
+      app.duel.finishConfirmOpen = true;
+      render();
+      return;
+    }
+    finishDuelRun();
+    return;
+  }
+  if (act === 'd-finish-force') {
+    app.duel.finishConfirmOpen = false;
+    finishDuelRun();
+    return;
+  }
+  if (act === 'd-finish-no') {
+    app.duel.finishConfirmOpen = false;
+    render();
+    return;
+  }
   if (act === 'd-rematch') { rematchDuelRoom(); return; }
   if (act === 'd-tog-rev') { app.duel.showReview = !app.duel.showReview; render(); return; }
   if (act === 'd-res-exp') { const i = Number(el.getAttribute('data-i')); app.duel.resOpenIdx = app.duel.resOpenIdx === i ? null : i; render(); return; }
@@ -3956,7 +4338,7 @@ function bindQuizSwipe() {
     if (hasIncomingChallenge()) return false;
     if (app.view === 'quiz' && !app.quiz.palOpen) return true;
     if (app.view === 'duel_sol') return true;
-    if (app.view === 'duel' && app.duel.stage === 'live' && !app.duel.palOpen && !app.duel.leaveOpen) return true;
+    if (app.view === 'duel' && app.duel.stage === 'live' && !app.duel.palOpen && !app.duel.leaveOpen && !app.duel.finishConfirmOpen) return true;
     return false;
   };
   root.addEventListener('touchstart', (e) => {
@@ -3984,6 +4366,15 @@ function bindQuizSwipe() {
   }, { passive: true });
 }
 
+if (typeof window !== 'undefined' && window.addEventListener) {
+  window.addEventListener('popstate', () => {
+    app._backArmed = false;
+    if (handleBackNavigation()) {
+      syncBackHistoryGuard();
+    }
+  });
+}
+
 initChapterStore();
 duelPid();
 bindQuizSwipe();
@@ -4009,7 +4400,7 @@ startLiveSyncLoop();
 if (typeof globalThis !== 'undefined') {
   globalThis.__TGT_APP = {
     app, ROADMAP, CHAPTER_BANK, openChapter, stepQuiz, loadGlobalZoom, saveGlobalZoom, splitReadablePoints, highlightHindiFacts,
-    importChapterData, calcMarks, handleAction, render, getChProg, getUserStats,
+    importChapterData, calcMarks, handleAction, handleBackNavigation, render, getChProg, getUserStats,
     getVaultItems, getVaultCounts, getDuelScopeCounts, resetDuelScopePool, openVaultQuiz, launchVaultDuel, stepDuelSol,
     createDuelRoom, joinDuelRoom, startDuelRoom, handleDuelPick, handleDuelSkip, stepDuel, finishDuelRun, rematchDuelRoom, leaveDuelRoom,
     startDuelMatch, sendPresence, syncLiveState, sendDuelInvite, acceptDuelInvite, rejectDuelInvite, cancelDuelInvite, advanceDuelNext
