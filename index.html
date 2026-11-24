@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0794C7">
+<title>TGT GK अभ्यास (मंजू · प्रियंका)</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TGT GK">
+<style>
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; background: #E9EFF4; color: #0F172A;
+    font-family: Arial, "Noto Sans Devanagari", "Nirmala UI", sans-serif;
+    overflow: hidden;
+  }
+  @keyframes cmDraw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @keyframes cmLeafIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes cmTwigIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes cmGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(7,148,199,.38); } 50% { box-shadow: 0 0 0 6px rgba(7,148,199,0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  .scr::-webkit-scrollbar { width: 4px; height: 4px; }
+  .scr::-webkit-scrollbar-thumb { background: rgba(15,23,42,.2); border-radius: 99px; }
+
+  .app-wrap {
+    position: fixed; inset: 0; display: flex; justify-content: center; align-items: stretch;
+    background: #DCE5EE;
+  }
+  .app-shell {
+    width: 100%; max-width: 440px; height: 100%; background: #F5F8FA;
+    display: flex; flex-direction: column; position: relative; overflow: hidden;
+    box-shadow: 0 12px 36px rgba(15,23,42,.18);
+  }
+  @media (min-width: 520px) {
+    .app-wrap { padding: 10px 0; }
+    .app-shell { border-radius: 26px; border: 5px solid #263238; }
+  }
+
+  /* Shared Header & Avatars */
+  .hd {
+    background: linear-gradient(135deg,#0794C7,#0578A3); color: #fff;
+    padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; flex: none;
+  }
+  .hd-l { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+  .hd-ttl { font-size: 14.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hd-btn {
+    background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.36); color: #fff;
+    border-radius: 7px; padding: 4px 8px; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; flex: none;
+  }
+  .usr-pill {
+    background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.38); color: #fff;
+    border-radius: 99px; padding: 2px 9px 2px 3px; font: inherit; font-size: 11.5px; font-weight: 800;
+    display: inline-flex; align-items: center; gap: 5px; cursor: pointer; flex: none;
+  }
+  .av-xs { width: 20px; height: 20px; border-radius: 999px; object-fit: cover; object-position: center 22%; border: 1.5px solid rgba(255,255,255,.92); flex: none; display: inline-block; vertical-align: middle; }
+  .av-md { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; object-position: center 22%; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(15,23,42,.14); flex: none; display: inline-block; }
+  .av-lg { width: 56px; height: 56px; border-radius: 999px; object-fit: cover; object-position: center 22%; border: 2.5px solid #fff; box-shadow: 0 3px 10px rgba(15,23,42,.16); flex: none; display: inline-block; }
+
+  .body-scr { flex: 1; min-height: 0; overflow-y: auto; }
+  .ft {
+    background: #fff; border-top: 1px solid #DCE5EC; padding: 8px 11px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: none;
+  }
+  .btn-pri { background: #0794C7; color: #fff; border: none; border-radius: 8px; padding: 8px 13px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+  .btn-grn { background: #1E7E4E; color: #fff; border: none; border-radius: 8px; padding: 8px 13px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+  .btn-sec { background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; border-radius: 8px; padding: 7px 11px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .u-btn { border: 1px solid #CBD5E1; background: #F8FAFC; color: #334155; border-radius: 6px; padding: 4px 8px; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+  .u-btn.on { background: #0794C7; color: #fff; border-color: #0794C7; }
+
+  /* Combo C Locked Home */
+  .cm-res { width: 100%; background: #E3F3FA; border: none; border-bottom: 1px solid #BAE6FD; padding: 7px 11px; display: flex; align-items: center; justify-content: space-between; gap: 7px; cursor: pointer; text-align: left; flex: none; font: inherit; }
+  .cm-res-b { background: #0794C7; color: #fff; border-radius: 6px; padding: 4px 10px; font-size: 11.5px; font-weight: 800; flex: none; }
+  .cm-book { flex: 1; min-height: 0; display: flex; overflow: hidden; background: #E8EFF5; }
+  .cm-rail { width: 70px; flex: none; overflow-y: auto; padding: 7px 0 7px 4px; display: flex; flex-direction: column; gap: 5px; border-right: 1px solid #CBD5E1; }
+  .cm-tab { width: 100%; background: var(--soft); border: 1px solid #CBD5E1; border-left: 4px solid var(--c); border-right: none; border-radius: 10px 0 0 10px; padding: 7px 3px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; color: #334155; font: inherit; transition: transform .15s; }
+  .cm-tab.is-on { background: var(--page,#FFFFFF); color: #0F172A; border-top: 1.5px solid var(--c); border-bottom: 1.5px solid var(--c); border-left: 5px solid var(--c); margin-right: -1px; z-index: 3; box-shadow: -2px 2px 6px rgba(15,23,42,.08); }
+  .cm-ti { font-size: 16px; line-height: 1.1; }
+  .cm-tn { font-size: 10px; font-weight: 800; max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cm-tc { font-size: 10px; font-weight: 700; color: #546E7A; }
+  .cm-tab.is-on .cm-tc { color: var(--c); }
+  .cm-page { flex: 1; min-width: 0; background: var(--page,#FFFFFF); display: flex; flex-direction: column; overflow: hidden; }
+  .cm-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 9px 9px 14px 5px; }
+  .cm-root { background: var(--soft); border: 1.5px solid var(--c); border-radius: 11px; padding: 8px 9px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .cm-draw { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: cmDraw .42s cubic-bezier(.22,1,.36,1) forwards; }
+  .cm-fan { display: block; width: 100%; height: 16px; overflow: visible; margin-left: 4px; }
+  .cm-row { display: flex; align-items: stretch; position: relative; }
+  .cm-srail { width: 25px; flex: none; position: relative; }
+  .cm-stem { position: absolute; left: 10px; top: 0; bottom: 0; width: 2.2px; border-radius: 2px; opacity: .8; }
+  .cm-stem.last { bottom: auto; height: 16px; }
+  .cm-bsvg { display: block; width: 25px; height: 38px; overflow: visible; position: relative; z-index: 1; }
+  .cm-leaf { flex: 1; min-width: 0; background: #fff; border: 1.5px solid #DCE3E8; border-radius: 10px; margin-bottom: 6.5px; padding: 8px 9px; animation: cmLeafIn .24s cubic-bezier(.22,1,.36,1) both; }
+  .cm-leaf.done { border-color: #2E7D32; }
+  .cm-leaf.rdy { border-color: #0794C7; }
+  .cm-leaf.glow { border-color: #0794C7; animation: cmLeafIn .24s cubic-bezier(.22,1,.36,1) both, cmGlow 2s infinite; }
+  .cm-leaf.wait { opacity: .84; background: #FAFDFE; }
+  .cm-lbtn { width: 100%; background: transparent; border: none; padding: 0; display: flex; align-items: center; justify-content: space-between; gap: 6px; text-align: left; cursor: pointer; font: inherit; }
+  .cm-twigs { margin-top: 5px; padding-left: 10px; animation: cmTwigIn .22s ease both; }
+  .cm-tw-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+  .cm-tw-btn { flex: 1; border-radius: 7px; padding: 5px 2px; font: inherit; font-size: 10.5px; font-weight: 800; cursor: pointer; text-align: center; }
+
+  /* #0794C7 Question Screen */
+  .q-strip { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 7px 10px; display: flex; align-items: center; gap: 6px; overflow-x: auto; flex: none; }
+  .q-num { width: 27px; height: 27px; border-radius: 99px; border: 1.5px solid #CBD5E1; background: #fff; color: #334155; font: inherit; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; }
+  .q-num.cur { border: 2.5px solid #FF6F00; color: #0F172A; }
+  .q-num.ok { background: #E8F5E9; border-color: #2E7D32; color: #2E7D32; }
+  .q-num.bad { background: #FFEBEE; border-color: #C62828; color: #C62828; }
+  .util-bar { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between; gap: 5px; flex: none; font-size: 11.5px; font-weight: 700; color: #475569; }
+  .q-card { background: #fff; border: 1px solid #DCE5EC; border-radius: 13px; padding: 12px; margin-bottom: 9px; }
+  .q-stem { font-weight: 800; color: #0F172A; line-height: 1.52; white-space: pre-line; }
+  .q-src { font-size: 12px; font-weight: 700; color: #0F172A; margin-top: 6px; }
+  .mtab { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+  .mtab th, .mtab td { border: 1px solid #CBD5E1; padding: 5px 7px; text-align: left; vertical-align: top; }
+  .mtab th { background: #E3F3FA; color: #0578A3; font-weight: 800; }
+
+  .opt-card { background: #fff; border: 1.5px solid #DCE5EC; border-radius: 11px; margin-bottom: 7px; overflow: hidden; transition: border-color .15s, background .15s; }
+  .opt-card.is-right { background: #E8F5E9; border-color: #2E7D32; }
+  .opt-card.is-wrong { background: #FFEBEE; border-color: #C62828; }
+  .opt-btn { width: 100%; background: transparent; border: none; padding: 10px 11px; display: flex; align-items: center; gap: 9px; text-align: left; font: inherit; color: #0F172A; font-weight: 600; cursor: pointer; }
+  .opt-card.is-right .opt-btn { color: #1B5E20; font-weight: 800; }
+  .opt-card.is-wrong .opt-btn { color: #B71C1C; font-weight: 800; }
+  .opt-pill { width: 24px; height: 24px; border-radius: 99px; background: #ECEFF1; color: #37474F; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .opt-card.is-right .opt-pill { background: #2E7D32; color: #fff; }
+  .opt-card.is-wrong .opt-pill { background: #C62828; color: #fff; }
+
+  /* E1 & R1 Editorial Story Timeline */
+  .ed-sheet { background: #FFFFFF; border-radius: 15px; padding: 13px 14px; margin-top: 9px; box-shadow: 0 2px 14px rgba(15,23,42,.06); animation: fadeUp .22s ease both; }
+  .tl-wrap { position: relative; padding-left: 20px; margin: 9px 0; }
+  .tl-line { position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: #DCE7F0; border-radius: 2px; }
+  .tl-item { position: relative; padding-bottom: 9px; font-size: 13px; line-height: 1.62; color: #334155; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { position: absolute; left: -19px; top: 6px; width: 11px; height: 11px; border-radius: 99px; background: #fff; border: 2px solid #94A3B8; }
+  .tl-dot.hi { background: #0794C7; border-color: #E0F2FE; box-shadow: 0 0 0 3px rgba(7,148,199,.22); }
+  .tl-dot.bad { border-color: #FB7185; }
+  .tl-dot.sk { border-color: #94A3B8; }
+
+  /* P1 Palette Rising Sheet & V3 1v1 Overlay */
+  .sheet-bg { position: absolute; inset: 0; z-index: 35; background: rgba(15,23,42,.42); display: flex; flex-direction: column; justify-content: flex-end; }
+  .sheet-box { background: #fff; border-radius: 18px 18px 0 0; padding: 12px 14px 16px; max-height: 78%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -6px 24px rgba(0,0,0,.22); animation: fadeUp .18s ease both; }
+  .pal-grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; overflow-y: auto; padding: 2px; }
+  .modal-bg { position: absolute; inset: 0; z-index: 40; background: rgba(15,23,42,.56); display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .modal-card { background: #fff; border: 2px solid #1E7E4E; border-radius: 18px; padding: 16px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 12px 28px rgba(0,0,0,.28); }
+
+  .toast { position: absolute; left: 12px; right: 12px; bottom: 54px; z-index: 60; background: #1E293B; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 9px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="app-wrap">
+  <div class="app-shell" id="appRoot"></div>
+</div>
+<input type="file" id="jsonImportInput" accept=".json,application/json" multiple style="display:none;">
+
+<script src="./data/avatars.js"></script>
+<script src="./data/chapters_bundle.js"></script>
+<script>
+'use strict';
+
+// Optional future live multi-device 1v1 endpoint (leave empty for offline + simulated opponent + WhatsApp invite mode)
+const FIREBASE_DB_URL = '';
+
+const ROADMAP = [
+  { id:'env', icon:'🌿', short:'पर्यावरण', name:'पर्यावरण', color:'#1E7E4E', soft:'#E8F6EE',
+    chapters:[
+      { t:'पर्यावरण सम्मेलन', p:'प. 416', est:46, exam:'both', chId:'ch02' },
+      { t:'पर्यावरण विज्ञान के मूल तत्व', p:'प. 407–408', est:66, exam:'both', chId:'ch03' },
+      { t:'पारिस्थितिकी तंत्र', p:'प. 409–411', est:85, exam:'both', chId:'ch04' },
+      { t:'राष्ट्रीय उद्यान', p:'प. 417–419', est:122, exam:'both', chId:'ch05' }
+    ]
+  },
+  { id:'pol', icon:'⚖️', short:'राजव्यवस्था', name:'राजव्यवस्था', color:'#0794C7', soft:'#E3F3FA',
+    chapters:[
+      { t:'संविधान का निर्माण', p:'प. 185–187', est:107, exam:'both', chId:'ch01' },
+      { t:'संविधान की प्रमुख विशेषताएं', p:'प. 188–189', est:50, exam:'both' },
+      { t:'संवैधानिक व गैर-संवैधानिक निकाय', p:'प. 234–237', est:65, exam:'both' },
+      { t:'स्थानीय सरकार (पंचायत)', p:'प. 231–233', est:60, exam:'both' },
+      { t:'मौलिक अधिकार', p:'प. 196–200', est:80, exam:'both' },
+      { t:'नीति निदेशक सिद्धांत व कर्तव्य', p:'प. 201–203', est:55, exam:'both' },
+      { t:'राष्ट्रपति और उपराष्ट्रपति', p:'प. 204–206', est:60, exam:'both' },
+      { t:'प्रधानमंत्री और मंत्रिपरिषद', p:'प. 207–208', est:45, exam:'both' },
+      { t:'संसद (लोकसभा व राज्यसभा)', p:'प. 209–216', est:110, exam:'both' },
+      { t:'सर्वोच्च व उच्च न्यायालय', p:'प. 226–230', est:70, exam:'both' },
+      { t:'आपातकाल व संविधान संशोधन', p:'प. 223–225', est:60, exam:'both' },
+      { t:'संविधान के स्रोत व राजभाषा', p:'प. 243–244', est:45, exam:'both' },
+      { t:'महत्वपूर्ण अधिनियम (1773–1935)', p:'प. 240–242', est:55, exam:'both' },
+      { t:'नागरिकता व राज्य विधायिका', p:'प. 192–195, 217', est:70, exam:'delhi' }
+    ]
+  },
+  { id:'his', icon:'🏛️', short:'इतिहास', name:'इतिहास', color:'#A6541D', soft:'#FBEFE6',
+    chapters:[
+      { t:'सामाजिक धार्मिक सुधार', p:'प. 159–161', est:55, exam:'both' },
+      { t:'1857 का विद्रोह', p:'प. 162–166', est:65, exam:'both' },
+      { t:'भारतीय राष्ट्रीय कांग्रेस', p:'प. 167–168', est:45, exam:'both' },
+      { t:'बंगाल विभाजन व स्वदेशी', p:'प. 169–171', est:55, exam:'both' },
+      { t:'गांधी युग (1915–1932)', p:'प. 172–174', est:60, exam:'both' },
+      { t:'भारत छोड़ो आंदोलन व आज़ादी', p:'प. 179–182', est:70, exam:'both' },
+      { t:'गवर्नर-जनरल और वायसराय', p:'प. 183–184', est:50, exam:'both' },
+      { t:'वैदिक युग (संस्कृत विशेष)', p:'प. 98–101', est:65, exam:'both' },
+      { t:'जैन धर्म और बौद्ध धर्म', p:'प. 104–108', est:80, exam:'both' },
+      { t:'मौर्य साम्राज्य', p:'प. 111–114', est:60, exam:'both' },
+      { t:'गुप्त वंश (कालिदास/नवरत्न)', p:'प. 118–120', est:55, exam:'both' },
+      { t:'मुगल साम्राज्य', p:'प. 143–149', est:85, exam:'both' },
+      { t:'पाषाण युग (दिल्ली सुपर-हिट)', p:'प. 91–93', est:50, exam:'delhi' },
+      { t:'गुप्तोत्तर व चोल काल', p:'प. 121–132', est:75, exam:'delhi' },
+      { t:'दिल्ली सल्तनत', p:'प. 133–138', est:70, exam:'delhi' },
+      { t:'विजयनगर और बहमनी', p:'प. 139–142', est:50, exam:'delhi' }
+    ]
+  },
+  { id:'geo', icon:'🌍', short:'भूगोल', name:'भूगोल व जनगणना', color:'#0D7A72', soft:'#E7F5F4',
+    chapters:[
+      { t:'जनगणना 2011 (UP + भारत)', p:'प. 466–468', est:70, exam:'both' },
+      { t:'हिमालयी नदी तंत्र', p:'प. 49–52', est:65, exam:'both' },
+      { t:'भारतीय मानसून व जलवायु', p:'प. 59–61', est:50, exam:'both' },
+      { t:'कृषि व फसलें', p:'प. 68–71', est:60, exam:'both' },
+      { t:'खनिज व ऊर्जा केंद्र', p:'प. 72–76', est:65, exam:'both' },
+      { t:'मानव भूगोल व जनजातियाँ', p:'प. 86–87', est:45, exam:'both' },
+      { t:'सौरमण्डल (UPESSC खास)', p:'प. 1–6', est:75, exam:'both' },
+      { t:'विश्व मानचित्र सार', p:'चुनिंदा 2 प.', est:40, exam:'both' },
+      { t:'हिमालय श्रेणियाँ व दर्रे', p:'प. 38–41', est:55, exam:'delhi' }
+    ]
+  },
+  { id:'eco', icon:'💰', short:'अर्थशास्त्र', name:'अर्थव्यवस्था', color:'#8A6314', soft:'#FBF4E2',
+    chapters:[
+      { t:'अर्थव्यवस्था का मूल सिद्धांत', p:'प. 245–247', est:45, exam:'both' },
+      { t:'मुद्रास्फीति और बेरोजगारी', p:'प. 262–265', est:55, exam:'both' },
+      { t:'बजट और कराधान', p:'प. 258–261', est:55, exam:'both' },
+      { t:'मौद्रिक नीति (Repo/SLR)', p:'प. 270–271', est:40, exam:'both' },
+      { t:'बैंकिंग भाग-2 (NABARD)', p:'प. 272–274', est:50, exam:'both' },
+      { t:'पंचवर्षीय योजनाएँ व 1991 सुधार', p:'प. 280–284', est:70, exam:'delhi' },
+      { t:'राष्ट्रीय आय (GDP / GNP)', p:'प. 254–257', est:50, exam:'delhi' },
+      { t:'व्यष्टि अर्थशास्त्र', p:'प. 248–253', est:60, exam:'delhi' },
+      { t:'बैंकिंग भाग-1 (RBI इतिहास)', p:'प. 266–269', est:50, exam:'delhi' }
+    ]
+  },
+  { id:'sci', icon:'🧬', short:'विज्ञान', name:'विज्ञान व स्वास्थ्य', color:'#6A1B9A', soft:'#F4ECF8',
+    chapters:[
+      { t:'पोषण (विटामिन व खनिज)', p:'प. 399–402', est:60, exam:'both' },
+      { t:'मानव रोग व बचाव', p:'प. 394–398', est:65, exam:'both' },
+      { t:'अम्ल, क्षार और लवण', p:'प. 342–345', est:50, exam:'both' },
+      { t:'मानव नेत्र और दृष्टि', p:'प. 306–309', est:45, exam:'both' },
+      { t:'आनुवंशिकता व ध्वनि', p:'प. 403–406, 297', est:50, exam:'delhi' }
+    ]
+  },
+  { id:'up', icon:'⚡', short:'UP व मॉक', name:'UP, ICT व मॉक', color:'#C62828', soft:'#FDECEA',
+    chapters:[
+      { t:'कंप्यूटर (ICT) व शिक्षा नियम', p:'कैप्सूल 4 प.', est:60, exam:'both' },
+      { t:'UP स्पेशल + UP बजट 2026–27', p:'कैप्सूल 6 प.', est:75, exam:'both' },
+      { t:'संधियाँ + 2026 करंट अफेयर्स', p:'कैप्सूल', est:80, exam:'both' },
+      { t:'असली 30-GK मॉक टेस्ट (UP)', p:'फुल टेस्ट', est:60, exam:'both' }
+    ]
+  },
+  { id:'sta', icon:'🎭', short:'संस्कृति', name:'स्टैटिक व संस्कृति', color:'#B45309', soft:'#FEF3C7',
+    chapters:[
+      { t:'राष्ट्रीय संगठन व संस्थान', p:'प. 498–499', est:40, exam:'delhi' },
+      { t:'शास्त्रीय नृत्य', p:'प. 430–433', est:55, exam:'delhi' },
+      { t:'भारत के प्रमुख त्योहार', p:'पूर्वोत्तर/लद्दाख', est:50, exam:'delhi' }
+    ]
+  }
+];
+
+function safeLS(key, fallback) {
+  try {
+    if (typeof localStorage === 'undefined') return fallback;
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (_) { return fallback; }
+}
+function saveLS(key, val) {
+  try { if (typeof localStorage !== 'undefined') localStorage.setItem(key, JSON.stringify(val)); } catch (_) {}
+}
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function avImg(who, cls, st) {
+  const av = (typeof window !== 'undefined' && window.TGT_AVATARS) ? window.TGT_AVATARS : {};
+  const src = (who === 'p' ? av.priyanka : av.manju) || '';
+  const alt = who === 'p' ? 'प्रियंका' : 'मंजू';
+  return '<img class="' + (cls || 'av-xs') + '" src="' + src + '" alt="' + alt + '"' + (st ? ' style="' + st + '"' : '') + '>';
+}
+
+// Chapter Store (Bundle + LocalStorage imported JSONs)
+const CHAPTER_BANK = {};
+function normalizeRawChapter(data) {
+  if (!data || !data.id || !data.title || !Array.isArray(data.questions) || !data.questions.length) {
+    throw new Error('अमान्य पाठ फ़ाइल: id, title या questions गायब हैं।');
+  }
+  const qs = data.questions.map((q, idx) => {
+    if (!Array.isArray(q.opts) || q.opts.length !== 4 || typeof q.ans !== 'number') {
+      throw new Error('सवाल #' + (idx + 1) + ' में 4 विकल्प और ans होना आवश्यक है।');
+    }
+    let rawQ = String(q.q || '').trim();
+    let stem = rawQ, src = q.src ? String(q.src) : '';
+    if (!src) {
+      const m = rawQ.match(/\s*\[((?:किताब|PYQ)[^\]]*)\]\s*$/);
+      if (m) { stem = rawQ.slice(0, m.index).trim(); src = '(' + m[1].trim() + ')'; }
+      else { src = '(किताब: ' + String(data.pages || '') + ')'; }
+    }
+    const cleanExp = String(q.exp || '')
+      .replace(/⚠️\s*किताब सुधार\s*:?|किताब सुधार\s*:?/g, 'सटीक तथ्य:')
+      .replace(/\u092f\u0939 \u092e\u092e\u094d\u092e\u0940 \u0915\u0940 \u0905\u092a\u0928\u0940\s+/g, 'यह अपनी ')
+      .replace(/\u092e\u092e\u094d\u092e\u0940,\s*\u0907\u0928 \u0924\u0940\u0928\u094b\u0902/g, 'इन तीनों')
+      .replace(/\u092e\u092e\u094d\u092e\u0940 \u0915\u094b \u0938\u094d\u092a\u0937\u094d\u091f \u0909\u0924\u094d\u0924\u0930 \u0938\u093f\u0916\u093e\u0928\u0947 \u0939\u0947\u0924\u0941\s+/g, 'स्पष्ट उत्तर हेतु ')
+      .replace(/⚠️/g, '').trim();
+    return {
+      id: q.id != null ? q.id : idx + 1,
+      type: q.type || 'BOOK',
+      fmt: q.fmt || 'Direct',
+      q: stem,
+      src: src,
+      opts: q.opts.map(String),
+      ans: q.ans,
+      exp: cleanExp,
+      trick: String(q.trick || '').replace(/⚠️/g, '').trim(),
+      vip: !!q.vip,
+      match: Array.isArray(q.match) && q.match.length ? q.match : null
+    };
+  });
+  return {
+    id: String(data.id),
+    num: Number(data.num || 0),
+    subject: String(data.subject || ''),
+    chapter_code: String(data.chapter_code || ''),
+    title: String(data.title).trim(),
+    pages: String(data.pages || ''),
+    total_questions: qs.length,
+    questions: qs
+  };
+}
+
+function initChapterStore() {
+  const b = (typeof window !== 'undefined' && window.TGT_CHAPTERS) ? window.TGT_CHAPTERS : {};
+  Object.keys(b).forEach(k => { try { CHAPTER_BANK[k] = normalizeRawChapter(b[k]); } catch (_) {} });
+  const extra = safeLS('tgt_gk_extra_chapters_v1', {});
+  Object.keys(extra).forEach(k => { try { CHAPTER_BANK[k] = normalizeRawChapter(extra[k]); } catch (_) {} });
+  attachChaptersToRoadmap();
+}
+
+function normTitle(t) {
+  return String(t || '').replace(/\s+/g, '').replace(/[()\-–।]/g, '').toLowerCase();
+}
+function subjectIdFromText(subj) {
+  const s = String(subj || '');
+  if (s.includes('पर्यावरण')) return 'env';
+  if (s.includes('राज') || s.includes('संविधान')) return 'pol';
+  if (s.includes('इतिहास')) return 'his';
+  if (s.includes('भूगोल') || s.includes('जनगणना')) return 'geo';
+  if (s.includes('अर्थ')) return 'eco';
+  if (s.includes('विज्ञान') || s.includes('स्वास्थ्य')) return 'sci';
+  if (s.includes('संस्कृति') || s.includes('स्टैटिक')) return 'sta';
+  return 'up';
+}
+
+function attachChaptersToRoadmap() {
+  ROADMAP.forEach(s => s.chapters.forEach(c => { if (!c._baseChId) c._baseChId = c.chId || ''; c.liveId = ''; }));
+  Object.values(CHAPTER_BANK).forEach(ch => {
+    let matched = null;
+    for (const s of ROADMAP) {
+      for (const c of s.chapters) {
+        if ((c._baseChId && c._baseChId === ch.id) || normTitle(c.t) === normTitle(ch.title)) {
+          matched = c; break;
+        }
+      }
+      if (matched) break;
+    }
+    if (matched) {
+      matched.liveId = ch.id;
+      matched.q = ch.total_questions;
+      if (ch.pages) matched.p = ch.pages.replace(/\s*\(PDF[^)]*\)/g, '').trim();
+    } else {
+      const sid = subjectIdFromText(ch.subject);
+      const sub = ROADMAP.find(s => s.id === sid) || ROADMAP[6];
+      sub.chapters.push({ t: ch.title, p: ch.pages || 'नया पाठ', est: ch.total_questions, q: ch.total_questions, exam: 'both', liveId: ch.id, _baseChId: ch.id });
+    }
+  });
+}
+
+function importChapterData(rawJson) {
+  const ch = normalizeRawChapter(rawJson);
+  CHAPTER_BANK[ch.id] = ch;
+  const extra = safeLS('tgt_gk_extra_chapters_v1', {});
+  extra[ch.id] = ch;
+  saveLS('tgt_gk_extra_chapters_v1', extra);
+  attachChaptersToRoadmap();
+  showToast('✅ नया पाठ जुड़ा: ' + ch.title + ' (' + ch.total_questions + ' सवाल)');
+  return ch;
+}
+
+// Per-user data & helpers
+const DEFAULT_USER_DATA = () => ({
+  tabId: 'env',
+  onlyReady: false,
+  paperTint: false,
+  fontSize: 15,
+  lastChId: 'ch03',
+  progress: {}
+});
+
+function loadUserData(uid) {
+  const d = safeLS('tgt_gk_user_v1_' + uid, null);
+  return Object.assign(DEFAULT_USER_DATA(), d || {});
+}
+function saveUserData(uid, data) {
+  saveLS('tgt_gk_user_v1_' + uid, data);
+}
+
+const app = {
+  view: 'welcome',
+  userId: 'm',
+  userData: DEFAULT_USER_DATA(),
+  doneTwigCh: '',
+  toast: '',
+  toastT: null,
+  quiz: {
+    chId: 'ch01',
+    title: '',
+    mode: 'full',
+    qIds: [],
+    cur: 0,
+    palOpen: false,
+    palFilter: 'all',
+    showOther: false
+  },
+  result: {
+    marking: 'simple',
+    openQId: null,
+    summary: null
+  },
+  duel: {
+    stage: 'online',
+    scope: 'ch01',
+    count: 10,
+    qs: [],
+    qIdx: 0,
+    mScore: 0,
+    pScore: 0,
+    mStreak: 0,
+    dots: [],
+    history: [],
+    timer: 25,
+    timerId: null,
+    picked: null,
+    pAnswered: false,
+    pCorrect: false,
+    resOpenIdx: null
+  }
+};
+
+function stopDuelTimer() {
+  if (app.duel.timerId) {
+    clearInterval(app.duel.timerId);
+    app.duel.timerId = null;
+  }
+}
+
+function showToast(msg) {
+  app.toast = msg;
+  render();
+  if (app.toastT) clearTimeout(app.toastT);
+  app.toastT = setTimeout(() => { app.toast = ''; render(); }, 2300);
+}
+
+function speakHindi(text) {
+  try {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'hi-IN';
+      window.speechSynthesis.speak(u);
+    }
+  } catch (_) {}
+  showToast('🔊 हिंदी आवाज़ में पढ़ा जा रहा है...');
+}
+
+function getChProg(chId) {
+  if (!app.userData.progress[chId]) {
+    app.userData.progress[chId] = { answers: {}, stars: {}, curIdx: 0, finished: false };
+  }
+  return app.userData.progress[chId];
+}
+
+function getUserStats(uid) {
+  const ud = uid === app.userId ? app.userData : loadUserData(uid);
+  let doneCh = 0, seen = 0, ok = 0;
+  Object.keys(CHAPTER_BANK).forEach(cid => {
+    const p = ud.progress[cid];
+    if (!p) return;
+    const ansMap = p.answers || {};
+    const keys = Object.keys(ansMap);
+    if (keys.length >= CHAPTER_BANK[cid].questions.length || p.finished) doneCh++;
+    CHAPTER_BANK[cid].questions.forEach(q => {
+      if (ansMap[q.id] !== undefined) {
+        seen++;
+        if (ansMap[q.id] === q.ans) ok++;
+      }
+    });
+  });
+  const acc = seen ? Math.round((ok / seen) * 100) : 0;
+  return { doneCh, seen, ok, acc };
+}
+
+function roadmapTotals() {
+  let tot = 0, rdy = 0, qTot = 0;
+  ROADMAP.forEach(s => s.chapters.forEach(c => {
+    tot++;
+    if (c.liveId && CHAPTER_BANK[c.liveId]) { rdy++; qTot += CHAPTER_BANK[c.liveId].total_questions; }
+  }));
+  return { tot, rdy, qTot };
+}
+
+function renderWelcomeView() {
+  const mSt = getUserStats('m');
+  const pSt = getUserStats('p');
+  const card = (uid, name, st, note) => {
+    const sub = st.seen > 0 ? (st.doneCh + '/64 पाठ · ' + st.acc + '% सटीकता') : note;
+    return '<button style="width:100%;background:#fff;border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:13px;text-align:left;font:inherit;cursor:pointer;border:2px solid ' + (app.userId === uid ? '#0794C7' : 'transparent') + ';box-shadow:0 2px 14px rgba(15,23,42,.07);" data-act="choose-user" data-u="' + uid + '">' +
+      avImg(uid, 'av-lg') +
+      '<div style="flex:1;min-width:0;"><div style="font-size:17px;font-weight:800;color:#0F172A;">' + name + '</div><div style="font-size:12px;font-weight:700;color:#475569;margin-top:2px;">' + sub + '</div></div>' +
+      '<span style="background:#0794C7;color:#fff;font-size:12px;font-weight:800;padding:6px 12px;border-radius:99px;">शुरू ›</span>' +
+    '</button>';
+  };
+  return '<div class="hd"><div class="hd-l"><span style="font-size:18px;">📘</span><span class="hd-ttl">TGT GK अभ्यास</span></div><span class="usr-pill">' + Object.values(CHAPTER_BANK).reduce((a,c)=>a+c.total_questions,0) + ' सवाल</span></div>' +
+    '<div class="body-scr scr" style="padding:18px 14px;background:linear-gradient(180deg,#E3F3FA 0%,#F5F8FA 48%);display:flex;flex-direction:column;gap:14px;">' +
+      '<div style="text-align:center;padding-top:8px;">' +
+        '<div style="font-size:18px;font-weight:800;color:#0F172A;">नमस्ते! आज कौन पढ़ रहा है?</div>' +
+        '<div style="font-size:12.5px;font-weight:700;color:#0578A3;margin-top:4px;">अपना नाम चुनें — कोई पासवर्ड या लॉगिन नहीं</div>' +
+      '</div>' +
+      card('m', 'मंजू', mSt, roadmapTotals().rdy + ' पाठ तैयार · अभ्यास शुरू करें') +
+      card('p', 'प्रियंका', pSt, roadmapTotals().rdy + ' पाठ तैयार · अभ्यास शुरू करें') +
+      '<div style="margin-top:auto;background:#fff;border-radius:12px;padding:11px 13px;font-size:12px;color:#475569;line-height:1.55;text-align:center;">' +
+        '📚 फ़ैटमैन 2026 + UP & दिल्ली TGT असली सवाल · बिना इंटरनेट ऑफ़लाइन चलता है' +
+      '</div>' +
+    '</div>';
+}
+
+function renderHomeView() {
+  const ud = app.userData;
+  const tot = roadmapTotals();
+  const actSub = ROADMAP.find(s => s.id === ud.tabId) || ROADMAP[0];
+  ud.tabId = actSub.id;
+  const allCh = actSub.chapters;
+  const rdyN = allCh.filter(c => c.liveId && CHAPTER_BANK[c.liveId]).length;
+  const list = ud.onlyReady ? allCh.filter(c => c.liveId && CHAPTER_BANK[c.liveId]) : allCh;
+  const pageBg = ud.paperTint ? '#FAFBFD' : '#FFFFFF';
+  const myName = app.userId === 'p' ? 'प्रियंका' : 'मंजू';
+  const otherId = app.userId === 'p' ? 'm' : 'p';
+  const otherName = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
+
+  // Resume bar target
+  const resCh = CHAPTER_BANK[ud.lastChId] || CHAPTER_BANK['ch03'] || CHAPTER_BANK['ch01'] || Object.values(CHAPTER_BANK)[0];
+  let resHtml = '';
+  if (resCh) {
+    const rp = getChProg(resCh.id);
+    const ansCnt = Object.keys(rp.answers || {}).length;
+    resHtml = '<button class="cm-res" data-act="open-ch" data-cid="' + resCh.id + '" data-mode="resume">' +
+      '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:800;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">▶ ' + esc(resCh.title) + '</div><div style="font-size:11px;color:#0578A3;font-weight:700;">' + ansCnt + ' / ' + resCh.total_questions + ' सवाल देखे गए</div></div>' +
+      '<span class="cm-res-b">' + (ansCnt > 0 ? 'जारी रखें' : 'शुरू करें') + '</span>' +
+    '</button>';
+  }
+
+  const railHtml = ROADMAP.map(s => {
+    const sr = s.chapters.filter(c => c.liveId && CHAPTER_BANK[c.liveId]).length;
+    const on = s.id === actSub.id;
+    return '<button type="button" class="cm-tab ' + (on ? 'is-on' : '') + '" data-act="sel-sub" data-v="' + s.id + '" style="--c:' + s.color + ';--soft:' + s.soft + '">' +
+      '<span class="cm-ti">' + s.icon + '</span>' +
+      '<span class="cm-tn">' + esc(s.short) + '</span>' +
+      '<span class="cm-tc">' + sr + '/' + s.chapters.length + '</span>' +
+    '</button>';
+  }).join('');
+
+  const circ = 2 * Math.PI * 14;
+  const off = (circ * (1 - (allCh.length ? rdyN / allCh.length : 0))).toFixed(1);
+  const rootHtml = '<div style="display:flex;align-items:center;">' +
+    '<svg width="16" height="22" viewBox="0 0 16 22" style="flex:none;margin-left:-5px;" aria-hidden="true"><path class="cm-draw" pathLength="100" d="M 0,11 L 16,11" stroke="' + actSub.color + '"/><circle cx="13" cy="11" r="2.5" fill="' + actSub.color + '"/></svg>' +
+    '<div class="cm-root" style="flex:1;--c:' + actSub.color + ';--soft:' + actSub.soft + '">' +
+      '<div style="display:flex;align-items:center;gap:7px;min-width:0;">' +
+        '<svg width="34" height="34" viewBox="0 0 34 34" style="flex:none;"><circle cx="17" cy="17" r="14" fill="#fff" stroke="#E2E8F0" stroke-width="3"/>' +
+          (rdyN > 0 ? '<circle cx="17" cy="17" r="14" fill="none" stroke="' + actSub.color + '" stroke-width="3" stroke-linecap="round" stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + off + '" transform="rotate(-90 17 17)"/>' : '') +
+          '<text x="17" y="18" text-anchor="middle" dominant-baseline="central" font-size="14">' + actSub.icon + '</text>' +
+        '</svg>' +
+        '<div style="min-width:0;"><div style="font-size:13.5px;font-weight:800;color:#0F172A;">' + esc(actSub.name) + '</div><div style="font-size:11px;font-weight:700;color:' + actSub.color + ';">' + rdyN + '/' + allCh.length + ' तैयार</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:4px;flex:none;">' +
+        '<button type="button" data-act="tog-ready" style="border:1px solid ' + actSub.color + ';background:' + (ud.onlyReady ? actSub.color : '#fff') + ';color:' + (ud.onlyReady ? '#fff' : actSub.color) + ';border-radius:6px;padding:3px 7px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;">' + (ud.onlyReady ? '⚡ तैयार' : 'सभी') + '</button>' +
+        '<button type="button" data-act="tog-paper" style="border:1px solid #CBD5E1;background:#fff;border-radius:6px;padding:3px 6px;font-size:10.5px;cursor:pointer;">' + (ud.paperTint ? '📄' : '☀️') + '</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+  const fanHtml = '<svg class="cm-fan" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path class="cm-draw" pathLength="100" d="M 28,0 C 28,11 10,6 10,16" stroke="' + actSub.color + '"/><circle cx="28" cy="2" r="2.2" fill="' + actSub.color + '"/></svg>';
+
+  const branchHtml = list.length ? list.map((ch, idx) => {
+    const isLast = idx === list.length - 1;
+    const delay = Math.min(idx, 10) * 26;
+    const bank = ch.liveId ? CHAPTER_BANK[ch.liveId] : null;
+    let inner = '', cls = 'wait';
+
+    if (bank) {
+      const p = getChProg(bank.id);
+      const ansCount = Object.keys(p.answers || {}).length;
+      const rightCount = bank.questions.filter(q => p.answers && p.answers[q.id] === q.ans).length;
+      const wrongCount = bank.questions.filter(q => p.answers && p.answers[q.id] !== undefined && p.answers[q.id] !== q.ans).length;
+      const starCount = Object.keys(p.stars || {}).filter(k => p.stars[k]).length;
+      const isDone = p.finished || ansCount >= bank.total_questions;
+      const inProg = !isDone && ansCount > 0;
+
+      if (isDone) {
+        cls = 'done';
+        const exp = app.doneTwigCh === bank.id;
+        inner = '<button type="button" class="cm-lbtn" data-act="tog-twig" data-cid="' + bank.id + '">' +
+          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">✅ ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · ' + bank.total_questions + ' सवाल</div></div>' +
+          '<span style="background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;border-radius:6px;padding:2px 7px;font-size:11px;font-weight:800;flex:none;">' + rightCount + '/' + bank.total_questions + ' ' + (exp ? '▴' : '▾') + '</span>' +
+        '</button>' +
+        (exp ? '<div class="cm-twigs">' +
+          '<svg width="100%" height="12" viewBox="0 0 180 12" preserveAspectRatio="none"><path class="cm-draw" pathLength="100" d="M 18,0 C 18,8 30,8 30,12" stroke="#D32F2F"/><path class="cm-draw" pathLength="100" d="M 18,0 C 18,8 90,8 90,12" stroke="#D97706"/><path class="cm-draw" pathLength="100" d="M 18,0 C 18,8 150,8 150,12" stroke="#0794C7"/></svg>' +
+          '<div class="cm-tw-row">' +
+            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="wrong" style="background:#FDECEA;color:#C62828;border:1px solid #F5C6C3;">✗ गलत (' + wrongCount + ')</button>' +
+            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="star" style="background:#FFF8E1;color:#8D6E00;border:1px solid #F9A825;">⭐ (' + starCount + ')</button>' +
+            '<button type="button" class="cm-tw-btn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="full" style="background:#E3F3FA;color:#0A6F97;border:1px solid #93C5FD;">🔄 पूरे</button>' +
+          '</div>' +
+        '</div>' : '');
+      } else {
+        cls = inProg ? 'glow' : 'rdy';
+        inner = '<button type="button" class="cm-lbtn" data-act="open-ch" data-cid="' + bank.id + '" data-mode="resume">' +
+          '<div style="min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">🟢 ' + esc(ch.t) + '</div><div style="font-size:11px;color:#546E7A;">' + esc(ch.p) + ' · ' + bank.total_questions + ' सवाल' + (inProg ? ' · ' + ansCount + ' हुए' : '') + '</div></div>' +
+          '<span style="background:#0794C7;color:#fff;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:800;flex:none;">' + (inProg ? 'जारी' : 'शुरू') + '</span>' +
+        '</button>';
+      }
+    } else {
+      inner = '<button type="button" class="cm-lbtn" data-act="soon-ch" data-t="' + esc(ch.t) + '">' +
+        '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:600;color:#1E293B;">' + (idx + 1) + '. ' + esc(ch.t) + '</div><div style="font-size:11px;color:#64748B;">' + esc(ch.p) + (ch.exam === 'delhi' ? ' · 🌸 दिल्ली' : '') + '</div></div>' +
+        '<span style="background:#F1F5F9;color:#64748B;border-radius:5px;padding:2px 7px;font-size:10px;font-weight:700;flex:none;">जल्द</span>' +
+      '</button>';
+    }
+
+    return '<div class="cm-row"><div class="cm-srail"><div class="cm-stem ' + (isLast ? 'last' : '') + '" style="background:' + actSub.color + '"></div><svg class="cm-bsvg" viewBox="0 0 25 38"><path class="cm-draw" pathLength="100" style="animation-delay:' + delay + 'ms" d="M 11,0 C 11,17 16,17 24,17" stroke="' + actSub.color + '"/><circle cx="23" cy="17" r="2.2" fill="' + actSub.color + '"/></svg></div><div class="cm-leaf ' + cls + '" style="animation-delay:' + delay + 'ms">' + inner + '</div></div>';
+  }).join('') : '<div style="padding:18px;text-align:center;font-size:12.5px;color:#64748B;">इस विषय में अभी कोई तैयार पाठ नहीं है। "सभी" दबाएँ!</div>';
+
+  return '<div class="hd">' +
+      '<div class="hd-l"><span style="font-size:17px;">📖</span><span class="hd-ttl">TGT GK अभ्यास</span></div>' +
+      '<button type="button" class="hd-btn" data-act="trigger-import" title="नया पाठ जोड़ें">📥</button>' +
+      '<button type="button" class="usr-pill" data-act="open-welcome">' + avImg(app.userId, 'av-xs') + ' ' + myName + ' · ' + tot.rdy + '/' + tot.tot + '</button>' +
+    '</div>' +
+    resHtml +
+    '<div class="cm-book">' +
+      '<div class="cm-rail scr">' + railHtml + '</div>' +
+      '<div class="cm-page" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
+    '</div>' +
+    '<div class="ft">' +
+      '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;">⚔️ 1 vs 1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b></span>' +
+      '<button type="button" class="btn-grn" style="padding:6px 12px;" data-act="open-duel">चैलेंज ›</button>' +
+    '</div>';
+}
+
+function buildExpTimeline(rawExp) {
+  const clean = String(rawExp || '').replace(/⚠️\s*किताब सुधार\s*:?|किताब सुधार\s*:?/g, 'सटीक तथ्य:').replace(/⚠️/g, '').trim();
+  const parts = clean
+    .replace(/([।!])\s+/g, '$1\n')
+    .replace(/;\s+/g, '\n')
+    .replace(/सही मिलान:\s*/g, '\nसही मिलान: ')
+    .split(/\n+/)
+    .map(s => s.replace(/^[•\-]\s*/, '').trim())
+    .filter(Boolean);
+  const lead = parts.length ? parts[0] : '';
+  const points = parts.slice(1);
+  return { lead, points };
+}
+
+function renderQuizView() {
+  const ch = CHAPTER_BANK[app.quiz.chId];
+  if (!ch) return renderHomeView();
+  const prog = getChProg(ch.id);
+  const list = app.quiz.qIds.map(qid => ch.questions.find(q => q.id === qid)).filter(Boolean);
+  if (!list.length) return renderHomeView();
+  const curIdx = Math.max(0, Math.min(app.quiz.cur, list.length - 1));
+  app.quiz.cur = curIdx;
+  const q = list[curIdx];
+  const picked = prog.answers[q.id];
+  const hasPick = picked !== undefined;
+  const isOk = hasPick && picked === q.ans;
+  const isStar = !!(prog.stars && prog.stars[q.id]);
+
+  // Round number circles
+  const circles = list.map((item, idx) => {
+    const p = prog.answers[item.id];
+    let cls = 'q-num';
+    if (idx === curIdx) cls += ' cur';
+    if (p !== undefined) cls += (p === item.ans ? ' ok' : ' bad');
+    return '<button type="button" class="' + cls + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
+  }).join('');
+
+  let matchHtml = '';
+  if (q.match && q.match.length) {
+    matchHtml = '<table class="mtab"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+      q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+      '</tbody></table>';
+  }
+
+  const optsHtml = q.opts.map((opt, idx) => {
+    let cls = 'opt-card';
+    if (hasPick) {
+      if (idx === q.ans) cls += ' is-right';
+      else if (idx === picked) cls += ' is-wrong';
+    }
+    return '<div class="' + cls + '"><button type="button" class="opt-btn" style="font-size:' + app.userData.fontSize + 'px;" data-act="q-pick" data-i="' + idx + '">' +
+      '<span class="opt-pill">' + (idx + 1) + '</span>' +
+      '<span style="flex:1;min-width:0;line-height:1.45;">' + esc(opt) + '</span>' +
+    '</button></div>';
+  }).join('');
+
+  // E1 Story Timeline Explanation (clean & zero warning boxes!)
+  let explHtml = '';
+  if (hasPick) {
+    const { lead, points } = buildExpTimeline(q.exp);
+    const otherRows = q.opts.map((opt, idx) => idx === q.ans ? '' :
+      '<div style="background:#F8FAFC;border-radius:8px;padding:6px 9px;font-size:12px;color:#475569;"><strong style="color:#0F172A;">विकल्प ' + (idx + 1) + ':</strong> ' + esc(opt) + '</div>'
+    ).join('');
+    explHtml = '<div class="ed-sheet">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding-bottom:8px;border-bottom:1px solid #EEF3F7;">' +
+        '<span style="background:' + (isOk ? '#DCFCE7' : '#E0F2FE') + ';color:' + (isOk ? '#166534' : '#0369A1') + ';padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;">✅ सही उत्तर: ' + esc(q.opts[q.ans]) + '</span>' +
+        '<button type="button" class="u-btn" style="border:none;background:#F0F9FF;color:#0794C7;border-radius:99px;padding:4px 9px;" data-act="q-speak">🔊 सुनें</button>' +
+      '</div>' +
+      (lead ? '<p style="margin:9px 0 4px;font-size:' + Math.max(13, app.userData.fontSize - 1) + 'px;line-height:1.65;color:#0F172A;font-weight:600;">' + esc(lead) + '</p>' : '') +
+      (points.length ? '<div class="tl-wrap"><div class="tl-line"></div>' +
+        points.map((pt, pi) => '<div class="tl-item"><span class="tl-dot' + (pi === 0 ? ' hi' : '') + '"></span><span>' + esc(pt) + '</span></div>').join('') +
+      '</div>' : '') +
+      (q.trick ? '<div style="background:#FFFBEB;color:#92400E;border-radius:9px;padding:8px 10px;font-size:12.5px;font-weight:700;margin-top:6px;">💡 ' + esc(q.trick) + '</div>' : '') +
+      '<button type="button" style="width:100%;background:transparent;border:none;border-top:1px solid #F1F5F9;margin-top:8px;padding:7px 0 0;text-align:left;font:inherit;font-size:12px;font-weight:800;color:#0578A3;cursor:pointer;" data-act="q-tog-other">बाकी 3 विकल्प देखें ' + (app.quiz.showOther ? '▴' : '▾') + '</button>' +
+      (app.quiz.showOther ? '<div style="margin-top:6px;display:flex;flex-direction:column;gap:5px;">' + otherRows + '</div>' : '') +
+    '</div>';
+  }
+
+  // P1 Clean Dot Sheet Palette
+  let palSheet = '';
+  if (app.quiz.palOpen) {
+    const f = app.quiz.palFilter;
+    const wrongN = list.filter(x => prog.answers[x.id] !== undefined && prog.answers[x.id] !== x.ans).length;
+    const starN = list.filter(x => prog.stars && prog.stars[x.id]).length;
+    const restN = list.filter(x => prog.answers[x.id] === undefined).length;
+    const filt = list.map((x, idx) => ({ x, idx })).filter(({ x }) => {
+      const p = prog.answers[x.id];
+      if (f === 'wrong') return p !== undefined && p !== x.ans;
+      if (f === 'star') return !!(prog.stars && prog.stars[x.id]);
+      if (f === 'rest') return p === undefined;
+      return true;
+    });
+    palSheet = '<div class="sheet-bg" data-act="q-pal-bg">' +
+      '<div class="sheet-box">' +
+        '<div style="width:36px;height:4px;background:#CBD5E1;border-radius:99px;margin:0 auto;"></div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;"><span>सवाल सूची (' + list.length + ')</span><button type="button" class="u-btn" data-act="q-pal-tog">✖ बंद</button></div>' +
+        '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">' +
+          [['all','सभी ' + list.length],['wrong','गलत ' + wrongN],['star','⭐ ' + starN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
+            '<button type="button" style="border:none;border-radius:8px;padding:6px 2px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (f === fk ? 'background:#0794C7;color:#fff;' : 'background:#F1F5F9;color:#475569;') + '" data-act="q-pal-f" data-v="' + fk + '">' + fl + '</button>'
+          ).join('') +
+        '</div>' +
+        '<div class="pal-grid5 scr">' + filt.map(({ x, idx }) => {
+          const p = prog.answers[x.id];
+          const st = p !== undefined ? (p === x.ans ? 'background:#ECFDF5;color:#15803D;border:none;' : 'background:#FFF1F2;color:#BE123C;border:none;') : 'background:#fff;color:#334155;border:1px solid #CBD5E1;';
+          return '<button type="button" style="height:32px;border-radius:99px;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;' + st + (idx === curIdx ? 'box-shadow:0 0 0 2px #FF6F00;' : '') + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + ((prog.stars && prog.stars[x.id]) ? '★' : '') + '</button>';
+        }).join('') + '</div>' +
+        '<button type="button" class="btn-grn" style="width:100%;" data-act="finish-ch">📊 परिणाम व गलतियाँ देखें</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  const isLast = curIdx === list.length - 1;
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button><span class="hd-ttl">' + esc(app.quiz.title) + '</span></div>' +
+      '<button type="button" class="hd-btn" data-act="q-pal-tog">▦ सूची</button>' +
+    '</div>' +
+    '<div class="q-strip scr">' + circles + '</div>' +
+    '<div class="util-bar">' +
+      '<span>सवाल ' + (curIdx + 1) + ' / ' + list.length + (app.quiz.mode !== 'full' && app.quiz.mode !== 'resume' ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : '⭐ स्टार') : '') + '</span>' +
+      '<div style="display:flex;gap:4px;">' +
+        '<button type="button" class="u-btn" data-act="q-fs" data-d="-1">अ−</button>' +
+        '<button type="button" class="u-btn" data-act="q-fs" data-d="1">अ+</button>' +
+        '<button type="button" class="u-btn" data-act="q-speak">🔊</button>' +
+        '<button type="button" class="u-btn ' + (isStar ? 'on' : '') + '" data-act="q-star">' + (isStar ? '★' : '☆') + '</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="body-scr scr" style="padding:11px;">' +
+      '<div class="q-card"><div class="q-stem" style="font-size:' + app.userData.fontSize + 'px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div>' + matchHtml + '</div>' +
+      optsHtml +
+      explHtml +
+    '</div>' +
+    '<div class="ft">' +
+      '<button type="button" class="btn-sec" data-act="q-step" data-d="-1">‹ पिछला</button>' +
+      '<button type="button" class="u-btn" data-act="finish-ch">📊 परिणाम</button>' +
+      '<button type="button" class="btn-pri" data-act="' + (isLast ? 'finish-ch' : 'q-step') + '" data-d="1">' + (isLast ? 'परिणाम देखें ›' : 'अगला ›') + '</button>' +
+    '</div>' +
+    palSheet;
+}
+
+function calcMarks(right, wrong, total, mode) {
+  if (mode === 'up') return { big: (right * 3 - wrong) + ' / ' + (total * 3) + ' अंक', sub: 'UP TGT (+3 / −1) · ' + right + '×3 − ' + wrong + '×1' };
+  if (mode === 'delhi') return { big: (right - wrong * 0.25) + ' / ' + total + ' अंक', sub: 'दिल्ली (+1 / −0.25) · ' + right + ' − ' + (wrong * 0.25) };
+  const pct = total ? Math.round((right / total) * 100) : 0;
+  return { big: right + ' / ' + total + ' सही', sub: pct + '% सटीकता · शानदार अभ्यास!' };
+}
+
+function renderResultView() {
+  const ch = CHAPTER_BANK[app.quiz.chId];
+  if (!ch) return renderHomeView();
+  const prog = getChProg(ch.id);
+  const qs = ch.questions;
+  let right = 0, wrong = 0, skip = 0;
+  const reviewItems = [];
+  qs.forEach((q, idx) => {
+    const p = prog.answers[q.id];
+    if (p === undefined) {
+      skip++;
+      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: 'छोड़ा गया', correct: q.opts[q.ans], exp: q.exp });
+    } else if (p === q.ans) {
+      right++;
+    } else {
+      wrong++;
+      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'wrong', q: q.q, yours: q.opts[p], correct: q.opts[q.ans], exp: q.exp });
+    }
+  });
+  const sc = calcMarks(right, wrong, qs.length, app.result.marking);
+  const markRow = '<div style="display:inline-flex;background:#F1F5F9;padding:2px;border-radius:8px;gap:2px;">' +
+    [['simple','सरल'],['up','UP +3/−1'],['delhi','दिल्ली']].map(([mk,l]) =>
+      '<button type="button" style="border:none;border-radius:6px;padding:3px 7px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (app.result.marking === mk ? 'background:#fff;color:#0578A3;box-shadow:0 1px 3px rgba(0,0,0,.1);' : 'background:transparent;color:#475569;') + '" data-act="r-mark" data-k="' + mk + '">' + l + '</button>'
+    ).join('') +
+  '</div>';
+
+  const tl = reviewItems.length ? reviewItems.map(it => {
+    const open = app.result.openQId === it.id;
+    const { lead, points } = buildExpTimeline(it.exp);
+    return '<div class="tl-item"><span class="tl-dot ' + (it.status === 'skip' ? 'sk' : 'bad') + '"></span>' +
+      '<div style="background:#fff;border-radius:12px;padding:10px 11px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
+        '<button type="button" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font:inherit;cursor:pointer;" data-act="r-tog" data-id="' + it.id + '">' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;"><span style="color:' + (it.status === 'wrong' ? '#BE123C' : '#64748B') + ';">सवाल #' + it.qNum + (it.status === 'skip' ? ' · छोड़ा' : '') + '</span><span style="color:#0794C7;">' + (open ? 'छुपाएँ ▴' : 'समझें ▾') + '</span></div>' +
+          '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:3px;line-height:1.45;">' + esc(it.q) + '</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:11px;font-weight:700;">' +
+            '<span style="background:#FFF1F2;color:#BE123C;padding:2px 8px;border-radius:99px;">आपका: ' + esc(it.yours) + '</span>' +
+            '<span style="background:#ECFDF5;color:#15803D;padding:2px 8px;border-radius:99px;">सही: ' + esc(it.correct) + '</span>' +
+          '</div>' +
+        '</button>' +
+        (open ? '<div style="margin-top:7px;padding-top:7px;border-top:1px solid #EEF3F7;font-size:12px;line-height:1.6;color:#334155;">' + esc(lead + (points.length ? ' ' + points.join(' ') : '')) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('') : '<div style="background:#ECFDF5;border-radius:14px;padding:16px;text-align:center;font-weight:800;color:#166534;">🌟 अद्भुत! एक भी सवाल गलत या छूटा नहीं!</div>';
+
+  return '<div class="hd"><div class="hd-l">' + avImg(app.userId, 'av-xs') + '<span class="hd-ttl">परिणाम · ' + esc(ch.title) + '</span></div><button type="button" class="hd-btn" data-act="back-home">🏠 होम</button></div>' +
+    '<div class="body-scr scr" style="padding:11px;">' +
+      '<div style="border-radius:16px;padding:13px;background:linear-gradient(180deg,#ECFDF5 0%,#FFFFFF 100%);box-shadow:0 2px 10px rgba(15,23,42,.05);margin-bottom:12px;">' +
+        '<div style="display:flex;align-items:center;gap:10px;">' + avImg(app.userId, 'av-md') + '<div><div style="font-size:20px;font-weight:800;color:#14532D;">' + sc.big + '</div><div style="font-size:11.5px;font-weight:700;color:#15803D;">' + sc.sub + '</div></div></div>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid #D1FAE5;">' +
+          '<div style="display:flex;gap:8px;font-size:11.5px;font-weight:800;"><span style="color:#15803D;">' + right + ' सही</span><span style="color:#BE123C;">' + wrong + ' गलत</span><span style="color:#64748B;">' + skip + ' छोड़े</span></div>' +
+          markRow +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:12px;font-weight:800;color:#475569;margin-bottom:4px;">दोहराने योग्य सवाल (' + reviewItems.length + ')</div>' +
+      (reviewItems.length ? '<div class="tl-wrap"><div class="tl-line"></div>' + tl + '</div>' : tl) +
+    '</div>' +
+    '<div class="ft">' +
+      '<button type="button" class="btn-sec" data-act="back-home">🏠 होम</button>' +
+      (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>') +
+    '</div>';
+}
+
+function buildDuelPool(scope, count) {
+  let pool = [];
+  if (scope === 'mix') {
+    Object.values(CHAPTER_BANK).forEach(ch => ch.questions.forEach(q => { if (!q.match) pool.push(q); }));
+  } else if (CHAPTER_BANK[scope]) {
+    pool = CHAPTER_BANK[scope].questions.filter(q => !q.match);
+    if (pool.length < count) pool = CHAPTER_BANK[scope].questions.slice();
+  }
+  const arr = pool.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, Math.min(count, arr.length));
+}
+
+function startDuelMatch() {
+  stopDuelTimer();
+  const d = app.duel;
+  d.qs = buildDuelPool(d.scope, d.count);
+  d.qIdx = 0; d.mScore = 0; d.pScore = 0; d.mStreak = 0;
+  d.dots = Array(d.qs.length).fill('w');
+  d.history = []; d.picked = null; d.pAnswered = false; d.pCorrect = false;
+  d.resOpenIdx = null; d.timer = 25; d.stage = 'live';
+  if (typeof setInterval === 'function' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
+    d.timerId = setInterval(() => {
+      if (app.view !== 'duel' || app.duel.stage !== 'live' || app.duel.picked !== null) return;
+      app.duel.timer -= 1;
+      if (app.duel.timer <= 0) handleDuelPick(-1);
+      else render();
+    }, 1000);
+  }
+  render();
+}
+
+function handleDuelPick(idx) {
+  const d = app.duel;
+  if (d.picked !== null) return;
+  const q = d.qs[d.qIdx];
+  d.picked = idx;
+  const mOk = idx === q.ans;
+  const pOk = Math.random() < 0.72;
+  d.pAnswered = true;
+  d.pCorrect = pOk;
+  if (mOk) { d.mScore += 1; d.mStreak += 1; } else { d.mStreak = 0; }
+  if (pOk) d.pScore += 1;
+  d.dots[d.qIdx] = mOk ? 'g' : 'r';
+  d.history.push({ qNum: d.qIdx + 1, q: q.q, mOk, pOk, mAns: idx >= 0 ? q.opts[idx] : 'समय समाप्त', pAns: pOk ? q.opts[q.ans] : q.opts[(q.ans + 1) % 4], right: q.opts[q.ans], exp: q.exp });
+  render();
+}
+
+function renderDuelView() {
+  const d = app.duel;
+  const myId = app.userId, opId = myId === 'p' ? 'm' : 'p';
+  const myName = myId === 'p' ? 'प्रियंका' : 'मंजू', opName = myId === 'p' ? 'मंजू' : 'प्रियंका';
+  const stageBar = '<div style="background:#fff;border-bottom:1px solid #E2E8F0;padding:5px 8px;display:flex;gap:5px;overflow-x:auto;flex:none;">' +
+    [['online','🟢 ऑनलाइन'],['incoming','🔔 पॉपअप'],['offline','⚪ WhatsApp'],['live','🔴 लाइव'],['result','🏆 परिणाम']].map(([sk, sl]) =>
+      '<button type="button" class="u-btn ' + (d.stage === sk ? 'on' : '') + '" style="flex:none;" data-act="d-stage" data-s="' + sk + '">' + sl + '</button>'
+    ).join('') +
+  '</div>';
+
+  let body = '';
+  if (d.stage === 'online' || d.stage === 'incoming') {
+    const chOpts = Object.values(CHAPTER_BANK).map(ch =>
+      '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" data-act="d-scope" data-v="' + ch.id + '">' + esc(ch.title) + ' (' + ch.total_questions + ')</button>'
+    ).join('') + '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" data-act="d-scope" data-v="mix">सभी मिक्स (' + Object.values(CHAPTER_BANK).reduce((a,c)=>a+c.total_questions,0) + ')</button>';
+
+    body = '<div style="display:flex;flex-direction:column;gap:10px;">' +
+      '<div style="background:#E8F6EE;border:1.5px solid #86EFAC;border-radius:13px;padding:11px;display:flex;align-items:center;gap:10px;">' +
+        avImg(opId, 'av-md') +
+        '<div><div style="font-size:13px;font-weight:800;color:#14532D;">' + opName + ' को लाइव चैलेंज भेजें</div><div style="font-size:11px;font-weight:700;color:#1E7E4E;">सीधे साथ-साथ खेलें — कोई कोड या पासवर्ड नहीं</div></div>' +
+      '</div>' +
+      '<div style="background:#fff;border:1px solid #DCE3E8;border-radius:13px;padding:11px;display:flex;flex-direction:column;gap:8px;">' +
+        '<div style="font-size:12px;font-weight:800;">विषय / पाठ चुनें:</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;">' + chOpts + '</div>' +
+        '<div style="font-size:12px;font-weight:800;margin-top:4px;">सवालों की संख्या:</div>' +
+        '<div style="display:flex;gap:6px;">' + [10,15,20].map(c => '<button type="button" class="u-btn ' + (d.count === c ? 'on' : '') + '" style="flex:1;padding:7px;" data-act="d-cnt" data-v="' + c + '">' + c + ' सवाल</button>').join('') + '</div>' +
+      '</div>' +
+      '<button type="button" class="btn-grn" style="width:100%;padding:11px;font-size:13px;" data-act="d-start">⚔️ ' + opName + ' के साथ अभी शुरू करें (' + d.count + ' सवाल)</button>' +
+      '<button type="button" class="btn-sec" style="width:100%;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
+    '</div>';
+
+    if (d.stage === 'incoming') {
+      const scTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+      body += '<div class="modal-bg"><div class="modal-card">' +
+        avImg(myId, 'av-lg', 'margin:0 auto;') +
+        '<div style="font-size:11.5px;font-weight:800;color:#1E7E4E;">' + opName + ' के फ़ोन पर सीधा संदेश</div>' +
+        '<div style="font-size:16px;font-weight:800;">🔔 ' + myName + ' ने चैलेंज भेजा है!</div>' +
+        '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:8px;font-size:12px;font-weight:800;">' + esc(scTitle) + ' · ' + d.count + ' सवाल · 25 सेकंड/सवाल</div>' +
+        '<div style="display:flex;gap:8px;"><button type="button" class="btn-sec" style="flex:1;" data-act="d-stage" data-s="online">✖ अभी नहीं</button><button type="button" class="btn-grn" style="flex:1;" data-act="d-start">✅ स्वीकार करें</button></div>' +
+      '</div></div>';
+    }
+  } else if (d.stage === 'offline') {
+    body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
+      '<div style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:13px;padding:13px;text-align:center;">' +
+        avImg(opId, 'av-lg', 'margin:0 auto 6px;border-color:#94A3B8;filter:grayscale(30%);') +
+        '<div style="font-size:14.5px;font-weight:800;color:#334155;">⚪ ' + opName + ' अभी ऑफ़लाइन हैं</div>' +
+        '<div style="font-size:11.5px;color:#64748B;margin-top:3px;">1 vs 1 दोनों के साथ-साथ ऑनलाइन होने पर चलता है</div>' +
+      '</div>' +
+      '<div style="background:#fff;border:1px solid #DCE3E8;border-radius:12px;padding:11px;font-size:12px;"><strong>भेजा जाने वाला संदेश:</strong><br>"' + opName + ', TGT GK ऐप खोलो — 1 vs 1 मुक़ाबला खेलना है!"</div>' +
+      '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:11px;padding:11px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
+    '</div>';
+  } else if (d.stage === 'live') {
+    if (!d.qs.length) startDuelMatch();
+    const q = d.qs[d.qIdx] || d.qs[0];
+    if (q) {
+      const dots = d.dots.map((dt, i) => '<span style="flex:1;max-width:22px;height:6px;border-radius:99px;background:' + (i === d.qIdx ? '#FF6F00' : dt === 'g' ? '#2E7D32' : dt === 'r' ? '#C62828' : '#E2E8F0') + ';"></span>').join('');
+      const opts = q.opts.map((o, i) => {
+        let cls = 'opt-card';
+        if (d.picked !== null) {
+          if (i === q.ans) cls += ' is-right';
+          else if (i === d.picked) cls += ' is-wrong';
+        }
+        return '<div class="' + cls + '"><button type="button" class="opt-btn" data-act="d-pick" data-i="' + i + '"><span class="opt-pill">' + (i + 1) + '</span><span>' + esc(o) + '</span></button></div>';
+      }).join('');
+      body = '<div style="background:#fff;border:1.5px solid #0794C7;border-radius:12px;padding:9px;margin-bottom:9px;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;margin-bottom:6px;">' +
+            '<span style="display:inline-flex;align-items:center;gap:4px;color:#0794C7;">' + avImg(myId, 'av-xs') + ' ' + myName + ': ' + d.mScore + (d.mStreak >= 2 ? ' 🔥' : '') + '</span>' +
+            '<span style="background:#E8F5E9;color:#2E7D32;padding:2px 8px;border-radius:99px;font-size:11px;">' + (d.qIdx + 1) + '/' + d.qs.length + ' · ⏱ ' + d.timer + 's</span>' +
+            '<span style="display:inline-flex;align-items:center;gap:4px;color:#D97706;">' + avImg(opId, 'av-xs') + ' ' + opName + ': ' + d.pScore + '</span>' +
+          '</div>' +
+          '<div style="display:flex;gap:3px;justify-content:center;">' + dots + '</div>' +
+        '</div>' +
+        '<div class="q-card"><div class="q-stem" style="font-size:14.5px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div></div>' +
+        opts +
+        (d.picked !== null ? '<div style="background:#E8F5E9;border:1.5px solid #2E7D32;border-radius:11px;padding:9px;font-size:12px;display:flex;flex-direction:column;gap:7px;"><div><strong>' + (d.picked === q.ans ? '✅ +1 ' + myName + '!' : '✗ सही उत्तर: ' + esc(q.opts[q.ans])) + '</strong> · ' + opName + (d.pCorrect ? ' का भी सही ✓' : ' चूक गईं ✗') + '</div><button type="button" class="btn-pri" data-act="d-next">' + (d.qIdx + 1 >= d.qs.length ? '🏆 अंतिम परिणाम देखें ›' : 'अगला सवाल ›') + '</button></div>' : '');
+    }
+  } else {
+    const winTxt = d.mScore > d.pScore ? '🏆 ' + myName + ' जीतीं!' : d.pScore > d.mScore ? '🏆 ' + opName + ' जीतीं!' : '🤝 बराबरी का मुक़ाबला!';
+    const diffs = (d.history.length ? d.history : [{ qNum: 1, q: 'संविधान सभा ने डॉ. राजेंद्र प्रसाद को प्रथम राष्ट्रपति कब चुना?', mOk: false, pOk: true, mAns: '26 जन 1950', pAns: '24 जन 1950', exp: '24 जनवरी 1950 की अंतिम बैठक में राष्ट्रपति चुने गए।' }]).map((h, i) => {
+      const open = d.resOpenIdx === i;
+      return '<div style="background:#fff;border-radius:11px;padding:9px;font-size:11.5px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-weight:800;"><span>#' + h.qNum + ': ' + esc(h.q) + '</span><button type="button" class="u-btn" style="flex:none;" data-act="d-res-exp" data-i="' + i + '">' + (open ? 'बंद' : 'व्याख्या') + '</button></div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px;font-weight:700;font-size:11px;">' +
+          '<div style="background:' + (h.mOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.mOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:4px 6px;">' + myName + ': ' + (h.mOk ? '✓ ' : '✗ ') + esc(h.mAns) + '</div>' +
+          '<div style="background:' + (h.pOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.pOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:4px 6px;">' + opName + ': ' + (h.pOk ? '✓ ' : '✗ ') + esc(h.pAns) + '</div>' +
+        '</div>' +
+        (open ? '<div style="margin-top:6px;padding-top:6px;border-top:1px solid #EEF3F7;color:#475569;">' + esc(buildExpTimeline(h.exp).lead) + '</div>' : '') +
+      '</div>';
+    }).join('');
+    body = '<div style="display:flex;flex-direction:column;gap:9px;">' +
+      '<div style="background:#FFF8E1;border:2px solid #D97706;border-radius:14px;padding:12px;text-align:center;">' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:5px;">' + avImg(myId, 'av-md') + '<span style="font-size:20px;">🏆</span>' + avImg(opId, 'av-md') + '</div>' +
+        '<div style="font-size:17px;font-weight:800;color:#14532D;">' + winTxt + ' · ' + d.mScore + ' — ' + d.pScore + '</div>' +
+      '</div>' +
+      '<div style="font-size:12px;font-weight:800;color:#334155;">किस सवाल पर कौन फँसा?</div>' +
+      diffs +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+        '<button type="button" class="btn-pri" data-act="d-start">🔁 फिर खेलें</button>' +
+        '<button type="button" class="btn-grn" data-act="d-wa-share">📲 WhatsApp भेजें</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  return '<div class="hd"><div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button>' + avImg(myId, 'av-xs') + '<span class="hd-ttl">1 vs 1 · ' + myName + ' vs ' + opName + '</span>' + avImg(opId, 'av-xs') + '</div></div>' +
+    stageBar +
+    '<div class="body-scr scr" style="padding:11px;">' + body + '</div>';
+}
+
+function render() {
+  const root = document.getElementById('appRoot');
+  if (!root) return '';
+  let html = '';
+  if (app.view === 'welcome') html = renderWelcomeView();
+  else if (app.view === 'home') html = renderHomeView();
+  else if (app.view === 'quiz') html = renderQuizView();
+  else if (app.view === 'result') html = renderResultView();
+  else html = renderDuelView();
+  root.innerHTML = html + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
+  return root.innerHTML;
+}
+
+function openChapter(chId, mode) {
+  const ch = CHAPTER_BANK[chId];
+  if (!ch) return;
+  const prog = getChProg(chId);
+  let ids = [];
+  if (mode === 'wrong') ids = ch.questions.filter(q => prog.answers[q.id] !== undefined && prog.answers[q.id] !== q.ans).map(q => q.id);
+  else if (mode === 'star') ids = ch.questions.filter(q => prog.stars && prog.stars[q.id]).map(q => q.id);
+  if (!ids.length) {
+    if (mode === 'wrong' || mode === 'star') {
+      showToast(mode === 'wrong' ? 'कोई गलत सवाल बाकी नहीं!' : 'अभी कोई स्टार सवाल नहीं है!');
+      return;
+    }
+    ids = ch.questions.map(q => q.id);
+  }
+  app.userData.lastChId = chId;
+  saveUserData(app.userId, app.userData);
+  app.quiz = {
+    chId,
+    title: ch.title,
+    mode,
+    qIds: ids,
+    cur: mode === 'resume' ? Math.min(prog.curIdx || 0, ids.length - 1) : 0,
+    palOpen: false,
+    palFilter: 'all',
+    showOther: false
+  };
+  app.view = 'quiz';
+  render();
+}
+
+function openWaUrl(msg) {
+  try {
+    if (typeof window !== 'undefined' && window.open && !window.__DISABLE_POPUPS) {
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    }
+  } catch (_) {}
+  showToast('📲 WhatsApp तैयार: ' + msg);
+}
+
+function handleAction(el, ev) {
+  const act = el.getAttribute('data-act');
+  if (!act) return;
+
+  if (act === 'choose-user') {
+    app.userId = el.getAttribute('data-u') === 'p' ? 'p' : 'm';
+    saveLS('tgt_gk_active_user_v1', app.userId);
+    app.userData = loadUserData(app.userId);
+    app.view = 'home';
+    render(); return;
+  }
+  if (act === 'open-welcome') { stopDuelTimer(); app.view = 'welcome'; render(); return; }
+  if (act === 'back-home') { stopDuelTimer(); app.view = 'home'; render(); return; }
+  if (act === 'sel-sub') { app.userData.tabId = el.getAttribute('data-v'); saveUserData(app.userId, app.userData); render(); return; }
+  if (act === 'tog-ready') { app.userData.onlyReady = !app.userData.onlyReady; saveUserData(app.userId, app.userData); render(); return; }
+  if (act === 'tog-paper') { app.userData.paperTint = !app.userData.paperTint; saveUserData(app.userId, app.userData); render(); return; }
+  if (act === 'tog-twig') { const cid = el.getAttribute('data-cid'); app.doneTwigCh = app.doneTwigCh === cid ? '' : cid; render(); return; }
+  if (act === 'soon-ch') { showToast('📚 "' + el.getAttribute('data-t') + '" जल्द जुड़ेगा!'); return; }
+  if (act === 'open-ch') { openChapter(el.getAttribute('data-cid'), el.getAttribute('data-mode') || 'full'); return; }
+  if (act === 'trigger-import') { const inp = document.getElementById('jsonImportInput'); if (inp && inp.click) inp.click(); return; }
+
+  // Quiz actions
+  if (act === 'q-pick') {
+    const ch = CHAPTER_BANK[app.quiz.chId];
+    const qId = app.quiz.qIds[app.quiz.cur];
+    const prog = getChProg(ch.id);
+    prog.answers[qId] = Number(el.getAttribute('data-i'));
+    prog.curIdx = app.quiz.cur;
+    saveUserData(app.userId, app.userData);
+    app.quiz.showOther = false;
+    render(); return;
+  }
+  if (act === 'q-step') {
+    const d = Number(el.getAttribute('data-d')) || 1;
+    const nxt = Math.max(0, Math.min(app.quiz.qIds.length - 1, app.quiz.cur + d));
+    app.quiz.cur = nxt; app.quiz.showOther = false;
+    getChProg(app.quiz.chId).curIdx = nxt;
+    saveUserData(app.userId, app.userData);
+    render(); return;
+  }
+  if (act === 'q-jump') {
+    const nxt = Number(el.getAttribute('data-i')) || 0;
+    app.quiz.cur = nxt; app.quiz.palOpen = false; app.quiz.showOther = false;
+    getChProg(app.quiz.chId).curIdx = nxt;
+    saveUserData(app.userId, app.userData);
+    render(); return;
+  }
+  if (act === 'q-pal-tog' || act === 'q-pal-bg') {
+    if (act === 'q-pal-bg' && ev && ev.target && ev.target !== el) return;
+    app.quiz.palOpen = !app.quiz.palOpen; render(); return;
+  }
+  if (act === 'q-pal-f') { app.quiz.palFilter = el.getAttribute('data-v'); render(); return; }
+  if (act === 'q-fs') {
+    app.userData.fontSize = Math.max(13, Math.min(20, (app.userData.fontSize || 15) + Number(el.getAttribute('data-d'))));
+    saveUserData(app.userId, app.userData); render(); return;
+  }
+  if (act === 'q-star') {
+    const qId = app.quiz.qIds[app.quiz.cur];
+    const prog = getChProg(app.quiz.chId);
+    prog.stars[qId] = !prog.stars[qId];
+    saveUserData(app.userId, app.userData); render(); return;
+  }
+  if (act === 'q-tog-other') { app.quiz.showOther = !app.quiz.showOther; render(); return; }
+  if (act === 'q-speak') {
+    const ch = CHAPTER_BANK[app.quiz.chId];
+    const q = ch.questions.find(x => x.id === app.quiz.qIds[app.quiz.cur]);
+    if (q) speakHindi(q.q + ' सही उत्तर: ' + q.opts[q.ans] + '। ' + buildExpTimeline(q.exp).lead);
+    return;
+  }
+  if (act === 'finish-ch') {
+    const prog = getChProg(app.quiz.chId);
+    prog.finished = true;
+    saveUserData(app.userId, app.userData);
+    app.quiz.palOpen = false; app.result.openQId = null; app.view = 'result';
+    render(); return;
+  }
+
+  // Result actions
+  if (act === 'r-mark') { app.result.marking = el.getAttribute('data-k'); render(); return; }
+  if (act === 'r-tog') { const id = Number(el.getAttribute('data-id')); app.result.openQId = app.result.openQId === id ? null : id; render(); return; }
+
+  // Duel V3 actions
+  if (act === 'open-duel') { stopDuelTimer(); app.duel.stage = 'online'; app.view = 'duel'; render(); return; }
+  if (act === 'd-stage') {
+    const s = el.getAttribute('data-s');
+    if (s === 'live') { startDuelMatch(); return; }
+    stopDuelTimer(); app.duel.stage = s; render(); return;
+  }
+  if (act === 'd-scope') { app.duel.scope = el.getAttribute('data-v'); render(); return; }
+  if (act === 'd-cnt') { app.duel.count = Number(el.getAttribute('data-v')) || 10; render(); return; }
+  if (act === 'd-start') { startDuelMatch(); return; }
+  if (act === 'd-pick') { handleDuelPick(Number(el.getAttribute('data-i'))); return; }
+  if (act === 'd-next') {
+    if (app.duel.qIdx + 1 >= app.duel.qs.length) { stopDuelTimer(); app.duel.stage = 'result'; }
+    else { app.duel.qIdx += 1; app.duel.picked = null; app.duel.timer = 25; }
+    render(); return;
+  }
+  if (act === 'd-res-exp') { const i = Number(el.getAttribute('data-i')); app.duel.resOpenIdx = app.duel.resOpenIdx === i ? null : i; render(); return; }
+  if (act === 'd-wa-invite') {
+    const op = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
+    openWaUrl(op + ', TGT GK ऐप खोलो — 1 vs 1 मुक़ाबला खेलना है!'); return;
+  }
+  if (act === 'd-wa-share') {
+    const my = app.userId === 'p' ? 'प्रियंका' : 'मंजू', op = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
+    openWaUrl('🏆 TGT GK 1 vs 1 परिणाम: ' + my + ' ' + app.duel.mScore + ' — ' + app.duel.pScore + ' ' + op + '!'); return;
+  }
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target && e.target.closest ? e.target.closest('[data-act]') : null;
+  if (t) handleAction(t, e);
+});
+
+const impEl = document.getElementById('jsonImportInput');
+if (impEl && impEl.addEventListener) {
+  impEl.addEventListener('change', (e) => {
+    const files = e.target && e.target.files ? Array.from(e.target.files) : [];
+    files.forEach(f => {
+      const r = new FileReader();
+      r.onload = () => {
+        try { importChapterData(JSON.parse(r.result)); render(); }
+        catch (err) { showToast('त्रुटि: ' + err.message); }
+      };
+      r.readAsText(f);
+    });
+    e.target.value = '';
+  });
+}
+
+initChapterStore();
+const savedUid = safeLS('tgt_gk_active_user_v1', '');
+if (savedUid === 'm' || savedUid === 'p') {
+  app.userId = savedUid;
+  app.userData = loadUserData(savedUid);
+  app.view = 'home';
+}
+render();
+
+if (typeof globalThis !== 'undefined') {
+  globalThis.__TGT_APP = {
+    app, ROADMAP, CHAPTER_BANK, openChapter, importChapterData, calcMarks, handleAction, render, getChProg, getUserStats, startDuelMatch, handleDuelPick
+  };
+}
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
+</body>
+</html>
