@@ -159,8 +159,8 @@
 <script>
 'use strict';
 
-// Optional future live multi-device 1v1 endpoint (leave empty for offline + simulated opponent + WhatsApp invite mode)
-const FIREBASE_DB_URL = '';
+// Live 2-phone Firebase Realtime Database room (REST API — works offline gracefully for solo study)
+const FIREBASE_DB_URL = 'https://tgtgk-live-default-rtdb.asia-southeast1.firebasedatabase.app/tgtgk_mp_live_84k9x2';
 
 const ROADMAP = [
   { id:'env', icon:'🌿', short:'पर्यावरण', name:'पर्यावरण', color:'#1E7E4E', soft:'#E8F6EE',
@@ -430,7 +430,7 @@ const app = {
     summary: null
   },
   duel: {
-    stage: 'online',
+    stage: 'lobby',
     scope: 'ch01',
     count: 10,
     qs: [],
@@ -445,7 +445,18 @@ const app = {
     picked: null,
     pAnswered: false,
     pCorrect: false,
-    resOpenIdx: null
+    resOpenIdx: null,
+    matchId: '',
+    lastRejectedId: '',
+    opOnline: false,
+    netOk: true,
+    serverOffset: 0,
+    remoteMatch: null,
+    remotePresence: null,
+    submitting: false,
+    inviteSentAt: 0,
+    pollTimer: null,
+    lastUiSig: ''
   }
 };
 
@@ -650,7 +661,7 @@ function renderHomeView() {
       '<div class="cm-page" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
     '</div>' +
     '<div class="ft">' +
-      '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;">⚔️ 1 vs 1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b></span>' +
+      '<span style="font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;">⚔️ 1 vs 1 · ' + avImg(otherId, 'av-xs', 'border-color:#1E7E4E') + ' <b style="color:#1E7E4E;">' + otherName + '</b>' + (app.duel.opOnline ? ' <span style="background:#DCFCE7;color:#15803D;padding:1px 6px;border-radius:99px;font-size:10px;font-weight:800;">🟢 ऑनलाइन</span>' : '') + '</span>' +
       '<button type="button" class="btn-grn" style="padding:6px 12px;" data-act="open-duel">चैलेंज ›</button>' +
     '</div>';
 }
@@ -863,13 +874,15 @@ function renderResultView() {
     '</div>';
 }
 
-function buildDuelPool(scope, count) {
+function buildDuelRefs(scope, count) {
   let pool = [];
   if (scope === 'mix') {
-    Object.values(CHAPTER_BANK).forEach(ch => ch.questions.forEach(q => { if (!q.match) pool.push(q); }));
+    Object.keys(CHAPTER_BANK).forEach(cid => CHAPTER_BANK[cid].questions.forEach(q => {
+      if (!q.match) pool.push({ chId: cid, qId: q.id });
+    }));
   } else if (CHAPTER_BANK[scope]) {
-    pool = CHAPTER_BANK[scope].questions.filter(q => !q.match);
-    if (pool.length < count) pool = CHAPTER_BANK[scope].questions.slice();
+    pool = CHAPTER_BANK[scope].questions.filter(q => !q.match).map(q => ({ chId: scope, qId: q.id }));
+    if (pool.length < count) pool = CHAPTER_BANK[scope].questions.map(q => ({ chId: scope, qId: q.id }));
   }
   const arr = pool.slice();
   for (let i = arr.length - 1; i > 0; i--) {
@@ -879,96 +892,441 @@ function buildDuelPool(scope, count) {
   return arr.slice(0, Math.min(count, arr.length));
 }
 
-function startDuelMatch() {
+function buildDuelPool(scope, count) {
+  return buildDuelRefs(scope, count).map(r => {
+    const ch = CHAPTER_BANK[r.chId];
+    return ch ? ch.questions.find(q => q.id === r.qId) : null;
+  }).filter(Boolean);
+}
+
+function resolveDuelQuestions(qRefs) {
+  const list = Array.isArray(qRefs) ? qRefs : Object.values(qRefs || {});
+  return list.map(r => {
+    const ch = r && CHAPTER_BANK[r.chId];
+    return ch ? ch.questions.find(q => q.id === r.qId) : null;
+  }).filter(Boolean);
+}
+
+function serverNow() {
+  return Date.now() + (app.duel.serverOffset || 0);
+}
+
+function fbUrl(subPath) {
+  const base = String(FIREBASE_DB_URL || '').replace(/\/+$/, '');
+  return base + (subPath ? '/' + subPath.replace(/^\/+/, '') : '') + '.json';
+}
+
+async function fbReq(subPath, method, bodyObj, keepalive) {
+  if (!FIREBASE_DB_URL || typeof fetch !== 'function') return null;
+  try {
+    const opts = { method: method || 'GET' };
+    if (keepalive) opts.keepalive = true;
+    if (bodyObj !== undefined) {
+      opts.headers = { 'Content-Type': 'application/json' };
+      opts.body = JSON.stringify(bodyObj);
+    }
+    const resp = await fetch(fbUrl(subPath), opts);
+    if (!resp.ok) {
+      app.duel.netOk = false;
+      return null;
+    }
+    app.duel.netOk = true;
+    return await resp.json();
+  } catch (_) {
+    app.duel.netOk = false;
+    return null;
+  }
+}
+
+async function sendPresence(isOnline, keepalive) {
+  if (!FIREBASE_DB_URL || app.view === 'welcome') return null;
+  const uid = app.userId === 'p' ? 'p' : 'm';
+  const res = await fbReq('presence/' + uid, 'PUT', {
+    ts: { '.sv': 'timestamp' },
+    online: isOnline !== false
+  }, keepalive);
+  if (res && typeof res.ts === 'number') {
+    app.duel.serverOffset = res.ts - Date.now();
+  }
+  return res;
+}
+
+function hasIncomingChallenge() {
+  if (app.view === 'welcome') return false;
+  const d = app.duel, m = d.remoteMatch;
+  if (!m || m.status !== 'ringing' || m.to !== app.userId) return false;
+  if (m.id === d.lastRejectedId || m.id === d.matchId) return false;
+  if (typeof m.createdAt === 'number' && (serverNow() - m.createdAt) > 90000) return false;
+  return true;
+}
+
+function startDuelTicker() {
   stopDuelTimer();
+  if (typeof setInterval === 'function' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
+    app.duel.timerId = setInterval(() => {
+      const d = app.duel;
+      if (app.view !== 'duel' || d.stage !== 'live') return;
+      const m = d.remoteMatch;
+      const qStart = (m && typeof m.qStartAt === 'number') ? m.qStartAt : serverNow();
+      d.timer = Math.max(0, 25 - Math.floor((serverNow() - qStart) / 1000));
+      if (d.timer <= 0 && d.picked === null) {
+        handleDuelPick(-1);
+        return;
+      }
+      if (d.picked === null || !d.pAnswered) render();
+    }, 1000);
+  }
+}
+
+function recomputeDuelFromMatch(m) {
   const d = app.duel;
-  d.qs = buildDuelPool(d.scope, d.count);
+  const myId = app.userId === 'p' ? 'p' : 'm';
+  const opId = myId === 'p' ? 'm' : 'p';
+  const qs = resolveDuelQuestions(m.qRefs);
+  if (qs.length) d.qs = qs;
+  d.scope = m.scope || d.scope;
+  d.count = m.count || d.qs.length || d.count;
+  d.qIdx = Math.max(0, Math.min(Math.max(0, d.qs.length - 1), Number(m.qIdx || 0)));
+
+  const qStart = typeof m.qStartAt === 'number' ? m.qStartAt : serverNow();
+  d.timer = (typeof window !== 'undefined' && window.__DISABLE_TIMERS)
+    ? 25
+    : Math.max(0, 25 - Math.floor((serverNow() - qStart) / 1000));
+
+  const ansMap = m.ans || {};
+  d.mScore = 0; d.pScore = 0; d.mStreak = 0;
+  d.dots = Array(d.qs.length).fill('w');
+  d.history = [];
+  d.picked = null;
+  d.pAnswered = false;
+  d.pCorrect = false;
+
+  d.qs.forEach((q, i) => {
+    const qa = ansMap[i] || ansMap[String(i)] || {};
+    const myA = qa[myId];
+    const opA = qa[opId];
+    if (myA) {
+      if (myA.ok) { d.mScore += 1; d.mStreak += 1; d.dots[i] = 'g'; }
+      else { d.mStreak = 0; d.dots[i] = 'r'; }
+    }
+    if (opA && opA.ok) d.pScore += 1;
+
+    if (i === d.qIdx) {
+      d.picked = myA ? myA.idx : null;
+      d.pAnswered = !!opA;
+      d.pCorrect = !!(opA && opA.ok);
+    }
+
+    const roundDone = !!(myA && (opA || d.timer <= 0 || m.status === 'ended' || i < d.qIdx));
+    if (myA || opA || i < d.qIdx || m.status === 'ended') {
+      const mText = myA ? (myA.idx >= 0 && q.opts[myA.idx] !== undefined ? q.opts[myA.idx] : 'समय समाप्त') : 'छोड़ा';
+      const pText = opA ? (opA.idx >= 0 && q.opts[opA.idx] !== undefined ? q.opts[opA.idx] : 'समय समाप्त') : 'छोड़ा';
+      d.history.push({
+        qNum: i + 1,
+        q: q.q,
+        mOk: !!(myA && myA.ok),
+        pOk: !!(opA && opA.ok),
+        mAns: mText,
+        pAns: pText,
+        right: q.opts[q.ans],
+        exp: q.exp,
+        show: roundDone || m.status === 'ended'
+      });
+    }
+  });
+}
+
+function applyRemoteState(data) {
+  const d = app.duel;
+  const myId = app.userId === 'p' ? 'p' : 'm';
+  const opId = myId === 'p' ? 'm' : 'p';
+  const opName = opId === 'p' ? 'प्रियंका' : 'मंजू';
+  const prevOnline = d.opOnline;
+  const prevPopup = hasIncomingChallenge();
+  const prevSig = d.lastUiSig;
+
+  const pres = data && data.presence ? data.presence : null;
+  d.remotePresence = pres;
+  const opP = pres ? pres[opId] : null;
+  d.opOnline = !!(opP && opP.online !== false && typeof opP.ts === 'number' && (serverNow() - opP.ts) < 18000);
+
+  const m = data && data.match ? data.match : null;
+  d.remoteMatch = m;
+
+  if (d.stage === 'waiting' && d.matchId) {
+    if (m && m.id === d.matchId) {
+      if (m.status === 'live') {
+        recomputeDuelFromMatch(m);
+        d.stage = 'live';
+        app.view = 'duel';
+        startDuelTicker();
+        showToast('⚔️ ' + opName + ' जुड़ गईं — मुक़ाबला शुरू!');
+      } else if (m.status === 'rejected') {
+        stopDuelTimer();
+        d.stage = 'lobby';
+        d.matchId = '';
+        showToast('🔔 ' + opName + ' अभी व्यस्त हैं — बाद में खेलें');
+      } else if (m.status === 'cancelled') {
+        stopDuelTimer();
+        d.stage = 'lobby';
+        d.matchId = '';
+      } else if (m.status === 'ringing' && typeof m.createdAt === 'number' && (serverNow() - m.createdAt) > 75000) {
+        fbReq('match', 'PATCH', { status: 'cancelled' });
+        stopDuelTimer();
+        d.stage = 'lobby';
+        d.matchId = '';
+        showToast('जवाब नहीं मिला — WhatsApp पर बुलाकर फिर भेजें');
+      }
+    }
+  } else if (d.stage === 'live' && d.matchId) {
+    if (m && m.id === d.matchId) {
+      recomputeDuelFromMatch(m);
+      if (m.status === 'ended') {
+        stopDuelTimer();
+        d.stage = 'result';
+      }
+    }
+  }
+
+  const nextPopup = hasIncomingChallenge();
+  const curSig = (app.view === 'duel')
+    ? JSON.stringify([d.opOnline, d.netOk, nextPopup, d.stage, d.matchId, d.qIdx, d.mScore, d.pScore, d.picked, d.pAnswered, m && m.status, m && m.qIdx, m && m.ans])
+    : JSON.stringify([d.opOnline, d.netOk, nextPopup, d.stage, d.matchId]);
+
+  d.lastUiSig = curSig;
+  if (curSig !== prevSig || prevOnline !== d.opOnline || prevPopup !== nextPopup) {
+    render();
+  }
+}
+
+async function syncLiveState() {
+  if (!FIREBASE_DB_URL) return null;
+  const data = await fbReq('', 'GET');
+  if (data !== null || !app.duel.netOk) {
+    applyRemoteState(data || {});
+  }
+  return data;
+}
+
+async function sendDuelInvite() {
+  if (app.duel.submitting) return;
+  const d = app.duel;
+  const myId = app.userId === 'p' ? 'p' : 'm';
+  const opId = myId === 'p' ? 'm' : 'p';
+  const qRefs = buildDuelRefs(d.scope, d.count);
+  if (!qRefs.length) { showToast('इस विषय में अभी सवाल नहीं हैं'); return; }
+
+  const matchId = myId + '_' + Date.now() + '_' + Math.floor(Math.random() * 9000 + 1000);
+  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  d.submitting = true;
+  d.matchId = matchId;
+  d.inviteSentAt = Date.now();
+  d.qs = resolveDuelQuestions(qRefs);
   d.qIdx = 0; d.mScore = 0; d.pScore = 0; d.mStreak = 0;
   d.dots = Array(d.qs.length).fill('w');
   d.history = []; d.picked = null; d.pAnswered = false; d.pCorrect = false;
-  d.resOpenIdx = null; d.timer = 25; d.stage = 'live';
-  if (typeof setInterval === 'function' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
-    d.timerId = setInterval(() => {
-      if (app.view !== 'duel' || app.duel.stage !== 'live' || app.duel.picked !== null) return;
-      app.duel.timer -= 1;
-      if (app.duel.timer <= 0) handleDuelPick(-1);
-      else render();
-    }, 1000);
-  }
+  d.resOpenIdx = null; d.timer = 25;
+  d.stage = 'waiting';
+  app.view = 'duel';
   render();
+
+  const payload = {
+    id: matchId,
+    from: myId,
+    to: opId,
+    status: 'ringing',
+    scope: d.scope,
+    scopeTitle,
+    count: qRefs.length,
+    createdAt: { '.sv': 'timestamp' },
+    qIdx: 0,
+    qStartAt: { '.sv': 'timestamp' },
+    qRefs,
+    ans: {}
+  };
+  const res = await fbReq('match', 'PUT', payload);
+  d.submitting = false;
+  if (!res) {
+    d.stage = 'lobby';
+    d.matchId = '';
+    showToast('📶 इंटरनेट चालू करें — चैलेंज नहीं जा सका');
+    return;
+  }
+  d.remoteMatch = res;
 }
 
-function handleDuelPick(idx) {
-  const d = app.duel;
-  if (d.picked !== null) return;
-  const q = d.qs[d.qIdx];
-  d.picked = idx;
-  const mOk = idx === q.ans;
-  const pOk = Math.random() < 0.72;
-  d.pAnswered = true;
-  d.pCorrect = pOk;
-  if (mOk) { d.mScore += 1; d.mStreak += 1; } else { d.mStreak = 0; }
-  if (pOk) d.pScore += 1;
-  d.dots[d.qIdx] = mOk ? 'g' : 'r';
-  d.history.push({ qNum: d.qIdx + 1, q: q.q, mOk, pOk, mAns: idx >= 0 ? q.opts[idx] : 'समय समाप्त', pAns: pOk ? q.opts[q.ans] : q.opts[(q.ans + 1) % 4], right: q.opts[q.ans], exp: q.exp });
+function startDuelMatch() {
+  return sendDuelInvite();
+}
+
+async function acceptDuelInvite() {
+  const d = app.duel, m = d.remoteMatch;
+  if (!m) return;
+  const qs = resolveDuelQuestions(m.qRefs);
+  if (!qs.length) {
+    showToast('यह पाठ अभी इस फ़ोन में अपडेट नहीं है');
+    return;
+  }
+  d.matchId = m.id;
+  d.scope = m.scope || 'ch01';
+  d.count = m.count || qs.length;
+  d.qs = qs;
+  d.qIdx = 0; d.mScore = 0; d.pScore = 0; d.mStreak = 0;
+  d.dots = Array(qs.length).fill('w');
+  d.history = []; d.picked = null; d.pAnswered = false; d.pCorrect = false;
+  d.resOpenIdx = null; d.timer = 25;
+  d.stage = 'live';
+  app.view = 'duel';
+  if (d.remoteMatch) {
+    d.remoteMatch.status = 'live';
+    d.remoteMatch.qIdx = 0;
+    d.remoteMatch.qStartAt = serverNow();
+  }
+  startDuelTicker();
   render();
+  await fbReq('match', 'PATCH', {
+    status: 'live',
+    qIdx: 0,
+    qStartAt: { '.sv': 'timestamp' }
+  });
+}
+
+async function rejectDuelInvite() {
+  const d = app.duel, m = d.remoteMatch;
+  if (m && m.id) d.lastRejectedId = m.id;
+  if (d.remoteMatch) d.remoteMatch.status = 'rejected';
+  showToast('चैलेंज अभी के लिए टाल दिया गया');
+  if (m && m.id) {
+    await fbReq('match', 'PATCH', { status: 'rejected' });
+  }
+}
+
+async function cancelDuelInvite() {
+  const d = app.duel;
+  stopDuelTimer();
+  d.stage = 'lobby';
+  if (d.remoteMatch && d.remoteMatch.id === d.matchId) d.remoteMatch.status = 'cancelled';
+  d.matchId = '';
+  render();
+  await fbReq('match', 'PATCH', { status: 'cancelled' });
+}
+
+async function handleDuelPick(idx) {
+  const d = app.duel;
+  if (d.picked !== null || d.stage !== 'live') return;
+  const q = d.qs[d.qIdx];
+  if (!q) return;
+  const myId = app.userId === 'p' ? 'p' : 'm';
+  const isOk = idx === q.ans;
+  const entry = { idx, ok: isOk, at: { '.sv': 'timestamp' } };
+
+  if (!d.remoteMatch) d.remoteMatch = { id: d.matchId, qIdx: d.qIdx, ans: {} };
+  if (!d.remoteMatch.ans) d.remoteMatch.ans = {};
+  if (!d.remoteMatch.ans[d.qIdx]) d.remoteMatch.ans[d.qIdx] = {};
+  d.remoteMatch.ans[d.qIdx][myId] = { idx, ok: isOk, at: serverNow() };
+
+  recomputeDuelFromMatch(d.remoteMatch);
+  render();
+
+  await fbReq('match/ans/' + d.qIdx + '/' + myId, 'PUT', entry);
+}
+
+async function advanceDuelNext() {
+  const d = app.duel;
+  if (d.stage !== 'live') return;
+  if (d.qIdx + 1 >= d.qs.length) {
+    stopDuelTimer();
+    d.stage = 'result';
+    if (d.remoteMatch) d.remoteMatch.status = 'ended';
+    recomputeDuelFromMatch(d.remoteMatch || { qRefs: d.qs.map((q, i) => ({ chId: d.scope, qId: q.id })), ans: {} });
+    render();
+    await fbReq('match', 'PATCH', { status: 'ended' });
+    return;
+  }
+  const nxt = d.qIdx + 1;
+  d.qIdx = nxt;
+  d.picked = null;
+  d.pAnswered = false;
+  d.pCorrect = false;
+  d.timer = 25;
+  if (d.remoteMatch) {
+    d.remoteMatch.qIdx = nxt;
+    d.remoteMatch.qStartAt = serverNow();
+  }
+  render();
+  await fbReq('match', 'PATCH', { qIdx: nxt, qStartAt: { '.sv': 'timestamp' } });
+}
+
+function renderIncomingModal(m) {
+  const fromId = m.from === 'p' ? 'p' : 'm';
+  const fromName = fromId === 'p' ? 'प्रियंका' : 'मंजू';
+  const scTitle = m.scopeTitle || (m.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[m.scope]?.title || 'पाठ'));
+  return '<div class="modal-bg"><div class="modal-card">' +
+    avImg(fromId, 'av-lg', 'margin:0 auto;') +
+    '<div style="font-size:11.5px;font-weight:800;color:#1E7E4E;">लाइव 1 vs 1 आमंत्रण</div>' +
+    '<div style="font-size:16px;font-weight:800;">🔔 ' + fromName + ' ने चैलेंज भेजा है!</div>' +
+    '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:8px;font-size:12px;font-weight:800;">' + esc(scTitle) + ' · ' + (m.count || 10) + ' सवाल · 25 सेकंड/सवाल</div>' +
+    '<div style="display:flex;gap:8px;"><button type="button" class="btn-sec" style="flex:1;" data-act="d-reject">✖ अभी नहीं</button><button type="button" class="btn-grn" style="flex:1;" data-act="d-accept">✅ स्वीकार करें</button></div>' +
+  '</div></div>';
 }
 
 function renderDuelView() {
   const d = app.duel;
-  const myId = app.userId, opId = myId === 'p' ? 'm' : 'p';
+  const myId = app.userId === 'p' ? 'p' : 'm', opId = myId === 'p' ? 'm' : 'p';
   const myName = myId === 'p' ? 'प्रियंका' : 'मंजू', opName = myId === 'p' ? 'मंजू' : 'प्रियंका';
-  const stageBar = '<div style="background:#fff;border-bottom:1px solid #E2E8F0;padding:5px 8px;display:flex;gap:5px;overflow-x:auto;flex:none;">' +
-    [['online','🟢 ऑनलाइन'],['incoming','🔔 पॉपअप'],['offline','⚪ WhatsApp'],['live','🔴 लाइव'],['result','🏆 परिणाम']].map(([sk, sl]) =>
-      '<button type="button" class="u-btn ' + (d.stage === sk ? 'on' : '') + '" style="flex:none;" data-act="d-stage" data-s="' + sk + '">' + sl + '</button>'
-    ).join('') +
-  '</div>';
 
   let body = '';
-  if (d.stage === 'online' || d.stage === 'incoming') {
+  if (d.stage === 'lobby') {
+    const netWarn = !d.netOk
+      ? '<div style="background:#FEF2F2;border:1.5px solid #FCA5A5;color:#991B1B;border-radius:11px;padding:9px 11px;font-size:12px;font-weight:800;">📶 इंटरनेट बंद है — लाइव 1 vs 1 के लिए नेट चालू करें (अकेले अभ्यास हमेशा बिना नेट चलेगा)</div>'
+      : '';
+    const statusBanner = d.opOnline
+      ? '<div style="background:#E8F6EE;border:1.5px solid #86EFAC;border-radius:13px;padding:11px;display:flex;align-items:center;gap:10px;">' +
+          avImg(opId, 'av-md', 'border-color:#16A34A;') +
+          '<div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:800;color:#14532D;">🟢 ' + opName + ' अभी ऑनलाइन हैं!</div><div style="font-size:11px;font-weight:700;color:#1E7E4E;">चैलेंज भेजते ही उनके फ़ोन पर 🔔 स्वीकार / अस्वीकार पॉपअप आएगा</div></div>' +
+        '</div>'
+      : '<div style="background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
+          '<div style="display:flex;align-items:center;gap:10px;">' +
+            avImg(opId, 'av-md', 'border-color:#94A3B8;filter:grayscale(35%);') +
+            '<div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:800;color:#334155;">⚪ ' + opName + ' अभी ऐप में नहीं हैं</div><div style="font-size:11px;font-weight:700;color:#64748B;">दोनों के फ़ोन पर ऐप खुलते ही तुरंत लाइव मुक़ाबला होगा</div></div>' +
+          '</div>' +
+          '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:10px;padding:10px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
+        '</div>';
+
     const chOpts = Object.values(CHAPTER_BANK).map(ch =>
       '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" data-act="d-scope" data-v="' + ch.id + '">' + esc(ch.title) + ' (' + ch.total_questions + ')</button>'
     ).join('') + '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" data-act="d-scope" data-v="mix">सभी मिक्स (' + Object.values(CHAPTER_BANK).reduce((a,c)=>a+c.total_questions,0) + ')</button>';
 
     body = '<div style="display:flex;flex-direction:column;gap:10px;">' +
-      '<div style="background:#E8F6EE;border:1.5px solid #86EFAC;border-radius:13px;padding:11px;display:flex;align-items:center;gap:10px;">' +
-        avImg(opId, 'av-md') +
-        '<div><div style="font-size:13px;font-weight:800;color:#14532D;">' + opName + ' को लाइव चैलेंज भेजें</div><div style="font-size:11px;font-weight:700;color:#1E7E4E;">सीधे साथ-साथ खेलें — कोई कोड या पासवर्ड नहीं</div></div>' +
-      '</div>' +
+      netWarn +
+      statusBanner +
       '<div style="background:#fff;border:1px solid #DCE3E8;border-radius:13px;padding:11px;display:flex;flex-direction:column;gap:8px;">' +
         '<div style="font-size:12px;font-weight:800;">विषय / पाठ चुनें:</div>' +
         '<div style="display:flex;flex-wrap:wrap;gap:5px;">' + chOpts + '</div>' +
         '<div style="font-size:12px;font-weight:800;margin-top:4px;">सवालों की संख्या:</div>' +
         '<div style="display:flex;gap:6px;">' + [10,15,20].map(c => '<button type="button" class="u-btn ' + (d.count === c ? 'on' : '') + '" style="flex:1;padding:7px;" data-act="d-cnt" data-v="' + c + '">' + c + ' सवाल</button>').join('') + '</div>' +
       '</div>' +
-      '<button type="button" class="btn-grn" style="width:100%;padding:11px;font-size:13px;" data-act="d-start">⚔️ ' + opName + ' के साथ अभी शुरू करें (' + d.count + ' सवाल)</button>' +
-      '<button type="button" class="btn-sec" style="width:100%;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
+      '<button type="button" class="btn-grn" style="width:100%;padding:12px;font-size:13.5px;" data-act="d-send-invite">' +
+        (d.opOnline ? '⚔️ ' + opName + ' को लाइव चैलेंज भेजें (' + d.count + ' सवाल)' : '⚔️ चैलेंज भेजकर इंतज़ार करें (' + d.count + ' सवाल)') +
+      '</button>' +
+      (d.opOnline ? '<button type="button" class="btn-sec" style="width:100%;" data-act="d-wa-invite">📲 WhatsApp संदेश भी भेजें</button>' : '') +
     '</div>';
-
-    if (d.stage === 'incoming') {
-      const scTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
-      body += '<div class="modal-bg"><div class="modal-card">' +
-        avImg(myId, 'av-lg', 'margin:0 auto;') +
-        '<div style="font-size:11.5px;font-weight:800;color:#1E7E4E;">' + opName + ' के फ़ोन पर सीधा संदेश</div>' +
-        '<div style="font-size:16px;font-weight:800;">🔔 ' + myName + ' ने चैलेंज भेजा है!</div>' +
-        '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:8px;font-size:12px;font-weight:800;">' + esc(scTitle) + ' · ' + d.count + ' सवाल · 25 सेकंड/सवाल</div>' +
-        '<div style="display:flex;gap:8px;"><button type="button" class="btn-sec" style="flex:1;" data-act="d-stage" data-s="online">✖ अभी नहीं</button><button type="button" class="btn-grn" style="flex:1;" data-act="d-start">✅ स्वीकार करें</button></div>' +
-      '</div></div>';
-    }
-  } else if (d.stage === 'offline') {
-    body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
-      '<div style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:13px;padding:13px;text-align:center;">' +
-        avImg(opId, 'av-lg', 'margin:0 auto 6px;border-color:#94A3B8;filter:grayscale(30%);') +
-        '<div style="font-size:14.5px;font-weight:800;color:#334155;">⚪ ' + opName + ' अभी ऑफ़लाइन हैं</div>' +
-        '<div style="font-size:11.5px;color:#64748B;margin-top:3px;">1 vs 1 दोनों के साथ-साथ ऑनलाइन होने पर चलता है</div>' +
+  } else if (d.stage === 'waiting') {
+    const scTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+    body = '<div style="display:flex;flex-direction:column;gap:12px;padding-top:10px;">' +
+      '<div style="background:#fff;border:2px solid #0794C7;border-radius:16px;padding:18px 14px;text-align:center;display:flex;flex-direction:column;gap:9px;">' +
+        avImg(opId, 'av-lg', 'margin:0 auto;border-color:#0794C7;') +
+        '<div style="font-size:16px;font-weight:800;color:#0F172A;">⏳ ' + opName + ' को चैलेंज भेजा गया है!</div>' +
+        '<div style="font-size:12.5px;font-weight:700;color:#0578A3;background:#E3F3FA;border-radius:9px;padding:7px;">' + esc(scTitle) + ' · ' + d.count + ' सवाल</div>' +
+        '<div style="font-size:12px;color:#475569;line-height:1.55;">जैसे ही ' + opName + ' अपने फ़ोन पर <b>"✅ स्वीकार करें"</b> दबाएँगी, दोनों फ़ोन पर एक साथ पहला सवाल खुल जाएगा!</div>' +
       '</div>' +
-      '<div style="background:#fff;border:1px solid #DCE3E8;border-radius:12px;padding:11px;font-size:12px;"><strong>भेजा जाने वाला संदेश:</strong><br>"' + opName + ', TGT GK ऐप खोलो — 1 vs 1 मुक़ाबला खेलना है!"</div>' +
-      '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:11px;padding:11px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
+      '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:11px;padding:11px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को याद दिलाएँ</button>' +
+      '<button type="button" class="btn-sec" style="width:100%;" data-act="d-cancel">✖ चैलेंज रद्द करें</button>' +
     '</div>';
   } else if (d.stage === 'live') {
-    if (!d.qs.length) startDuelMatch();
     const q = d.qs[d.qIdx] || d.qs[0];
     if (q) {
+      const roundDone = d.picked !== null && (d.pAnswered || d.timer <= 0);
       const dots = d.dots.map((dt, i) => '<span style="flex:1;max-width:22px;height:6px;border-radius:99px;background:' + (i === d.qIdx ? '#FF6F00' : dt === 'g' ? '#2E7D32' : dt === 'r' ? '#C62828' : '#E2E8F0') + ';"></span>').join('');
       const opts = q.opts.map((o, i) => {
         let cls = 'opt-card';
@@ -978,6 +1336,18 @@ function renderDuelView() {
         }
         return '<div class="' + cls + '"><button type="button" class="opt-btn" data-act="d-pick" data-i="' + i + '"><span class="opt-pill">' + (i + 1) + '</span><span>' + esc(o) + '</span></button></div>';
       }).join('');
+      const preNotice = (d.picked === null && d.pAnswered)
+        ? '<div style="background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:9px;padding:6px 10px;font-size:11.5px;font-weight:800;margin-bottom:8px;text-align:center;">⚡ ' + opName + ' ने उत्तर दे दिया है — अब आपकी बारी!</div>'
+        : '';
+      const afterBox = d.picked !== null
+        ? '<div style="background:' + (roundDone ? '#E8F5E9' : '#F8FAFC') + ';border:1.5px solid ' + (roundDone ? '#2E7D32' : '#94A3B8') + ';border-radius:11px;padding:10px;font-size:12.5px;display:flex;flex-direction:column;gap:8px;">' +
+            '<div><strong>' + (d.picked === q.ans ? '✅ +1 ' + myName + '!' : '✗ सही उत्तर: ' + esc(q.opts[q.ans])) + '</strong> · ' +
+              (d.pAnswered ? (opName + (d.pCorrect ? ' का भी सही ✓' : ' चूक गईं ✗')) : ('⏳ ' + opName + ' के जवाब का इंतज़ार… (⏱ ' + d.timer + 's)')) +
+            '</div>' +
+            (roundDone ? '<button type="button" class="btn-pri" data-act="d-next">' + (d.qIdx + 1 >= d.qs.length ? '🏆 अंतिम परिणाम देखें ›' : 'अगला सवाल ›') + '</button>' : '') +
+          '</div>'
+        : '';
+
       body = '<div style="background:#fff;border:1.5px solid #0794C7;border-radius:12px;padding:9px;margin-bottom:9px;">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;margin-bottom:6px;">' +
             '<span style="display:inline-flex;align-items:center;gap:4px;color:#0794C7;">' + avImg(myId, 'av-xs') + ' ' + myName + ': ' + d.mScore + (d.mStreak >= 2 ? ' 🔥' : '') + '</span>' +
@@ -986,39 +1356,40 @@ function renderDuelView() {
           '</div>' +
           '<div style="display:flex;gap:3px;justify-content:center;">' + dots + '</div>' +
         '</div>' +
-        '<div class="q-card"><div class="q-stem" style="font-size:14.5px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div></div>' +
+        preNotice +
+        '<div class="q-card"><div class="q-stem" style="font-size:15px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div></div>' +
         opts +
-        (d.picked !== null ? '<div style="background:#E8F5E9;border:1.5px solid #2E7D32;border-radius:11px;padding:9px;font-size:12px;display:flex;flex-direction:column;gap:7px;"><div><strong>' + (d.picked === q.ans ? '✅ +1 ' + myName + '!' : '✗ सही उत्तर: ' + esc(q.opts[q.ans])) + '</strong> · ' + opName + (d.pCorrect ? ' का भी सही ✓' : ' चूक गईं ✗') + '</div><button type="button" class="btn-pri" data-act="d-next">' + (d.qIdx + 1 >= d.qs.length ? '🏆 अंतिम परिणाम देखें ›' : 'अगला सवाल ›') + '</button></div>' : '');
+        afterBox;
     }
   } else {
     const winTxt = d.mScore > d.pScore ? '🏆 ' + myName + ' जीतीं!' : d.pScore > d.mScore ? '🏆 ' + opName + ' जीतीं!' : '🤝 बराबरी का मुक़ाबला!';
-    const diffs = (d.history.length ? d.history : [{ qNum: 1, q: 'संविधान सभा ने डॉ. राजेंद्र प्रसाद को प्रथम राष्ट्रपति कब चुना?', mOk: false, pOk: true, mAns: '26 जन 1950', pAns: '24 जन 1950', exp: '24 जनवरी 1950 की अंतिम बैठक में राष्ट्रपति चुने गए।' }]).map((h, i) => {
+    const diffs = d.history.length ? d.history.map((h, i) => {
       const open = d.resOpenIdx === i;
-      return '<div style="background:#fff;border-radius:11px;padding:9px;font-size:11.5px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;font-weight:800;"><span>#' + h.qNum + ': ' + esc(h.q) + '</span><button type="button" class="u-btn" style="flex:none;" data-act="d-res-exp" data-i="' + i + '">' + (open ? 'बंद' : 'व्याख्या') + '</button></div>' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px;font-weight:700;font-size:11px;">' +
-          '<div style="background:' + (h.mOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.mOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:4px 6px;">' + myName + ': ' + (h.mOk ? '✓ ' : '✗ ') + esc(h.mAns) + '</div>' +
-          '<div style="background:' + (h.pOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.pOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:4px 6px;">' + opName + ': ' + (h.pOk ? '✓ ' : '✗ ') + esc(h.pAns) + '</div>' +
+      return '<div style="background:#fff;border-radius:11px;padding:9px;font-size:12px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:800;"><span>#' + h.qNum + ': ' + esc(h.q) + '</span><button type="button" class="u-btn" style="flex:none;" data-act="d-res-exp" data-i="' + i + '">' + (open ? 'बंद' : 'व्याख्या') + '</button></div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;font-weight:700;font-size:11.5px;">' +
+          '<div style="background:' + (h.mOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.mOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:5px 7px;">' + myName + ': ' + (h.mOk ? '✓ ' : '✗ ') + esc(h.mAns) + '</div>' +
+          '<div style="background:' + (h.pOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.pOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:5px 7px;">' + opName + ': ' + (h.pOk ? '✓ ' : '✗ ') + esc(h.pAns) + '</div>' +
         '</div>' +
-        (open ? '<div style="margin-top:6px;padding-top:6px;border-top:1px solid #EEF3F7;color:#475569;">' + esc(buildExpTimeline(h.exp).lead) + '</div>' : '') +
+        '<div style="margin-top:4px;font-size:11px;font-weight:700;color:#15803D;">सही उत्तर: ' + esc(h.right) + '</div>' +
+        (open ? '<div style="margin-top:6px;padding-top:6px;border-top:1px solid #EEF3F7;color:#334155;line-height:1.55;">' + esc(buildExpTimeline(h.exp).lead) + '</div>' : '') +
       '</div>';
-    }).join('');
+    }).join('') : '<div style="background:#fff;border-radius:11px;padding:12px;text-align:center;font-size:12px;color:#64748B;">कोई हल किया हुआ सवाल दर्ज नहीं हुआ</div>';
     body = '<div style="display:flex;flex-direction:column;gap:9px;">' +
       '<div style="background:#FFF8E1;border:2px solid #D97706;border-radius:14px;padding:12px;text-align:center;">' +
         '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:5px;">' + avImg(myId, 'av-md') + '<span style="font-size:20px;">🏆</span>' + avImg(opId, 'av-md') + '</div>' +
         '<div style="font-size:17px;font-weight:800;color:#14532D;">' + winTxt + ' · ' + d.mScore + ' — ' + d.pScore + '</div>' +
       '</div>' +
-      '<div style="font-size:12px;font-weight:800;color:#334155;">किस सवाल पर कौन फँसा?</div>' +
+      '<div style="font-size:12.5px;font-weight:800;color:#334155;">किस सवाल पर कौन फँसा?</div>' +
       diffs +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
-        '<button type="button" class="btn-pri" data-act="d-start">🔁 फिर खेलें</button>' +
+        '<button type="button" class="btn-pri" data-act="d-lobby">🔁 फिर चैलेंज भेजें</button>' +
         '<button type="button" class="btn-grn" data-act="d-wa-share">📲 WhatsApp भेजें</button>' +
       '</div>' +
     '</div>';
   }
 
   return '<div class="hd"><div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button>' + avImg(myId, 'av-xs') + '<span class="hd-ttl">1 vs 1 · ' + myName + ' vs ' + opName + '</span>' + avImg(opId, 'av-xs') + '</div></div>' +
-    stageBar +
     '<div class="body-scr scr" style="padding:11px;">' + body + '</div>';
 }
 
@@ -1031,7 +1402,8 @@ function render() {
   else if (app.view === 'quiz') html = renderQuizView();
   else if (app.view === 'result') html = renderResultView();
   else html = renderDuelView();
-  root.innerHTML = html + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
+  const popupHtml = hasIncomingChallenge() ? renderIncomingModal(app.duel.remoteMatch) : '';
+  root.innerHTML = html + popupHtml + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
   return root.innerHTML;
 }
 
@@ -1082,11 +1454,35 @@ function handleAction(el, ev) {
     app.userId = el.getAttribute('data-u') === 'p' ? 'p' : 'm';
     saveLS('tgt_gk_active_user_v1', app.userId);
     app.userData = loadUserData(app.userId);
+    app.duel.stage = 'lobby';
+    app.duel.matchId = '';
+    app.view = 'home';
+    render();
+    sendPresence(true);
+    syncLiveState();
+    return;
+  }
+  if (act === 'open-welcome') {
+    sendPresence(false, true);
+    stopDuelTimer();
+    app.duel.stage = 'lobby';
+    app.view = 'welcome';
+    render(); return;
+  }
+  if (act === 'back-home') {
+    if (app.view === 'duel') {
+      if (app.duel.stage === 'waiting') cancelDuelInvite();
+      else if (app.duel.stage === 'live') {
+        stopDuelTimer();
+        app.duel.stage = 'lobby';
+        app.duel.matchId = '';
+        fbReq('match', 'PATCH', { status: 'ended' });
+      }
+    }
+    stopDuelTimer();
     app.view = 'home';
     render(); return;
   }
-  if (act === 'open-welcome') { stopDuelTimer(); app.view = 'welcome'; render(); return; }
-  if (act === 'back-home') { stopDuelTimer(); app.view = 'home'; render(); return; }
   if (act === 'sel-sub') { app.userData.tabId = el.getAttribute('data-v'); saveUserData(app.userId, app.userData); render(); return; }
   if (act === 'tog-ready') { app.userData.onlyReady = !app.userData.onlyReady; saveUserData(app.userId, app.userData); render(); return; }
   if (act === 'tog-paper') { app.userData.paperTint = !app.userData.paperTint; saveUserData(app.userId, app.userData); render(); return; }
@@ -1155,22 +1551,26 @@ function handleAction(el, ev) {
   if (act === 'r-mark') { app.result.marking = el.getAttribute('data-k'); render(); return; }
   if (act === 'r-tog') { const id = Number(el.getAttribute('data-id')); app.result.openQId = app.result.openQId === id ? null : id; render(); return; }
 
-  // Duel V3 actions
-  if (act === 'open-duel') { stopDuelTimer(); app.duel.stage = 'online'; app.view = 'duel'; render(); return; }
-  if (act === 'd-stage') {
-    const s = el.getAttribute('data-s');
-    if (s === 'live') { startDuelMatch(); return; }
-    stopDuelTimer(); app.duel.stage = s; render(); return;
+  // Live 2-Phone Duel actions
+  if (act === 'open-duel') {
+    stopDuelTimer();
+    if ((app.view === 'quiz' || app.view === 'result') && CHAPTER_BANK[app.quiz.chId]) app.duel.scope = app.quiz.chId;
+    if (app.duel.stage !== 'live' && app.duel.stage !== 'waiting') app.duel.stage = 'lobby';
+    app.view = 'duel';
+    render();
+    sendPresence(true);
+    syncLiveState();
+    return;
   }
+  if (act === 'd-lobby') { stopDuelTimer(); app.duel.stage = 'lobby'; app.duel.matchId = ''; render(); return; }
   if (act === 'd-scope') { app.duel.scope = el.getAttribute('data-v'); render(); return; }
   if (act === 'd-cnt') { app.duel.count = Number(el.getAttribute('data-v')) || 10; render(); return; }
-  if (act === 'd-start') { startDuelMatch(); return; }
+  if (act === 'd-send-invite' || act === 'd-start') { sendDuelInvite(); return; }
+  if (act === 'd-accept') { acceptDuelInvite(); return; }
+  if (act === 'd-reject') { rejectDuelInvite(); return; }
+  if (act === 'd-cancel') { cancelDuelInvite(); return; }
   if (act === 'd-pick') { handleDuelPick(Number(el.getAttribute('data-i'))); return; }
-  if (act === 'd-next') {
-    if (app.duel.qIdx + 1 >= app.duel.qs.length) { stopDuelTimer(); app.duel.stage = 'result'; }
-    else { app.duel.qIdx += 1; app.duel.picked = null; app.duel.timer = 25; }
-    render(); return;
-  }
+  if (act === 'd-next') { advanceDuelNext(); return; }
   if (act === 'd-res-exp') { const i = Number(el.getAttribute('data-i')); app.duel.resOpenIdx = app.duel.resOpenIdx === i ? null : i; render(); return; }
   if (act === 'd-wa-invite') {
     const op = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
@@ -1203,6 +1603,30 @@ if (impEl && impEl.addEventListener) {
   });
 }
 
+function startLiveSyncLoop() {
+  if (!FIREBASE_DB_URL || typeof window === 'undefined' || window.__DISABLE_TIMERS) return;
+  if (typeof setInterval === 'function') {
+    setInterval(() => {
+      if (typeof document === 'undefined' || document.visibilityState !== 'hidden') sendPresence(true);
+    }, 6000);
+  }
+  const stepPoll = async () => {
+    await syncLiveState();
+    const fast = app.duel.stage === 'waiting' || app.duel.stage === 'live';
+    if (typeof setTimeout === 'function') setTimeout(stepPoll, fast ? 850 : 2500);
+  };
+  if (typeof setTimeout === 'function') setTimeout(stepPoll, 900);
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendPresence(false, true);
+      else { sendPresence(true); syncLiveState(); }
+    });
+  }
+  if (window.addEventListener) {
+    window.addEventListener('pagehide', () => sendPresence(false, true));
+  }
+}
+
 initChapterStore();
 const savedUid = safeLS('tgt_gk_active_user_v1', '');
 if (savedUid === 'm' || savedUid === 'p') {
@@ -1211,10 +1635,16 @@ if (savedUid === 'm' || savedUid === 'p') {
   app.view = 'home';
 }
 render();
+if (app.view !== 'welcome' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
+  sendPresence(true);
+  syncLiveState();
+}
+startLiveSyncLoop();
 
 if (typeof globalThis !== 'undefined') {
   globalThis.__TGT_APP = {
-    app, ROADMAP, CHAPTER_BANK, openChapter, importChapterData, calcMarks, handleAction, render, getChProg, getUserStats, startDuelMatch, handleDuelPick
+    app, ROADMAP, CHAPTER_BANK, openChapter, importChapterData, calcMarks, handleAction, render, getChProg, getUserStats,
+    startDuelMatch, handleDuelPick, sendPresence, syncLiveState, sendDuelInvite, acceptDuelInvite, rejectDuelInvite, cancelDuelInvite, advanceDuelNext
   };
 }
 </script>
