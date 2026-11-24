@@ -249,6 +249,20 @@
   .cnt-inp { width: 86px; height: 38px; border: 1.5px solid #0794C7; border-radius: 9px; text-align: center; font: inherit; font-size: 16px; font-weight: 800; color: #0F172A; background: #fff; }
   .code-inp { width: 100%; height: 46px; border: 1.5px solid #94A3B8; border-radius: 11px; text-align: center; font: inherit; font-size: 20px; font-weight: 800; letter-spacing: 6px; color: #0F172A; background: #F8FAFC; }
   .name-inp { width: 100%; height: 40px; border: 1.5px solid #CBD5E1; border-radius: 9px; padding: 0 11px; font: inherit; font-size: 14.5px; font-weight: 700; color: #0F172A; background: #fff; }
+  .d-sub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .d-sub-btn { border: 1.5px solid #DCE5EC; background: #F8FAFC; color: #1E293B; border-radius: 10px; padding: 7px 6px; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-align: center; min-width: 0; transition: transform .08s, border-color .14s, background .14s; }
+  .d-sub-btn.has-live { background: #FFFFFF; border-color: #CBD5E1; }
+  .d-sub-btn.on { box-shadow: 0 2px 8px rgba(15,23,42,.1); transform: translateY(-1px); }
+  .d-sub-nm { font-size: 11.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .d-sub-ct { font-size: 10px; font-weight: 800; border-radius: 99px; padding: 1px 6px; background: #E2E8F0; color: #475569; }
+  .d-ch-box { border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 5px; max-height: 215px; overflow-y: auto; }
+  .d-ch-row { width: 100%; border: 1.5px solid #DCE5EC; background: #FFFFFF; color: #0F172A; border-radius: 9px; padding: 8px 10px; font: inherit; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; }
+  .d-ch-row.on { background: #0794C7; border-color: #0578A3; color: #FFFFFF; box-shadow: 0 2px 7px rgba(7,148,199,.24); }
+  .d-ch-row.soon { background: rgba(255,255,255,.72); border-style: dashed; color: #64748B; padding: 6px 10px; }
+  .d-ch-rd { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #94A3B8; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .d-ch-row.on .d-ch-rd { border-color: #FFFFFF; background: #FFFFFF; box-shadow: inset 0 0 0 3.5px #0794C7; }
+  .d-ch-pill { flex: none; font-size: 11px; font-weight: 800; border-radius: 99px; padding: 2px 8px; background: #F1F5F9; color: #0578A3; }
+  .d-ch-row.on .d-ch-pill { background: rgba(255,255,255,.22); color: #FFFFFF; }
 
   /* D1 Home Quick-Vault Strip (★ स्टार · ✗ गलत · 📜 1v1 इतिहास) */
   .vault-strip3 { background: #FFFFFF; border-bottom: 1px solid #DCE5EC; padding: 6px 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; flex: none; }
@@ -589,6 +603,8 @@ function renderMatchTableHtml(q, tblBasePx, wrapStyle) {
   '</div>' + tailNote;
 }
 
+const CH01_MATCH_FALLBACK = {"2":[["1. डॉ. हेडगेवार","a. भारत के लिए एक संविधान की रूपरेखा तैयार की गई"],["2. 1942 में क्रिप्स मिशन","b. युद्ध के अंत में भारत को अधिराज्य दर्जा ('Dominion Status') देने की पेशकश की गई"],["3. 1928 में नेहरू प्रस्ताव","c. राष्ट्रीय स्वयं सेवक संघ (RSS)"],["4. 1929 में कांग्रेस का लाहौर अधिवेशन","d. पूर्ण स्वराज के नारे को लक्ष्य के रूप में अपनाया गया"]],"28":[["A. साम्यवादी (Communist)","1. कुछ लोगों द्वारा शासित सरकार (जैसे: चीन, रूस)"],["B. अल्पतंत्र (Oligarchic)","2. शासक का नागरिकों के जीवन पर पूर्ण नियंत्रण (उदाहरण: उत्तर कोरिया)"],["C. राजशाही (Monarchic)","3. उत्पादन के स्रोतों या साधनों का सरकार द्वारा नियंत्रित होना (जैसे: चीन)"],["D. सर्वसत्तावादी (Totalitarian)","4. राजा या सम्राट वाली शासन प्रणाली — पूर्ण राजशाही में एक व्यक्ति का शासन, संवैधानिक राजशाही में सम्राट राष्ट्र प्रमुख (जैसे: सऊदी अरब, यूके)"]],"33":[["A. 1928","1. एम. एन. रॉय ने पहली बार भारत के लिए संविधान सभा का विचार प्रस्तावित किया"],["B. 1934","2. मोतीलाल नेहरू की अध्यक्षता वाली समिति की 'नेहरू रिपोर्ट' (प्रारंभिक प्रारूप) लखनऊ सर्वदलीय सम्मेलन में प्रस्तुत"],["C. 1935","3. जवाहरलाल नेहरू ने बाहरी हस्तक्षेप के बिना वयस्क मताधिकार आधारित संविधान सभा की घोषणा की"],["D. 1938","4. भारतीय राष्ट्रीय कांग्रेस (INC) ने आधिकारिक तौर पर एक संवैधानिक सभा की मांग की"]],"35":[["A. अगस्त प्रस्ताव","1. 1942"],["B. क्रिप्स प्रस्ताव","2. 1946"],["C. वेवेल योजना","3. 1940"],["D. कैबिनेट मिशन योजना","4. 1945"]],"51":[["A. जवाहरलाल नेहरू (कांग्रेस)","1. गृह मंत्रालय, सूचना एवं प्रसारण"],["B. सरदार वल्लभभाई पटेल (कांग्रेस)","2. रक्षा मंत्रालय"],["C. डॉ. राजेंद्र प्रसाद (कांग्रेस)","3. कार्यकारी परिषद के उपाध्यक्ष, विदेश मामले और राष्ट्रमंडल संबंध"],["D. बलदेव सिंह (कांग्रेस)","4. कृषि और खाद्य मंत्रालय"]],"52":[["A. सी. राजगोपालाचारी (कांग्रेस)","1. उद्योग और आपूर्ति"],["B. जॉन मथाई (कांग्रेस)","2. शिक्षा और कला"],["C. जोगेंद्र नाथ मंडल (मुस्लिम लीग)","3. संचार — डाक और हवाई (किताब में रेलवे सहित उल्लिखित)"],["D. अब्दुर रब निश्तर (मुस्लिम लीग)","4. कानून"]],"58":[["1. संघीय संविधान समिति एवं संघ शक्ति समिति","a. डॉ. राजेंद्र प्रसाद"],["2. प्रांतीय संविधान समिति","b. डॉ. बी. आर. अंबेडकर"],["3. प्रारूप समिति","c. सरदार वल्लभभाई पटेल"],["4. प्रक्रिया नियम समिति एवं संचालन समिति","d. जवाहर लाल नेहरू"]],"62":[["1. प्रत्यय-पत्र (Credentials) समिति","a. जी. वी. मावलंकर"],["2. सदन समिति एवं मुख्य आयुक्तों के प्रांतों पर समिति","b. डॉ. के. एम. मुंशी"],["3. कार्य-संचालन (Order of Business) समिति","c. बी. पट्टाभि सीतारमैया"],["4. संविधान सभा के कार्यों पर समिति","d. अल्लादी कृष्णास्वामी अय्यर"]],"64":[["1. संघीय संविधान के वित्तीय प्रावधानों पर विशेषज्ञ समिति","a. उषा नाथ सेन"],["2. भाषाई प्रांत आयोग (Linguistic Provinces Commission)","b. जवाहर लाल नेहरू"],["3. संविधान के प्रारूप की जांच के लिए विशेष समिति","c. एस. के. धर"],["4. प्रेस दीर्घा (Press Gallery) समिति","d. नलिनी रंजन सरकार"]],"74":[["1. पहला वाचन (सामान्य चर्चा)","a. 17 नवम्बर 1949 – 26 नवम्बर 1949 (26 नवम्बर को पूरा)"],["2. दूसरा वाचन (सबसे लंबा, खंड-दर-खंड विचार)","b. 4 नवम्बर 1948 – 9 नवम्बर 1948"],["3. तीसरा वाचन (अंतिम वाचन)","c. 15 नवम्बर 1948 – 17 अक्टूबर 1949"],["4. पहला प्रारूप सभा-अध्यक्ष को सौंपा गया","d. 21 फरवरी 1948"]],"77":[["1. पहला सत्र","a. 14–26 नवम्बर 1949"],["2. 10वां सत्र","b. 24 जनवरी 1950"],["3. 11वां सत्र (अंतिम सत्र)","c. 6–17 अक्टूबर 1949"],["4. संविधान पर हस्ताक्षर की तिथि","d. 9–23 दिसम्बर 1946"]],"101":[["1. प्रेम बिहारी नारायण रायजादा","a. हिंदी संस्करण के संविधान सुलेखनकर्ता"],["2. वसंत कृष्ण वैद्य","b. अंग्रेज़ी संस्करण के संविधान सुलेखनकर्ता"],["3. नंद लाल बोस व ब्योहार राममनोहर सिन्हा","c. संविधान सभा के सचिव"],["4. एच. वी. अयंगर","d. संविधान के सज्जाकार (अलंकृत करने वाले)"]],"106":[["A. जोगेंद्र नाथ मंडल","1. संविधान सभा के सचिव"],["B. बी. एन. राव","2. संविधान सभा के मुख्य प्रारूपकार (Chief Draftsman)"],["C. एस. एन. मुखर्जी","3. 1946 की अंतरिम सरकार में कानून मंत्री (मुस्लिम लीग)"],["D. एच. वी. अयंगर","4. संविधान सभा के संवैधानिक/कानूनी सलाहकार"]]};
+
 function normalizeRawChapter(data) {
   if (!data || !data.id || !data.title || !Array.isArray(data.questions) || !data.questions.length) {
     throw new Error('अमान्य पाठ फ़ाइल: id, title या questions गायब हैं।');
@@ -610,9 +626,13 @@ function normalizeRawChapter(data) {
       .replace(/\u092e\u092e\u094d\u092e\u0940,\s*\u0907\u0928 \u0924\u0940\u0928\u094b\u0902/g, 'इन तीनों')
       .replace(/\u092e\u092e\u094d\u092e\u0940 \u0915\u094b \u0938\u094d\u092a\u0937\u094d\u091f \u0909\u0924\u094d\u0924\u0930 \u0938\u093f\u0916\u093e\u0928\u0947 \u0939\u0947\u0924\u0941\s+/g, 'स्पष्ट उत्तर हेतु ')
       .replace(/\u26a0\ufe0f?/g, '').trim();
-    const parsed = parseStructuredStem(stem, q.match);
+    const qIdVal = q.id != null ? q.id : idx + 1;
+    const baseMatch = (Array.isArray(q.match) && q.match.length)
+      ? q.match
+      : (String(data.id) === 'ch01' && CH01_MATCH_FALLBACK[qIdVal] ? CH01_MATCH_FALLBACK[qIdVal] : null);
+    const parsed = parseStructuredStem(stem, baseMatch);
     return {
-      id: q.id != null ? q.id : idx + 1,
+      id: qIdVal,
       type: q.type || 'BOOK',
       fmt: q.fmt || 'Direct',
       q: parsed.stem,
@@ -794,6 +814,7 @@ const app = {
   },
   duel: {
     stage: 'menu',
+    subTab: 'pol',
     scope: 'ch01',
     customRefs: null,
     customTitle: '',
@@ -1051,6 +1072,7 @@ function launchVaultDuel(kind, chFilter) {
   }
   const ttl = kind === 'star' ? '★ स्टार सवाल' : (kind === 'wrong' ? '✗ गलत सवाल' : '⏭ छोड़े सवाल');
   app.duel.scope = 'vault_' + kind;
+  app.duel.subTab = 'vault';
   app.duel.customRefs = items.map(it => ({ chId: it.chId, qId: it.q.id }));
   app.duel.customTitle = ttl;
   app.duel.allScope = false;
@@ -1712,6 +1734,17 @@ function defaultPlayerName() {
   const saved = safeLS('tgt_gk_duel_name_' + app.userId, '');
   if (saved && String(saved).trim()) return String(saved).trim().slice(0, 16);
   return app.userId === 'p' ? 'प्रियंका' : 'मंजू';
+}
+
+function getDuelSubIdForScope(scope) {
+  const sc = String(scope || '');
+  if (sc.startsWith('vault_')) return 'vault';
+  if (sc === 'mix') return 'mix';
+  for (const s of ROADMAP) {
+    if (s.chapters.some(c => c.liveId === sc)) return s.id;
+  }
+  if (CHAPTER_BANK[sc]) return subjectIdFromText(CHAPTER_BANK[sc].subject);
+  return 'pol';
 }
 
 function duelPoolMax(scope) {
@@ -3372,26 +3405,106 @@ function renderDuelView() {
   let body = '';
   if (d.stage === 'menu') {
     const isVaultScope = String(d.scope || '').startsWith('vault_');
-    const vaultChip = isVaultScope
-      ? '<button type="button" class="u-btn on" style="padding:6px 9px;font-size:12px;border-color:#7C3AED;background:#7C3AED;" data-act="d-scope" data-v="' + esc(d.scope) + '">' + esc(d.customTitle || 'मेरे सवाल') + ' (' + duelPoolMax(d.scope) + ')</button>'
+    const validSubIds = ROADMAP.map(s => s.id).concat(['mix', 'vault']);
+    let curSubId = d.subTab || getDuelSubIdForScope(d.scope);
+    if (!validSubIds.includes(curSubId) || (curSubId === 'vault' && !isVaultScope)) {
+      curSubId = getDuelSubIdForScope(d.scope);
+    }
+    d.subTab = curSubId;
+
+    const vaultSubBtn = isVaultScope
+      ? '<button type="button" class="d-sub-btn has-live ' + (curSubId === 'vault' ? 'on' : '') + '" style="' + (curSubId === 'vault' ? 'background:#F5F3FF;border-color:#7C3AED;border-width:2px;' : '') + '" data-act="d-sub" data-v="vault">' +
+          '<span class="d-sub-nm">★ ' + esc(d.customTitle || 'मेरे सवाल') + '</span>' +
+          '<span class="d-sub-ct" style="' + (curSubId === 'vault' ? 'background:#7C3AED;color:#fff;' : 'background:#EDE9FE;color:#5B21B6;') + '">' + duelPoolMax(d.scope) + ' सवाल</span>' +
+        '</button>'
       : '';
-    const chOpts = vaultChip + orderedChapterIds().map(cid => {
-      const ch = CHAPTER_BANK[cid];
-      const sc = getDuelScopeCounts(cid);
-      const lbl = sc.seen === 0
-        ? (esc(ch.title) + ' (' + sc.total + ')')
-        : (sc.unseen === 0
-            ? ('✅ ' + esc(ch.title) + ' (0 बाकी)')
-            : (esc(ch.title) + ' (' + sc.unseen + ' बाकी / ' + sc.total + ')'));
-      return '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="' + ch.id + '">' + lbl + '</button>';
-    }).join('') + (() => {
+
+    const subGridHtml = '<div class="d-sub-grid">' +
+      vaultSubBtn +
+      ROADMAP.map(sub => {
+        const liveCnt = sub.chapters.filter(c => c.liveId && CHAPTER_BANK[c.liveId]).length;
+        const isOn = curSubId === sub.id;
+        const st = isOn
+          ? ('background:' + sub.soft + ';border-color:' + sub.color + ';border-width:2px;')
+          : (liveCnt > 0 ? '' : 'opacity:.78;');
+        const ctSt = isOn
+          ? ('background:' + sub.color + ';color:#fff;')
+          : (liveCnt > 0 ? ('background:' + sub.soft + ';color:' + sub.color + ';') : '');
+        return '<button type="button" class="d-sub-btn ' + (liveCnt > 0 ? 'has-live ' : '') + (isOn ? 'on' : '') + '" style="' + st + '" data-act="d-sub" data-v="' + sub.id + '">' +
+          '<span class="d-sub-nm">' + sub.icon + ' ' + esc(sub.short) + '</span>' +
+          '<span class="d-sub-ct" style="' + ctSt + '">' + (liveCnt > 0 ? (liveCnt + ' पाठ') : 'जल्द') + '</span>' +
+        '</button>';
+      }).join('') +
+      (() => {
+        const msc = getDuelScopeCounts('mix');
+        const isOn = curSubId === 'mix';
+        return '<button type="button" class="d-sub-btn has-live ' + (isOn ? 'on' : '') + '" style="' + (isOn ? 'background:#F3E8FF;border-color:#7C3AED;border-width:2px;' : '') + '" data-act="d-sub" data-v="mix">' +
+          '<span class="d-sub-nm">🎲 सभी मिक्स</span>' +
+          '<span class="d-sub-ct" style="' + (isOn ? 'background:#7C3AED;color:#fff;' : 'background:#F3E8FF;color:#6B21A8;') + '">' + (msc.seen === 0 ? (msc.total + ' सवाल') : (msc.unseen + ' बाकी')) + '</span>' +
+        '</button>';
+      })() +
+    '</div>';
+
+    let subChHeader = '';
+    let subChListHtml = '';
+    if (curSubId === 'vault' && isVaultScope) {
+      subChHeader = '2. चुना गया सेट:';
+      subChListHtml = '<div class="d-ch-box scr" style="background:#F5F3FF;border-color:#C4B5FD;">' +
+        '<button type="button" class="d-ch-row on" style="background:#7C3AED;border-color:#6D28D9;" data-act="d-scope" data-v="' + esc(d.scope) + '">' +
+          '<span style="display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;font-weight:800;"><span class="d-ch-rd"></span><span>' + esc(d.customTitle || 'मेरे सवाल') + '</span></span>' +
+          '<span class="d-ch-pill">' + duelPoolMax(d.scope) + ' सवाल</span>' +
+        '</button>' +
+      '</div>';
+    } else if (curSubId === 'mix') {
       const msc = getDuelScopeCounts('mix');
-      const mlbl = msc.seen === 0 ? ('सभी मिक्स (' + msc.total + ')') : ('सभी मिक्स (' + msc.unseen + ' बाकी / ' + msc.total + ')');
-      return '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="mix">' + mlbl + '</button>';
-    })();
+      const mlbl = msc.seen === 0 ? (msc.total + ' सवाल') : (msc.unseen + ' बाकी / ' + msc.total);
+      subChHeader = '2. मिक्स मोड (सभी तैयार पाठ):';
+      subChListHtml = '<div class="d-ch-box scr" style="background:#FAF5FF;border-color:#D8B4FE;">' +
+        '<button type="button" class="d-ch-row on" style="background:#7C3AED;border-color:#6D28D9;" data-act="d-scope" data-v="mix">' +
+          '<span style="display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;font-weight:800;"><span class="d-ch-rd"></span><span>🎲 सभी मिक्स (' + mlbl + ')</span></span>' +
+          '<span class="d-ch-pill">' + mlbl + '</span>' +
+        '</button>' +
+      '</div>';
+    } else {
+      const actSub = ROADMAP.find(s => s.id === curSubId) || ROADMAP[0];
+      const liveChs = actSub.chapters.filter(c => c.liveId && CHAPTER_BANK[c.liveId]);
+      const soonChs = actSub.chapters.filter(c => !(c.liveId && CHAPTER_BANK[c.liveId]));
+      subChHeader = '2. ' + actSub.icon + ' ' + esc(actSub.name) + ' — पाठ चुनें (' + (liveChs.length > 0 ? (liveChs.length + ' तैयार') : 'जल्द जुड़ेंगे') + '):';
+      const liveRows = liveChs.map(c => {
+        const ch = CHAPTER_BANK[c.liveId];
+        const sc = getDuelScopeCounts(ch.id);
+        const isSel = d.scope === ch.id;
+        const badgeTxt = sc.seen === 0
+          ? (sc.total + ' सवाल')
+          : (sc.unseen === 0 ? '✅ 0 बाकी' : (sc.unseen + ' बाकी / ' + sc.total));
+        const rowTitle = sc.seen === 0
+          ? (esc(ch.title) + ' (' + sc.total + ')')
+          : (sc.unseen === 0 ? ('✅ ' + esc(ch.title) + ' (0 बाकी)') : (esc(ch.title) + ' (' + sc.unseen + ' बाकी / ' + sc.total + ')'));
+        const onCss = isSel ? ('background:' + actSub.color + ';border-color:' + actSub.color + ';') : '';
+        return '<button type="button" class="d-ch-row ' + (isSel ? 'on' : '') + '" style="' + onCss + '" data-act="d-scope" data-v="' + ch.id + '">' +
+          '<span style="display:flex;align-items:center;gap:8px;min-width:0;font-size:12.8px;font-weight:800;"><span class="d-ch-rd" style="' + (isSel ? 'box-shadow:inset 0 0 0 3.5px ' + actSub.color + ';' : '') + '"></span><span style="min-width:0;">' + rowTitle + '</span></span>' +
+          '<span class="d-ch-pill">' + badgeTxt + '</span>' +
+        '</button>';
+      }).join('');
+      const soonRows = soonChs.map(c =>
+        '<button type="button" class="d-ch-row soon" data-act="soon-ch" data-t="' + esc(c.t) + '">' +
+          '<span style="font-size:12px;font-weight:700;">🔒 ' + esc(c.t) + '</span>' +
+          '<span style="font-size:10.5px;font-weight:800;">जल्द</span>' +
+        '</button>'
+      ).join('');
+      const emptyBanner = liveChs.length === 0
+        ? '<div style="background:#FFFBEB;border:1px solid #FDE68A;color:#92400E;border-radius:8px;padding:7px 9px;font-size:11.5px;font-weight:800;">📚 इस विषय के सवाल जल्द जुड़ेंगे — अभी ऊपर <b>🌿 पर्यावरण</b> या <b>⚖️ राजव्यवस्था</b> चुनें!</div>'
+        : '';
+      subChListHtml = '<div class="d-ch-box scr" style="background:' + actSub.soft + ';border-color:' + actSub.color + ';">' +
+        emptyBanner + liveRows + soonRows +
+      '</div>';
+    }
 
     const eff = duelEffCount();
     const scCur = getDuelScopeCounts(d.scope);
+    const curScopeLabel = isVaultScope
+      ? (d.customTitle || 'मेरे सवाल')
+      : (d.scope === 'mix' ? '🎲 सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
     const statusPill = d.opOnline
       ? '<span style="background:#DCFCE7;color:#15803D;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:800;">🟢 ' + opDefaultName + ' ऑनलाइन</span>'
       : '<span style="background:#F1F5F9;color:#475569;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;">⚪ ' + opDefaultName + ' ऑफ़लाइन</span>';
@@ -3413,8 +3526,14 @@ function renderDuelView() {
       '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
         '<div style="font-size:12px;font-weight:800;color:#334155;">तुम्हारा नाम (दूसरे फ़ोन पर यही दिखेगा):</div>' +
         '<input id="duelNameInp" class="name-inp" type="text" maxlength="16" value="' + esc(curName) + '" placeholder="जैसे मंजू / NITESH">' +
-        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">पाठ चुनें (बाकी बचे नए सवाल दिख रहे हैं):</div>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:5px;max-height:152px;overflow-y:auto;" class="scr">' + chOpts + '</div>' +
+        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">1. पहले विषय चुनें:</div>' +
+        subGridHtml +
+        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">' + subChHeader + '</div>' +
+        subChListHtml +
+        '<div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:800;color:#0369A1;display:flex;justify-content:space-between;align-items:center;gap:6px;">' +
+          '<span>📘 चुना पाठ: <b>' + esc(curScopeLabel) + '</b></span>' +
+          '<span>' + (scCur.unseen > 0 ? (scCur.unseen + ' बाकी') : '0 बाकी') + '</span>' +
+        '</div>' +
         renderDuelCountSelector() +
         (scCur.unseen > 0 ? (
           '<button type="button" class="btn-pri" id="duelCreateBtn" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;margin-top:4px;" data-act="d-create">' +
@@ -4002,6 +4121,7 @@ function handleAction(el, ev) {
   if (act === 'dhist-play-scope') {
     const sc = el.getAttribute('data-v') || 'ch01';
     app.duel.scope = sc;
+    app.duel.subTab = getDuelSubIdForScope(sc);
     app.duel.customRefs = null;
     app.duel.allScope = false;
     const mx = duelPoolMax(sc);
@@ -4102,6 +4222,7 @@ function handleAction(el, ev) {
       app.duel.scope = orderedChapterIds()[0] || 'ch01';
       app.duel.customRefs = null;
     }
+    app.duel.subTab = getDuelSubIdForScope(app.duel.scope);
     const mx = duelPoolMax(app.duel.scope);
     if (mx > 0 && !app.duel.allScope) app.duel.count = Math.min(30, mx);
     if (!app.duel.customName) app.duel.customName = defaultPlayerName();
@@ -4121,10 +4242,37 @@ function handleAction(el, ev) {
     app.view = 'home'; render(); return;
   }
   if (act === 'd-ztog') { app.duel.zoomOpen = !app.duel.zoomOpen; render(); return; }
+  if (act === 'd-sub') {
+    readAndSaveDuelName();
+    const sid = el.getAttribute('data-v') || 'pol';
+    app.duel.subTab = sid;
+    if (sid === 'mix') {
+      app.duel.scope = 'mix';
+      app.duel.customRefs = null;
+      app.duel.allScope = false;
+      const mx = duelPoolMax('mix');
+      app.duel.count = mx > 0 ? Math.min(30, mx) : 30;
+    } else if (sid !== 'vault') {
+      const subObj = ROADMAP.find(s => s.id === sid);
+      if (subObj) {
+        const liveCids = subObj.chapters.filter(c => c.liveId && CHAPTER_BANK[c.liveId]).map(c => c.liveId);
+        if (liveCids.length > 0 && !liveCids.includes(app.duel.scope)) {
+          const nextCid = liveCids.find(cid => getDuelScopeCounts(cid).unseen > 0) || liveCids[0];
+          app.duel.scope = nextCid;
+          app.duel.customRefs = null;
+          app.duel.allScope = false;
+          const mx = duelPoolMax(nextCid);
+          app.duel.count = mx > 0 ? Math.min(30, mx) : 30;
+        }
+      }
+    }
+    render(); return;
+  }
   if (act === 'd-scope') {
     readAndSaveDuelName();
     const sc = el.getAttribute('data-v');
     app.duel.scope = sc;
+    app.duel.subTab = getDuelSubIdForScope(sc);
     if (!String(sc || '').startsWith('vault_')) app.duel.customRefs = null;
     app.duel.allScope = false;
     const mx = duelPoolMax(app.duel.scope);
