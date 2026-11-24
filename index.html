@@ -48,10 +48,37 @@
   }
   .hd-l { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
   .hd-ttl { font-size: 14.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hd-r { display: flex; align-items: center; gap: 5px; flex: none; }
   .hd-btn {
-    background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.36); color: #fff;
-    border-radius: 7px; padding: 4px 8px; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; flex: none;
+    background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.42); color: #fff;
+    border-radius: 8px; padding: 5px 9px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; flex: none;
   }
+  .hd-btn.zoom-on { background: #FFFFFF; color: #0578A3; border-color: #FFFFFF; }
+  .zoom-bar {
+    background: #F0F9FF; border-bottom: 1.5px solid #BAE6FD; padding: 9px 11px;
+    display: flex; flex-direction: column; gap: 7px; flex: none;
+  }
+  .z-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .z-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .z-pre {
+    border: 1.5px solid #93C5FD; background: #FFFFFF; color: #0F172A;
+    border-radius: 8px; padding: 6px 4px; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; text-align: center;
+  }
+  .z-pre.on { background: #0794C7; border-color: #0578A3; color: #FFFFFF; }
+  .z-fine { display: flex; align-items: center; gap: 5px; flex: 1; }
+  .z-step {
+    border: 1px solid #94A3B8; background: #FFFFFF; color: #0F172A;
+    border-radius: 7px; padding: 5px 10px; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer;
+  }
+  .z-num {
+    min-width: 56px; text-align: center; background: #FFFFFF; border: 1.5px solid #0794C7;
+    color: #0578A3; border-radius: 7px; padding: 4px 7px; font-size: 13px; font-weight: 800;
+  }
+  .z-rst {
+    border: 1px solid #CBD5E1; background: #FFFFFF; color: #334155;
+    border-radius: 7px; padding: 5px 9px; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer;
+  }
+  .z-note { font-size: 11px; font-weight: 700; color: #0369A1; text-align: center; }
   .usr-pill {
     background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.38); color: #fff;
     border-radius: 99px; padding: 2px 9px 2px 3px; font: inherit; font-size: 11.5px; font-weight: 800;
@@ -103,31 +130,65 @@
   .cm-tw-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
   .cm-tw-btn { flex: 1; border-radius: 7px; padding: 5px 2px; font: inherit; font-size: 10.5px; font-weight: 800; cursor: pointer; text-align: center; }
 
-  /* #0794C7 Question Screen */
-  .q-strip { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 7px 10px; display: flex; align-items: center; gap: 6px; overflow-x: auto; flex: none; }
-  .q-num { width: 27px; height: 27px; border-radius: 99px; border: 1.5px solid #CBD5E1; background: #fff; color: #334155; font: inherit; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; }
-  .q-num.cur { border: 2.5px solid #FF6F00; color: #0F172A; }
-  .q-num.ok { background: #E8F5E9; border-color: #2E7D32; color: #2E7D32; }
-  .q-num.bad { background: #FFEBEE; border-color: #C62828; color: #C62828; }
-  .util-bar { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between; gap: 5px; flex: none; font-size: 11.5px; font-weight: 700; color: #475569; }
+  /* #0794C7 Question & Solution Screen (Testbook 2-Screen Upgrade) */
+  .q-strip { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 9px 10px; display: flex; align-items: center; gap: 7px; overflow-x: auto; flex: none; }
+  .q-num { width: 31px; height: 31px; border-radius: 99px; border: 1.5px solid #CBD5E1; background: #fff; color: #1E293B; font: inherit; font-size: 12.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; position: relative; }
+  .q-num.ok { background: #1E8E3E; border-color: #1E8E3E; color: #FFFFFF; }
+  .q-num.bad { background: #D93025; border-color: #D93025; color: #FFFFFF; }
+  .q-num.skip { background: #E2E8F0; border: 1.5px dashed #64748B; color: #334155; }
+  .q-num.cur { border: 3px solid #FF6F00; box-shadow: 0 0 0 2px rgba(255,111,0,.22); }
+  .q-num.has-star::after { content: '★'; position: absolute; top: -6px; right: -4px; font-size: 12px; color: #F59E0B; text-shadow: 0 0 2px #fff, 0 0 2px #fff; line-height: 1; }
+  .sub-bar { background: #fff; border-bottom: 1px solid #EEF2F6; padding: 7px 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; flex: none; }
+  .sub-l { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-width: 0; font-size: 13px; font-weight: 800; color: #1E293B; }
+  .mark-g { background: #ECFDF5; color: #15803D; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; font-weight: 800; }
+  .mark-r { background: #FFF1F2; color: #BE123C; padding: 2px 7px; border-radius: 6px; font-size: 11.5px; font-weight: 800; }
+  .st-pill { padding: 4px 10px; border-radius: 99px; font-size: 12.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
+  .st-pill.ok { background: #1E8E3E; color: #fff; }
+  .st-pill.bad { background: #D93025; color: #fff; }
+  .st-pill.skip { background: #475569; color: #fff; }
+  .speak-pill { border: 1px solid #BAE6FD; background: #F0F9FF; color: #0578A3; border-radius: 99px; padding: 5px 11px; min-height: 34px; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .star-btn { min-height: 36px; padding: 5px 12px; border-radius: 99px; border: 1.5px solid #D97706; background: #FFFBEB; color: #92400E; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px; flex: none; }
+  .star-btn .st-ic { font-size: 19px; line-height: 1; color: #D97706; }
+  .star-btn.is-star { background: #F59E0B; border-color: #B45309; color: #FFFFFF; box-shadow: 0 2px 8px rgba(217,119,6,.36); }
+  .star-btn.is-star .st-ic { color: #FFFFFF; }
+  .quiz-body { background: #FFFFFF; padding: 14px 14px 26px; touch-action: pan-y; }
   .q-card { background: #fff; border: 1px solid #DCE5EC; border-radius: 13px; padding: 12px; margin-bottom: 9px; }
-  .q-stem { font-weight: 800; color: #0F172A; line-height: 1.52; white-space: pre-line; }
-  .q-src { font-size: 12px; font-weight: 700; color: #0F172A; margin-top: 6px; }
-  .mtab { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
-  .mtab th, .mtab td { border: 1px solid #CBD5E1; padding: 5px 7px; text-align: left; vertical-align: top; }
+  .q-stem { font-weight: 800; color: #0F172A; line-height: 1.55; white-space: pre-line; }
+  .q-src { font-size: 12.5px; font-weight: 700; color: #334155; margin-top: 7px; margin-bottom: 14px; line-height: 1.45; }
+  .mtab { width: 100%; border-collapse: collapse; margin: 0 0 14px; line-height: 1.55; }
+  .mtab th, .mtab td { border: 1px solid #CBD5E1; padding: 7px 8px; text-align: left; vertical-align: top; color: #0F172A; }
   .mtab th { background: #E3F3FA; color: #0578A3; font-weight: 800; }
 
-  .opt-card { background: #fff; border: 1.5px solid #DCE5EC; border-radius: 11px; margin-bottom: 7px; overflow: hidden; transition: border-color .15s, background .15s; }
-  .opt-card.is-right { background: #E8F5E9; border-color: #2E7D32; }
-  .opt-card.is-wrong { background: #FFEBEE; border-color: #C62828; }
-  .opt-btn { width: 100%; background: transparent; border: none; padding: 10px 11px; display: flex; align-items: center; gap: 9px; text-align: left; font: inherit; color: #0F172A; font-weight: 600; cursor: pointer; }
-  .opt-card.is-right .opt-btn { color: #1B5E20; font-weight: 800; }
-  .opt-card.is-wrong .opt-btn { color: #B71C1C; font-weight: 800; }
-  .opt-pill { width: 24px; height: 24px; border-radius: 99px; background: #ECEFF1; color: #37474F; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; }
-  .opt-card.is-right .opt-pill { background: #2E7D32; color: #fff; }
-  .opt-card.is-wrong .opt-pill { background: #C62828; color: #fff; }
+  .opt-card { background: #fff; border: 1.5px solid #DCE5EC; border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: border-color .15s, background .15s; }
+  .opt-card.is-right { background: #E8F5E9; border-color: #1E8E3E; }
+  .opt-card.is-wrong { background: #FFEBEE; border-color: #D93025; }
+  .opt-btn { width: 100%; background: transparent; border: none; padding: 12px 13px; display: flex; align-items: center; gap: 11px; text-align: left; font: inherit; color: #0F172A; font-weight: 600; line-height: 1.48; cursor: pointer; }
+  .opt-card.is-right .opt-btn { color: #14532D; font-weight: 800; }
+  .opt-card.is-wrong .opt-btn { color: #991B1B; font-weight: 800; }
+  .opt-pill { width: 27px; height: 27px; border-radius: 99px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #1E293B; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .opt-card.is-right .opt-pill { background: #1E8E3E; border-color: #1E8E3E; color: #fff; }
+  .opt-card.is-wrong .opt-pill { background: #D93025; border-color: #D93025; color: #fff; }
 
-  /* E1 & R1 Editorial Story Timeline */
+  .kh { font-weight: 800; color: #000000; }
+  .ans-banner { border-radius: 12px; padding: 12px 14px; margin-bottom: 13px; background: #E8F5E9; border: 1.5px solid #86EFAC; border-left: 5px solid #1E8E3E; }
+  .ans-banner.skip-mode { background: #EBF7FC; border-color: #7DD3FC; border-left: 5px solid #0794C7; }
+  .wrong-strip { background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 9px; padding: 8px 11px; margin-bottom: 10px; font-size: 13.5px; font-weight: 700; color: #9F1239; }
+  .kp-box { background: #F8FBFE; border: 1px solid #D9EAF5; border-radius: 14px; padding: 14px 15px; animation: fadeUp .2s ease both; }
+  .kp-hd { font-size: 14px; font-weight: 800; color: #0578A3; margin-bottom: 11px; display: flex; align-items: center; gap: 6px; }
+  .kp-ul { list-style: none; margin: 0; padding: 0; }
+  .kp-li { position: relative; padding-left: 18px; margin-bottom: 13px; color: #0F172A; font-weight: 500; line-height: 1.75; }
+  .kp-li:last-child { margin-bottom: 0; }
+  .kp-li::before { content: ''; position: absolute; left: 0; top: 11px; width: 7.5px; height: 7.5px; border-radius: 99px; background: #0794C7; }
+  .trick-bar { background: #FFFBEB; border: 1px solid #FDE68A; border-left: 4px solid #D97706; border-radius: 10px; padding: 10px 12px; color: #78350F; font-weight: 700; line-height: 1.68; margin-top: 13px; }
+  .tog-q-btn { width: 100%; background: #F8FAFC; border: 1px solid #DCE5EC; border-radius: 10px; padding: 10px 12px; margin-top: 12px; font: inherit; font-size: 13.5px; font-weight: 800; color: #0578A3; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .swipe-hint { text-align: center; font-size: 11.5px; font-weight: 700; color: #64748B; margin-top: 14px; }
+  .q-ft { background: #F8FAFC; border-top: 1px solid #DCE5EC; padding: 8px 10px; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 7px; flex: none; }
+  .f-prev { background: #FFFFFF; color: #334155; border: 1px solid #CBD5E1; border-radius: 9px; padding: 9px 6px; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; }
+  .f-skip { background: #FFFFFF; color: #1E293B; border: 1.5px solid #64748B; border-radius: 9px; padding: 9px 5px; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; }
+  .f-retry { background: #EBF7FC; color: #0578A3; border: 1.5px solid #7DD3FC; border-radius: 9px; padding: 9px 5px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+  .f-next { background: #0794C7; color: #FFFFFF; border: none; border-radius: 9px; padding: 9px 6px; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; }
+
+  /* Result Editorial Timeline */
   .ed-sheet { background: #FFFFFF; border-radius: 15px; padding: 13px 14px; margin-top: 9px; box-shadow: 0 2px 14px rgba(15,23,42,.06); animation: fadeUp .22s ease both; }
   .tl-wrap { position: relative; padding-left: 20px; margin: 9px 0; }
   .tl-line { position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: #DCE7F0; border-radius: 2px; }
@@ -138,12 +199,48 @@
   .tl-dot.bad { border-color: #FB7185; }
   .tl-dot.sk { border-color: #94A3B8; }
 
-  /* P1 Palette Rising Sheet & V3 1v1 Overlay */
+  /* P1 Palette Rising Sheet & JOD 2028 (JOD Lab) 1v1 Challenge */
   .sheet-bg { position: absolute; inset: 0; z-index: 35; background: rgba(15,23,42,.42); display: flex; flex-direction: column; justify-content: flex-end; }
   .sheet-box { background: #fff; border-radius: 18px 18px 0 0; padding: 12px 14px 16px; max-height: 78%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -6px 24px rgba(0,0,0,.22); animation: fadeUp .18s ease both; }
   .pal-grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; overflow-y: auto; padding: 2px; }
   .modal-bg { position: absolute; inset: 0; z-index: 40; background: rgba(15,23,42,.56); display: flex; align-items: center; justify-content: center; padding: 16px; }
   .modal-card { background: #fff; border: 2px solid #1E7E4E; border-radius: 18px; padding: 16px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 12px 28px rgba(0,0,0,.28); }
+
+  /* JOD 2028 Experiment (JOD Lab) Exact 1v1 Battle & Result Styles */
+  .tnum { font-variant-numeric: tabular-nums; }
+  .jl-stats { background: #fff; display: flex; justify-content: space-around; align-items: center; padding: 7px 10px; border-bottom: 1px solid #E2E8F0; flex: none; }
+  .jl-stat { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; line-height: 1; }
+  .jl-ok { color: #16A34A; }
+  .jl-wr { color: #DC2626; }
+  .jl-sk { color: #64748B; }
+  .jl-clk { color: #2563EB; font-weight: 700; font-size: 14.5px; }
+  .jl-pline { height: 4.5px; background: #DCE7F0; position: relative; overflow: hidden; flex: none; }
+  .jl-pline i { position: absolute; left: 0; top: 0; bottom: 0; background: #0794C7; transition: width .22s ease; }
+  .battle { display: grid; grid-template-columns: 1fr 22px 1fr; gap: 6px; margin: 7px 10px 4px; padding: 7px; border-radius: 15px; background: #EFE2C8; border: 1px solid #DCC79F; flex: none; }
+  .bbox { background: #F8F1E4; border: 1px solid #DCC79F; border-radius: 11px; padding: 6px 8px; min-width: 0; }
+  .bname { display: flex; align-items: center; gap: 5px; min-width: 0; font-size: 12px; color: #0F172A; }
+  .bname b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bav-init { flex: none; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #0794C7; color: #fff; font-weight: 800; font-size: 11px; }
+  .byou { flex: none; font-size: 9.5px; font-weight: 800; padding: 1px 5px; border-radius: 999px; background: #1F5130; color: #9BE3B0; }
+  .bfin { flex: none; font-size: 10px; font-weight: 800; color: #15803D; margin-left: auto; }
+  .bpts { display: flex; align-items: baseline; gap: 4px; margin-top: 3px; font-size: 11px; color: #57534E; font-weight: 700; }
+  .bpts b { font-size: 18px; color: #0F172A; font-weight: 800; }
+  .bpts .bk-cnt { margin-left: auto; font-weight: 800; color: #334155; }
+  .bbar { height: 4.5px; border-radius: 4px; background: rgba(120,113,108,.24); margin-top: 4px; overflow: hidden; }
+  .bbar i { display: block; height: 100%; background: #E59A1A; transition: width .22s ease; }
+  .bvs { display: flex; align-items: center; justify-content: center; color: #D97706; font-size: 15px; font-weight: 800; }
+  .chcode { font-size: 40px; font-weight: 800; letter-spacing: 9px; text-align: center; margin: 4px 0 2px; color: #0F172A; }
+  .chcount { font-size: 96px; font-weight: 800; text-align: center; margin-top: 14vh; color: #0794C7; }
+  .chp { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E2E8F0; }
+  .chp:first-child { border-top: 0; }
+  .chverd { font-size: 20px; font-weight: 800; text-align: center; margin: 4px 0 6px; }
+  .chtab { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .chtab td, .chtab th { padding: 8px 6px; text-align: center; border-top: 1px solid #E2E8F0; }
+  .chtab th { font-weight: 700; color: #475569; text-align: left; }
+  .cnt-stepper { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+  .cnt-inp { width: 86px; height: 38px; border: 1.5px solid #0794C7; border-radius: 9px; text-align: center; font: inherit; font-size: 16px; font-weight: 800; color: #0F172A; background: #fff; }
+  .code-inp { width: 100%; height: 46px; border: 1.5px solid #94A3B8; border-radius: 11px; text-align: center; font: inherit; font-size: 20px; font-weight: 800; letter-spacing: 6px; color: #0F172A; background: #F8FAFC; }
+  .name-inp { width: 100%; height: 40px; border: 1.5px solid #CBD5E1; border-radius: 9px; padding: 0 11px; font: inherit; font-size: 14.5px; font-weight: 700; color: #0F172A; background: #fff; }
 
   .toast { position: absolute; left: 12px; right: 12px; bottom: 54px; z-index: 60; background: #1E293B; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 9px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); pointer-events: none; }
 </style>
@@ -300,11 +397,11 @@ function normalizeRawChapter(data) {
       else { src = '(किताब: ' + String(data.pages || '') + ')'; }
     }
     const cleanExp = String(q.exp || '')
-      .replace(/⚠️\s*किताब सुधार\s*:?|किताब सुधार\s*:?/g, 'सटीक तथ्य:')
+      .replace(/\u26a0\ufe0f?\s*\u0915\u093f\u0924\u093e\u092c \u0938\u0941\u0927\u093e\u0930\s*:?|\u0915\u093f\u0924\u093e\u092c \u0938\u0941\u0927\u093e\u0930\s*:?/g, 'सटीक तथ्य:')
       .replace(/\u092f\u0939 \u092e\u092e\u094d\u092e\u0940 \u0915\u0940 \u0905\u092a\u0928\u0940\s+/g, 'यह अपनी ')
       .replace(/\u092e\u092e\u094d\u092e\u0940,\s*\u0907\u0928 \u0924\u0940\u0928\u094b\u0902/g, 'इन तीनों')
       .replace(/\u092e\u092e\u094d\u092e\u0940 \u0915\u094b \u0938\u094d\u092a\u0937\u094d\u091f \u0909\u0924\u094d\u0924\u0930 \u0938\u093f\u0916\u093e\u0928\u0947 \u0939\u0947\u0924\u0941\s+/g, 'स्पष्ट उत्तर हेतु ')
-      .replace(/⚠️/g, '').trim();
+      .replace(/\u26a0\ufe0f?/g, '').trim();
     return {
       id: q.id != null ? q.id : idx + 1,
       type: q.type || 'BOOK',
@@ -314,7 +411,7 @@ function normalizeRawChapter(data) {
       opts: q.opts.map(String),
       ans: q.ans,
       exp: cleanExp,
-      trick: String(q.trick || '').replace(/⚠️/g, '').trim(),
+      trick: String(q.trick || '').replace(/\u26a0\ufe0f?/g, '').trim(),
       vip: !!q.vip,
       match: Array.isArray(q.match) && q.match.length ? q.match : null
     };
@@ -389,12 +486,35 @@ function importChapterData(rawJson) {
   return ch;
 }
 
+// Global permanent zoom helpers (100% = 20px default matching phone screenshot)
+function loadGlobalZoom() {
+  const raw = safeLS('tgt_gk_zoom_pct_v1', null);
+  const n = Number(raw);
+  if (raw !== null && raw !== '' && Number.isFinite(n) && n >= 75 && n <= 150) {
+    return Math.round(n);
+  }
+  return 100;
+}
+function saveGlobalZoom(val) {
+  const n = Number(val);
+  const v = Math.max(75, Math.min(150, Math.round(Number.isFinite(n) ? n : 100)));
+  app.zoomPct = v;
+  app.userData.zoomPct = v;
+  saveLS('tgt_gk_zoom_pct_v1', v);
+  saveUserData(app.userId, app.userData);
+  return v;
+}
+function zPx(basePx) {
+  return (Math.round(basePx * ((app.zoomPct || 100) / 100) * 10) / 10) + 'px';
+}
+
 // Per-user data & helpers
 const DEFAULT_USER_DATA = () => ({
   tabId: 'env',
   onlyReady: false,
   paperTint: false,
   fontSize: 15,
+  zoomPct: 100,
   lastChId: 'ch03',
   progress: {}
 });
@@ -411,6 +531,8 @@ const app = {
   view: 'welcome',
   userId: 'm',
   userData: DEFAULT_USER_DATA(),
+  zoomPct: loadGlobalZoom(),
+  _lastRenderKey: '',
   doneTwigCh: '',
   toast: '',
   toastT: null,
@@ -422,6 +544,8 @@ const app = {
     cur: 0,
     palOpen: false,
     palFilter: 'all',
+    zoomOpen: false,
+    showQInSol: false,
     showOther: false
   },
   result: {
@@ -430,32 +554,42 @@ const app = {
     summary: null
   },
   duel: {
-    stage: 'lobby',
+    stage: 'menu',
     scope: 'ch01',
-    count: 10,
+    count: 30,
+    allScope: false,
+    code: '',
+    prefillCode: '',
+    customName: '',
+    pid: '',
+    room: null,
+    es: null,
+    round: 0,
     qs: [],
+    qRefs: [],
     qIdx: 0,
-    mScore: 0,
-    pScore: 0,
-    mStreak: 0,
-    dots: [],
-    history: [],
-    timer: 25,
-    timerId: null,
-    picked: null,
-    pAnswered: false,
-    pCorrect: false,
+    myAns: {},
+    startedAt: 0,
+    elapsedMs: 0,
+    finishedMs: 0,
+    fin: 0,
+    soloPractice: false,
+    palOpen: false,
+    palFilter: 'all',
+    zoomOpen: false,
+    leaveOpen: false,
+    showReview: true,
     resOpenIdx: null,
-    matchId: '',
+    timerId: null,
+    roomPollId: null,
+    activeInvite: null,
     lastRejectedId: '',
     opOnline: false,
     netOk: true,
     serverOffset: 0,
-    remoteMatch: null,
     remotePresence: null,
     submitting: false,
-    inviteSentAt: 0,
-    pollTimer: null,
+    err: '',
     lastUiSig: ''
   }
 };
@@ -464,6 +598,16 @@ function stopDuelTimer() {
   if (app.duel.timerId) {
     clearInterval(app.duel.timerId);
     app.duel.timerId = null;
+  }
+}
+function stopDuelRoomStream() {
+  if (app.duel.es) {
+    try { app.duel.es.close(); } catch (_) {}
+    app.duel.es = null;
+  }
+  if (app.duel.roomPollId) {
+    clearInterval(app.duel.roomPollId);
+    app.duel.roomPollId = null;
   }
 }
 
@@ -495,7 +639,7 @@ function getChProg(chId) {
 
 function getUserStats(uid) {
   const ud = uid === app.userId ? app.userData : loadUserData(uid);
-  let doneCh = 0, seen = 0, ok = 0;
+  let doneCh = 0, seen = 0, attempted = 0, ok = 0;
   Object.keys(CHAPTER_BANK).forEach(cid => {
     const p = ud.progress[cid];
     if (!p) return;
@@ -503,14 +647,18 @@ function getUserStats(uid) {
     const keys = Object.keys(ansMap);
     if (keys.length >= CHAPTER_BANK[cid].questions.length || p.finished) doneCh++;
     CHAPTER_BANK[cid].questions.forEach(q => {
-      if (ansMap[q.id] !== undefined) {
+      const val = ansMap[q.id];
+      if (val !== undefined) {
         seen++;
-        if (ansMap[q.id] === q.ans) ok++;
+        if (val >= 0) {
+          attempted++;
+          if (val === q.ans) ok++;
+        }
       }
     });
   });
-  const acc = seen ? Math.round((ok / seen) * 100) : 0;
-  return { doneCh, seen, ok, acc };
+  const acc = attempted ? Math.round((ok / attempted) * 100) : 0;
+  return { doneCh, seen, attempted, ok, acc };
 }
 
 function roadmapTotals() {
@@ -613,7 +761,7 @@ function renderHomeView() {
       const p = getChProg(bank.id);
       const ansCount = Object.keys(p.answers || {}).length;
       const rightCount = bank.questions.filter(q => p.answers && p.answers[q.id] === q.ans).length;
-      const wrongCount = bank.questions.filter(q => p.answers && p.answers[q.id] !== undefined && p.answers[q.id] !== q.ans).length;
+      const wrongCount = bank.questions.filter(q => p.answers && p.answers[q.id] !== undefined && p.answers[q.id] >= 0 && p.answers[q.id] !== q.ans).length;
       const starCount = Object.keys(p.stars || {}).filter(k => p.stars[k]).length;
       const isDone = p.finished || ansCount >= bank.total_questions;
       const inProg = !isDone && ansCount > 0;
@@ -666,15 +814,44 @@ function renderHomeView() {
     '</div>';
 }
 
-function buildExpTimeline(rawExp) {
-  const clean = String(rawExp || '').replace(/⚠️\s*किताब सुधार\s*:?|किताब सुधार\s*:?/g, 'सटीक तथ्य:').replace(/⚠️/g, '').trim();
-  const parts = clean
+function splitReadablePoints(rawExp) {
+  const clean = String(rawExp || '')
+    .replace(/\u26a0\ufe0f?\s*\u0915\u093f\u0924\u093e\u092c \u0938\u0941\u0927\u093e\u0930\s*:?|\u0915\u093f\u0924\u093e\u092c \u0938\u0941\u0927\u093e\u0930\s*:?/g, 'सटीक तथ्य:')
+    .replace(/\u26a0\ufe0f?/g, '').trim();
+  return clean
     .replace(/([।!])\s+/g, '$1\n')
     .replace(/;\s+/g, '\n')
     .replace(/सही मिलान:\s*/g, '\nसही मिलान: ')
     .split(/\n+/)
     .map(s => s.replace(/^[•\-]\s*/, '').trim())
     .filter(Boolean);
+}
+
+function highlightHindiFacts(rawStr) {
+  const str = String(rawStr || '');
+  const rx = /(^[^:\n]{3,36}:|'[^'\n]{2,45}'|"[^"\n]{2,45}"|अनुच्छेद\s*\d+[A-Za-z\u0900-\u097F\-]*|अनु\.\s*\d+[A-Za-z\u0900-\u097F\-]*|\d+\s*(?:लाख|मिलियन|करोड़|सीटें?|सीट|प्रतिशत|%|सदस्य|वर्ष|साल|दिन|माह|वाँ|वें|वीं)|\d{1,2}\s*(?:जनवरी|फरवरी|मार्च|अप्रैल|मई|जून|जुलाई|अगस्त|सितंबर|अक्टूबर|नवंबर|दिसंबर)|(?:1[789]\d{2}|20\d{2}))/g;
+  let out = '', last = 0, m;
+  while ((m = rx.exec(str)) !== null) {
+    if (m.index > last) out += esc(str.slice(last, m.index));
+    out += '<b class="kh">' + esc(m[0]) + '</b>';
+    last = rx.lastIndex;
+    if (m[0].length === 0) rx.lastIndex++;
+  }
+  if (last < str.length) out += esc(str.slice(last));
+  return out;
+}
+
+function extractPageLabel(q, ch) {
+  const s = String((q && q.src) || '');
+  const m = s.match(/प\.\s*([0-9\u0966-\u096F\u2013\-, ]+)/);
+  if (m && m[1].trim()) return 'पन्ना ' + m[1].trim().replace(/[,\s]+$/, '');
+  if (s.includes('किताब में नहीं')) return 'व्याख्या';
+  const cp = ch && ch.pages ? String(ch.pages).replace(/\s*\(PDF[^)]*\)/g, '').replace(/^प\.\s*/, '').trim() : '';
+  return cp ? 'पन्ना ' + cp : 'व्याख्या';
+}
+
+function buildExpTimeline(rawExp) {
+  const parts = splitReadablePoints(rawExp);
   const lead = parts.length ? parts[0] : '';
   const points = parts.slice(1);
   return { lead, points };
@@ -691,69 +868,129 @@ function renderQuizView() {
   const q = list[curIdx];
   const picked = prog.answers[q.id];
   const hasPick = picked !== undefined;
-  const isOk = hasPick && picked === q.ans;
+  const isSkipped = picked === -1;
+  const isOk = hasPick && !isSkipped && picked === q.ans;
   const isStar = !!(prog.stars && prog.stars[q.id]);
+  const z = app.zoomPct || 100;
 
-  // Round number circles
+  // Auto-centered Testbook Q Strip circles (green/red/skip + golden star badge)
   const circles = list.map((item, idx) => {
     const p = prog.answers[item.id];
     let cls = 'q-num';
     if (idx === curIdx) cls += ' cur';
-    if (p !== undefined) cls += (p === item.ans ? ' ok' : ' bad');
+    if (p === -1) cls += ' skip';
+    else if (p !== undefined) cls += (p === item.ans ? ' ok' : ' bad');
+    if (prog.stars && prog.stars[item.id]) cls += ' has-star';
     return '<button type="button" class="' + cls + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
   }).join('');
 
-  let matchHtml = '';
-  if (q.match && q.match.length) {
-    matchHtml = '<table class="mtab"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
-      q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
-      '</tbody></table>';
-  }
+  const matchHtml = (q.match && q.match.length)
+    ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+        q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+      '</tbody></table>'
+    : '';
 
-  const optsHtml = q.opts.map((opt, idx) => {
-    let cls = 'opt-card';
-    if (hasPick) {
-      if (idx === q.ans) cls += ' is-right';
-      else if (idx === picked) cls += ' is-wrong';
-    }
-    return '<div class="' + cls + '"><button type="button" class="opt-btn" style="font-size:' + app.userData.fontSize + 'px;" data-act="q-pick" data-i="' + idx + '">' +
-      '<span class="opt-pill">' + (idx + 1) + '</span>' +
-      '<span style="flex:1;min-width:0;line-height:1.45;">' + esc(opt) + '</span>' +
-    '</button></div>';
-  }).join('');
+  const starBtnHtml = '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="q-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button>';
 
-  // E1 Story Timeline Explanation (clean & zero warning boxes!)
-  let explHtml = '';
-  if (hasPick) {
-    const { lead, points } = buildExpTimeline(q.exp);
-    const otherRows = q.opts.map((opt, idx) => idx === q.ans ? '' :
-      '<div style="background:#F8FAFC;border-radius:8px;padding:6px 9px;font-size:12px;color:#475569;"><strong style="color:#0F172A;">विकल्प ' + (idx + 1) + ':</strong> ' + esc(opt) + '</div>'
-    ).join('');
-    explHtml = '<div class="ed-sheet">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding-bottom:8px;border-bottom:1px solid #EEF3F7;">' +
-        '<span style="background:' + (isOk ? '#DCFCE7' : '#E0F2FE') + ';color:' + (isOk ? '#166534' : '#0369A1') + ';padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;">✅ सही उत्तर: ' + esc(q.opts[q.ans]) + '</span>' +
-        '<button type="button" class="u-btn" style="border:none;background:#F0F9FF;color:#0794C7;border-radius:99px;padding:4px 9px;" data-act="q-speak">🔊 सुनें</button>' +
+  let zoomBar = '';
+  if (app.quiz.zoomOpen) {
+    const presets = [[85, 'छोटा (85%)'], [100, 'सामान्य (100%)'], [120, 'बड़ा (120%)']];
+    zoomBar = '<div class="zoom-bar">' +
+      '<div class="z-presets">' +
+        presets.map(([val, lbl]) =>
+          '<button type="button" class="z-pre ' + (z === val ? 'on' : '') + '" data-act="q-zset" data-v="' + val + '">' + lbl + '</button>'
+        ).join('') +
       '</div>' +
-      (lead ? '<p style="margin:9px 0 4px;font-size:' + Math.max(13, app.userData.fontSize - 1) + 'px;line-height:1.65;color:#0F172A;font-weight:600;">' + esc(lead) + '</p>' : '') +
-      (points.length ? '<div class="tl-wrap"><div class="tl-line"></div>' +
-        points.map((pt, pi) => '<div class="tl-item"><span class="tl-dot' + (pi === 0 ? ' hi' : '') + '"></span><span>' + esc(pt) + '</span></div>').join('') +
-      '</div>' : '') +
-      (q.trick ? '<div style="background:#FFFBEB;color:#92400E;border-radius:9px;padding:8px 10px;font-size:12.5px;font-weight:700;margin-top:6px;">💡 ' + esc(q.trick) + '</div>' : '') +
-      '<button type="button" style="width:100%;background:transparent;border:none;border-top:1px solid #F1F5F9;margin-top:8px;padding:7px 0 0;text-align:left;font:inherit;font-size:12px;font-weight:800;color:#0578A3;cursor:pointer;" data-act="q-tog-other">बाकी 3 विकल्प देखें ' + (app.quiz.showOther ? '▴' : '▾') + '</button>' +
-      (app.quiz.showOther ? '<div style="margin-top:6px;display:flex;flex-direction:column;gap:5px;">' + otherRows + '</div>' : '') +
+      '<div class="z-row">' +
+        '<div class="z-fine">' +
+          '<button type="button" class="z-step" data-act="q-zstep" data-d="-5">अ−</button>' +
+          '<span class="z-num">' + z + '%</span>' +
+          '<button type="button" class="z-step" data-act="q-zstep" data-d="5">अ+</button>' +
+        '</div>' +
+        '<button type="button" class="z-rst" data-act="q-zset" data-v="100">↺ रीसेट</button>' +
+      '</div>' +
+      '<div class="z-note">स्थायी ज़ूम: एक बार सेट करने पर हर सवाल व हर पाठ में अपने-आप यही आकार रहेगा</div>' +
     '</div>';
   }
 
-  // P1 Clean Dot Sheet Palette
+  let subBarHtml = '';
+  let bodyHtml = '';
+  if (!hasPick) {
+    const modeTag = (app.quiz.mode !== 'full' && app.quiz.mode !== 'resume')
+      ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : (app.quiz.mode === 'skip' ? 'नहीं आता' : '⭐ स्टार'))
+      : '';
+    subBarHtml = '<div class="sub-bar">' +
+      '<div class="sub-l"><span>प्रश्न ' + (curIdx + 1) + ' / ' + list.length + esc(modeTag) + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' +
+      starBtnHtml +
+    '</div>';
+    const optsHtml = q.opts.map((opt, idx) =>
+      '<div class="opt-card"><button type="button" class="opt-btn" style="font-size:' + zPx(19) + ';" data-act="q-pick" data-i="' + idx + '">' +
+        '<span class="opt-pill">' + (idx + 1) + '</span>' +
+        '<span style="flex:1;min-width:0;">' + esc(opt) + '</span>' +
+      '</button></div>'
+    ).join('');
+    bodyHtml = '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
+      '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
+      matchHtml +
+      optsHtml +
+      '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल</div>';
+  } else {
+    const statusCls = isSkipped ? 'skip' : (isOk ? 'ok' : 'bad');
+    const statusTxt = isSkipped ? '⏭ नहीं आता (0 अंक)' : (isOk ? '✓ सही' : '✗ गलत');
+    const pageLbl = extractPageLabel(q, ch);
+    subBarHtml = '<div class="sub-bar">' +
+      '<div class="sub-l"><span class="st-pill ' + statusCls + '">' + statusTxt + '</span><span>' + esc(pageLbl) + '</span></div>' +
+      '<div style="display:flex;gap:5px;align-items:center;">' +
+        '<button type="button" class="speak-pill" data-act="q-speak">🔊 सुनें</button>' +
+        starBtnHtml +
+      '</div>' +
+    '</div>';
+    const pts = splitReadablePoints(q.exp);
+    const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
+    const ansBanner =
+      (!isSkipped && !isOk ? '<div class="wrong-strip">✗ आपका चुनाव (विकल्प ' + (picked + 1) + '): ' + esc(q.opts[picked]) + '</div>' : '') +
+      '<div class="ans-banner ' + (isSkipped ? 'skip-mode' : '') + '">' +
+        '<div style="font-size:12.5px;font-weight:800;color:' + (isSkipped ? '#0369A1' : '#15803D') + ';">' +
+          (isSkipped ? '⏭ नहीं आता चुना गया (0 निगेटिव अंक) · सही उत्तर (विकल्प ' + (q.ans + 1) + ')' : 'सही उत्तर · विकल्प ' + (q.ans + 1)) +
+        '</div>' +
+        '<div style="margin-top:5px;font-size:' + zPx(19) + ';font-weight:800;line-height:1.55;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div>' +
+      '</div>';
+    const explBlock = '<div class="kp-box">' +
+      '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
+      '<ul class="kp-ul">' +
+        kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(19) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
+      '</ul>' +
+      (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(17) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+    '</div>';
+    const qReviewMatch = (q.match && q.match.length)
+      ? '<table class="mtab" style="font-size:' + zPx(15) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+        '</tbody></table>'
+      : '';
+    const qReviewBlock = '<button type="button" class="tog-q-btn" data-act="q-tog-q">' +
+        '<span>पूरा सवाल व सभी 4 विकल्प देखें</span><span>' + (app.quiz.showQInSol ? '▴' : '▾') + '</span>' +
+      '</button>' +
+      (app.quiz.showQInSol ? '<div style="margin-top:10px;padding:12px;border:1px solid #DCE5EC;border-radius:12px;background:#fff;"><div class="q-stem" style="font-size:' + zPx(18) + ';">' + esc(q.q) + '</div><div class="q-src" style="font-size:' + zPx(13) + ';">' + esc(q.src) + '</div>' + qReviewMatch + q.opts.map((o, i) => {
+        let stRow = 'background:#F8FAFC;color:#334155;';
+        if (i === q.ans) stRow = 'background:#ECFDF5;color:#14532D;font-weight:800;';
+        else if (!isSkipped && i === picked) stRow = 'background:#FFF1F2;color:#991B1B;font-weight:800;';
+        return '<div style="padding:7px 9px;margin-top:6px;border-radius:8px;font-size:' + zPx(16.5) + ';' + stRow + '">' + (i + 1) + '. ' + esc(o) + '</div>';
+      }).join('') + '</div>' : '');
+    bodyHtml = ansBanner + explBlock + qReviewBlock + '<div class="swipe-hint">👈 दाएँ–बाएँ स्वाइप से पिछला / अगला सवाल</div>';
+  }
+
+  // P1 Clean Dot Sheet Palette (includes 'नहीं आता' filter)
   let palSheet = '';
   if (app.quiz.palOpen) {
     const f = app.quiz.palFilter;
-    const wrongN = list.filter(x => prog.answers[x.id] !== undefined && prog.answers[x.id] !== x.ans).length;
+    const wrongN = list.filter(x => prog.answers[x.id] !== undefined && prog.answers[x.id] >= 0 && prog.answers[x.id] !== x.ans).length;
+    const skipN = list.filter(x => prog.answers[x.id] === -1).length;
     const starN = list.filter(x => prog.stars && prog.stars[x.id]).length;
     const restN = list.filter(x => prog.answers[x.id] === undefined).length;
     const filt = list.map((x, idx) => ({ x, idx })).filter(({ x }) => {
       const p = prog.answers[x.id];
-      if (f === 'wrong') return p !== undefined && p !== x.ans;
+      if (f === 'wrong') return p !== undefined && p >= 0 && p !== x.ans;
+      if (f === 'skip') return p === -1;
       if (f === 'star') return !!(prog.stars && prog.stars[x.id]);
       if (f === 'rest') return p === undefined;
       return true;
@@ -761,46 +998,46 @@ function renderQuizView() {
     palSheet = '<div class="sheet-bg" data-act="q-pal-bg">' +
       '<div class="sheet-box">' +
         '<div style="width:36px;height:4px;background:#CBD5E1;border-radius:99px;margin:0 auto;"></div>' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;"><span>सवाल सूची (' + list.length + ')</span><button type="button" class="u-btn" data-act="q-pal-tog">✖ बंद</button></div>' +
-        '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">' +
-          [['all','सभी ' + list.length],['wrong','गलत ' + wrongN],['star','⭐ ' + starN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
-            '<button type="button" style="border:none;border-radius:8px;padding:6px 2px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (f === fk ? 'background:#0794C7;color:#fff;' : 'background:#F1F5F9;color:#475569;') + '" data-act="q-pal-f" data-v="' + fk + '">' + fl + '</button>'
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;"><span>सवाल सूची (' + list.length + ')</span><button type="button" class="u-btn" data-act="q-pal-tog">✖ बंद</button></div>' +
+        '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">' +
+          [['all','सभी ' + list.length],['wrong','गलत ' + wrongN],['skip','नहीं आता ' + skipN],['star','⭐ ' + starN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
+            '<button type="button" style="border:none;border-radius:8px;padding:7px 2px;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;' + (f === fk ? 'background:#0794C7;color:#fff;' : 'background:#F1F5F9;color:#475569;') + '" data-act="q-pal-f" data-v="' + fk + '">' + fl + '</button>'
           ).join('') +
         '</div>' +
-        '<div class="pal-grid5 scr">' + filt.map(({ x, idx }) => {
-          const p = prog.answers[x.id];
-          const st = p !== undefined ? (p === x.ans ? 'background:#ECFDF5;color:#15803D;border:none;' : 'background:#FFF1F2;color:#BE123C;border:none;') : 'background:#fff;color:#334155;border:1px solid #CBD5E1;';
-          return '<button type="button" style="height:32px;border-radius:99px;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;' + st + (idx === curIdx ? 'box-shadow:0 0 0 2px #FF6F00;' : '') + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + ((prog.stars && prog.stars[x.id]) ? '★' : '') + '</button>';
-        }).join('') + '</div>' +
+        '<div class="pal-grid5 scr">' + (filt.length ? filt.map(({ x, idx }) => {
+          const p = prog.answers[x.id], isS = !!(prog.stars && prog.stars[x.id]);
+          let stCss = 'background:#fff;color:#334155;border:1px solid #CBD5E1;';
+          if (p === -1) stCss = 'background:#E2E8F0;color:#334155;border:1.5px dashed #64748B;';
+          else if (p !== undefined) stCss = (p === x.ans) ? 'background:#1E8E3E;color:#fff;border:none;' : 'background:#D93025;color:#fff;border:none;';
+          if (isS) stCss += 'box-shadow:0 0 0 2.5px #F59E0B;';
+          if (idx === curIdx) stCss += 'outline:3px solid #FF6F00;outline-offset:1px;';
+          return '<button type="button" style="height:35px;border-radius:99px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;' + stCss + '" data-act="q-jump" data-i="' + idx + '">' + (idx + 1) + (p === -1 ? '⏭' : '') + (isS ? '★' : '') + '</button>';
+        }).join('') : '<div style="grid-column:1/-1;text-align:center;font-size:12.5px;color:#64748B;padding:12px;">कोई सवाल नहीं</div>') + '</div>' +
         '<button type="button" class="btn-grn" style="width:100%;" data-act="finish-ch">📊 परिणाम व गलतियाँ देखें</button>' +
       '</div>' +
     '</div>';
   }
 
   const isLast = curIdx === list.length - 1;
+  const centerBtn = hasPick
+    ? '<button type="button" class="f-retry" data-act="q-retry">🔄 फिर हल करें</button>'
+    : '<button type="button" class="f-skip" data-act="q-skip">⏭ नहीं आता</button>';
+
   return '<div class="hd">' +
       '<div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button><span class="hd-ttl">' + esc(app.quiz.title) + '</span></div>' +
-      '<button type="button" class="hd-btn" data-act="q-pal-tog">▦ सूची</button>' +
-    '</div>' +
-    '<div class="q-strip scr">' + circles + '</div>' +
-    '<div class="util-bar">' +
-      '<span>सवाल ' + (curIdx + 1) + ' / ' + list.length + (app.quiz.mode !== 'full' && app.quiz.mode !== 'resume' ? ' · ' + (app.quiz.mode === 'wrong' ? 'गलत' : '⭐ स्टार') : '') + '</span>' +
-      '<div style="display:flex;gap:4px;">' +
-        '<button type="button" class="u-btn" data-act="q-fs" data-d="-1">अ−</button>' +
-        '<button type="button" class="u-btn" data-act="q-fs" data-d="1">अ+</button>' +
-        '<button type="button" class="u-btn" data-act="q-speak">🔊</button>' +
-        '<button type="button" class="u-btn ' + (isStar ? 'on' : '') + '" data-act="q-star">' + (isStar ? '★' : '☆') + '</button>' +
+      '<div class="hd-r">' +
+        '<button type="button" class="hd-btn ' + (app.quiz.zoomOpen ? 'zoom-on' : '') + '" data-act="q-ztog">अ ' + z + '%</button>' +
+        '<button type="button" class="hd-btn" data-act="q-pal-tog">▦ सूची</button>' +
       '</div>' +
     '</div>' +
-    '<div class="body-scr scr" style="padding:11px;">' +
-      '<div class="q-card"><div class="q-stem" style="font-size:' + app.userData.fontSize + 'px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div>' + matchHtml + '</div>' +
-      optsHtml +
-      explHtml +
-    '</div>' +
-    '<div class="ft">' +
-      '<button type="button" class="btn-sec" data-act="q-step" data-d="-1">‹ पिछला</button>' +
-      '<button type="button" class="u-btn" data-act="finish-ch">📊 परिणाम</button>' +
-      '<button type="button" class="btn-pri" data-act="' + (isLast ? 'finish-ch' : 'q-step') + '" data-d="1">' + (isLast ? 'परिणाम देखें ›' : 'अगला ›') + '</button>' +
+    zoomBar +
+    '<div class="q-strip scr">' + circles + '</div>' +
+    subBarHtml +
+    '<div class="body-scr scr quiz-body">' + bodyHtml + '</div>' +
+    '<div class="q-ft">' +
+      '<button type="button" class="f-prev" data-act="q-step" data-d="-1">‹ पिछला</button>' +
+      centerBtn +
+      '<button type="button" class="f-next" data-act="' + (isLast ? 'finish-ch' : 'q-step') + '" data-d="1">' + (isLast ? 'परिणाम देखें ›' : 'अगला ›') + '</button>' +
     '</div>' +
     palSheet;
 }
@@ -821,9 +1058,9 @@ function renderResultView() {
   const reviewItems = [];
   qs.forEach((q, idx) => {
     const p = prog.answers[q.id];
-    if (p === undefined) {
+    if (p === undefined || p === -1) {
       skip++;
-      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: 'छोड़ा गया', correct: q.opts[q.ans], exp: q.exp });
+      reviewItems.push({ qNum: idx + 1, id: q.id, status: 'skip', q: q.q, yours: p === -1 ? 'नहीं आता (छोड़ा)' : 'अनदेखा (बाकी)', correct: q.opts[q.ans], exp: q.exp });
     } else if (p === q.ans) {
       right++;
     } else {
@@ -844,10 +1081,10 @@ function renderResultView() {
     return '<div class="tl-item"><span class="tl-dot ' + (it.status === 'skip' ? 'sk' : 'bad') + '"></span>' +
       '<div style="background:#fff;border-radius:12px;padding:10px 11px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
         '<button type="button" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font:inherit;cursor:pointer;" data-act="r-tog" data-id="' + it.id + '">' +
-          '<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;"><span style="color:' + (it.status === 'wrong' ? '#BE123C' : '#64748B') + ';">सवाल #' + it.qNum + (it.status === 'skip' ? ' · छोड़ा' : '') + '</span><span style="color:#0794C7;">' + (open ? 'छुपाएँ ▴' : 'समझें ▾') + '</span></div>' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;"><span style="color:' + (it.status === 'wrong' ? '#BE123C' : '#64748B') + ';">सवाल #' + it.qNum + (it.status === 'skip' ? ' · ' + esc(it.yours) : '') + '</span><span style="color:#0794C7;">' + (open ? 'छुपाएँ ▴' : 'समझें ▾') + '</span></div>' +
           '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:3px;line-height:1.45;">' + esc(it.q) + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:11px;font-weight:700;">' +
-            '<span style="background:#FFF1F2;color:#BE123C;padding:2px 8px;border-radius:99px;">आपका: ' + esc(it.yours) + '</span>' +
+            '<span style="background:' + (it.status === 'skip' ? '#F1F5F9;color:#334155;' : '#FFF1F2;color:#BE123C;') + 'padding:2px 8px;border-radius:99px;">आपका: ' + esc(it.yours) + '</span>' +
             '<span style="background:#ECFDF5;color:#15803D;padding:2px 8px;border-radius:99px;">सही: ' + esc(it.correct) + '</span>' +
           '</div>' +
         '</button>' +
@@ -870,26 +1107,58 @@ function renderResultView() {
     '</div>' +
     '<div class="ft">' +
       '<button type="button" class="btn-sec" data-act="back-home">🏠 होम</button>' +
-      (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>') +
+      (wrong > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="wrong">🔁 सिर्फ़ ' + wrong + ' गलत दोबारा करें</button>' : (skip > 0 ? '<button type="button" class="btn-pri" style="flex:1;" data-act="open-ch" data-cid="' + ch.id + '" data-mode="skip">🔁 छोड़े सवाल (' + skip + ') देखें</button>' : '<button type="button" class="btn-grn" style="flex:1;" data-act="open-duel">⚔️ इस पाठ पर 1 vs 1 खेलें</button>')) +
     '</div>';
+}
+
+/* ================= JOD 2028 EXPERIMENT (JOD LAB) 1v1 CHALLENGE ENGINE ================= */
+function duelPid() {
+  if (app.duel.pid) return app.duel.pid;
+  let id = safeLS('tgt_gk_duel_pid_v2', '');
+  if (!id || typeof id !== 'string') {
+    id = 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+    saveLS('tgt_gk_duel_pid_v2', id);
+  }
+  app.duel.pid = id;
+  return id;
+}
+
+function defaultPlayerName() {
+  const saved = safeLS('tgt_gk_duel_name_' + app.userId, '');
+  if (saved && String(saved).trim()) return String(saved).trim().slice(0, 16);
+  return app.userId === 'p' ? 'प्रियंका' : 'मंजू';
+}
+
+function duelPoolMax(scope) {
+  if (scope === 'mix') {
+    return Object.values(CHAPTER_BANK).reduce((a, c) => a + c.questions.length, 0);
+  }
+  return CHAPTER_BANK[scope] ? CHAPTER_BANK[scope].questions.length : 0;
+}
+
+function duelEffCount() {
+  const mx = Math.max(1, duelPoolMax(app.duel.scope) || 30);
+  if (app.duel.allScope) return mx;
+  const n = Math.round(Number(app.duel.count) || 30);
+  return Math.max(1, Math.min(mx, n));
 }
 
 function buildDuelRefs(scope, count) {
   let pool = [];
   if (scope === 'mix') {
     Object.keys(CHAPTER_BANK).forEach(cid => CHAPTER_BANK[cid].questions.forEach(q => {
-      if (!q.match) pool.push({ chId: cid, qId: q.id });
+      pool.push({ chId: cid, qId: q.id });
     }));
   } else if (CHAPTER_BANK[scope]) {
-    pool = CHAPTER_BANK[scope].questions.filter(q => !q.match).map(q => ({ chId: scope, qId: q.id }));
-    if (pool.length < count) pool = CHAPTER_BANK[scope].questions.map(q => ({ chId: scope, qId: q.id }));
+    pool = CHAPTER_BANK[scope].questions.map(q => ({ chId: scope, qId: q.id }));
   }
   const arr = pool.slice();
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return arr.slice(0, Math.min(count, arr.length));
+  const want = Math.max(1, Math.min(Number(count) || 30, arr.length));
+  return arr.slice(0, want);
 }
 
 function buildDuelPool(scope, count) {
@@ -903,12 +1172,31 @@ function resolveDuelQuestions(qRefs) {
   const list = Array.isArray(qRefs) ? qRefs : Object.values(qRefs || {});
   return list.map(r => {
     const ch = r && CHAPTER_BANK[r.chId];
-    return ch ? ch.questions.find(q => q.id === r.qId) : null;
+    if (!ch) return null;
+    const found = ch.questions.find(q => q.id === r.qId);
+    return found ? Object.assign({ _chId: r.chId }, found) : null;
   }).filter(Boolean);
 }
 
 function serverNow() {
   return Date.now() + (app.duel.serverOffset || 0);
+}
+
+function fmtDuelClock(ms) {
+  const s = Math.max(0, Math.floor((ms || 0) / 1000));
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+}
+
+function fmtDuelDur(ms) {
+  if (!ms || ms <= 0) return '—';
+  const totTenths = Math.round(ms / 100);
+  const s = totTenths / 10;
+  if (s < 60) return s.toFixed(1) + 's';
+  const m = Math.floor(s / 60);
+  const rem = (s - m * 60).toFixed(0).padStart(2, '0');
+  return m + ':' + rem;
 }
 
 function fbUrl(subPath) {
@@ -931,7 +1219,8 @@ async function fbReq(subPath, method, bodyObj, keepalive) {
       return null;
     }
     app.duel.netOk = true;
-    return await resp.json();
+    const txt = await resp.text();
+    return txt ? JSON.parse(txt) : null;
   } catch (_) {
     app.duel.netOk = false;
     return null;
@@ -941,469 +1230,1136 @@ async function fbReq(subPath, method, bodyObj, keepalive) {
 async function sendPresence(isOnline, keepalive) {
   if (!FIREBASE_DB_URL || app.view === 'welcome') return null;
   const uid = app.userId === 'p' ? 'p' : 'm';
+  const t0 = Date.now();
   const res = await fbReq('presence/' + uid, 'PUT', {
     ts: { '.sv': 'timestamp' },
-    online: isOnline !== false
+    online: isOnline !== false,
+    pid: duelPid()
   }, keepalive);
+  const t1 = Date.now();
   if (res && typeof res.ts === 'number') {
-    app.duel.serverOffset = res.ts - Date.now();
+    app.duel.serverOffset = res.ts - Math.round((t0 + t1) / 2);
   }
   return res;
 }
 
-function hasIncomingChallenge() {
-  if (app.view === 'welcome') return false;
-  const d = app.duel, m = d.remoteMatch;
-  if (!m || m.status !== 'ringing' || m.to !== app.userId) return false;
-  if (m.id === d.lastRejectedId || m.id === d.matchId) return false;
-  if (typeof m.createdAt === 'number' && (serverNow() - m.createdAt) > 90000) return false;
+function setNestedAt(obj, pathStr, val) {
+  const ks = String(pathStr || '').split('/').filter(Boolean);
+  if (!ks.length) return val;
+  const root = (obj && typeof obj === 'object') ? obj : {};
+  let cur = root;
+  for (let i = 0; i < ks.length - 1; i++) {
+    if (!cur[ks[i]] || typeof cur[ks[i]] !== 'object') cur[ks[i]] = {};
+    cur = cur[ks[i]];
+  }
+  if (val === null) delete cur[ks[ks.length - 1]];
+  else cur[ks[ks.length - 1]] = val;
+  return root;
+}
+
+function duelPlayers() {
+  const p = (app.duel.room && app.duel.room.p) || {};
+  return Object.keys(p)
+    .filter(id => p[id] && typeof p[id] === 'object')
+    .map(id => Object.assign({ id }, p[id]))
+    .sort((a, b) => (a.role === 'host' ? 0 : 1) - (b.role === 'host' ? 0 : 1));
+}
+
+function duelMePlayer() {
+  const pid = duelPid();
+  return duelPlayers().find(x => x.id === pid) || null;
+}
+
+function duelOppPlayer() {
+  const pid = duelPid();
+  return duelPlayers().find(x => x.id !== pid) || null;
+}
+
+function isDuelHost() {
+  const m = duelMePlayer();
+  return !!(m && m.role === 'host');
+}
+
+function calcMyDuelStats() {
+  const d = app.duel;
+  let ok = 0, wr = 0, sk = 0, k = 0;
+  d.qs.forEach((q, idx) => {
+    const a = d.myAns[idx];
+    if (a === undefined) return;
+    k++;
+    if (a === -1) sk++;
+    else if (a === q.ans) ok++;
+    else wr++;
+  });
+  const pts = ok * 3 - wr * 1;
+  return { k, ok, wr, sk, pts };
+}
+
+function playerAvatarHtml(pObj, cls) {
+  const nm = String((pObj && pObj.name) || '').trim();
+  const who = pObj && pObj.who;
+  if (nm === 'मंजू' || (who === 'm' && (!nm || nm === 'मंजू'))) return avImg('m', cls || 'av-xs');
+  if (nm === 'प्रियंका' || (who === 'p' && (!nm || nm === 'प्रियंका'))) return avImg('p', cls || 'av-xs');
+  const ch = nm ? Array.from(nm)[0].toUpperCase() : '?';
+  return '<span class="bav-init">' + esc(ch) + '</span>';
+}
+
+function renderBattleBoxesHtml() {
+  const d = app.duel;
+  const n = Math.max(1, d.qs.length || 30);
+  const myS = calcMyDuelStats();
+  const meP = duelMePlayer() || { name: d.customName || defaultPlayerName(), who: app.userId };
+  const opP = duelOppPlayer();
+  const box = (pObj, pts, k, isYou, isFin) =>
+    '<div class="bbox">' +
+      '<div class="bname">' +
+        playerAvatarHtml(pObj, 'av-xs') +
+        '<b>' + esc((pObj && pObj.name) || 'खिलाड़ी') + '</b>' +
+        (isYou ? '<span class="byou">YOU</span>' : '') +
+        (isFin ? '<span class="bfin">✓ पूरा</span>' : '') +
+      '</div>' +
+      '<div class="bpts">' +
+        '<b class="tnum">' + pts + '</b><span>अंक</span>' +
+        '<span class="bk-cnt tnum">' + k + '/' + n + '</span>' +
+      '</div>' +
+      '<div class="bbar"><i style="width:' + Math.min(100, Math.round((k / n) * 100)) + '%"></i></div>' +
+    '</div>';
+
+  const rightBox = opP
+    ? box(opP, Number(opP.pts || 0), Number(opP.k || 0), false, !!opP.fin)
+    : '<div class="bbox" style="display:flex;flex-direction:column;justify-content:center;align-items:center;color:#78716C;font-size:11.5px;font-weight:700;text-align:center;">' +
+        (d.soloPractice ? '⚡ अकेला अभ्यास मोड' : 'दोस्त जुड़ने का इंतज़ार…') +
+      '</div>';
+
+  return box(meP, myS.pts, myS.k, true, !!d.fin) + '<div class="bvs">⚡</div>' + rightBox;
+}
+
+function updateLiveBattleDomOnly() {
+  if (typeof document === 'undefined') return false;
+  const root = document.getElementById('appRoot');
+  const bEl = root && root.querySelector ? root.querySelector('#duelBattleBar') : null;
+  if (!bEl) return false;
+  bEl.innerHTML = renderBattleBoxesHtml();
   return true;
 }
 
-function startDuelTicker() {
+function hasIncomingChallenge() {
+  if (app.view === 'welcome') return false;
+  const d = app.duel;
+  if (app.view === 'duel' && (d.stage === 'lobby' || d.stage === 'count' || d.stage === 'live')) return false;
+  const inv = d.activeInvite;
+  if (!inv || !inv.code || inv.status !== 'wait') return false;
+  if (inv.fromPid && inv.fromPid === duelPid()) return false;
+  if (inv.code === d.code || inv.code === d.lastRejectedId) return false;
+  if (typeof inv.createdAt === 'number' && (serverNow() - inv.createdAt) > 180000) return false;
+  return true;
+}
+
+function hasFocusedInputInRoot() {
+  if (typeof document === 'undefined' || !document.activeElement) return false;
+  const tag = String(document.activeElement.tagName || '').toUpperCase();
+  if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') return false;
+  const root = document.getElementById('appRoot');
+  return !!(root && root.contains && root.contains(document.activeElement));
+}
+
+function startDuelStopwatch() {
   stopDuelTimer();
   if (typeof setInterval === 'function' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
     app.duel.timerId = setInterval(() => {
       const d = app.duel;
       if (app.view !== 'duel' || d.stage !== 'live') return;
-      const m = d.remoteMatch;
-      const qStart = (m && typeof m.qStartAt === 'number') ? m.qStartAt : serverNow();
-      d.timer = Math.max(0, 25 - Math.floor((serverNow() - qStart) / 1000));
-      if (d.timer <= 0 && d.picked === null) {
-        handleDuelPick(-1);
-        return;
+      d.elapsedMs = Math.max(0, Date.now() - (d.startedAt || Date.now()));
+      if (typeof document !== 'undefined') {
+        const root = document.getElementById('appRoot');
+        const clk = root && root.querySelector ? root.querySelector('#duelClkEl') : null;
+        if (clk) clk.textContent = fmtDuelClock(d.elapsedMs);
       }
-      if (d.picked === null || !d.pAnswered) render();
-    }, 1000);
+    }, 500);
   }
 }
 
-function recomputeDuelFromMatch(m) {
+function runDuelCountdown() {
   const d = app.duel;
-  const myId = app.userId === 'p' ? 'p' : 'm';
-  const opId = myId === 'p' ? 'm' : 'p';
-  const qs = resolveDuelQuestions(m.qRefs);
+  const goAt = (d.room && d.room.go) ? Number(d.room.go) : (serverNow() + 3000);
+  if (typeof window === 'undefined' || window.__DISABLE_TIMERS) {
+    beginDuelLivePlay();
+    return;
+  }
+  const tick = () => {
+    if (d.stage !== 'count') return;
+    const left = goAt - serverNow();
+    if (typeof document !== 'undefined') {
+      const root = document.getElementById('appRoot');
+      const el = root && root.querySelector ? root.querySelector('#duelCountNum') : null;
+      if (el) el.textContent = left > 2000 ? '3' : (left > 1000 ? '2' : (left > 0 ? '1' : 'GO!'));
+    }
+    if (left <= 0) {
+      beginDuelLivePlay();
+      return;
+    }
+    setTimeout(tick, 60);
+  };
+  tick();
+}
+
+function beginDuelLivePlay() {
+  const d = app.duel;
+  const r = d.room;
+  const refs = (r && r.qRefs) ? r.qRefs : d.qRefs;
+  const qs = resolveDuelQuestions(refs);
   if (qs.length) d.qs = qs;
-  d.scope = m.scope || d.scope;
-  d.count = m.count || d.qs.length || d.count;
-  d.qIdx = Math.max(0, Math.min(Math.max(0, d.qs.length - 1), Number(m.qIdx || 0)));
+  if (!d.qs.length) {
+    d.qs = buildDuelPool(d.scope, duelEffCount());
+  }
+  d.round = (r && r.round) ? Number(r.round) : d.round;
+  d.qIdx = 0;
+  d.myAns = {};
+  d.startedAt = Date.now();
+  d.elapsedMs = 0;
+  d.finishedMs = 0;
+  d.fin = 0;
+  d.palOpen = false;
+  d.palFilter = 'all';
+  d.leaveOpen = false;
+  d.resOpenIdx = null;
+  d.stage = 'live';
+  app.view = 'duel';
+  startDuelStopwatch();
+  render();
+  pushMyDuelProgress(false);
+}
 
-  const qStart = typeof m.qStartAt === 'number' ? m.qStartAt : serverNow();
-  d.timer = (typeof window !== 'undefined' && window.__DISABLE_TIMERS)
-    ? 25
-    : Math.max(0, 25 - Math.floor((serverNow() - qStart) / 1000));
-
-  const ansMap = m.ans || {};
-  d.mScore = 0; d.pScore = 0; d.mStreak = 0;
-  d.dots = Array(d.qs.length).fill('w');
-  d.history = [];
-  d.picked = null;
-  d.pAnswered = false;
-  d.pCorrect = false;
-
-  d.qs.forEach((q, i) => {
-    const qa = ansMap[i] || ansMap[String(i)] || {};
-    const myA = qa[myId];
-    const opA = qa[opId];
-    if (myA) {
-      if (myA.ok) { d.mScore += 1; d.mStreak += 1; d.dots[i] = 'g'; }
-      else { d.mStreak = 0; d.dots[i] = 'r'; }
+function onDuelRoomUpdate() {
+  const d = app.duel;
+  const r = d.room;
+  if (!r) {
+    if (d.stage === 'lobby' || d.stage === 'count') {
+      stopDuelRoomStream();
+      d.stage = 'menu';
+      d.code = '';
+      showToast('Room बंद हो गया है');
     }
-    if (opA && opA.ok) d.pScore += 1;
+    return;
+  }
+  if (r.scope) d.scope = r.scope;
+  if (r.count) d.count = Number(r.count);
 
-    if (i === d.qIdx) {
-      d.picked = myA ? myA.idx : null;
-      d.pAnswered = !!opA;
-      d.pCorrect = !!(opA && opA.ok);
+  if (r.st === 'go' && d.stage === 'lobby') {
+    d.round = Number(r.round || 0);
+    d.stage = 'count';
+    app.view = 'duel';
+    render();
+    runDuelCountdown();
+    return;
+  }
+  if (r.st === 'wait' && d.stage === 'result' && Number(r.round || 0) !== Number(d.round || 0)) {
+    d.round = Number(r.round || 0);
+    d.myAns = {};
+    d.fin = 0;
+    d.stage = 'lobby';
+    if (r.qRefs) d.qs = resolveDuelQuestions(r.qRefs);
+    render();
+    showToast('⚔️ नया राउंड तैयार है!');
+    return;
+  }
+  if (app.view === 'duel') {
+    if (d.stage === 'live') {
+      updateLiveBattleDomOnly();
+    } else if (d.stage === 'lobby' || d.stage === 'result') {
+      if (!hasFocusedInputInRoot()) render();
     }
+  }
+}
 
-    const roundDone = !!(myA && (opA || d.timer <= 0 || m.status === 'ended' || i < d.qIdx));
-    if (myA || opA || i < d.qIdx || m.status === 'ended') {
-      const mText = myA ? (myA.idx >= 0 && q.opts[myA.idx] !== undefined ? q.opts[myA.idx] : 'समय समाप्त') : 'छोड़ा';
-      const pText = opA ? (opA.idx >= 0 && q.opts[opA.idx] !== undefined ? q.opts[opA.idx] : 'समय समाप्त') : 'छोड़ा';
-      d.history.push({
-        qNum: i + 1,
-        q: q.q,
-        mOk: !!(myA && myA.ok),
-        pOk: !!(opA && opA.ok),
-        mAns: mText,
-        pAns: pText,
-        right: q.opts[q.ans],
-        exp: q.exp,
-        show: roundDone || m.status === 'ended'
+function listenDuelRoom(code) {
+  stopDuelRoomStream();
+  if (!FIREBASE_DB_URL || !code) return;
+  if (typeof EventSource === 'function' && (typeof window === 'undefined' || !window.__DISABLE_TIMERS)) {
+    try {
+      const es = new EventSource(fbUrl('rooms/' + code));
+      app.duel.es = es;
+      es.addEventListener('put', (e) => {
+        try {
+          const m = JSON.parse(e.data);
+          app.duel.room = setNestedAt(app.duel.room, m.path, m.data);
+          onDuelRoomUpdate();
+        } catch (_) {}
       });
-    }
-  });
+      es.addEventListener('patch', (e) => {
+        try {
+          const m = JSON.parse(e.data);
+          const base = m.path === '/' ? '' : m.path;
+          Object.keys(m.data || {}).forEach(k => {
+            app.duel.room = setNestedAt(app.duel.room, base + '/' + k, m.data[k]);
+          });
+          onDuelRoomUpdate();
+        } catch (_) {}
+      });
+    } catch (_) {}
+  }
+  if (typeof setInterval === 'function' && (typeof window === 'undefined' || !window.__DISABLE_TIMERS)) {
+    app.duel.roomPollId = setInterval(async () => {
+      if (!app.duel.code) return;
+      const snap = await fbReq('rooms/' + app.duel.code, 'GET');
+      if (snap !== null || !app.duel.netOk) {
+        app.duel.room = snap;
+        onDuelRoomUpdate();
+      }
+    }, 1150);
+  }
 }
 
 function applyRemoteState(data) {
   const d = app.duel;
-  const myId = app.userId === 'p' ? 'p' : 'm';
-  const opId = myId === 'p' ? 'm' : 'p';
-  const opName = opId === 'p' ? 'प्रियंका' : 'मंजू';
+  const opId = app.userId === 'p' ? 'm' : 'p';
   const prevOnline = d.opOnline;
   const prevPopup = hasIncomingChallenge();
-  const prevSig = d.lastUiSig;
+  const prevInvSig = d.activeInvite ? (d.activeInvite.code + ':' + d.activeInvite.status + ':' + d.activeInvite.count) : '';
 
   const pres = data && data.presence ? data.presence : null;
   d.remotePresence = pres;
   const opP = pres ? pres[opId] : null;
   d.opOnline = !!(opP && opP.online !== false && typeof opP.ts === 'number' && (serverNow() - opP.ts) < 18000);
 
-  const m = data && data.match ? data.match : null;
-  d.remoteMatch = m;
-
-  if (d.stage === 'waiting' && d.matchId) {
-    if (m && m.id === d.matchId) {
-      if (m.status === 'live') {
-        recomputeDuelFromMatch(m);
-        d.stage = 'live';
-        app.view = 'duel';
-        startDuelTicker();
-        showToast('⚔️ ' + opName + ' जुड़ गईं — मुक़ाबला शुरू!');
-      } else if (m.status === 'rejected') {
-        stopDuelTimer();
-        d.stage = 'lobby';
-        d.matchId = '';
-        showToast('🔔 ' + opName + ' अभी व्यस्त हैं — बाद में खेलें');
-      } else if (m.status === 'cancelled') {
-        stopDuelTimer();
-        d.stage = 'lobby';
-        d.matchId = '';
-      } else if (m.status === 'ringing' && typeof m.createdAt === 'number' && (serverNow() - m.createdAt) > 75000) {
-        fbReq('match', 'PATCH', { status: 'cancelled' });
-        stopDuelTimer();
-        d.stage = 'lobby';
-        d.matchId = '';
-        showToast('जवाब नहीं मिला — WhatsApp पर बुलाकर फिर भेजें');
-      }
-    }
-  } else if (d.stage === 'live' && d.matchId) {
-    if (m && m.id === d.matchId) {
-      recomputeDuelFromMatch(m);
-      if (m.status === 'ended') {
-        stopDuelTimer();
-        d.stage = 'result';
-      }
-    }
-  }
+  d.activeInvite = data && data.activeInvite ? data.activeInvite : null;
+  const nextInvSig = d.activeInvite ? (d.activeInvite.code + ':' + d.activeInvite.status + ':' + d.activeInvite.count) : '';
 
   const nextPopup = hasIncomingChallenge();
-  const curSig = (app.view === 'duel')
-    ? JSON.stringify([d.opOnline, d.netOk, nextPopup, d.stage, d.matchId, d.qIdx, d.mScore, d.pScore, d.picked, d.pAnswered, m && m.status, m && m.qIdx, m && m.ans])
-    : JSON.stringify([d.opOnline, d.netOk, nextPopup, d.stage, d.matchId]);
-
-  d.lastUiSig = curSig;
-  if (curSig !== prevSig || prevOnline !== d.opOnline || prevPopup !== nextPopup) {
-    render();
+  if ((prevOnline !== d.opOnline || prevPopup !== nextPopup || prevInvSig !== nextInvSig) && !hasFocusedInputInRoot()) {
+    if (app.view === 'duel' && d.stage === 'live' && !nextPopup) {
+      updateLiveBattleDomOnly();
+    } else {
+      render();
+    }
   }
 }
 
 async function syncLiveState() {
   if (!FIREBASE_DB_URL) return null;
-  const data = await fbReq('', 'GET');
-  if (data !== null || !app.duel.netOk) {
-    applyRemoteState(data || {});
+  const [pres, inv] = await Promise.all([
+    fbReq('presence', 'GET'),
+    fbReq('activeInvite', 'GET')
+  ]);
+  applyRemoteState({ presence: pres, activeInvite: inv });
+  if (app.duel.code && (typeof window !== 'undefined' && window.__DISABLE_TIMERS)) {
+    const rSnap = await fbReq('rooms/' + app.duel.code, 'GET');
+    if (rSnap) {
+      app.duel.room = rSnap;
+      onDuelRoomUpdate();
+    }
   }
-  return data;
+  return { presence: pres, activeInvite: inv };
 }
 
-async function sendDuelInvite() {
-  if (app.duel.submitting) return;
-  const d = app.duel;
-  const myId = app.userId === 'p' ? 'p' : 'm';
-  const opId = myId === 'p' ? 'm' : 'p';
-  const qRefs = buildDuelRefs(d.scope, d.count);
-  if (!qRefs.length) { showToast('इस विषय में अभी सवाल नहीं हैं'); return; }
+function readAndSaveDuelName() {
+  if (typeof document !== 'undefined') {
+    const inp = document.getElementById('duelNameInp');
+    if (inp && typeof inp.value === 'string' && inp.value.trim()) {
+      app.duel.customName = inp.value.trim().slice(0, 16);
+    }
+  }
+  const nm = (app.duel.customName || defaultPlayerName()).trim().slice(0, 16);
+  app.duel.customName = nm;
+  saveLS('tgt_gk_duel_name_' + app.userId, nm);
+  return nm;
+}
 
-  const matchId = myId + '_' + Date.now() + '_' + Math.floor(Math.random() * 9000 + 1000);
+async function createDuelRoom(soloDirect) {
+  if (app.duel.submitting) return null;
+  const d = app.duel;
+  const nm = readAndSaveDuelName();
+  const cnt = duelEffCount();
+  const qRefs = buildDuelRefs(d.scope, cnt);
+  if (!qRefs.length) { showToast('इस पाठ में सवाल उपलब्ध नहीं हैं'); return null; }
+
   const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
-  d.submitting = true;
-  d.matchId = matchId;
-  d.inviteSentAt = Date.now();
+  d.qRefs = qRefs;
   d.qs = resolveDuelQuestions(qRefs);
-  d.qIdx = 0; d.mScore = 0; d.pScore = 0; d.mStreak = 0;
-  d.dots = Array(d.qs.length).fill('w');
-  d.history = []; d.picked = null; d.pAnswered = false; d.pCorrect = false;
-  d.resOpenIdx = null; d.timer = 25;
-  d.stage = 'waiting';
-  app.view = 'duel';
+  d.count = qRefs.length;
+  d.err = '';
+
+  if (soloDirect) {
+    d.soloPractice = true;
+    d.code = '';
+    d.room = {
+      v: 2, st: 'go', round: 0, scope: d.scope, scopeTitle, count: qRefs.length, qRefs,
+      p: { [duelPid()]: { name: nm, who: app.userId, role: 'host', pts: 0, k: 0, ok: 0, wr: 0, sk: 0, fin: 0, ans: {} } }
+    };
+    beginDuelLivePlay();
+    return d.room;
+  }
+
+  d.soloPractice = false;
+  d.submitting = true;
   render();
 
-  const payload = {
-    id: matchId,
-    from: myId,
-    to: opId,
-    status: 'ringing',
+  const pid = duelPid();
+  let code = '';
+  for (let t = 0; t < 8; t++) {
+    const c = String(1000 + Math.floor(Math.random() * 9000));
+    const ex = await fbReq('rooms/' + c, 'GET');
+    if (!ex || !ex.exp || ex.exp < Date.now()) { code = c; break; }
+  }
+  if (!code) code = String(1000 + Math.floor(Math.random() * 9000));
+
+  const roomObj = {
+    v: 2,
+    code,
+    exp: Date.now() + 3 * 3600 * 1000,
+    st: 'wait',
+    round: 0,
     scope: d.scope,
     scopeTitle,
     count: qRefs.length,
     createdAt: { '.sv': 'timestamp' },
-    qIdx: 0,
-    qStartAt: { '.sv': 'timestamp' },
     qRefs,
-    ans: {}
+    p: {
+      [pid]: { name: nm, who: app.userId, role: 'host', pts: 0, k: 0, ok: 0, wr: 0, sk: 0, fin: 0, ans: {} }
+    }
   };
-  const res = await fbReq('match', 'PUT', payload);
+
+  const res = await fbReq('rooms/' + code, 'PUT', roomObj);
   d.submitting = false;
   if (!res) {
-    d.stage = 'lobby';
-    d.matchId = '';
-    showToast('📶 इंटरनेट चालू करें — चैलेंज नहीं जा सका');
-    return;
+    d.err = 'Room नहीं बन सका — इंटरनेट चालू करें (या नीचे "अकेले प्रैक्टिस" दबाएँ)';
+    render();
+    return null;
   }
-  d.remoteMatch = res;
-}
 
-function startDuelMatch() {
-  return sendDuelInvite();
-}
-
-async function acceptDuelInvite() {
-  const d = app.duel, m = d.remoteMatch;
-  if (!m) return;
-  const qs = resolveDuelQuestions(m.qRefs);
-  if (!qs.length) {
-    showToast('यह पाठ अभी इस फ़ोन में अपडेट नहीं है');
-    return;
-  }
-  d.matchId = m.id;
-  d.scope = m.scope || 'ch01';
-  d.count = m.count || qs.length;
-  d.qs = qs;
-  d.qIdx = 0; d.mScore = 0; d.pScore = 0; d.mStreak = 0;
-  d.dots = Array(qs.length).fill('w');
-  d.history = []; d.picked = null; d.pAnswered = false; d.pCorrect = false;
-  d.resOpenIdx = null; d.timer = 25;
-  d.stage = 'live';
-  app.view = 'duel';
-  if (d.remoteMatch) {
-    d.remoteMatch.status = 'live';
-    d.remoteMatch.qIdx = 0;
-    d.remoteMatch.qStartAt = serverNow();
-  }
-  startDuelTicker();
-  render();
-  await fbReq('match', 'PATCH', {
-    status: 'live',
-    qIdx: 0,
-    qStartAt: { '.sv': 'timestamp' }
+  await fbReq('activeInvite', 'PUT', {
+    code,
+    status: 'wait',
+    fromPid: pid,
+    fromWho: app.userId,
+    fromName: nm,
+    scope: d.scope,
+    scopeTitle,
+    count: qRefs.length,
+    createdAt: { '.sv': 'timestamp' }
   });
-}
 
-async function rejectDuelInvite() {
-  const d = app.duel, m = d.remoteMatch;
-  if (m && m.id) d.lastRejectedId = m.id;
-  if (d.remoteMatch) d.remoteMatch.status = 'rejected';
-  showToast('चैलेंज अभी के लिए टाल दिया गया');
-  if (m && m.id) {
-    await fbReq('match', 'PATCH', { status: 'rejected' });
-  }
-}
-
-async function cancelDuelInvite() {
-  const d = app.duel;
-  stopDuelTimer();
+  d.code = code;
+  d.round = 0;
+  d.room = res;
   d.stage = 'lobby';
-  if (d.remoteMatch && d.remoteMatch.id === d.matchId) d.remoteMatch.status = 'cancelled';
-  d.matchId = '';
+  app.view = 'duel';
+  listenDuelRoom(code);
   render();
-  await fbReq('match', 'PATCH', { status: 'cancelled' });
+  return res;
+}
+
+async function updateHostLobbySetup() {
+  const d = app.duel;
+  if (!d.code || !isDuelHost() || !d.room || d.room.st !== 'wait') return;
+  const cnt = duelEffCount();
+  const qRefs = buildDuelRefs(d.scope, cnt);
+  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  d.qRefs = qRefs;
+  d.qs = resolveDuelQuestions(qRefs);
+  d.count = qRefs.length;
+  d.room.scope = d.scope;
+  d.room.scopeTitle = scopeTitle;
+  d.room.count = qRefs.length;
+  d.room.qRefs = qRefs;
+  render();
+  await fbReq('rooms/' + d.code, 'PATCH', { scope: d.scope, scopeTitle, count: qRefs.length, qRefs });
+  await fbReq('activeInvite', 'PATCH', { scope: d.scope, scopeTitle, count: qRefs.length });
+}
+
+async function joinDuelRoom(explicitCode) {
+  if (app.duel.submitting) return null;
+  const d = app.duel;
+  const nm = readAndSaveDuelName();
+  let rawCode = explicitCode || '';
+  if (!rawCode && typeof document !== 'undefined') {
+    const cInp = document.getElementById('duelCodeInp');
+    if (cInp && cInp.value) rawCode = cInp.value;
+  }
+  if (!rawCode) rawCode = d.prefillCode || '';
+  const code = String(rawCode).replace(/\D/g, '').slice(0, 4);
+  if (code.length !== 4) {
+    d.err = '4 अंक का सही Room Code डालें!';
+    render();
+    return null;
+  }
+
+  d.err = '';
+  d.submitting = true;
+  render();
+
+  const r = await fbReq('rooms/' + code, 'GET');
+  d.submitting = false;
+  if (!r || (r.exp && r.exp < Date.now())) {
+    d.err = 'कोड ' + code + ' वाला कोई चालू Room नहीं मिला!';
+    render();
+    return null;
+  }
+
+  const pid = duelPid();
+  const existingPlayers = Object.keys(r.p || {});
+  const alreadyIn = existingPlayers.includes(pid);
+  if (!alreadyIn && existingPlayers.length >= 2) {
+    d.err = 'यह Room पहले से भरा हुआ है (2/2 खिलाड़ी)।';
+    render();
+    return null;
+  }
+
+  const qs = resolveDuelQuestions(r.qRefs);
+  if (!qs.length) {
+    d.err = 'इस Room का पाठ इस फ़ोन में उपलब्ध नहीं है।';
+    render();
+    return null;
+  }
+
+  const role = alreadyIn ? ((r.p[pid] && r.p[pid].role) || 'guest') : 'guest';
+  const myPlayerObj = alreadyIn && r.p[pid]
+    ? Object.assign({}, r.p[pid], { name: nm, who: app.userId })
+    : { name: nm, who: app.userId, role, pts: 0, k: 0, ok: 0, wr: 0, sk: 0, fin: 0, ans: {} };
+
+  await fbReq('rooms/' + code + '/p/' + pid, 'PUT', myPlayerObj);
+  if (!r.p) r.p = {};
+  r.p[pid] = myPlayerObj;
+
+  d.soloPractice = false;
+  d.code = code;
+  d.prefillCode = '';
+  d.scope = r.scope || 'ch01';
+  d.count = r.count || qs.length;
+  d.round = Number(r.round || 0);
+  d.qs = qs;
+  d.qRefs = r.qRefs;
+  d.room = r;
+  app.view = 'duel';
+  listenDuelRoom(code);
+
+  await fbReq('activeInvite', 'PATCH', { status: 'joined' });
+
+  if (r.st === 'go') {
+    beginDuelLivePlay();
+  } else {
+    d.stage = 'lobby';
+    render();
+  }
+  return r;
+}
+
+async function startDuelRoom(allowSingle) {
+  const d = app.duel;
+  if (!d.code || !d.room) return;
+  const ps = duelPlayers();
+  if (!allowSingle && ps.length < 2) {
+    showToast('पहले दूसरे खिलाड़ी को जुड़ने दें (या "अकेले शुरू करें" दबाएँ)');
+    return;
+  }
+  if (ps.length < 2) d.soloPractice = true;
+  await sendPresence(true);
+  const goTime = Math.round(serverNow() + 3200);
+  d.room.st = 'go';
+  d.room.go = goTime;
+  d.stage = 'count';
+  render();
+  runDuelCountdown();
+  await fbReq('rooms/' + d.code, 'PATCH', { st: 'go', go: goTime });
+  await fbReq('activeInvite', 'PATCH', { status: 'started' });
+}
+
+async function pushMyDuelProgress(isFinished) {
+  const d = app.duel;
+  const s = calcMyDuelStats();
+  const pid = duelPid();
+  const payload = {
+    name: d.customName || defaultPlayerName(),
+    who: app.userId,
+    pts: s.pts,
+    k: s.k,
+    ok: s.ok,
+    wr: s.wr,
+    sk: s.sk,
+    ans: d.myAns
+  };
+  if (isFinished) {
+    payload.fin = 1;
+    payload.ms = d.finishedMs || d.elapsedMs || 0;
+  }
+  if (d.room && d.room.p && d.room.p[pid]) {
+    Object.assign(d.room.p[pid], payload);
+  }
+  if (!d.code || d.soloPractice) return;
+  await fbReq('rooms/' + d.code + '/p/' + pid, 'PATCH', payload);
 }
 
 async function handleDuelPick(idx) {
   const d = app.duel;
-  if (d.picked !== null || d.stage !== 'live') return;
+  if (d.stage !== 'live') return;
   const q = d.qs[d.qIdx];
   if (!q) return;
-  const myId = app.userId === 'p' ? 'p' : 'm';
-  const isOk = idx === q.ans;
-  const entry = { idx, ok: isOk, at: { '.sv': 'timestamp' } };
-
-  if (!d.remoteMatch) d.remoteMatch = { id: d.matchId, qIdx: d.qIdx, ans: {} };
-  if (!d.remoteMatch.ans) d.remoteMatch.ans = {};
-  if (!d.remoteMatch.ans[d.qIdx]) d.remoteMatch.ans[d.qIdx] = {};
-  d.remoteMatch.ans[d.qIdx][myId] = { idx, ok: isOk, at: serverNow() };
-
-  recomputeDuelFromMatch(d.remoteMatch);
+  if (d.myAns[d.qIdx] !== undefined) return;
+  d.myAns[d.qIdx] = Number(idx);
   render();
-
-  await fbReq('match/ans/' + d.qIdx + '/' + myId, 'PUT', entry);
+  await pushMyDuelProgress(false);
 }
 
-async function advanceDuelNext() {
+async function handleDuelSkip() {
   const d = app.duel;
   if (d.stage !== 'live') return;
-  if (d.qIdx + 1 >= d.qs.length) {
-    stopDuelTimer();
-    d.stage = 'result';
-    if (d.remoteMatch) d.remoteMatch.status = 'ended';
-    recomputeDuelFromMatch(d.remoteMatch || { qRefs: d.qs.map((q, i) => ({ chId: d.scope, qId: q.id })), ans: {} });
-    render();
-    await fbReq('match', 'PATCH', { status: 'ended' });
-    return;
-  }
-  const nxt = d.qIdx + 1;
-  d.qIdx = nxt;
-  d.picked = null;
-  d.pAnswered = false;
-  d.pCorrect = false;
-  d.timer = 25;
-  if (d.remoteMatch) {
-    d.remoteMatch.qIdx = nxt;
-    d.remoteMatch.qStartAt = serverNow();
-  }
-  render();
-  await fbReq('match', 'PATCH', { qIdx: nxt, qStartAt: { '.sv': 'timestamp' } });
+  const q = d.qs[d.qIdx];
+  if (!q) return;
+  if (d.myAns[d.qIdx] !== undefined) return;
+  d.myAns[d.qIdx] = -1;
+  showToast('⏭ नहीं आता (0 निगेटिव अंक) · नीचे सही उत्तर व व्याख्या देखें');
+  await pushMyDuelProgress(false);
 }
 
-function renderIncomingModal(m) {
-  const fromId = m.from === 'p' ? 'p' : 'm';
-  const fromName = fromId === 'p' ? 'प्रियंका' : 'मंजू';
-  const scTitle = m.scopeTitle || (m.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[m.scope]?.title || 'पाठ'));
+function stepDuel(delta, viaSwipe) {
+  const d = app.duel;
+  if (d.stage !== 'live') return;
+  const nxt = d.qIdx + delta;
+  if (nxt < 0) { showToast('यह पहला सवाल है'); return; }
+  if (nxt >= d.qs.length) {
+    showToast('यह आख़िरी सवाल है — "परिणाम देखें" दबाएँ');
+    return;
+  }
+  d.qIdx = nxt;
+  if (viaSwipe) {
+    showToast(delta > 0 ? '👉 सवाल #' + (nxt + 1) : '👈 सवाल #' + (nxt + 1));
+  } else {
+    render();
+  }
+}
+
+async function finishDuelRun() {
+  const d = app.duel;
+  stopDuelTimer();
+  d.elapsedMs = Math.max(100, Date.now() - (d.startedAt || Date.now()));
+  d.finishedMs = d.elapsedMs;
+  d.fin = 1;
+  d.palOpen = false;
+  d.leaveOpen = false;
+  d.stage = 'result';
+  render();
+  await pushMyDuelProgress(true);
+}
+
+async function rematchDuelRoom() {
+  const d = app.duel;
+  const cnt = duelEffCount();
+  const qRefs = buildDuelRefs(d.scope, cnt);
+  const scopeTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
+  if (d.soloPractice || !d.code) {
+    d.qRefs = qRefs;
+    d.qs = resolveDuelQuestions(qRefs);
+    beginDuelLivePlay();
+    return;
+  }
+  const nextRound = Number((d.room && d.room.round) || 0) + 1;
+  const upd = {
+    st: 'wait',
+    round: nextRound,
+    go: null,
+    scope: d.scope,
+    scopeTitle,
+    count: qRefs.length,
+    qRefs
+  };
+  duelPlayers().forEach(p => {
+    upd['p/' + p.id + '/pts'] = 0;
+    upd['p/' + p.id + '/k'] = 0;
+    upd['p/' + p.id + '/ok'] = 0;
+    upd['p/' + p.id + '/wr'] = 0;
+    upd['p/' + p.id + '/sk'] = 0;
+    upd['p/' + p.id + '/fin'] = 0;
+    upd['p/' + p.id + '/ms'] = null;
+    upd['p/' + p.id + '/ans'] = null;
+  });
+  d.round = nextRound;
+  d.qRefs = qRefs;
+  d.qs = resolveDuelQuestions(qRefs);
+  d.myAns = {};
+  d.fin = 0;
+  d.stage = 'lobby';
+  if (d.room) {
+    d.room.st = 'wait';
+    d.room.round = nextRound;
+    d.room.qRefs = qRefs;
+    d.room.count = qRefs.length;
+  }
+  render();
+  await fbReq('rooms/' + d.code, 'PATCH', upd);
+}
+
+async function leaveDuelRoom(goHome) {
+  const d = app.duel;
+  const code = d.code;
+  const pid = duelPid();
+  const host = isDuelHost();
+  stopDuelTimer();
+  stopDuelRoomStream();
+  d.code = '';
+  d.room = null;
+  d.soloPractice = false;
+  d.leaveOpen = false;
+  d.palOpen = false;
+  d.stage = 'menu';
+  d.err = '';
+  if (goHome) app.view = 'home';
+  render();
+  if (code) {
+    if (host) {
+      await fbReq('rooms/' + code, 'DELETE');
+      if (d.activeInvite && d.activeInvite.code === code) {
+        await fbReq('activeInvite', 'PATCH', { status: 'closed' });
+      }
+    } else {
+      await fbReq('rooms/' + code + '/p/' + pid, 'DELETE');
+    }
+  }
+}
+
+// Legacy aliases kept so external callers stay working
+function sendDuelInvite() { return createDuelRoom(false); }
+function startDuelMatch() { return createDuelRoom(false); }
+function acceptDuelInvite() {
+  const inv = app.duel.activeInvite;
+  if (inv && inv.code) return joinDuelRoom(inv.code);
+}
+function rejectDuelInvite() {
+  const inv = app.duel.activeInvite;
+  if (inv && inv.code) app.duel.lastRejectedId = inv.code;
+  showToast('चैलेंज अभी के लिए टाल दिया गया');
+}
+function cancelDuelInvite() { return leaveDuelRoom(false); }
+function advanceDuelNext() { return stepDuel(1, false); }
+
+function renderIncomingModal(inv) {
+  if (!inv) return '';
+  const fromWho = inv.fromWho === 'p' ? 'p' : 'm';
+  const fromName = inv.fromName || (fromWho === 'p' ? 'प्रियंका' : 'मंजू');
   return '<div class="modal-bg"><div class="modal-card">' +
-    avImg(fromId, 'av-lg', 'margin:0 auto;') +
-    '<div style="font-size:11.5px;font-weight:800;color:#1E7E4E;">लाइव 1 vs 1 आमंत्रण</div>' +
-    '<div style="font-size:16px;font-weight:800;">🔔 ' + fromName + ' ने चैलेंज भेजा है!</div>' +
-    '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:8px;font-size:12px;font-weight:800;">' + esc(scTitle) + ' · ' + (m.count || 10) + ' सवाल · 25 सेकंड/सवाल</div>' +
-    '<div style="display:flex;gap:8px;"><button type="button" class="btn-sec" style="flex:1;" data-act="d-reject">✖ अभी नहीं</button><button type="button" class="btn-grn" style="flex:1;" data-act="d-accept">✅ स्वीकार करें</button></div>' +
+    avImg(fromWho, 'av-lg', 'margin:0 auto;') +
+    '<div style="font-size:11.5px;font-weight:800;color:#1E7E4E;">⚔️ लाइव 1v1 आमंत्रण · Room ' + esc(inv.code) + '</div>' +
+    '<div style="font-size:16px;font-weight:800;">🔔 ' + esc(fromName) + ' ने 1v1 चैलेंज बनाया है!</div>' +
+    '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:8px;font-size:12.5px;font-weight:800;">' + esc(inv.scopeTitle || 'पाठ') + ' · ' + (inv.count || 30) + ' सवाल · अपनी रफ़्तार (+3 / −1)</div>' +
+    '<div style="display:flex;gap:8px;"><button type="button" class="btn-sec" style="flex:1;" data-act="d-reject">✖ अभी नहीं</button><button type="button" class="btn-grn" style="flex:1;" data-act="d-accept">✅ सीधे जुड़ें</button></div>' +
   '</div></div>';
+}
+
+function duelVerdict(myS, myMs, opP, isFinal) {
+  if (!opP) return ['⚡ अभ्यास पूरा! (' + myS.pts + ' अंक)', 'win'];
+  const n = Math.max(1, app.duel.qs.length || 30);
+  if (!isFinal) return ['⏳ ' + (opP.name || 'दोस्त') + ' अभी खेल रही हैं… (' + (opP.k || 0) + '/' + n + ')', 'wait'];
+  const mp = Number(myS.pts || 0), op = Number(opP.pts || 0);
+  const myNm = app.duel.customName || defaultPlayerName();
+  const opNm = opP.name || 'दोस्त';
+  if (mp !== op) return mp > op ? ['🏆 ' + myNm + ' जीतीं!', 'win'] : ['🏆 ' + opNm + ' जीतीं — अगली बार पक्का! 💪', 'lose'];
+  if (myMs && opP.ms && myMs !== opP.ms) {
+    return myMs < opP.ms ? ['🏆 बराबर अंक — कम समय से ' + myNm + ' जीतीं!', 'win'] : ['🏆 बराबर अंक — कम समय से ' + opNm + ' जीतीं!', 'lose'];
+  }
+  return ['🤝 बराबरी का शानदार मुक़ाबला!', 'draw'];
+}
+
+function renderDuelZoomBar() {
+  if (!app.duel.zoomOpen) return '';
+  const z = app.zoomPct || 100;
+  const presets = [[85, 'छोटा (85%)'], [100, 'सामान्य (100%)'], [120, 'बड़ा (120%)']];
+  return '<div class="zoom-bar">' +
+    '<div class="z-presets">' +
+      presets.map(([val, lbl]) => '<button type="button" class="z-pre ' + (z === val ? 'on' : '') + '" data-act="q-zset" data-v="' + val + '">' + lbl + '</button>').join('') +
+    '</div>' +
+    '<div class="z-row">' +
+      '<div class="z-fine">' +
+        '<button type="button" class="z-step" data-act="q-zstep" data-d="-5">अ−</button>' +
+        '<span class="z-num">' + z + '%</span>' +
+        '<button type="button" class="z-step" data-act="q-zstep" data-d="5">अ+</button>' +
+      '</div>' +
+      '<button type="button" class="z-rst" data-act="q-zset" data-v="100">↺ रीसेट</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderDuelCountSelector() {
+  const d = app.duel;
+  const mx = Math.max(1, duelPoolMax(d.scope) || 30);
+  const eff = duelEffCount();
+  const presets = [15, 30, 50].filter(n => n < mx);
+  return '<div style="font-size:12.5px;font-weight:800;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span>सवालों की संख्या (डिफ़ॉल्ट 30 · मनचाही चुनें):</span>' +
+      '<span style="color:#0794C7;">कुल उपलब्ध: ' + mx + '</span>' +
+    '</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
+      presets.map(c =>
+        '<button type="button" class="u-btn ' + (!d.allScope && eff === c ? 'on' : '') + '" style="flex:1;min-width:64px;padding:7px 6px;font-size:12px;font-weight:800;" data-act="d-cnt" data-v="' + c + '">' + c + (c === 30 ? ' (डिफ़ॉल्ट)' : '') + '</button>'
+      ).join('') +
+      '<button type="button" class="u-btn ' + (d.allScope || eff === mx ? 'on' : '') + '" style="flex:1;min-width:82px;padding:7px 6px;font-size:12px;font-weight:800;" data-act="d-cnt-all">पूरे (' + mx + ')</button>' +
+    '</div>' +
+    '<div class="cnt-stepper">' +
+      '<span style="font-size:12px;font-weight:700;color:#475569;flex:1;">मनचाहे सवाल (1 से ' + mx + '):</span>' +
+      '<button type="button" class="z-step" data-act="d-cnt-step" data-d="-5">−5</button>' +
+      '<input id="duelCntInp" class="cnt-inp tnum" type="number" inputmode="numeric" min="1" max="' + mx + '" value="' + eff + '">' +
+      '<button type="button" class="z-step" data-act="d-cnt-step" data-d="5">+5</button>' +
+    '</div>';
 }
 
 function renderDuelView() {
   const d = app.duel;
   const myId = app.userId === 'p' ? 'p' : 'm', opId = myId === 'p' ? 'm' : 'p';
-  const myName = myId === 'p' ? 'प्रियंका' : 'मंजू', opName = myId === 'p' ? 'मंजू' : 'प्रियंका';
+  const opDefaultName = myId === 'p' ? 'मंजू' : 'प्रियंका';
+  const curName = d.customName || defaultPlayerName();
+  const z = app.zoomPct || 100;
+
+  if (d.stage === 'live') {
+    const q = d.qs[d.qIdx] || d.qs[0];
+    if (!q) return renderHomeView();
+    const myPick = d.myAns[d.qIdx];
+    const hasPick = myPick !== undefined;
+    const isSkipped = myPick === -1;
+    const isOk = hasPick && !isSkipped && myPick === q.ans;
+    const myS = calcMyDuelStats();
+    const qChId = q._chId || (d.scope !== 'mix' ? d.scope : 'ch01');
+    const prog = CHAPTER_BANK[qChId] ? getChProg(qChId) : null;
+    const isStar = !!(prog && prog.stars && prog.stars[q.id]);
+
+    const circles = d.qs.map((item, idx) => {
+      const p = d.myAns[idx];
+      const itemCh = item._chId || qChId;
+      const stStar = CHAPTER_BANK[itemCh] && getChProg(itemCh).stars && getChProg(itemCh).stars[item.id];
+      let cls = 'q-num';
+      if (idx === d.qIdx) cls += ' cur';
+      if (p === -1) cls += ' skip';
+      else if (p !== undefined) cls += (p === item.ans ? ' ok' : ' bad');
+      if (stStar) cls += ' has-star';
+      return '<button type="button" class="' + cls + '" data-act="d-jump" data-i="' + idx + '">' + (idx + 1) + '</button>';
+    }).join('');
+
+    const matchHtml = (q.match && q.match.length)
+      ? '<table class="mtab" style="font-size:' + zPx(15.5) + ';"><thead><tr><th>सूची-I</th><th>सूची-II</th></tr></thead><tbody>' +
+          q.match.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join('') +
+        '</tbody></table>'
+      : '';
+
+    const optsHtml = q.opts.map((opt, idx) => {
+      let cls = 'opt-card';
+      if (hasPick) {
+        if (idx === q.ans) cls += ' is-right';
+        else if (!isSkipped && idx === myPick) cls += ' is-wrong';
+      }
+      return '<div class="' + cls + '"><button type="button" class="opt-btn" style="font-size:' + zPx(19) + ';" data-act="d-pick" data-i="' + idx + '">' +
+        '<span class="opt-pill">' + (idx + 1) + '</span>' +
+        '<span style="flex:1;min-width:0;">' + esc(opt) + '</span>' +
+      '</button></div>';
+    }).join('');
+
+    let nicheExplHtml = '';
+    if (hasPick) {
+      const chObj = CHAPTER_BANK[qChId];
+      const pageLbl = extractPageLabel(q, chObj);
+      const pts = splitReadablePoints(q.exp);
+      const kpItems = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
+      nicheExplHtml = '<div id="duelExplCard" style="margin-top:12px;">' +
+        (!isSkipped && !isOk ? '<div class="wrong-strip">✗ आपका चुनाव (विकल्प ' + (myPick + 1) + '): ' + esc(q.opts[myPick]) + ' (−1 अंक)</div>' : '') +
+        '<div class="ans-banner ' + (isSkipped ? 'skip-mode' : '') + '" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
+          '<div style="flex:1;min-width:180px;">' +
+            '<div style="font-size:12.5px;font-weight:800;color:' + (isSkipped ? '#0369A1' : '#15803D') + ';">' +
+              (isSkipped ? '⏭ नहीं आता (0 अंक) · सही उत्तर (विकल्प ' + (q.ans + 1) + ')' : (isOk ? '✅ बिल्कुल सही! (+3 अंक) · विकल्प ' + (q.ans + 1) : '✅ सही उत्तर · विकल्प ' + (q.ans + 1))) +
+            '</div>' +
+            '<div style="margin-top:4px;font-size:' + zPx(18.5) + ';font-weight:800;line-height:1.5;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div>' +
+          '</div>' +
+          '<button type="button" class="speak-pill" data-act="d-speak">🔊 सुनें</button>' +
+        '</div>' +
+        '<div class="kp-box">' +
+          '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
+          '<ul class="kp-ul">' +
+            kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(18.5) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
+          '</ul>' +
+          (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }
+
+    let palSheet = '';
+    if (d.palOpen) {
+      const f = d.palFilter;
+      const wrongN = d.qs.filter((x, i) => d.myAns[i] !== undefined && d.myAns[i] >= 0 && d.myAns[i] !== x.ans).length;
+      const skipN = d.qs.filter((x, i) => d.myAns[i] === -1).length;
+      const restN = d.qs.filter((x, i) => d.myAns[i] === undefined).length;
+      const filt = d.qs.map((x, idx) => ({ x, idx })).filter(({ x, idx }) => {
+        const p = d.myAns[idx];
+        if (f === 'wrong') return p !== undefined && p >= 0 && p !== x.ans;
+        if (f === 'skip') return p === -1;
+        if (f === 'rest') return p === undefined;
+        return true;
+      });
+      palSheet = '<div class="sheet-bg" data-act="d-pal-bg"><div class="sheet-box">' +
+        '<div style="width:36px;height:4px;background:#CBD5E1;border-radius:99px;margin:0 auto;"></div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;"><span>1v1 सवाल सूची (' + d.qs.length + ')</span><button type="button" class="u-btn" data-act="d-pal-tog">✖ बंद</button></div>' +
+        '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">' +
+          [['all','सभी ' + d.qs.length],['wrong','गलत ' + wrongN],['skip','छोड़े ' + skipN],['rest','बाकी ' + restN]].map(([fk,fl]) =>
+            '<button type="button" style="border:none;border-radius:8px;padding:7px 2px;font:inherit;font-size:11px;font-weight:800;cursor:pointer;' + (f === fk ? 'background:#0794C7;color:#fff;' : 'background:#F1F5F9;color:#475569;') + '" data-act="d-pal-f" data-v="' + fk + '">' + fl + '</button>'
+          ).join('') +
+        '</div>' +
+        '<div class="pal-grid5 scr">' + (filt.length ? filt.map(({ x, idx }) => {
+          const p = d.myAns[idx];
+          let stCss = 'background:#fff;color:#334155;border:1px solid #CBD5E1;';
+          if (p === -1) stCss = 'background:#E2E8F0;color:#334155;border:1.5px dashed #64748B;';
+          else if (p !== undefined) stCss = (p === x.ans) ? 'background:#1E8E3E;color:#fff;border:none;' : 'background:#D93025;color:#fff;border:none;';
+          if (idx === d.qIdx) stCss += 'outline:3px solid #FF6F00;outline-offset:1px;';
+          return '<button type="button" style="height:35px;border-radius:99px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;' + stCss + '" data-act="d-jump" data-i="' + idx + '">' + (idx + 1) + (p === -1 ? '⏭' : '') + '</button>';
+        }).join('') : '<div style="grid-column:1/-1;text-align:center;font-size:12.5px;color:#64748B;padding:12px;">कोई सवाल नहीं</div>') + '</div>' +
+        '<button type="button" class="btn-grn" style="width:100%;padding:11px;" data-act="d-finish">🏆 मुक़ाबला पूरा करें व परिणाम देखें</button>' +
+      '</div></div>';
+    }
+
+    const leaveModal = d.leaveOpen
+      ? '<div class="modal-bg"><div class="modal-card" style="border-color:#0794C7;">' +
+          '<div style="font-size:16px;font-weight:800;">मुक़ाबला बीच में छोड़ना है?</div>' +
+          '<div style="font-size:12.5px;color:#475569;line-height:1.5;">अभी तक आपने <b>' + myS.k + ' / ' + d.qs.length + '</b> सवाल हल किए हैं। आप चाहें तो यहीं परिणाम देख सकती हैं या बाहर निकल सकती हैं।</div>' +
+          '<div style="display:flex;flex-direction:column;gap:7px;">' +
+            '<button type="button" class="btn-pri" data-act="d-leave-no">▶ खेल जारी रखें</button>' +
+            (myS.k > 0 ? '<button type="button" class="btn-grn" data-act="d-finish">🏆 इतने पर ही परिणाम देखें</button>' : '') +
+            '<button type="button" class="btn-sec" data-act="d-leave-yes">✖ चैलेंज बंद करें</button>' +
+          '</div>' +
+        '</div></div>'
+      : '';
+
+    const isLast = d.qIdx === d.qs.length - 1;
+    const midBtn = !hasPick
+      ? '<button type="button" class="f-skip" data-act="d-skip">⏭ नहीं आता</button>'
+      : '<button type="button" class="f-retry" data-act="d-finish">🏆 पूरा करें (' + myS.k + '/' + d.qs.length + ')</button>';
+
+    return '<div class="hd">' +
+        '<div class="hd-l"><button type="button" class="hd-btn" data-act="d-ask-leave">←</button><span class="hd-ttl">⚔️ 1v1 Challenge' + (d.code ? ' · ' + esc(d.code) : '') + '</span></div>' +
+        '<div class="hd-r">' +
+          '<button type="button" class="hd-btn ' + (d.zoomOpen ? 'zoom-on' : '') + '" data-act="d-ztog">अ ' + z + '%</button>' +
+          '<button type="button" class="hd-btn" data-act="d-pal-tog">▦ सूची</button>' +
+        '</div>' +
+      '</div>' +
+      renderDuelZoomBar() +
+      '<div class="jl-stats">' +
+        '<div class="jl-stat"><span class="jl-ok tnum">✅ ' + myS.ok + '</span></div>' +
+        '<div class="jl-stat"><span class="jl-wr tnum">❌ ' + myS.wr + '</span></div>' +
+        '<div class="jl-stat"><span class="jl-sk tnum">⏭ ' + myS.sk + '</span></div>' +
+        '<div class="jl-stat"><span class="jl-clk tnum" id="duelClkEl">' + fmtDuelClock(d.elapsedMs) + '</span></div>' +
+      '</div>' +
+      '<div class="jl-pline"><i style="width:' + Math.min(100, Math.round((myS.k / Math.max(1, d.qs.length)) * 100)) + '%"></i></div>' +
+      '<div class="battle" id="duelBattleBar">' + renderBattleBoxesHtml() + '</div>' +
+      '<div class="q-strip scr">' + circles + '</div>' +
+      '<div class="sub-bar">' +
+        '<div class="sub-l"><span>प्रश्न ' + (d.qIdx + 1) + ' / ' + d.qs.length + '</span><span class="mark-g">+3.0</span><span class="mark-r">-1.0</span></div>' +
+        '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="d-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button>' +
+      '</div>' +
+      '<div class="body-scr scr quiz-body">' +
+        '<div class="q-stem" style="font-size:' + zPx(20) + ';">' + esc(q.q) + '</div>' +
+        '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
+        matchHtml +
+        optsHtml +
+        nicheExplHtml +
+        '<div class="swipe-hint">👈 अपनी रफ़्तार से स्वाइप या अगला दबाएँ — दूसरे खिलाड़ी का इंतज़ार नहीं!</div>' +
+      '</div>' +
+      '<div class="q-ft">' +
+        '<button type="button" class="f-prev" data-act="d-step" data-d="-1">‹ पिछला</button>' +
+        midBtn +
+        '<button type="button" class="f-next" data-act="' + (isLast ? 'd-finish' : 'd-step') + '" data-d="1">' + (isLast ? 'परिणाम देखें ›' : 'अगला ›') + '</button>' +
+      '</div>' +
+      palSheet +
+      leaveModal;
+  }
 
   let body = '';
-  if (d.stage === 'lobby') {
-    const netWarn = !d.netOk
-      ? '<div style="background:#FEF2F2;border:1.5px solid #FCA5A5;color:#991B1B;border-radius:11px;padding:9px 11px;font-size:12px;font-weight:800;">📶 इंटरनेट बंद है — लाइव 1 vs 1 के लिए नेट चालू करें (अकेले अभ्यास हमेशा बिना नेट चलेगा)</div>'
-      : '';
-    const statusBanner = d.opOnline
-      ? '<div style="background:#E8F6EE;border:1.5px solid #86EFAC;border-radius:13px;padding:11px;display:flex;align-items:center;gap:10px;">' +
-          avImg(opId, 'av-md', 'border-color:#16A34A;') +
-          '<div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:800;color:#14532D;">🟢 ' + opName + ' अभी ऑनलाइन हैं!</div><div style="font-size:11px;font-weight:700;color:#1E7E4E;">चैलेंज भेजते ही उनके फ़ोन पर 🔔 स्वीकार / अस्वीकार पॉपअप आएगा</div></div>' +
-        '</div>'
-      : '<div style="background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
-          '<div style="display:flex;align-items:center;gap:10px;">' +
-            avImg(opId, 'av-md', 'border-color:#94A3B8;filter:grayscale(35%);') +
-            '<div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:800;color:#334155;">⚪ ' + opName + ' अभी ऐप में नहीं हैं</div><div style="font-size:11px;font-weight:700;color:#64748B;">दोनों के फ़ोन पर ऐप खुलते ही तुरंत लाइव मुक़ाबला होगा</div></div>' +
-          '</div>' +
-          '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:10px;padding:10px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को बुलाएँ</button>' +
-        '</div>';
-
+  if (d.stage === 'menu') {
     const chOpts = Object.values(CHAPTER_BANK).map(ch =>
-      '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" data-act="d-scope" data-v="' + ch.id + '">' + esc(ch.title) + ' (' + ch.total_questions + ')</button>'
-    ).join('') + '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" data-act="d-scope" data-v="mix">सभी मिक्स (' + Object.values(CHAPTER_BANK).reduce((a,c)=>a+c.total_questions,0) + ')</button>';
+      '<button type="button" class="u-btn ' + (d.scope === ch.id ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="' + ch.id + '">' + esc(ch.title) + ' (' + ch.total_questions + ')</button>'
+    ).join('') + '<button type="button" class="u-btn ' + (d.scope === 'mix' ? 'on' : '') + '" style="padding:6px 9px;font-size:12px;" data-act="d-scope" data-v="mix">सभी मिक्स (' + duelPoolMax('mix') + ')</button>';
+
+    const eff = duelEffCount();
+    const statusPill = d.opOnline
+      ? '<span style="background:#DCFCE7;color:#15803D;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:800;">🟢 ' + opDefaultName + ' ऑनलाइन</span>'
+      : '<span style="background:#F1F5F9;color:#475569;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;">⚪ ' + opDefaultName + ' ऑफ़लाइन</span>';
+
+    const openInvBanner = (d.activeInvite && d.activeInvite.status === 'wait' && d.activeInvite.code && d.activeInvite.fromPid !== duelPid())
+      ? '<div style="background:#ECFDF5;border:2px solid #16A34A;border-radius:14px;padding:11px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;">' +
+          '<div><div style="font-size:13px;font-weight:800;color:#14532D;">🔔 ' + esc(d.activeInvite.fromName || opDefaultName) + ' का Room तैयार है!</div><div style="font-size:11.5px;font-weight:700;color:#15803D;">कोड <b>' + esc(d.activeInvite.code) + '</b> · ' + (d.activeInvite.count || 30) + ' सवाल</div></div>' +
+          '<button type="button" class="btn-grn" data-act="d-accept">सीधे जुड़ें ▶</button>' +
+        '</div>'
+      : '';
+
+    body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border:1px solid #DCE5EC;border-radius:13px;padding:10px 12px;">' +
+        '<div style="display:flex;align-items:center;gap:9px;"><span style="width:36px;height:36px;border-radius:10px;background:#7C3AED;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;">⚔</span><div><div style="font-size:15px;font-weight:800;">1v1 Challenge (JOD Lab)</div><div style="font-size:11px;color:#475569;font-weight:700;">समान सवाल · अपनी रफ़्तार · +3 / −1</div></div></div>' +
+        statusPill +
+      '</div>' +
+      openInvBanner +
+      (d.err ? '<div style="background:#FEF2F2;border:1.5px solid #FCA5A5;color:#991B1B;border-radius:11px;padding:9px 11px;font-size:12.5px;font-weight:800;">' + esc(d.err) + '</div>' : '') +
+      '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
+        '<div style="font-size:12px;font-weight:800;color:#334155;">तुम्हारा नाम (दूसरे फ़ोन पर यही दिखेगा):</div>' +
+        '<input id="duelNameInp" class="name-inp" type="text" maxlength="16" value="' + esc(curName) + '" placeholder="जैसे मंजू / NITESH">' +
+        '<div style="font-size:12.5px;font-weight:800;color:#0F172A;margin-top:2px;">पाठ / विषय चुनें:</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;max-height:148px;overflow-y:auto;" class="scr">' + chOpts + '</div>' +
+        renderDuelCountSelector() +
+        '<button type="button" class="btn-pri" id="duelCreateBtn" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;margin-top:4px;" data-act="d-create">' +
+          (d.submitting ? 'Room बन रहा है…' : '⚔️ Room बनाएँ (' + eff + ' सवाल)') +
+        '</button>' +
+        '<button type="button" class="btn-sec" id="duelSoloBtn" style="width:100%;padding:9px;font-size:12.5px;font-weight:800;" data-act="d-solo">' +
+          '⚡ अकेले प्रैक्टिस टेस्ट चलाएँ (' + eff + ' सवाल · बिना इंतज़ार)' +
+        '</button>' +
+      '</div>' +
+      '<div style="font-size:11.5px;font-weight:800;color:#475569;letter-spacing:.4px;padding:0 2px;">दोस्त ने 4 अंक का कोड भेजा है?</div>' +
+      '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;">' +
+        '<input id="duelCodeInp" class="code-inp tnum" type="tel" inputmode="numeric" maxlength="4" placeholder="4 अंक का कोड" value="' + esc(d.prefillCode || '') + '">' +
+        '<button type="button" class="btn-grn" style="width:100%;height:46px;font-size:14px;border-radius:11px;" data-act="d-join">कोड से जुड़ें ▶</button>' +
+      '</div>' +
+    '</div>';
+  } else if (d.stage === 'lobby') {
+    const ps = duelPlayers();
+    const r = d.room || {};
+    const scTitle = r.scopeTitle || (d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ'));
+    const cnt = r.count || d.qs.length || duelEffCount();
+    const baseHref = (typeof location !== 'undefined' && location.origin && location.origin !== 'null')
+      ? (location.origin + location.pathname)
+      : 'https://jodexam777-air1.github.io/tgtgk/';
+    const roomLink = baseHref + '?room=' + d.code;
+
+    body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
+      '<div style="background:#fff;border:1.5px solid #0794C7;border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:7px;">' +
+        '<div style="font-size:12px;font-weight:800;color:#64748B;">Room Code (दूसरे फ़ोन में डालें या लिंक भेजें)</div>' +
+        '<div class="chcode tnum">' + esc(d.code) + '</div>' +
+        '<div style="background:#E3F3FA;color:#0578A3;border-radius:9px;padding:7px 10px;font-size:12.5px;font-weight:800;">' + esc(scTitle) + ' · ' + cnt + ' सवाल · +3 / −1 (अपनी रफ़्तार)</div>' +
+        '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:10px;padding:10px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;" data-act="d-wa-room" data-link="' + esc(roomLink) + '">📲 WhatsApp पर दोस्त को लिंक व कोड भेजें</button>' +
+      '</div>' +
+      '<div style="font-size:12px;font-weight:800;color:#475569;">खिलाड़ी (' + ps.length + '/2)</div>' +
+      '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:14px;padding:6px 12px;">' +
+        ps.map(p =>
+          '<div class="chp">' +
+            playerAvatarHtml(p, 'av-xs') +
+            '<b style="flex:1;font-size:14px;">' + esc(p.name || 'खिलाड़ी') + '</b>' +
+            (p.id === duelPid() ? '<span class="byou">YOU</span>' : '') +
+            (p.role === 'host' ? '<span style="font-size:11px;color:#64748B;font-weight:700;">host</span>' : '') +
+          '</div>'
+        ).join('') +
+        (ps.length < 2 ? '<div class="chp" style="color:#64748B;font-size:12.5px;font-weight:700;">⏳ दूसरे खिलाड़ी के जुड़ने का इंतज़ार… (उनके फ़ोन पर पॉपअप भी गया है)</div>' : '') +
+      '</div>' +
+      (isDuelHost()
+        ? '<button type="button" class="btn-pri" style="width:100%;height:50px;font-size:15px;border-radius:12px;' + (ps.length < 2 ? 'opacity:.55;' : '') + '" data-act="d-start-room">' +
+            (ps.length < 2 ? '⏳ दूसरे खिलाड़ी के जुड़ने का इंतज़ार…' : '⚔️ शुरू करो ▶ (' + cnt + ' सवाल)') +
+          '</button>' +
+          (ps.length < 2 ? '<button type="button" class="btn-sec" style="width:100%;padding:10px;font-weight:800;" data-act="d-start-solo-room">⚡ अभी अकेले ही शुरू करें</button>' : '')
+        : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:12px;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#475569;">⏳ Host के <b>"शुरू करो ▶"</b> दबाने का इंतज़ार…</div>') +
+      '<button type="button" class="btn-sec" style="width:100%;padding:10px;" data-act="d-leave-room">Room छोड़ें</button>' +
+    '</div>';
+  } else if (d.stage === 'count') {
+    body = '<div style="text-align:center;">' +
+      '<div class="chcount tnum" id="duelCountNum">3</div>' +
+      '<div style="font-size:14px;font-weight:800;color:#475569;margin-top:8px;">तैयार हो जाओ — दोनों को एक जैसे ' + d.qs.length + ' सवाल!</div>' +
+    '</div>';
+  } else {
+    // Result screen (JOD Lab exact table + per-question full review & explanations)
+    const myS = calcMyDuelStats();
+    const myMs = d.finishedMs || d.elapsedMs || 0;
+    const meP = duelMePlayer() || { name: curName, who: app.userId };
+    const opP = duelOppPlayer();
+    const isFinal = !opP || !!opP.fin || d.soloPractice;
+    const [vTxt, vKind] = duelVerdict(myS, myMs, opP, isFinal);
+    const vColor = vKind === 'win' ? '#15803D' : (vKind === 'lose' ? '#DC2626' : (vKind === 'wait' ? '#0578A3' : '#0F172A'));
+    const opAnsMap = (opP && opP.ans && typeof opP.ans === 'object') ? opP.ans : {};
+
+    const reviewCards = d.showReview ? d.qs.map((q, idx) => {
+      const mPick = d.myAns[idx];
+      const oPick = opAnsMap[idx] !== undefined ? opAnsMap[idx] : opAnsMap[String(idx)];
+      const mTxt = mPick === undefined ? 'अनदेखा' : (mPick === -1 ? '⏭ नहीं आता (0)' : q.opts[mPick]);
+      const oTxt = !opP ? '—' : (!isFinal && oPick === undefined ? 'खेल रही हैं…' : (oPick === undefined ? 'अनदेखा' : (Number(oPick) === -1 ? '⏭ नहीं आता (0)' : q.opts[Number(oPick)])));
+      const mOk = mPick === q.ans, mSk = mPick === undefined || mPick === -1;
+      const oOk = opP && Number(oPick) === q.ans, oSk = !opP || oPick === undefined || Number(oPick) === -1;
+      const open = d.resOpenIdx === idx;
+      const pts = splitReadablePoints(q.exp);
+      return '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:12px;padding:10px 11px;font-size:12.5px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:7px;">' +
+          '<div style="font-weight:800;color:#0F172A;line-height:1.45;font-size:' + zPx(15.5) + ';">#' + (idx + 1) + '. ' + esc(q.q) + '</div>' +
+          '<button type="button" class="u-btn" style="flex:none;font-weight:800;" data-act="d-res-exp" data-i="' + idx + '">' + (open ? 'छुपाएँ ▴' : 'व्याख्या ▾') + '</button>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:' + (opP ? '1fr 1fr' : '1fr') + ';gap:6px;margin-top:7px;font-weight:700;font-size:12px;">' +
+          '<div style="background:' + (mOk ? '#ECFDF5;color:#15803D;' : (mSk ? '#F1F5F9;color:#475569;' : '#FFF1F2;color:#BE123C;')) + 'border-radius:7px;padding:5px 8px;">' + esc(meP.name || curName) + ': ' + (mOk ? '✓ ' : (mSk ? '' : '✗ ')) + esc(mTxt) + '</div>' +
+          (opP ? '<div style="background:' + (oOk ? '#ECFDF5;color:#15803D;' : (oSk ? '#F1F5F9;color:#475569;' : '#FFF1F2;color:#BE123C;')) + 'border-radius:7px;padding:5px 8px;">' + esc(opP.name || 'दोस्त') + ': ' + (oOk ? '✓ ' : (oSk ? '' : '✗ ')) + esc(oTxt) + '</div>' : '') +
+        '</div>' +
+        '<div style="margin-top:6px;font-size:12px;font-weight:800;color:#15803D;">✅ सही उत्तर: ' + esc(q.opts[q.ans]) + '</div>' +
+        (open ? '<div class="kp-box" style="margin-top:8px;padding:10px 12px;"><ul class="kp-ul">' + pts.map(pt => '<li class="kp-li" style="font-size:' + zPx(16) + ';margin-bottom:8px;">' + highlightHindiFacts(pt) + '</li>').join('') + '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15) + ';margin-top:8px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + '</div>' : '') +
+      '</div>';
+    }).join('') : '';
 
     body = '<div style="display:flex;flex-direction:column;gap:10px;">' +
-      netWarn +
-      statusBanner +
-      '<div style="background:#fff;border:1px solid #DCE3E8;border-radius:13px;padding:11px;display:flex;flex-direction:column;gap:8px;">' +
-        '<div style="font-size:12px;font-weight:800;">विषय / पाठ चुनें:</div>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:5px;">' + chOpts + '</div>' +
-        '<div style="font-size:12px;font-weight:800;margin-top:4px;">सवालों की संख्या:</div>' +
-        '<div style="display:flex;gap:6px;">' + [10,15,20].map(c => '<button type="button" class="u-btn ' + (d.count === c ? 'on' : '') + '" style="flex:1;padding:7px;" data-act="d-cnt" data-v="' + c + '">' + c + ' सवाल</button>').join('') + '</div>' +
+      '<div style="background:#fff;border:1.5px solid #CBD5E1;border-radius:16px;padding:13px;">' +
+        '<div class="chverd" style="color:' + vColor + ';">' + esc(vTxt) + '</div>' +
+        '<table class="chtab">' +
+          '<tr><th></th><td><b>' + esc(meP.name || curName) + '</b></td><td><b>' + esc(opP ? opP.name : '—') + '</b></td></tr>' +
+          '<tr><th>अंक (+3 / −1)</th><td class="tnum"><b style="font-size:17px;">' + myS.pts + '</b></td><td class="tnum"><b style="font-size:17px;">' + (opP ? Number(opP.pts || 0) : '—') + '</b></td></tr>' +
+          '<tr><th>सही / गलत</th><td class="tnum">' + myS.ok + ' / ' + myS.wr + '</td><td class="tnum">' + (opP ? (opP.ok || 0) + ' / ' + (opP.wr || 0) : '—') + '</td></tr>' +
+          '<tr><th>छोड़े (0 अंक)</th><td class="tnum">' + myS.sk + '</td><td class="tnum">' + (opP ? (opP.sk || 0) : '—') + '</td></tr>' +
+          '<tr><th>किए</th><td class="tnum">' + myS.k + ' / ' + d.qs.length + '</td><td class="tnum">' + (opP ? (opP.k || 0) + ' / ' + d.qs.length : '—') + '</td></tr>' +
+          '<tr><th>समय</th><td class="tnum">' + fmtDuelDur(myMs) + '</td><td class="tnum">' + (opP && opP.fin && opP.ms ? fmtDuelDur(opP.ms) : '—') + '</td></tr>' +
+        '</table>' +
       '</div>' +
-      '<button type="button" class="btn-grn" style="width:100%;padding:12px;font-size:13.5px;" data-act="d-send-invite">' +
-        (d.opOnline ? '⚔️ ' + opName + ' को लाइव चैलेंज भेजें (' + d.count + ' सवाल)' : '⚔️ चैलेंज भेजकर इंतज़ार करें (' + d.count + ' सवाल)') +
-      '</button>' +
-      (d.opOnline ? '<button type="button" class="btn-sec" style="width:100%;" data-act="d-wa-invite">📲 WhatsApp संदेश भी भेजें</button>' : '') +
-    '</div>';
-  } else if (d.stage === 'waiting') {
-    const scTitle = d.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[d.scope]?.title || 'पाठ');
-    body = '<div style="display:flex;flex-direction:column;gap:12px;padding-top:10px;">' +
-      '<div style="background:#fff;border:2px solid #0794C7;border-radius:16px;padding:18px 14px;text-align:center;display:flex;flex-direction:column;gap:9px;">' +
-        avImg(opId, 'av-lg', 'margin:0 auto;border-color:#0794C7;') +
-        '<div style="font-size:16px;font-weight:800;color:#0F172A;">⏳ ' + opName + ' को चैलेंज भेजा गया है!</div>' +
-        '<div style="font-size:12.5px;font-weight:700;color:#0578A3;background:#E3F3FA;border-radius:9px;padding:7px;">' + esc(scTitle) + ' · ' + d.count + ' सवाल</div>' +
-        '<div style="font-size:12px;color:#475569;line-height:1.55;">जैसे ही ' + opName + ' अपने फ़ोन पर <b>"✅ स्वीकार करें"</b> दबाएँगी, दोनों फ़ोन पर एक साथ पहला सवाल खुल जाएगा!</div>' +
-      '</div>' +
-      '<button type="button" style="width:100%;background:#16A34A;color:#fff;border:none;border-radius:11px;padding:11px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;" data-act="d-wa-invite">📲 WhatsApp पर ' + opName + ' को याद दिलाएँ</button>' +
-      '<button type="button" class="btn-sec" style="width:100%;" data-act="d-cancel">✖ चैलेंज रद्द करें</button>' +
-    '</div>';
-  } else if (d.stage === 'live') {
-    const q = d.qs[d.qIdx] || d.qs[0];
-    if (q) {
-      const roundDone = d.picked !== null && (d.pAnswered || d.timer <= 0);
-      const dots = d.dots.map((dt, i) => '<span style="flex:1;max-width:22px;height:6px;border-radius:99px;background:' + (i === d.qIdx ? '#FF6F00' : dt === 'g' ? '#2E7D32' : dt === 'r' ? '#C62828' : '#E2E8F0') + ';"></span>').join('');
-      const opts = q.opts.map((o, i) => {
-        let cls = 'opt-card';
-        if (d.picked !== null) {
-          if (i === q.ans) cls += ' is-right';
-          else if (i === d.picked) cls += ' is-wrong';
-        }
-        return '<div class="' + cls + '"><button type="button" class="opt-btn" data-act="d-pick" data-i="' + i + '"><span class="opt-pill">' + (i + 1) + '</span><span>' + esc(o) + '</span></button></div>';
-      }).join('');
-      const preNotice = (d.picked === null && d.pAnswered)
-        ? '<div style="background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:9px;padding:6px 10px;font-size:11.5px;font-weight:800;margin-bottom:8px;text-align:center;">⚡ ' + opName + ' ने उत्तर दे दिया है — अब आपकी बारी!</div>'
-        : '';
-      const afterBox = d.picked !== null
-        ? '<div style="background:' + (roundDone ? '#E8F5E9' : '#F8FAFC') + ';border:1.5px solid ' + (roundDone ? '#2E7D32' : '#94A3B8') + ';border-radius:11px;padding:10px;font-size:12.5px;display:flex;flex-direction:column;gap:8px;">' +
-            '<div><strong>' + (d.picked === q.ans ? '✅ +1 ' + myName + '!' : '✗ सही उत्तर: ' + esc(q.opts[q.ans])) + '</strong> · ' +
-              (d.pAnswered ? (opName + (d.pCorrect ? ' का भी सही ✓' : ' चूक गईं ✗')) : ('⏳ ' + opName + ' के जवाब का इंतज़ार… (⏱ ' + d.timer + 's)')) +
-            '</div>' +
-            (roundDone ? '<button type="button" class="btn-pri" data-act="d-next">' + (d.qIdx + 1 >= d.qs.length ? '🏆 अंतिम परिणाम देखें ›' : 'अगला सवाल ›') + '</button>' : '') +
-          '</div>'
-        : '';
-
-      body = '<div style="background:#fff;border:1.5px solid #0794C7;border-radius:12px;padding:9px;margin-bottom:9px;">' +
-          '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;margin-bottom:6px;">' +
-            '<span style="display:inline-flex;align-items:center;gap:4px;color:#0794C7;">' + avImg(myId, 'av-xs') + ' ' + myName + ': ' + d.mScore + (d.mStreak >= 2 ? ' 🔥' : '') + '</span>' +
-            '<span style="background:#E8F5E9;color:#2E7D32;padding:2px 8px;border-radius:99px;font-size:11px;">' + (d.qIdx + 1) + '/' + d.qs.length + ' · ⏱ ' + d.timer + 's</span>' +
-            '<span style="display:inline-flex;align-items:center;gap:4px;color:#D97706;">' + avImg(opId, 'av-xs') + ' ' + opName + ': ' + d.pScore + '</span>' +
-          '</div>' +
-          '<div style="display:flex;gap:3px;justify-content:center;">' + dots + '</div>' +
-        '</div>' +
-        preNotice +
-        '<div class="q-card"><div class="q-stem" style="font-size:15px;">' + esc(q.q) + '</div><div class="q-src">' + esc(q.src) + '</div></div>' +
-        opts +
-        afterBox;
-    }
-  } else {
-    const winTxt = d.mScore > d.pScore ? '🏆 ' + myName + ' जीतीं!' : d.pScore > d.mScore ? '🏆 ' + opName + ' जीतीं!' : '🤝 बराबरी का मुक़ाबला!';
-    const diffs = d.history.length ? d.history.map((h, i) => {
-      const open = d.resOpenIdx === i;
-      return '<div style="background:#fff;border-radius:11px;padding:9px;font-size:12px;box-shadow:0 1px 6px rgba(15,23,42,.05);">' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:800;"><span>#' + h.qNum + ': ' + esc(h.q) + '</span><button type="button" class="u-btn" style="flex:none;" data-act="d-res-exp" data-i="' + i + '">' + (open ? 'बंद' : 'व्याख्या') + '</button></div>' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;font-weight:700;font-size:11.5px;">' +
-          '<div style="background:' + (h.mOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.mOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:5px 7px;">' + myName + ': ' + (h.mOk ? '✓ ' : '✗ ') + esc(h.mAns) + '</div>' +
-          '<div style="background:' + (h.pOk ? '#ECFDF5' : '#FFF1F2') + ';color:' + (h.pOk ? '#15803D' : '#BE123C') + ';border-radius:6px;padding:5px 7px;">' + opName + ': ' + (h.pOk ? '✓ ' : '✗ ') + esc(h.pAns) + '</div>' +
-        '</div>' +
-        '<div style="margin-top:4px;font-size:11px;font-weight:700;color:#15803D;">सही उत्तर: ' + esc(h.right) + '</div>' +
-        (open ? '<div style="margin-top:6px;padding-top:6px;border-top:1px solid #EEF3F7;color:#334155;line-height:1.55;">' + esc(buildExpTimeline(h.exp).lead) + '</div>' : '') +
-      '</div>';
-    }).join('') : '<div style="background:#fff;border-radius:11px;padding:12px;text-align:center;font-size:12px;color:#64748B;">कोई हल किया हुआ सवाल दर्ज नहीं हुआ</div>';
-    body = '<div style="display:flex;flex-direction:column;gap:9px;">' +
-      '<div style="background:#FFF8E1;border:2px solid #D97706;border-radius:14px;padding:12px;text-align:center;">' +
-        '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:5px;">' + avImg(myId, 'av-md') + '<span style="font-size:20px;">🏆</span>' + avImg(opId, 'av-md') + '</div>' +
-        '<div style="font-size:17px;font-weight:800;color:#14532D;">' + winTxt + ' · ' + d.mScore + ' — ' + d.pScore + '</div>' +
-      '</div>' +
-      '<div style="font-size:12.5px;font-weight:800;color:#334155;">किस सवाल पर कौन फँसा?</div>' +
-      diffs +
+      ((isDuelHost() || d.soloPractice)
+        ? '<button type="button" class="btn-pri" style="width:100%;height:48px;font-size:14.5px;border-radius:11px;" data-act="d-rematch">⚔️ दोबारा — वही मुक़ाबला (नए ' + d.qs.length + ' सवाल)</button>'
+        : '<div style="background:#fff;border:1px solid #DCE5EC;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700;color:#475569;">दोबारा खेलने के लिए Host "दोबारा" दबाएँगी</div>') +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
-        '<button type="button" class="btn-pri" data-act="d-lobby">🔁 फिर चैलेंज भेजें</button>' +
-        '<button type="button" class="btn-grn" data-act="d-wa-share">📲 WhatsApp भेजें</button>' +
+        '<button type="button" class="btn-sec" data-act="d-tog-rev">' + (d.showReview ? '📋 सवाल छुपाएँ' : '📋 हर सवाल देखें') + '</button>' +
+        '<button type="button" class="btn-grn" data-act="d-wa-share">📲 WhatsApp परिणाम</button>' +
       '</div>' +
+      (d.showReview ? '<div style="display:flex;flex-direction:column;gap:8px;">' + reviewCards + '</div>' : '') +
+      '<button type="button" class="btn-sec" style="width:100%;padding:10px;" data-act="d-leave-home">चैलेंज बंद करें (होम)</button>' +
     '</div>';
   }
 
-  return '<div class="hd"><div class="hd-l"><button type="button" class="hd-btn" data-act="back-home">←</button>' + avImg(myId, 'av-xs') + '<span class="hd-ttl">1 vs 1 · ' + myName + ' vs ' + opName + '</span>' + avImg(opId, 'av-xs') + '</div></div>' +
+  return '<div class="hd">' +
+      '<div class="hd-l"><button type="button" class="hd-btn" data-act="d-back">←</button><span class="hd-ttl">⚔️ 1v1 Challenge</span></div>' +
+      '<div class="hd-r"><button type="button" class="hd-btn ' + (d.zoomOpen ? 'zoom-on' : '') + '" data-act="d-ztog">अ ' + z + '%</button></div>' +
+    '</div>' +
+    renderDuelZoomBar() +
     '<div class="body-scr scr" style="padding:11px;">' + body + '</div>';
 }
 
 function render() {
   const root = document.getElementById('appRoot');
   if (!root) return '';
+  const oldBody = root.querySelector ? root.querySelector('.body-scr') : null;
+  const oldHome = root.querySelector ? root.querySelector('.cm-scroll') : null;
+  const prevBodyTop = oldBody ? oldBody.scrollTop : 0;
+  const prevHomeTop = oldHome ? oldHome.scrollTop : 0;
+
+  let renderKey = app.view;
+  if (app.view === 'quiz') {
+    const ch = CHAPTER_BANK[app.quiz.chId];
+    const qId = app.quiz.qIds[app.quiz.cur];
+    const p = ch ? getChProg(ch.id).answers[qId] : undefined;
+    renderKey = 'quiz:' + app.quiz.chId + ':' + app.quiz.cur + ':' + (p !== undefined ? 'sol' : 'q');
+  } else if (app.view === 'home') {
+    renderKey = 'home:' + app.userData.tabId;
+  } else if (app.view === 'duel') {
+    renderKey = 'duel:' + app.duel.stage + ':' + app.duel.qIdx;
+  }
+
   let html = '';
   if (app.view === 'welcome') html = renderWelcomeView();
   else if (app.view === 'home') html = renderHomeView();
   else if (app.view === 'quiz') html = renderQuizView();
   else if (app.view === 'result') html = renderResultView();
   else html = renderDuelView();
-  const popupHtml = hasIncomingChallenge() ? renderIncomingModal(app.duel.remoteMatch) : '';
+  const popupHtml = hasIncomingChallenge() ? renderIncomingModal(app.duel.activeInvite) : '';
   root.innerHTML = html + popupHtml + (app.toast ? '<div class="toast">' + esc(app.toast) + '</div>' : '');
+
+  if (renderKey === app._lastRenderKey) {
+    const newBody = root.querySelector ? root.querySelector('.body-scr') : null;
+    const newHome = root.querySelector ? root.querySelector('.cm-scroll') : null;
+    if (newBody) newBody.scrollTop = prevBodyTop;
+    if (newHome) newHome.scrollTop = prevHomeTop;
+  }
+  app._lastRenderKey = renderKey;
+
+  if ((app.view === 'quiz' || (app.view === 'duel' && app.duel.stage === 'live')) && root.querySelector) {
+    const strip = root.querySelector('.q-strip');
+    const active = strip && strip.querySelector ? strip.querySelector('.q-num.cur') : null;
+    if (strip && active && typeof active.offsetLeft === 'number') {
+      strip.scrollLeft = Math.max(0, active.offsetLeft - (strip.clientWidth || 0) / 2 + (active.offsetWidth || 0) / 2);
+    }
+  }
   return root.innerHTML;
 }
 
@@ -1412,11 +2368,12 @@ function openChapter(chId, mode) {
   if (!ch) return;
   const prog = getChProg(chId);
   let ids = [];
-  if (mode === 'wrong') ids = ch.questions.filter(q => prog.answers[q.id] !== undefined && prog.answers[q.id] !== q.ans).map(q => q.id);
+  if (mode === 'wrong') ids = ch.questions.filter(q => prog.answers[q.id] !== undefined && prog.answers[q.id] >= 0 && prog.answers[q.id] !== q.ans).map(q => q.id);
+  else if (mode === 'skip') ids = ch.questions.filter(q => prog.answers[q.id] === -1 || prog.answers[q.id] === undefined).map(q => q.id);
   else if (mode === 'star') ids = ch.questions.filter(q => prog.stars && prog.stars[q.id]).map(q => q.id);
   if (!ids.length) {
-    if (mode === 'wrong' || mode === 'star') {
-      showToast(mode === 'wrong' ? 'कोई गलत सवाल बाकी नहीं!' : 'अभी कोई स्टार सवाल नहीं है!');
+    if (mode === 'wrong' || mode === 'star' || mode === 'skip') {
+      showToast(mode === 'wrong' ? 'कोई गलत सवाल बाकी नहीं!' : (mode === 'skip' ? 'कोई छोड़ा गया सवाल बाकी नहीं!' : 'अभी कोई स्टार सवाल नहीं है!'));
       return;
     }
     ids = ch.questions.map(q => q.id);
@@ -1431,10 +2388,30 @@ function openChapter(chId, mode) {
     cur: mode === 'resume' ? Math.min(prog.curIdx || 0, ids.length - 1) : 0,
     palOpen: false,
     palFilter: 'all',
+    zoomOpen: false,
+    showQInSol: false,
     showOther: false
   };
   app.view = 'quiz';
   render();
+}
+
+function stepQuiz(delta, viaSwipe) {
+  const nxt = app.quiz.cur + delta;
+  if (nxt < 0) { showToast('यह पहला सवाल है'); return; }
+  if (nxt >= app.quiz.qIds.length) {
+    showToast('यह आख़िरी सवाल है — नीचे "परिणाम देखें" दबाएँ');
+    return;
+  }
+  app.quiz.cur = nxt;
+  app.quiz.showQInSol = false;
+  getChProg(app.quiz.chId).curIdx = nxt;
+  saveUserData(app.userId, app.userData);
+  if (viaSwipe) {
+    showToast(delta > 0 ? '👉 स्वाइप: अगला सवाल #' + (nxt + 1) : '👈 स्वाइप: पिछला सवाल #' + (nxt + 1));
+  } else {
+    render();
+  }
 }
 
 function openWaUrl(msg) {
@@ -1454,9 +2431,10 @@ function handleAction(el, ev) {
     app.userId = el.getAttribute('data-u') === 'p' ? 'p' : 'm';
     saveLS('tgt_gk_active_user_v1', app.userId);
     app.userData = loadUserData(app.userId);
-    app.duel.stage = 'lobby';
-    app.duel.matchId = '';
-    app.view = 'home';
+    app.zoomPct = loadGlobalZoom();
+    app.userData.zoomPct = app.zoomPct;
+    app.duel.customName = defaultPlayerName();
+    app.view = app.duel.prefillCode ? 'duel' : 'home';
     render();
     sendPresence(true);
     syncLiveState();
@@ -1465,20 +2443,10 @@ function handleAction(el, ev) {
   if (act === 'open-welcome') {
     sendPresence(false, true);
     stopDuelTimer();
-    app.duel.stage = 'lobby';
     app.view = 'welcome';
     render(); return;
   }
   if (act === 'back-home') {
-    if (app.view === 'duel') {
-      if (app.duel.stage === 'waiting') cancelDuelInvite();
-      else if (app.duel.stage === 'live') {
-        stopDuelTimer();
-        app.duel.stage = 'lobby';
-        app.duel.matchId = '';
-        fbReq('match', 'PATCH', { status: 'ended' });
-      }
-    }
     stopDuelTimer();
     app.view = 'home';
     render(); return;
@@ -1499,20 +2467,35 @@ function handleAction(el, ev) {
     prog.answers[qId] = Number(el.getAttribute('data-i'));
     prog.curIdx = app.quiz.cur;
     saveUserData(app.userId, app.userData);
-    app.quiz.showOther = false;
+    app.quiz.showQInSol = false;
     render(); return;
   }
-  if (act === 'q-step') {
-    const d = Number(el.getAttribute('data-d')) || 1;
-    const nxt = Math.max(0, Math.min(app.quiz.qIds.length - 1, app.quiz.cur + d));
-    app.quiz.cur = nxt; app.quiz.showOther = false;
-    getChProg(app.quiz.chId).curIdx = nxt;
+  if (act === 'q-skip') {
+    const ch = CHAPTER_BANK[app.quiz.chId];
+    const qId = app.quiz.qIds[app.quiz.cur];
+    const prog = getChProg(ch.id);
+    prog.answers[qId] = -1;
+    prog.curIdx = app.quiz.cur;
+    saveUserData(app.userId, app.userData);
+    app.quiz.showQInSol = false;
+    showToast('⏭ नहीं आता (0 निगेटिव अंक) · सही उत्तर देखें');
+    return;
+  }
+  if (act === 'q-retry') {
+    const qId = app.quiz.qIds[app.quiz.cur];
+    const prog = getChProg(app.quiz.chId);
+    delete prog.answers[qId];
+    app.quiz.showQInSol = false;
     saveUserData(app.userId, app.userData);
     render(); return;
   }
+  if (act === 'q-step') {
+    stepQuiz(Number(el.getAttribute('data-d')) || 1, false);
+    return;
+  }
   if (act === 'q-jump') {
     const nxt = Number(el.getAttribute('data-i')) || 0;
-    app.quiz.cur = nxt; app.quiz.palOpen = false; app.quiz.showOther = false;
+    app.quiz.cur = nxt; app.quiz.palOpen = false; app.quiz.showQInSol = false;
     getChProg(app.quiz.chId).curIdx = nxt;
     saveUserData(app.userId, app.userData);
     render(); return;
@@ -1522,21 +2505,30 @@ function handleAction(el, ev) {
     app.quiz.palOpen = !app.quiz.palOpen; render(); return;
   }
   if (act === 'q-pal-f') { app.quiz.palFilter = el.getAttribute('data-v'); render(); return; }
-  if (act === 'q-fs') {
-    app.userData.fontSize = Math.max(13, Math.min(20, (app.userData.fontSize || 15) + Number(el.getAttribute('data-d'))));
-    saveUserData(app.userId, app.userData); render(); return;
+  if (act === 'q-ztog') { app.quiz.zoomOpen = !app.quiz.zoomOpen; render(); return; }
+  if (act === 'q-zset') {
+    const z = saveGlobalZoom(Number(el.getAttribute('data-v')) || 100);
+    showToast(z === 100 ? '↺ ज़ूम रीसेट: 100% (डिफ़ॉल्ट)' : 'ज़ूम सेव: ' + z + '% (हर सवाल व पाठ)');
+    return;
   }
+  if (act === 'q-zstep') {
+    const z = saveGlobalZoom((app.zoomPct || 100) + (Number(el.getAttribute('data-d')) || 0));
+    showToast('ज़ूम: ' + z + '% (स्थायी सेव)');
+    return;
+  }
+  if (act === 'q-tog-q' || act === 'q-tog-other') { app.quiz.showQInSol = !app.quiz.showQInSol; render(); return; }
   if (act === 'q-star') {
     const qId = app.quiz.qIds[app.quiz.cur];
     const prog = getChProg(app.quiz.chId);
     prog.stars[qId] = !prog.stars[qId];
-    saveUserData(app.userId, app.userData); render(); return;
+    saveUserData(app.userId, app.userData);
+    showToast(prog.stars[qId] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
+    return;
   }
-  if (act === 'q-tog-other') { app.quiz.showOther = !app.quiz.showOther; render(); return; }
   if (act === 'q-speak') {
     const ch = CHAPTER_BANK[app.quiz.chId];
     const q = ch.questions.find(x => x.id === app.quiz.qIds[app.quiz.cur]);
-    if (q) speakHindi(q.q + ' सही उत्तर: ' + q.opts[q.ans] + '। ' + buildExpTimeline(q.exp).lead);
+    if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
     return;
   }
   if (act === 'finish-ch') {
@@ -1551,40 +2543,139 @@ function handleAction(el, ev) {
   if (act === 'r-mark') { app.result.marking = el.getAttribute('data-k'); render(); return; }
   if (act === 'r-tog') { const id = Number(el.getAttribute('data-id')); app.result.openQId = app.result.openQId === id ? null : id; render(); return; }
 
-  // Live 2-Phone Duel actions
+  // JOD 2028 (JOD Lab) 1v1 Challenge actions
   if (act === 'open-duel') {
-    stopDuelTimer();
-    if ((app.view === 'quiz' || app.view === 'result') && CHAPTER_BANK[app.quiz.chId]) app.duel.scope = app.quiz.chId;
-    if (app.duel.stage !== 'live' && app.duel.stage !== 'waiting') app.duel.stage = 'lobby';
+    if ((app.view === 'quiz' || app.view === 'result') && CHAPTER_BANK[app.quiz.chId]) {
+      app.duel.scope = app.quiz.chId;
+    } else if (!CHAPTER_BANK[app.duel.scope] && app.duel.scope !== 'mix') {
+      app.duel.scope = Object.keys(CHAPTER_BANK)[0] || 'ch01';
+    }
+    if (!app.duel.customName) app.duel.customName = defaultPlayerName();
+    if (app.duel.stage !== 'live' && app.duel.stage !== 'lobby' && app.duel.stage !== 'count') {
+      app.duel.stage = 'menu';
+    }
+    app.duel.err = '';
     app.view = 'duel';
     render();
     sendPresence(true);
     syncLiveState();
     return;
   }
-  if (act === 'd-lobby') { stopDuelTimer(); app.duel.stage = 'lobby'; app.duel.matchId = ''; render(); return; }
-  if (act === 'd-scope') { app.duel.scope = el.getAttribute('data-v'); render(); return; }
-  if (act === 'd-cnt') { app.duel.count = Number(el.getAttribute('data-v')) || 10; render(); return; }
-  if (act === 'd-send-invite' || act === 'd-start') { sendDuelInvite(); return; }
+  if (act === 'd-back') {
+    if (app.duel.stage === 'lobby') { leaveDuelRoom(false); return; }
+    if (app.duel.stage === 'result') { leaveDuelRoom(true); return; }
+    app.view = 'home'; render(); return;
+  }
+  if (act === 'd-ztog') { app.duel.zoomOpen = !app.duel.zoomOpen; render(); return; }
+  if (act === 'd-scope') {
+    readAndSaveDuelName();
+    app.duel.scope = el.getAttribute('data-v');
+    const mx = duelPoolMax(app.duel.scope);
+    if (!app.duel.allScope && app.duel.count > mx) app.duel.count = Math.min(30, mx);
+    render(); return;
+  }
+  if (act === 'd-cnt') {
+    readAndSaveDuelName();
+    app.duel.allScope = false;
+    app.duel.count = Math.max(1, Number(el.getAttribute('data-v')) || 30);
+    render(); return;
+  }
+  if (act === 'd-cnt-all') {
+    readAndSaveDuelName();
+    app.duel.allScope = true;
+    app.duel.count = duelPoolMax(app.duel.scope) || 30;
+    render(); return;
+  }
+  if (act === 'd-cnt-step') {
+    readAndSaveDuelName();
+    app.duel.allScope = false;
+    const mx = Math.max(1, duelPoolMax(app.duel.scope) || 30);
+    const cur = duelEffCount();
+    app.duel.count = Math.max(1, Math.min(mx, cur + (Number(el.getAttribute('data-d')) || 0)));
+    render(); return;
+  }
+  if (act === 'd-create' || act === 'd-send-invite') { createDuelRoom(false); return; }
+  if (act === 'd-solo') { createDuelRoom(true); return; }
+  if (act === 'd-join') { joinDuelRoom(''); return; }
   if (act === 'd-accept') { acceptDuelInvite(); return; }
   if (act === 'd-reject') { rejectDuelInvite(); return; }
-  if (act === 'd-cancel') { cancelDuelInvite(); return; }
+  if (act === 'd-start-room' || act === 'd-start') { startDuelRoom(false); return; }
+  if (act === 'd-start-solo-room') { startDuelRoom(true); return; }
+  if (act === 'd-leave-room' || act === 'd-cancel') { leaveDuelRoom(false); return; }
+  if (act === 'd-leave-home' || act === 'd-lobby') { leaveDuelRoom(true); return; }
+  if (act === 'd-ask-leave') { app.duel.leaveOpen = true; render(); return; }
+  if (act === 'd-leave-no') { app.duel.leaveOpen = false; render(); return; }
+  if (act === 'd-leave-yes') { leaveDuelRoom(true); return; }
   if (act === 'd-pick') { handleDuelPick(Number(el.getAttribute('data-i'))); return; }
-  if (act === 'd-next') { advanceDuelNext(); return; }
+  if (act === 'd-skip') { handleDuelSkip(); return; }
+  if (act === 'd-step' || act === 'd-next') { stepDuel(Number(el.getAttribute('data-d')) || 1, false); return; }
+  if (act === 'd-jump') { app.duel.qIdx = Number(el.getAttribute('data-i')) || 0; app.duel.palOpen = false; render(); return; }
+  if (act === 'd-pal-tog' || act === 'd-pal-bg') {
+    if (act === 'd-pal-bg' && ev && ev.target && ev.target !== el) return;
+    app.duel.palOpen = !app.duel.palOpen; render(); return;
+  }
+  if (act === 'd-pal-f') { app.duel.palFilter = el.getAttribute('data-v'); render(); return; }
+  if (act === 'd-star') {
+    const q = app.duel.qs[app.duel.qIdx];
+    const cid = q && (q._chId || (app.duel.scope !== 'mix' ? app.duel.scope : 'ch01'));
+    if (q && CHAPTER_BANK[cid]) {
+      const prog = getChProg(cid);
+      prog.stars[q.id] = !prog.stars[q.id];
+      saveUserData(app.userId, app.userData);
+      showToast(prog.stars[q.id] ? '★ स्टार में सहेजा गया' : '☆ स्टार हटाया गया');
+    }
+    return;
+  }
+  if (act === 'd-speak') {
+    const q = app.duel.qs[app.duel.qIdx];
+    if (q) speakHindi('सही उत्तर: ' + q.opts[q.ans] + '। ' + splitReadablePoints(q.exp).join(' '));
+    return;
+  }
+  if (act === 'd-finish') { finishDuelRun(); return; }
+  if (act === 'd-rematch') { rematchDuelRoom(); return; }
+  if (act === 'd-tog-rev') { app.duel.showReview = !app.duel.showReview; render(); return; }
   if (act === 'd-res-exp') { const i = Number(el.getAttribute('data-i')); app.duel.resOpenIdx = app.duel.resOpenIdx === i ? null : i; render(); return; }
-  if (act === 'd-wa-invite') {
-    const op = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
-    openWaUrl(op + ', TGT GK ऐप खोलो — 1 vs 1 मुक़ाबला खेलना है!'); return;
+  if (act === 'd-wa-room' || act === 'd-wa-invite') {
+    const link = el.getAttribute('data-link') || 'https://jodexam777-air1.github.io/tgtgk/';
+    const scTitle = app.duel.scope === 'mix' ? 'सभी मिक्स सवाल' : (CHAPTER_BANK[app.duel.scope]?.title || 'पाठ');
+    openWaUrl('⚔️ TGT GK 1v1 Challenge!\nपाठ: ' + scTitle + ' (' + duelEffCount() + ' सवाल)\nRoom Code: ' + app.duel.code + '\nसीधे जुड़ने के लिए यह लिंक खोलें:\n' + link);
+    return;
   }
   if (act === 'd-wa-share') {
-    const my = app.userId === 'p' ? 'प्रियंका' : 'मंजू', op = app.userId === 'p' ? 'मंजू' : 'प्रियंका';
-    openWaUrl('🏆 TGT GK 1 vs 1 परिणाम: ' + my + ' ' + app.duel.mScore + ' — ' + app.duel.pScore + ' ' + op + '!'); return;
+    const myS = calcMyDuelStats();
+    const opP = duelOppPlayer();
+    const myNm = app.duel.customName || defaultPlayerName();
+    openWaUrl('🏆 TGT GK 1v1 परिणाम: ' + myNm + ' ' + myS.pts + ' अंक (' + myS.ok + '/' + app.duel.qs.length + ')' + (opP ? ' vs ' + opP.name + ' ' + (opP.pts || 0) + ' अंक' : '') + '!');
+    return;
   }
 }
 
 document.addEventListener('click', (e) => {
   const t = e.target && e.target.closest ? e.target.closest('[data-act]') : null;
   if (t) handleAction(t, e);
+});
+
+document.addEventListener('input', (e) => {
+  const t = e.target;
+  if (!t || !t.id) return;
+  if (t.id === 'duelCntInp') {
+    const mx = Math.max(1, duelPoolMax(app.duel.scope) || 30);
+    const raw = parseInt(t.value, 10);
+    if (Number.isFinite(raw) && raw >= 1) {
+      app.duel.allScope = false;
+      app.duel.count = Math.min(mx, raw);
+      const eff = duelEffCount();
+      const cBtn = document.getElementById('duelCreateBtn');
+      const sBtn = document.getElementById('duelSoloBtn');
+      if (cBtn) cBtn.textContent = '⚔️ Room बनाएँ (' + eff + ' सवाल)';
+      if (sBtn) sBtn.textContent = '⚡ अकेले प्रैक्टिस टेस्ट चलाएँ (' + eff + ' सवाल · बिना इंतज़ार)';
+    }
+  } else if (t.id === 'duelNameInp') {
+    app.duel.customName = String(t.value || '').slice(0, 16);
+    saveLS('tgt_gk_duel_name_' + app.userId, app.duel.customName.trim() || defaultPlayerName());
+  } else if (t.id === 'duelCodeInp') {
+    app.duel.prefillCode = String(t.value || '').replace(/\D/g, '').slice(0, 4);
+  }
 });
 
 const impEl = document.getElementById('jsonImportInput');
@@ -1612,8 +2703,8 @@ function startLiveSyncLoop() {
   }
   const stepPoll = async () => {
     await syncLiveState();
-    const fast = app.duel.stage === 'waiting' || app.duel.stage === 'live';
-    if (typeof setTimeout === 'function') setTimeout(stepPoll, fast ? 850 : 2500);
+    const fast = app.duel.stage === 'lobby' || app.duel.stage === 'result';
+    if (typeof setTimeout === 'function') setTimeout(stepPoll, fast ? 1400 : 3000);
   };
   if (typeof setTimeout === 'function') setTimeout(stepPoll, 900);
   if (typeof document !== 'undefined' && document.addEventListener) {
@@ -1627,12 +2718,54 @@ function startLiveSyncLoop() {
   }
 }
 
+function bindQuizSwipe() {
+  const root = document.getElementById('appRoot');
+  if (!root || !root.addEventListener) return;
+  let sx = 0, sy = 0, st = 0, tracking = false;
+  const canSwipeNow = () => {
+    if (hasIncomingChallenge()) return false;
+    if (app.view === 'quiz' && !app.quiz.palOpen) return true;
+    if (app.view === 'duel' && app.duel.stage === 'live' && !app.duel.palOpen && !app.duel.leaveOpen) return true;
+    return false;
+  };
+  root.addEventListener('touchstart', (e) => {
+    if (!canSwipeNow()) { tracking = false; return; }
+    const tgt = e.target;
+    if (tgt && tgt.closest && tgt.closest('.q-strip, .zoom-bar, .sheet-bg, .modal-bg, .mtab, .battle')) { tracking = false; return; }
+    const touches = e.touches || e.changedTouches;
+    if (touches && touches.length !== 1) { tracking = false; return; }
+    const t = touches ? touches[0] : null;
+    if (!t) { tracking = false; return; }
+    sx = t.clientX; sy = t.clientY; st = Date.now(); tracking = true;
+  }, { passive: true });
+  root.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+    if (!canSwipeNow()) return;
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t) return;
+    const dx = t.clientX - sx, dy = t.clientY - sy, dt = Date.now() - st;
+    if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.45 && dt <= 750) {
+      if (app.view === 'duel') stepDuel(dx < 0 ? 1 : -1, true);
+      else stepQuiz(dx < 0 ? 1 : -1, true);
+    }
+  }, { passive: true });
+}
+
 initChapterStore();
+duelPid();
+bindQuizSwipe();
+const urlRoomMatch = (typeof location !== 'undefined' && location.search) ? location.search.match(/[?&]room=(\d{4})/) : null;
+if (urlRoomMatch) app.duel.prefillCode = urlRoomMatch[1];
+
 const savedUid = safeLS('tgt_gk_active_user_v1', '');
 if (savedUid === 'm' || savedUid === 'p') {
   app.userId = savedUid;
   app.userData = loadUserData(savedUid);
-  app.view = 'home';
+  app.zoomPct = loadGlobalZoom();
+  app.userData.zoomPct = app.zoomPct;
+  app.duel.customName = defaultPlayerName();
+  app.view = app.duel.prefillCode ? 'duel' : 'home';
 }
 render();
 if (app.view !== 'welcome' && typeof window !== 'undefined' && !window.__DISABLE_TIMERS) {
@@ -1643,8 +2776,10 @@ startLiveSyncLoop();
 
 if (typeof globalThis !== 'undefined') {
   globalThis.__TGT_APP = {
-    app, ROADMAP, CHAPTER_BANK, openChapter, importChapterData, calcMarks, handleAction, render, getChProg, getUserStats,
-    startDuelMatch, handleDuelPick, sendPresence, syncLiveState, sendDuelInvite, acceptDuelInvite, rejectDuelInvite, cancelDuelInvite, advanceDuelNext
+    app, ROADMAP, CHAPTER_BANK, openChapter, stepQuiz, loadGlobalZoom, saveGlobalZoom, splitReadablePoints, highlightHindiFacts,
+    importChapterData, calcMarks, handleAction, render, getChProg, getUserStats,
+    createDuelRoom, joinDuelRoom, startDuelRoom, handleDuelPick, handleDuelSkip, stepDuel, finishDuelRun, rematchDuelRoom, leaveDuelRoom,
+    startDuelMatch, sendPresence, syncLiveState, sendDuelInvite, acceptDuelInvite, rejectDuelInvite, cancelDuelInvite, advanceDuelNext
   };
 }
 </script>
