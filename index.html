@@ -644,6 +644,7 @@ function normalizeRawChapter(data) {
       exp: cleanExp,
       trick: String(q.trick || '').replace(/\u26a0\ufe0f?/g, '').trim(),
       vip: !!q.vip,
+      kp: (q.kp && q.kp.p) ? q.kp : null,
       match: parsed.match,
       matchHeaders: parsed.matchHeaders
     };
@@ -1358,7 +1359,7 @@ function renderVaultView() {
         '<div class="ans-banner" style="margin-bottom:8px;padding:9px 12px;"><div style="font-size:11.5px;font-weight:800;color:#15803D;">' + (hasCPick && cPick === q.ans ? '✅ बिल्कुल सही! · विकल्प ' + (q.ans + 1) : '✅ सही उत्तर (विकल्प ' + (q.ans + 1) + ')') + '</div><div style="margin-top:3px;font-size:' + zPx(17.5) + ';font-weight:800;color:#064E3B;">' + esc(q.opts[q.ans]) + '</div></div>' +
         '<div class="kp-box" style="padding:11px 13px;"><div class="kp-hd">📌 मुख्य बिंदु (' + esc(pageLbl) + ')</div><ul class="kp-ul">' +
           kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(17) + ';margin-bottom:9px;">' + highlightHindiFacts(pt) + '</li>').join('') +
-        '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15.5) + ';margin-top:9px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + '</div>' +
+        '</ul>' + (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(15.5) + ';margin-top:9px;">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + kbBtnHtml(q) + '</div>' +
       '</div>' : '') +
     '</div>';
   }).join('') : '<div style="background:#fff;border:1.5px dashed #CBD5E1;border-radius:14px;padding:24px 16px;text-align:center;color:#475569;font-size:13.5px;font-weight:700;line-height:1.6;">' +
@@ -1534,7 +1535,7 @@ function renderQuizView() {
         '<ul class="kp-ul">' +
           kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(19) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
         '</ul>' +
-        (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(17) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+        (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(17) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + kbBtnHtml(q) +
       '</div>' +
     '</div>';
   }
@@ -3189,7 +3190,7 @@ function renderDuelSolView() {
   const explHtml = '<div class="kp-box" style="margin-top:12px;">' +
     '<div class="kp-hd">📌 मुख्य बिंदु (Key Points — ' + esc(pageLbl) + ')</div>' +
     '<ul class="kp-ul">' + kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(18.5) + ';">' + highlightHindiFacts(pt) + '</li>').join('') + '</ul>' +
-    (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+    (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + kbBtnHtml(q) +
   '</div>';
 
   return '<div class="hd">' +
@@ -3293,7 +3294,7 @@ function renderDuelView() {
           '<ul class="kp-ul">' +
             kpItems.map(pt => '<li class="kp-li" style="font-size:' + zPx(18.5) + ';">' + highlightHindiFacts(pt) + '</li>').join('') +
           '</ul>' +
-          (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') +
+          (q.trick ? '<div class="trick-bar" style="font-size:' + zPx(16.5) + ';">💡 ' + highlightHindiFacts(q.trick) + '</div>' : '') + kbBtnHtml(q) +
         '</div>' +
       '</div>';
     }
@@ -3825,6 +3826,7 @@ function openWaUrl(msg) {
 function handleAction(el, ev) {
   const act = el.getAttribute('data-act');
   if (!act) return;
+  if (act === 'kb-open') { try { openKitab(JSON.parse(el.getAttribute('data-kp'))); } catch (_) {} return; }
 
   if (act === 'choose-user') {
     app.userId = el.getAttribute('data-u') === 'p' ? 'p' : 'm';
@@ -4519,6 +4521,7 @@ function bindQuizSwipe() {
 if (typeof window !== 'undefined' && window.addEventListener) {
   window.addEventListener('popstate', () => {
     app._backArmed = false;
+    if (window.__kbClose) { window.__kbClose(); syncBackHistoryGuard(); return; }
     if (handleBackNavigation()) {
       syncBackHistoryGuard();
     }
@@ -4558,5 +4561,57 @@ if (typeof globalThis !== 'undefined') {
 }
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
+
+<!-- KITAB_V1: "📖 किताब में देखें" (Claude, 25 Nov 2026) -->
+<style>
+.kb-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px 10px;border-radius:12px;border:2px solid #0794C7;background:#E3F3FA;color:#05628A;font-weight:800;font-size:17px;font-family:inherit;cursor:pointer}
+.kb-ov{position:fixed;inset:0;background:#0B1220;z-index:99999;display:flex;flex-direction:column}
+.kb-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 12px;color:#fff;font-weight:800;font-size:17px}
+.kb-x{background:#fff;color:#0f172a;border:none;border-radius:10px;padding:9px 13px;font-weight:800;font-size:15px;font-family:inherit}
+.kb-body{flex:1;overflow:auto;padding:0 8px 10px;-webkit-overflow-scrolling:touch}
+.kb-body canvas{display:block;border-radius:8px;margin:0 auto;background:#fff}
+.kb-bar{display:flex;gap:8px;padding:10px 10px 14px;flex-wrap:wrap}
+.kb-bar button{flex:1;min-width:90px;padding:11px 6px;border-radius:10px;border:none;font-weight:800;font-size:15px;font-family:inherit}
+.kb-full{background:#0794C7;color:#fff}.kb-z{background:#1E293B;color:#fff}
+.kb-note{color:#FDE68A;font-size:14px;padding:0 12px 4px;font-weight:700;line-height:1.5}
+</style>
+<script>
+function kbBtnHtml(q){
+  try{ if(!q||!q.kp||!q.kp.p) return '';
+    return '<button type="button" class="kb-btn" data-act="kb-open" data-kp="'+esc(JSON.stringify(q.kp))+'">📖 किताब में देखें (पन्ना '+q.kp.p+')</button>';
+  }catch(_){ return ''; }
+}
+function openKitab(kp){
+  if(!kp||!kp.p) return;
+  const pg=String(kp.p).padStart(4,'0');
+  const ov=document.createElement('div'); ov.className='kb-ov';
+  ov.innerHTML='<div class="kb-top"><span>📖 फ़ैटमैन — पन्ना '+kp.p+'</span><button type="button" class="kb-x">✕ बंद करें</button></div>'+
+    '<div class="kb-note" id="kbNote">फोटो खुल रही है…</div><div class="kb-body"><canvas id="kbCv"></canvas></div>'+
+    '<div class="kb-bar">'+(kp.c?'<button type="button" class="kb-full" id="kbFull">📄 पूरा पन्ना देखें</button>':'')+
+    '<button type="button" class="kb-z" id="kbZm">🔍 बड़ा करें</button></div>';
+  document.body.appendChild(ov);
+  const close=()=>{ ov.remove(); window.__kbClose=null; };
+  window.__kbClose=close;  /* phone ka Back button: app ke popstate me pehle ye band hota hai */
+  ov.querySelector('.kb-x').onclick=close;
+  const cv=ov.querySelector('#kbCv'), note=ov.querySelector('#kbNote'), body=ov.querySelector('.kb-body');
+  let full=!kp.c, zoom=1; const img=new Image();
+  function draw(){
+    const W=img.naturalWidth,H=img.naturalHeight;
+    const c=full?[0,0,1,1]:kp.c; const sx=c[0]*W,sy=c[1]*H,sw=(c[2]-c[0])*W,sh=(c[3]-c[1])*H;
+    cv.width=Math.round(sw); cv.height=Math.round(sh);
+    const g=cv.getContext('2d'); g.drawImage(img,sx,sy,sw,sh,0,0,sw,sh);
+    if(kp.h){ g.fillStyle='rgba(255,214,0,0.38)'; g.fillRect(kp.h[0]*W-sx,kp.h[1]*H-sy,(kp.h[2]-kp.h[0])*W,(kp.h[3]-kp.h[1])*H); }
+    cv.style.width=(100*zoom)+'%';
+    note.textContent=kp.h?'🟨 पीली पट्टी = इस सवाल का जवाब यहीं से':'📄 यह सवाल इसी पन्ने से है — पूरा पन्ना पढ़ें';
+    const fb=ov.querySelector('#kbFull'); if(fb) fb.textContent=full?'✂️ सिर्फ़ ज़रूरी हिस्सा':'📄 पूरा पन्ना देखें';
+    if(full&&kp.h){ setTimeout(()=>{ body.scrollTop=Math.max(0,(kp.h[1]*cv.clientHeight)-120); },30); } else body.scrollTop=0;
+  }
+  img.onload=draw;
+  img.onerror=()=>{ note.textContent='⚠️ फोटो नहीं खुली — पहली बार खोलने के लिए इंटरनेट चाहिए (फिर बिना नेट भी खुलेगी)।'; };
+  img.src='./kitab/p'+pg+'.jpg';
+  const fb=ov.querySelector('#kbFull'); if(fb) fb.onclick=()=>{ full=!full; draw(); };
+  ov.querySelector('#kbZm').onclick=(e)=>{ zoom=zoom===1?1.6:(zoom===1.6?2.3:1); e.target.textContent=zoom===2.3?'↩️ छोटा करें':'🔍 बड़ा करें'; if(img.complete&&img.naturalWidth) draw(); };
+}
+</script>
 </body>
 </html>
