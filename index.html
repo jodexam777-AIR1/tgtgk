@@ -1150,6 +1150,17 @@ function renderWelcomeView() {
     '</div>';
 }
 
+// संस्कृत मॉक (mock.html) का बटन — Claude, 27 Nov 2026
+function skMockBanner() {
+  const sk = safeLS('tgt_sk_mock_v1_' + app.userId, null);
+  const sm = sk && sk.sum ? sk.sum : null;
+  const sub = (sm && sm.done) ? (sm.done + '/' + sm.total + ' मॉक दिए' + (sm.last ? ' · पिछला ' + sm.last : '')) : '120 सवाल · 2 घंटे · +3/−1 · असली पेपर जैसा';
+  return '<a class="cm-res" href="./mock.html" style="background:#FFF7ED;border-bottom-color:#FED7AA;text-decoration:none;color:inherit;">' +
+    '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:800;color:#0F172A;">📝 संस्कृत मॉक टेस्ट (UP TGT)</div>' +
+    '<div style="font-size:11px;color:#C2410C;font-weight:700;">' + esc(sub) + '</div></div>' +
+    '<span class="cm-res-b" style="background:#EA580C;">खोलें ›</span></a>';
+}
+
 function renderHomeView() {
   const ud = app.userData;
   const tot = roadmapTotals();
@@ -1278,6 +1289,7 @@ function renderHomeView() {
     '</div>' +
     resHtml +
     vaultStripHtml +
+    skMockBanner() +
     '<div class="cm-book">' +
       '<div class="cm-rail scr">' + railHtml + '</div>' +
       '<div class="cm-page' + noAnimCls + '" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +

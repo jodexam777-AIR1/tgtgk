@@ -1,6 +1,7 @@
 /* TGT GK अभ्यास — offline cache (JOD 2028 jaisa). Pehle net (naya maal), net na ho to cache. Naya release = C ka number badlo. */
-const C='tgtgk-v16';
-const FILES=['./','./index.html','./manifest.webmanifest','./data/avatars.js','./data/chapters_bundle.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png'];
+/* v17 (27 Nov, Claude): संस्कृत मॉक — mock.html + data/sanskrit_mocks.js; mock.html apni alag cache key par (index.html ko na dhake) */
+const C='tgtgk-v17';
+const FILES=['./','./index.html','./mock.html','./manifest.webmanifest','./data/avatars.js','./data/chapters_bundle.js','./data/sanskrit_mocks.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C&&k!=='tgtgk-kitab').map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
@@ -9,8 +10,9 @@ self.addEventListener('fetch',e=>{
   if(u.pathname.indexOf('/kitab/')>=0){ /* KITAB_V1: kitab photo — ek baar khuli to hamesha phone me (version badalne par bhi) */
     e.respondWith(caches.open('tgtgk-kitab').then(c=>c.match(r).then(m=>m||fetch(r).then(res=>{if(res&&res.ok)c.put(r,res.clone());return res;}))));
     return; }
-  const page=r.mode==='navigate'||u.pathname.endsWith('/')||u.pathname.endsWith('/index.html');
-  const key=page?'./index.html':r;
+  const isMock=u.pathname.endsWith('/mock.html');
+  const page=!isMock&&(r.mode==='navigate'||u.pathname.endsWith('/')||u.pathname.endsWith('/index.html'));
+  const key=isMock?'./mock.html':(page?'./index.html':r);
   e.respondWith(new Promise(resolve=>{
     let done=false;
     const fromCache=()=>caches.match(key).then(m=>m||(page?caches.match('./'):undefined));

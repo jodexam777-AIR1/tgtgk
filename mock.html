@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#C2410C">
+<title>संस्कृत मॉक — TGT</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- संस्कृत मॉक (UP TGT) — Claude, 27 Nov 2026. Data: data/sanskrit_mocks.js (24_SANSKRIT_MOCKS/_work/to_app_mocks.py se bana). -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #DCE5EE; color: #0F172A;
+    font-family: Arial, "Noto Sans Devanagari", "Nirmala UI", sans-serif; overflow: hidden; }
+  .wrap { position: fixed; inset: 0; display: flex; justify-content: center; }
+  .shell { width: 100%; height: 100%; background: #F5F8FA; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  @media (min-width: 900px) { .wrap { padding: 10px 0; } .shell { max-width: 440px; border-radius: 26px; border: 5px solid #263238; box-shadow: 0 12px 36px rgba(15,23,42,.18); } }
+  .scr { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .scr::-webkit-scrollbar { width: 4px; } .scr::-webkit-scrollbar-thumb { background: rgba(15,23,42,.2); border-radius: 99px; }
+  button { font: inherit; cursor: pointer; }
+  .hd { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0; flex: none; }
+  .hd-ttl { font-weight: 800; font-size: 15px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hb { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 9px; padding: 6px 10px; font-weight: 800; font-size: 13px; color: #334155; text-decoration: none; white-space: nowrap; }
+  .hb.or { background: #EA580C; border-color: #EA580C; color: #fff; }
+  .hb.gr { background: #16A34A; border-color: #16A34A; color: #fff; }
+  .body { flex: 1; min-height: 0; padding: 11px; }
+  .card { background: #fff; border: 1px solid #E3E8EE; border-radius: 14px; padding: 12px 13px; margin-bottom: 10px; box-shadow: 0 1px 5px rgba(15,23,42,.04); }
+  .rule { background: #FFF7ED; border-color: #FED7AA; font-size: 13px; line-height: 1.6; color: #7C2D12; }
+  .mk { display: flex; align-items: center; gap: 10px; }
+  .mk-n { width: 44px; height: 44px; border-radius: 12px; background: #FFEDD5; color: #C2410C; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .mk-n.done { background: #DCFCE7; color: #15803D; } .mk-n.run { background: #DBEAFE; color: #1D4ED8; }
+  .mk-t { font-weight: 800; font-size: 15px; } .mk-s { font-size: 12.5px; color: #475569; font-weight: 700; margin-top: 2px; }
+  .mk-b { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+  .btn { border: 1px solid #CBD5E1; background: #fff; color: #334155; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 13.5px; }
+  .btn.p { background: #0794C7; border-color: #0794C7; color: #fff; } .btn.o { background: #EA580C; border-color: #EA580C; color: #fff; }
+  .btn.g { background: #16A34A; border-color: #16A34A; color: #fff; } .btn.r { color: #B91C1C; border-color: #FCA5A5; }
+  .hist { font-size: 11.5px; color: #64748B; font-weight: 700; margin-top: 6px; }
+  /* exam */
+  .tm { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 15px; color: #0F172A; background: #F1F5F9; border-radius: 8px; padding: 5px 8px; }
+  .tm.low { color: #fff; background: #DC2626; }
+  .sb { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 7px 11px; background: #fff; border-bottom: 1px solid #EEF2F6; flex: none; font-size: 13px; font-weight: 800; color: #475569; }
+  .sec { display: inline-flex; background: #F1F5F9; border-radius: 9px; padding: 2px; gap: 2px; }
+  .sec button { border: none; background: transparent; border-radius: 7px; padding: 4px 9px; font-weight: 800; font-size: 12.5px; color: #475569; }
+  .sec button.on { background: #fff; color: #C2410C; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  .qno { font-size: 13px; font-weight: 800; color: #C2410C; margin-bottom: 6px; }
+  .qtx { font-weight: 700; line-height: 1.6; white-space: pre-line; color: #0F172A; margin-bottom: 12px; }
+  .qtx p { margin: 0 0 4px; }
+  table.mt { border-collapse: collapse; width: 100%; margin: 6px 0 10px; font-weight: 600; }
+  table.mt td { border: 1px solid #CBD5E1; padding: 5px 7px; vertical-align: top; }
+  table.mt tr.h td { background: #F1F5F9; font-weight: 800; }
+  .op { width: 100%; display: flex; align-items: flex-start; gap: 10px; text-align: left; background: #fff; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; margin-bottom: 9px; line-height: 1.5; color: #0F172A; font-weight: 600; }
+  .op .pl { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #94A3B8; flex: none; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: #475569; }
+  .op.sel { border-color: #0794C7; background: #E0F2FE; } .op.sel .pl { background: #0794C7; border-color: #0794C7; color: #fff; }
+  .op.ok { border-color: #16A34A; background: #DCFCE7; } .op.ok .pl { background: #16A34A; border-color: #16A34A; color: #fff; }
+  .op.bad { border-color: #DC2626; background: #FEE2E2; } .op.bad .pl { background: #DC2626; border-color: #DC2626; color: #fff; }
+  .ft { display: flex; gap: 6px; padding: 8px 10px; background: #fff; border-top: 1px solid #E2E8F0; flex: none; }
+  .ft .btn { flex: 1; padding: 10px 6px; font-size: 13px; }
+  .btn.mkd { background: #F3E8FF; border-color: #A855F7; color: #6B21A8; }
+  .ov { position: absolute; inset: 0; background: rgba(15,23,42,.45); z-index: 50; display: flex; align-items: flex-end; }
+  .ov.c { align-items: center; justify-content: center; padding: 18px; }
+  .sheet { background: #fff; width: 100%; max-height: 82%; border-radius: 18px 18px 0 0; padding: 12px; display: flex; flex-direction: column; }
+  .mdl { background: #fff; border-radius: 16px; padding: 16px; width: 100%; max-width: 380px; }
+  .mdl h3 { margin: 0 0 8px; font-size: 17px; } .mdl p { margin: 0 0 6px; font-size: 14px; line-height: 1.55; color: #334155; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .pb { height: 36px; border-radius: 8px; border: 1px solid #CBD5E1; background: #fff; font-weight: 800; font-size: 13px; color: #334155; position: relative; }
+  .pb.a { background: #0794C7; border-color: #0794C7; color: #fff; } .pb.m { box-shadow: inset 0 0 0 3px #A855F7; }
+  .pb.cur { outline: 3px solid #EA580C; outline-offset: 1px; }
+  .pb.ok { background: #16A34A; border-color: #16A34A; color: #fff; } .pb.bad { background: #DC2626; border-color: #DC2626; color: #fff; }
+  .lg { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11.5px; font-weight: 700; color: #475569; margin: 6px 0 10px; }
+  .lg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 3px; border: 1px solid #CBD5E1; }
+  .gh { font-size: 12.5px; font-weight: 800; color: #475569; margin: 8px 0 6px; }
+  /* result */
+  .big { font-size: 34px; font-weight: 800; color: #15803D; line-height: 1.1; } .big.neg { color: #B91C1C; } .big span { font-size: 15px; color: #64748B; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill { background: #F1F5F9; border-radius: 99px; padding: 4px 10px; font-size: 12.5px; font-weight: 800; color: #334155; }
+  .pill.g { background: #DCFCE7; color: #166534; } .pill.r { background: #FEE2E2; color: #991B1B; }
+  .row2 { display: flex; gap: 8px; } .row2 > div { flex: 1; }
+  .ssc { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 9px 10px; }
+  .ssc b { font-size: 20px; } .ssc small { display: block; font-size: 12px; color: #475569; font-weight: 700; margin-top: 2px; }
+  table.tp { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.tp td { padding: 6px 4px; border-bottom: 1px solid #EEF2F6; font-weight: 700; }
+  table.tp td.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .weak { color: #B91C1C; } .good { color: #15803D; }
+  .flt { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+  .flt button { border: 1px solid #CBD5E1; background: #fff; border-radius: 99px; padding: 5px 11px; font-weight: 800; font-size: 12.5px; color: #334155; }
+  .flt button.on { background: #0F172A; border-color: #0F172A; color: #fff; }
+  .rv .tag { font-size: 11.5px; color: #64748B; font-weight: 700; margin: -4px 0 8px; }
+  .exp { background: #F8FAFC; border-left: 4px solid #0794C7; border-radius: 8px; padding: 9px 10px; line-height: 1.65; color: #1E293B; font-weight: 600; white-space: pre-line; }
+  .trk { background: #FFFBEB; border-left: 4px solid #F59E0B; border-radius: 8px; padding: 8px 10px; margin-top: 6px; line-height: 1.6; font-weight: 600; white-space: pre-line; }
+  .zm { display: inline-flex; gap: 3px; }
+  .zm button { border: 1px solid #CBD5E1; background: #fff; border-radius: 7px; padding: 4px 7px; font-weight: 800; font-size: 12px; }
+  .toast { position: absolute; left: 12px; right: 12px; bottom: 70px; z-index: 60; background: #1E293B; color: #fff; font-size: 13px; font-weight: 700; padding: 9px 12px; border-radius: 10px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="shell" id="root"></div></div>
+<script src="./data/sanskrit_mocks.js"></script>
+<script>
+'use strict';
+const MOCKS = Array.isArray(window.SK_MOCKS) ? window.SK_MOCKS : [];
+const TOPIC = { sandhi:'सन्धि', samas:'समास', karak:'कारक', shabdroop:'शब्दरूप', sarvanaam:'सर्वनाम', dhatu:'धातुरूप', pratyahar:'प्रत्याहार व वर्ण',
+  sankhya:'संख्या', vachya:'वाच्य', ashuddhi:'अशुद्धि-शोधन', shikshan:'संस्कृत शिक्षण', subhashit:'सुभाषित', kadambari:'शुकनासोपदेश (कादम्बरी)',
+  shivraj:'शिवराजविजय', kirat:'किरातार्जुनीय', hitopadesh:'हितोपदेश', shakuntal:'अभिज्ञानशाकुन्तल', raghu:'रघुवंश', uttar:'उत्तररामचरित',
+  sahityadarpan:'साहित्यदर्पण, छन्द व अलंकार' };
+function tpName(q) { return q.s === 'G' ? 'GK' : (TOPIC[q.tp] || q.tp || 'संस्कृत'); }
+
+function lsGet(k, fb) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch (_) { return fb; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+const uid = (function () { const u = lsGet('tgt_gk_active_user_v1', 'm'); return (u === 'p') ? 'p' : 'm'; })();
+const uname = uid === 'p' ? 'प्रियंका' : 'मंजू';
+const SKEY = 'tgt_sk_mock_v1_' + uid;
+const store = lsGet(SKEY, null) || { mocks: {} };
+if (!store.mocks) store.mocks = {};
+function ms(code) { if (!store.mocks[code]) store.mocks[code] = { run: null, attempts: [] }; return store.mocks[code]; }
+function save() {
+  let done = 0, last = '';
+  MOCKS.forEach(m => { const s = store.mocks[m.code]; if (s && s.attempts && s.attempts.length) done++; });
+  let lastAt = 0;
+  Object.keys(store.mocks).forEach(c => { const a = store.mocks[c].attempts || []; const x = a[a.length - 1]; if (x && x.at > lastAt) { lastAt = x.at; last = x.score + '/' + x.max; } });
+  store.sum = { done: done, total: MOCKS.length, last: last };
+  lsSet(SKEY, store);
+}
+function mockBy(code) { return MOCKS.find(m => m.code === code); }
+
+let zoom = (function () { const n = Number(lsGet('tgt_gk_zoom_pct_v1', 100)); return (n >= 75 && n <= 150) ? Math.round(n) : 100; })();
+function zp(px) { return (Math.round(px * zoom / 10) / 10) + 'px'; }
+
+const st = { view: 'list', code: '', palOpen: false, modal: '', rvF: 'wrong', rvAt: -1, toast: '' };
+let ticker = null, lastTick = 0, saveCnt = 0;
+
+function fmtT(sec) { sec = Math.max(0, Math.floor(sec)); const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60; return h + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'); }
+function fmtDate(ts) { const d = new Date(ts); const M = ['जन','फर','मार्च','अप्रै','मई','जून','जुला','अग','सित','अक्टू','नव','दिस']; return d.getDate() + ' ' + M[d.getMonth()] + ', ' + d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); }
+
+/* सवाल का पाठ: "|" वाले हिस्से अलग पंक्ति / सूची-I सूची-II तालिका */
+const LBL = /^(\(?[A-Da-dक-ङ]\)?[.)]?|\(?[IVXivx]{1,4}\)?[.)]?|\(?\d\)?[.)]?)$/;
+const LEFT = /^\(?[A-Da-d]\)?[.)]?\s/;
+const RIGHT = /^\(?([ivx]{1,4}|[IVX]{1,4}|\d)\)?[.)]?\s/;
+function fmtStem(text) {
+  const t = String(text || '');
+  if (t.indexOf('|') < 0) return esc(t);
+  const tok = t.split('|').map(x => x.trim()).filter(Boolean);
+  const lines = [];
+  for (let i = 0; i < tok.length; i++) {
+    if (LBL.test(tok[i]) && i + 1 < tok.length) { lines.push(tok[i] + ' ' + tok[i + 1]); i++; } else lines.push(tok[i]);
+  }
+  let html = '', rows = [];
+  const flush = () => { if (rows.length) { html += '<table class="mt">' + rows.join('') + '</table>'; rows = []; } };
+  for (let i = 0; i < lines.length; i++) {
+    const a = lines[i], b = lines[i + 1];
+    if (b && /^सूची\s*(I|।|1)\b/.test(a) && /^सूची\s*(II|।।|2)/.test(b)) { rows.push('<tr class="h"><td>' + esc(a) + '</td><td>' + esc(b) + '</td></tr>'); i++; continue; }
+    if (b && LEFT.test(a) && RIGHT.test(b)) { rows.push('<tr><td>' + esc(a) + '</td><td>' + esc(b) + '</td></tr>'); i++; continue; }
+    flush(); html += '<p>' + esc(a) + '</p>';
+  }
+  flush();
+  return html;
+}
+
+/* ===== नतीजा ===== */
+function score(m, ans) {
+  const r = { r: 0, w: 0, s: 0, gk: { r: 0, w: 0, s: 0 }, san: { r: 0, w: 0, s: 0 }, tp: {} };
+  m.qs.forEach((q, i) => {
+    const a = ans[i]; const sec = q.s === 'G' ? r.gk : r.san;
+    const k = (a === undefined || a === null) ? 's' : (a === q.a ? 'r' : 'w');
+    r[k]++; sec[k]++;
+    if (q.s !== 'G') { const t = q.tp || 'x'; if (!r.tp[t]) r.tp[t] = { r: 0, w: 0, s: 0, n: 0 }; r.tp[t][k]++; r.tp[t].n++; }
+  });
+  r.score = r.r * m.plus - r.w * m.minus; r.max = m.qs.length * m.plus;
+  r.gk.score = r.gk.r * m.plus - r.gk.w * m.minus; r.san.score = r.san.r * m.plus - r.san.w * m.minus;
+  return r;
+}
+
+/* ===== टाइमर ===== */
+function stopTick() { if (ticker) { clearInterval(ticker); ticker = null; } }
+function startTick() {
+  stopTick(); lastTick = Date.now();
+  ticker = setInterval(() => {
+    const now = Date.now();
+    if (document.hidden || st.view !== 'exam') { lastTick = now; return; }
+    const m = mockBy(st.code), run = ms(st.code).run;
+    if (!m || !run) { stopTick(); return; }
+    run.used += Math.min(5, Math.max(0, (now - lastTick) / 1000)); lastTick = now;
+    const left = m.minutes * 60 - run.used;
+    const el = document.getElementById('tmr');
+    if (el) { el.textContent = '⏱ ' + fmtT(left); el.className = 'tm' + (left < 600 ? ' low' : ''); }
+    if (++saveCnt % 5 === 0) save();
+    if (left <= 0) { submit(true); }
+  }, 1000);
+}
+document.addEventListener('visibilitychange', () => { lastTick = Date.now(); if (document.hidden) save(); });
+window.addEventListener('pagehide', () => save());
+
+/* ===== कार्य ===== */
+function startMock(code) {
+  const s = ms(code);
+  if (!s.run) s.run = { ans: {}, mark: {}, cur: 0, used: 0, started: Date.now() };
+  save(); st.code = code; st.view = 'exam'; st.palOpen = false; st.modal = ''; st.toast = '';
+  pushV(); render(); startTick();
+}
+function submit(auto) {
+  const m = mockBy(st.code), s = ms(st.code); if (!m || !s.run) return;
+  const r = score(m, s.run.ans);
+  s.attempts.push({ at: Date.now(), used: Math.round(Math.min(s.run.used, m.minutes * 60)), ans: s.run.ans, mark: s.run.mark,
+    score: r.score, max: r.max, r: r.r, w: r.w, s: r.s, auto: !!auto });
+  s.run = null; save(); stopTick();
+  st.view = 'result'; st.rvAt = s.attempts.length - 1; st.rvF = 'wrong'; st.modal = ''; st.palOpen = false; st.toast = '';
+  if (auto) st.toast = '⏰ समय समाप्त — मॉक अपने-आप जमा हो गया';
+  render();
+}
+function showToast(t) { st.toast = t; render(); }
+
+/* ===== दृश्य: सूची ===== */
+function renderList() {
+  const cards = MOCKS.map(m => {
+    const s = store.mocks[m.code] || { run: null, attempts: [] };
+    const at = s.attempts || [], last = at[at.length - 1];
+    let cls = '', line = '120 सवाल · ' + (m.minutes / 60) + ' घंटे · +' + m.plus + '/−' + m.minus, btns = '';
+    if (s.run) {
+      cls = 'run';
+      const done = Object.keys(s.run.ans).length;
+      line = '⏸ चल रहा है · बचा समय ' + fmtT(m.minutes * 60 - s.run.used) + ' · ' + done + '/' + m.qs.length + ' हल';
+      btns = '<button class="btn p" data-act="start" data-c="' + m.code + '">जारी रखें ›</button>';
+    } else if (last) {
+      cls = 'done';
+      line = 'पिछला: <b>' + last.score + '/' + last.max + '</b> · ' + fmtDate(last.at) + (at.length > 1 ? ' · ' + at.length + ' बार दिया' : '');
+      btns = '<button class="btn g" data-act="res" data-c="' + m.code + '">परिणाम व व्याख्या ›</button><button class="btn" data-act="again" data-c="' + m.code + '">↻ दोबारा दें</button>';
+    } else {
+      btns = '<button class="btn o" data-act="start" data-c="' + m.code + '">शुरू करें ›</button>';
+    }
+    const hist = at.length > 1 ? '<div class="hist">सभी प्रयास: ' + at.map(x => x.score).join(' → ') + '</div>' : '';
+    return '<div class="card"><div class="mk"><div class="mk-n ' + cls + '">' + m.n + '</div><div style="min-width:0;flex:1;"><div class="mk-t">' + esc(m.title) + '</div><div class="mk-s">' + line + '</div></div></div>' + hist + '<div class="mk-b">' + btns + '</div></div>';
+  }).join('');
+  return '<div class="hd"><a class="hb" href="./index.html">← ऐप</a><span class="hd-ttl">📝 संस्कृत मॉक · ' + esc(uname) + '</span></div>' +
+    '<div class="body scr">' +
+      '<div class="card rule"><b>UP TGT संस्कृत जैसा पेपर:</b> 120 सवाल (1–30 GK, 31–120 संस्कृत) · 2 घंटे · सही +3, गलत −1, छोड़ा 0।<br>' +
+      '<b>मम्मी का नियम:</b> पक्का आए → करो · 2 विकल्प कट जाएँ → करो · एक भी न कटे → छोड़ो।<br>' +
+      'बीच में ऐप बंद हो जाए तो घड़ी रुक जाती है, जवाब सुरक्षित रहते हैं।</div>' +
+      (MOCKS.length ? cards : '<div class="card">मॉक का डेटा नहीं मिला। इंटरनेट से एक बार ऐप खोलें।</div>') +
+    '</div>';
+}
+
+/* ===== दृश्य: पेपर ===== */
+function renderExam() {
+  const m = mockBy(st.code), run = ms(st.code).run;
+  if (!m || !run) { st.view = 'list'; return renderList(); }
+  const n = m.qs.length, cur = Math.max(0, Math.min(run.cur || 0, n - 1)); run.cur = cur;
+  const q = m.qs[cur], pick = run.ans[cur], marked = !!run.mark[cur];
+  const left = m.minutes * 60 - run.used, done = Object.keys(run.ans).length;
+  const inGK = q.s === 'G';
+  const gkN = m.qs.filter(x => x.s === 'G').length;
+  const ops = q.o.map((o, i) => '<button class="op' + (pick === i ? ' sel' : '') + '" style="font-size:' + zp(16.5) + '" data-act="pick" data-i="' + i + '"><span class="pl">' + (i + 1) + '</span><span style="flex:1;min-width:0;">' + esc(o) + '</span></button>').join('');
+  let html = '<div class="hd"><button class="hb" data-act="pause">⏸ रोकें</button><span class="hd-ttl">' + esc(m.title) + '</span>' +
+    '<span id="tmr" class="tm' + (left < 600 ? ' low' : '') + '">⏱ ' + fmtT(left) + '</span><button class="hb gr" data-act="ask-submit">जमा</button></div>' +
+    '<div class="sb"><div class="sec"><button class="' + (inGK ? 'on' : '') + '" data-act="go" data-i="0">GK 1–' + gkN + '</button><button class="' + (!inGK ? 'on' : '') + '" data-act="go" data-i="' + gkN + '">संस्कृत ' + (gkN + 1) + '–' + n + '</button></div>' +
+    '<span>' + done + '/' + n + ' हल</span><span class="zm"><button data-act="z" data-d="-10">अ−</button><button data-act="z" data-d="10">अ+</button></span></div>' +
+    '<div class="body scr" id="qbody"><div class="qno">प्रश्न ' + (cur + 1) + ' / ' + n + (marked ? ' · <span style="color:#7E22CE;">⭐ बाद में देखें</span>' : '') + '</div>' +
+      '<div class="qtx" style="font-size:' + zp(17) + '">' + fmtStem(q.q) + '</div>' + ops +
+      (pick !== undefined ? '<button class="btn" style="width:100%;" data-act="clear">✕ उत्तर हटाएँ (छोड़ दें)</button>' : '') +
+    '</div>' +
+    '<div class="ft"><button class="btn" data-act="step" data-d="-1"' + (cur === 0 ? ' disabled style="opacity:.45"' : '') + '>‹ पिछला</button>' +
+      '<button class="btn' + (marked ? ' mkd' : '') + '" data-act="mark">⭐ ' + (marked ? 'हटाएँ' : 'बाद में') + '</button>' +
+      '<button class="btn" data-act="pal">☰ सभी</button>' +
+      (cur < n - 1 ? '<button class="btn p" data-act="step" data-d="1">अगला ›</button>' : '<button class="btn g" data-act="ask-submit">जमा करें</button>') + '</div>';
+  if (st.palOpen) {
+    const cell = (i) => '<button class="pb' + (run.ans[i] !== undefined ? ' a' : '') + (run.mark[i] ? ' m' : '') + (i === cur ? ' cur' : '') + '" data-act="go" data-i="' + i + '">' + (i + 1) + '</button>';
+    const all = m.qs.map((_, i) => i);
+    html += '<div class="ov" data-act="pal-close"><div class="sheet" data-stop="1"><div style="display:flex;justify-content:space-between;align-items:center;"><b>सभी प्रश्न</b><button class="btn" data-act="pal-close">बंद ✕</button></div>' +
+      '<div class="lg"><span><i style="background:#0794C7;border-color:#0794C7"></i>हल किया</span><span><i></i>नहीं किया</span><span><i style="box-shadow:inset 0 0 0 3px #A855F7"></i>⭐ बाद में</span></div>' +
+      '<div class="scr" style="flex:1;min-height:0;"><div class="gh">GK (1–' + gkN + ')</div><div class="grid">' + all.slice(0, gkN).map(cell).join('') + '</div>' +
+      '<div class="gh">संस्कृत (' + (gkN + 1) + '–' + n + ')</div><div class="grid">' + all.slice(gkN).map(cell).join('') + '</div></div></div></div>';
+  }
+  if (st.modal === 'submit') {
+    const sk = n - done, mk = Object.keys(run.mark).filter(k => run.mark[k]).length;
+    html += '<div class="ov c"><div class="mdl"><h3>पेपर जमा करें?</h3><p>हल किए: <b>' + done + '</b> · छोड़े: <b>' + sk + '</b>' + (mk ? ' · ⭐ बाद में देखने वाले: <b>' + mk + '</b>' : '') + '</p><p>बचा समय: ' + fmtT(left) + '</p><p style="color:#B91C1C;">जमा करने के बाद उत्तर नहीं बदल सकेंगे।</p>' +
+      '<div class="mk-b"><button class="btn g" data-act="submit">हाँ, जमा करें</button><button class="btn" data-act="modal-close">वापस पेपर पर</button></div></div></div>';
+  }
+  return html;
+}
+
+/* ===== दृश्य: परिणाम ===== */
+function renderResult() {
+  const m = mockBy(st.code), s = ms(st.code);
+  const at = s.attempts[st.rvAt >= 0 ? st.rvAt : s.attempts.length - 1];
+  if (!m || !at) { st.view = 'list'; return renderList(); }
+  const r = score(m, at.ans);
+  const prev = s.attempts.length > 1 && st.rvAt > 0 ? s.attempts[st.rvAt - 1] : null;
+  const tps = Object.keys(r.tp).map(k => ({ k, ...r.tp[k] })).sort((a, b) => ((a.r / a.n) - (b.r / b.n)) || (b.w - a.w));
+  const tpRows = tps.map(t => {
+    const pc = Math.round(100 * t.r / t.n);
+    return '<tr><td class="' + (pc < 50 ? 'weak' : (pc >= 80 ? 'good' : '')) + '">' + esc(TOPIC[t.k] || t.k) + '</td><td class="n">' + t.r + '/' + t.n + ' सही</td><td class="n" style="color:#B91C1C">' + (t.w ? t.w + ' ✗' : '') + '</td><td class="n" style="color:#64748B">' + (t.s ? t.s + ' छोड़ा' : '') + '</td></tr>';
+  }).join('');
+  const weak = tps.filter(t => t.r / t.n < 0.5).slice(0, 4).map(t => TOPIC[t.k] || t.k);
+  const items = m.qs.map((q, i) => ({ q, i, a: at.ans[i] })).filter(x => {
+    const k = (x.a === undefined || x.a === null) ? 's' : (x.a === x.q.a ? 'r' : 'w');
+    return st.rvF === 'all' || (st.rvF === 'wrong' && k === 'w') || (st.rvF === 'skip' && k === 's') || (st.rvF === 'right' && k === 'r') || (st.rvF === 'mark' && at.mark && at.mark[x.i]);
+  });
+  const mkCnt = at.mark ? Object.keys(at.mark).filter(k => at.mark[k]).length : 0;
+  const rv = items.map(x => {
+    const q = x.q, a = x.a;
+    const ops = q.o.map((o, i) => '<div class="op' + (i === q.a ? ' ok' : (i === a ? ' bad' : '')) + '" style="font-size:' + zp(15) + '"><span class="pl">' + (i + 1) + '</span><span style="flex:1;min-width:0;">' + esc(o) + (i === a ? ' <b>(आपका)</b>' : '') + '</span></div>').join('');
+    const stt = (a === undefined || a === null) ? '<span class="pill">छोड़ा · 0</span>' : (a === q.a ? '<span class="pill g">✓ सही · +' + m.plus + '</span>' : '<span class="pill r">✗ गलत · −' + m.minus + '</span>');
+    return '<div class="card rv"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;"><span class="qno" style="margin:0;">प्रश्न ' + (x.i + 1) + ' · ' + esc(tpName(q)) + '</span>' + stt + '</div>' +
+      '<div class="qtx" style="font-size:' + zp(16) + '">' + fmtStem(q.q) + '</div>' + (q.tag ? '<div class="tag">[' + esc(q.tag) + ']</div>' : '') + ops +
+      (q.e ? '<div class="exp" style="font-size:' + zp(14.5) + '"><b>व्याख्या:</b> ' + esc(q.e) + '</div>' : '') + (q.t ? '<div class="trk" style="font-size:' + zp(14) + '"><b>ट्रिक:</b> ' + esc(q.t) + '</div>' : '') + '</div>';
+  }).join('');
+  const F = [['wrong', '✗ गलत ' + r.w], ['skip', 'छोड़े ' + r.s], ['right', '✓ सही ' + r.r], ['mark', '⭐ ' + mkCnt], ['all', 'सभी 120']];
+  return '<div class="hd"><button class="hb" data-act="to-list">← सूची</button><span class="hd-ttl">परिणाम · ' + esc(m.title) + '</span><button class="hb" data-act="again" data-c="' + m.code + '">↻ दोबारा</button></div>' +
+    '<div class="body scr" id="rbody">' +
+      '<div class="card"><div style="font-size:12px;font-weight:800;color:#64748B;">कुल अंक (+' + m.plus + ' / −' + m.minus + ')' + (at.auto ? ' · समय समाप्त पर जमा' : '') + '</div>' +
+        '<div class="big' + (r.score < 0 ? ' neg' : '') + '">' + r.score + ' <span>/ ' + r.max + '</span></div>' +
+        '<div class="pills"><span class="pill g">✓ ' + r.r + ' सही</span><span class="pill r">✗ ' + r.w + ' गलत (−' + (r.w * m.minus) + ')</span><span class="pill">छोड़े ' + r.s + '</span><span class="pill">⏱ ' + fmtT(at.used) + '</span></div>' +
+        (prev ? '<div class="hist">पिछली बार: ' + prev.score + ' → अब: ' + r.score + ' (' + (r.score >= prev.score ? '+' : '') + (r.score - prev.score) + ')</div>' : '') +
+        '<div class="hist">' + fmtDate(at.at) + (s.attempts.length > 1 ? ' · प्रयास ' + ((st.rvAt >= 0 ? st.rvAt : s.attempts.length - 1) + 1) + '/' + s.attempts.length : '') + '</div></div>' +
+      '<div class="row2" style="margin-bottom:10px;"><div class="ssc"><b>' + r.gk.score + '</b>/' + (r.gk.r + r.gk.w + r.gk.s) * m.plus + '<small>GK · ✓' + r.gk.r + ' ✗' + r.gk.w + ' छोड़े ' + r.gk.s + '</small></div>' +
+        '<div class="ssc"><b>' + r.san.score + '</b>/' + (r.san.r + r.san.w + r.san.s) * m.plus + '<small>संस्कृत · ✓' + r.san.r + ' ✗' + r.san.w + ' छोड़े ' + r.san.s + '</small></div></div>' +
+      (weak.length ? '<div class="card rule"><b>सबसे कमज़ोर:</b> ' + esc(weak.join(' · ')) + '</div>' : '') +
+      '<div class="card"><div style="font-weight:800;margin-bottom:4px;">संस्कृत — विषय-वार (कमज़ोर ऊपर)</div><table class="tp">' + tpRows + '</table></div>' +
+      '<div style="font-weight:800;margin:4px 0 8px;">सवाल व व्याख्या</div>' +
+      '<div class="flt">' + F.map(f => '<button class="' + (st.rvF === f[0] ? 'on' : '') + '" data-act="rvf" data-f="' + f[0] + '">' + f[1] + '</button>').join('') + '</div>' +
+      (rv || '<div class="card" style="text-align:center;font-weight:800;color:#166534;">इस सूची में कोई सवाल नहीं।</div>') +
+    '</div>';
+}
+
+function renderModal() {
+  if (st.modal && st.modal.indexOf('again:') === 0) {
+    const code = st.modal.slice(6), m = mockBy(code);
+    return '<div class="ov c"><div class="mdl"><h3>' + esc(m ? m.title : '') + ' दोबारा दें?</h3><p>नया प्रयास शुरू होगा, घड़ी 2:00:00 से। पिछले परिणाम सुरक्षित रहेंगे।</p>' +
+      '<div class="mk-b"><button class="btn o" data-act="again-yes" data-c="' + code + '">हाँ, शुरू करें</button><button class="btn" data-act="modal-close">रहने दें</button></div></div></div>';
+  }
+  return '';
+}
+
+function render() {
+  const root = document.getElementById('root');
+  let h = st.view === 'exam' ? renderExam() : (st.view === 'result' ? renderResult() : renderList());
+  if (st.view !== 'exam') h += renderModal();
+  if (st.toast) h += '<div class="toast">' + esc(st.toast) + '</div>';
+  root.innerHTML = h;
+  if (st.toast) { const t = st.toast; setTimeout(() => { if (st.toast === t) { st.toast = ''; const el = root.querySelector('.toast'); if (el) el.remove(); } }, 2600); }
+}
+
+/* बैक बटन: पेपर/परिणाम से सूची पर */
+function pushV() { try { history.pushState({ sk: st.view }, ''); } catch (_) {} }
+function goList() { st.palOpen = false; st.modal = ''; if (history.state && history.state.sk) { try { history.back(); return; } catch (_) {} } st.view = 'list'; render(); }
+window.addEventListener('popstate', () => {
+  if (st.view === 'exam') { save(); stopTick(); }
+  st.view = 'list'; st.palOpen = false; st.modal = ''; render();
+});
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest ? e.target.closest('[data-act]') : null;
+  if (!el) return;
+  if (el.classList.contains('ov') && e.target.closest('[data-stop]')) return;
+  const act = el.getAttribute('data-act');
+  const m = mockBy(st.code), run = st.code ? ms(st.code).run : null;
+  if (act === 'start') return startMock(el.getAttribute('data-c'));
+  if (act === 'res') { st.code = el.getAttribute('data-c'); st.view = 'result'; st.rvAt = ms(st.code).attempts.length - 1; st.rvF = 'wrong'; pushV(); render(); return; }
+  if (act === 'again') { st.modal = 'again:' + el.getAttribute('data-c'); render(); return; }
+  if (act === 'again-yes') { const c = el.getAttribute('data-c'); ms(c).run = null; st.modal = ''; return startMock(c); }
+  if (act === 'modal-close') { st.modal = ''; render(); return; }
+  if (act === 'to-list') { goList(); return; }
+  if (act === 'rvf') { st.rvF = el.getAttribute('data-f'); render(); const b = document.getElementById('rbody'); return; }
+  if (act === 'z') { zoom = Math.max(75, Math.min(150, zoom + Number(el.getAttribute('data-d')))); lsSet('tgt_gk_zoom_pct_v1', zoom); render(); return; }
+  if (!m || !run) return;
+  if (act === 'pick') { const i = Number(el.getAttribute('data-i')); run.ans[run.cur] = i; save(); render(); return; }
+  if (act === 'clear') { delete run.ans[run.cur]; save(); render(); return; }
+  if (act === 'mark') { if (run.mark[run.cur]) delete run.mark[run.cur]; else run.mark[run.cur] = true; save(); render(); return; }
+  if (act === 'step') { run.cur = Math.max(0, Math.min(m.qs.length - 1, run.cur + Number(el.getAttribute('data-d')))); save(); render(); const b = document.getElementById('qbody'); if (b) b.scrollTop = 0; return; }
+  if (act === 'go') { run.cur = Number(el.getAttribute('data-i')); st.palOpen = false; save(); render(); const b = document.getElementById('qbody'); if (b) b.scrollTop = 0; return; }
+  if (act === 'pal') { st.palOpen = true; render(); return; }
+  if (act === 'pal-close') { if (e.target.closest('[data-stop]') && !e.target.closest('button')) return; st.palOpen = false; render(); return; }
+  if (act === 'ask-submit') { st.modal = 'submit'; render(); return; }
+  if (act === 'submit') return submit(false);
+  if (act === 'pause') { save(); stopTick(); st.toast = '⏸ रुका — "जारी रखें" से वहीं से शुरू होगा'; if (history.state && history.state.sk) { st.view = 'exam'; history.back(); } else { st.view = 'list'; render(); } return; }
+});
+
+/* बाएँ-दाएँ स्वाइप से अगला/पिछला */
+(function () {
+  let x0 = null, y0 = null;
+  document.addEventListener('touchstart', (e) => { if (st.view !== 'exam' || st.palOpen || st.modal) return; const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (x0 === null) return; const t = e.changedTouches[0]; const dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+      const m = mockBy(st.code), run = ms(st.code).run; if (!m || !run) return;
+      const nc = run.cur + (dx < 0 ? 1 : -1); if (nc < 0 || nc >= m.qs.length) return;
+      run.cur = nc; save(); render(); const b = document.getElementById('qbody'); if (b) b.scrollTop = 0;
+    }
+  }, { passive: true });
+})();
+
+save();
+render();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
+</body>
+</html>
