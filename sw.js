@@ -1,6 +1,6 @@
 /* TGT GK अभ्यास — offline cache (JOD 2028 jaisa). Pehle net (naya maal), net na ho to cache. Naya release = C ka number badlo. */
 /* v17 (27 Nov, Claude): संस्कृत मॉक — mock.html + data/sanskrit_mocks.js; mock.html apni alag cache key par (index.html ko na dhake) */
-const C='tgtgk-v19';
+const C='tgtgk-v20';
 const FILES=['./','./index.html','./mock.html','./manifest.webmanifest','./data/avatars.js','./data/chapters_bundle.js','./data/sanskrit_mocks.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C&&k!=='tgtgk-kitab').map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
