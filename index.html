@@ -1165,6 +1165,17 @@ function skMockBanner() {
     '<span class="cm-res-b" style="background:#EA580C;">खोलें ›</span></a>';
 }
 
+// संस्कृत पढ़ाई (padhai.html) का बटन — Claude, 27 Nov 2026 (Mock 1 के बाद मम्मी: "रोज़ पढ़ूँगी")
+function skPadhaiBanner() {
+  const pd = safeLS('tgt_sk_padhai_v1_' + app.userId, null);
+  const n = pd && pd.done ? Object.keys(pd.done).filter(k => (pd.done[k] || []).length).length : 0;
+  const sub = n ? (n + '/8 विषय पढ़े') : 'धातुरूप, वाच्य, कारक, रघुवंश… रोज़ एक विषय';
+  return '<a class="cm-res" href="./padhai.html" style="background:#F0FDF4;border-bottom-color:#BBF7D0;text-decoration:none;color:inherit;">' +
+    '<div style="min-width:0;"><div style="font-size:12.5px;font-weight:800;color:#0F172A;">📖 संस्कृत पढ़ाई (रोज़ का विषय)</div>' +
+    '<div style="font-size:11px;color:#15803D;font-weight:700;">' + esc(sub) + '</div></div>' +
+    '<span class="cm-res-b" style="background:#16A34A;">खोलें ›</span></a>';
+}
+
 function renderHomeView() {
   const ud = app.userData;
   const tot = roadmapTotals();
@@ -1294,6 +1305,7 @@ function renderHomeView() {
     resHtml +
     vaultStripHtml +
     skMockBanner() +
+    skPadhaiBanner() +
     '<div class="cm-book">' +
       '<div class="cm-rail scr">' + railHtml + '</div>' +
       '<div class="cm-page' + noAnimCls + '" style="--page:' + pageBg + '"><div class="cm-scroll scr">' + rootHtml + fanHtml + branchHtml + '</div></div>' +
@@ -4581,6 +4593,7 @@ if (typeof globalThis !== 'undefined') {
   };
 }
 </script>
+<script src="./sync.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
 
 <!-- KITAB_V1: "📖 किताब में देखें" (Claude, 25 Nov 2026) -->

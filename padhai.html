@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#15803D">
+<title>संस्कृत पढ़ाई — TGT</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<!-- संस्कृत पढ़ाई (UP TGT) — Claude, 27 Nov 2026. Bana: MUMMY GK MASTERY/24_SANSKRIT_MOCKS/_work/make_padhai.py (haath se mat badlo, script badlo). -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; background: #DCE5EE; color: #0F172A; font-family: Arial, "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+  .shell { max-width: 520px; margin: 0 auto; min-height: 100vh; background: #F5F8FA; }
+  .hd { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: #fff; border-bottom: 1px solid #E2E8F0; }
+  .hd-ttl { font-weight: 800; font-size: 15px; flex: 1; }
+  .hb { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 9px; padding: 6px 10px; font-weight: 800; font-size: 13px; color: #334155; text-decoration: none; }
+  .body { padding: 11px; }
+  .card { background: #fff; border: 1px solid #E3E8EE; border-radius: 14px; padding: 12px 13px; margin-bottom: 10px; box-shadow: 0 1px 5px rgba(15,23,42,.04); }
+  .intro { background: #F0FDF4; border-color: #BBF7D0; line-height: 1.7; }
+  summary { cursor: pointer; font-weight: 800; list-style: none; display: flex; align-items: center; gap: 8px; }
+  summary::-webkit-details-marker { display: none; }
+  .sec > summary { font-size: 1.05em; }
+  .sec > summary::after { content: "▾"; margin-left: auto; color: #64748B; }
+  .sec[open] > summary::after { content: "▴"; }
+  .st { min-width: 22px; height: 22px; border-radius: 99px; background: #E2E8F0; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+  .st.ok { background: #16A34A; color: #fff; }
+  .why { font-size: .85em; color: #9A3412; background: #FFF7ED; border-radius: 9px; padding: 6px 9px; margin: 9px 0; font-weight: 700; }
+  .sub { border: 1px solid #E2E8F0; border-radius: 10px; padding: 8px 10px; margin: 7px 0; background: #FAFCFE; }
+  .sub > summary { color: #0F766E; }
+  .lk { font-weight: 800; color: #1D4ED8; margin: 10px 0 4px; }
+  table.t { border-collapse: collapse; width: 100%; font-size: .92em; margin: 4px 0 8px; }
+  table.t th, table.t td { border: 1px solid #E2E8F0; padding: 5px 4px; text-align: center; }
+  table.t th { background: #F1F5F9; }
+  table.t td:first-child { font-weight: 700; color: #475569; }
+  ul { padding-left: 20px; line-height: 1.75; } p { line-height: 1.7; margin: 6px 0; }
+  p.v { line-height: 1.9; margin: 10px 0; }
+  .note { background: #EFF6FF; border-radius: 9px; padding: 8px 10px; color: #1E3A8A; font-weight: 700; }
+  .done-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .btn { border: 1px solid #CBD5E1; background: #fff; color: #334155; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 14px; }
+  .btn.g { background: #16A34A; border-color: #16A34A; color: #fff; }
+  .cnt-n { font-size: .85em; color: #15803D; font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hd"><a class="hb" href="./index.html">← होम</a><span class="hd-ttl">📖 संस्कृत पढ़ाई (UP TGT)</span></div>
+  <div class="body" id="root">
+    <div class="card intro"><b>रोज़ का क्रम</b><br>1. पिछले मॉक के गलत और छोड़े सवालों की व्याख्या (मॉक के परिणाम पेज पर “✗ गलत” दबाएँ)<br>2. नीचे से अगला विषय — ऊपर से नीचे के क्रम में<br>3. पढ़ लें तो “✓ आज पढ़ लिया” दबाएँ<br>4. GK ऐप पर रोज़ थोड़ा</div>
+<details class="card sec" data-sid="dhatu"><summary><span class="st" id="st-dhatu"></span><span class="tt">1. धातुरूप — 16 धातु, 5 लकार</span></summary>
+<div class="why">मॉक 1 में धातुरूप + वाच्य = 8 में 4 सही। हर धातु खोलकर लट्, लोट्, लृट्, लङ्, विधिलिङ् देखें।</div>
+<div class="cnt"><details class="sub"><summary>भू</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>भवति</td><td>भवतः</td><td>भवन्ति</td></tr><tr><td>मध्यम</td><td>भवसि</td><td>भवथः</td><td>भवथ</td></tr><tr><td>उत्तम</td><td>भवामि</td><td>भवावः</td><td>भवामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>भवतात् / भवतु</td><td>भवताम्</td><td>भवन्तु</td></tr><tr><td>मध्यम</td><td>भव / भवतात्</td><td>भवतम्</td><td>भवत</td></tr><tr><td>उत्तम</td><td>भवानि</td><td>भवाव</td><td>भवाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>भविष्यति</td><td>भविष्यतः</td><td>भविष्यन्ति</td></tr><tr><td>मध्यम</td><td>भविष्यसि</td><td>भविष्यथः</td><td>भविष्यथ</td></tr><tr><td>उत्तम</td><td>भविष्यामि</td><td>भविष्यावः</td><td>भविष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अभवत्</td><td>अभवताम्</td><td>अभवन्</td></tr><tr><td>मध्यम</td><td>अभवः</td><td>अभवतम्</td><td>अभवत</td></tr><tr><td>उत्तम</td><td>अभवम्</td><td>अभवाव</td><td>अभवाम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>भवेत्</td><td>भवेताम्</td><td>भवेयुः</td></tr><tr><td>मध्यम</td><td>भवेः</td><td>भवेतम्</td><td>भवेत</td></tr><tr><td>उत्तम</td><td>भवेयम्</td><td>भवेव</td><td>भवेम</td></tr></table></details>
+<details class="sub"><summary>गम्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>गच्छति</td><td>गच्छतः</td><td>गच्छन्ति</td></tr><tr><td>मध्यम</td><td>गच्छसि</td><td>गच्छथः</td><td>गच्छथ</td></tr><tr><td>उत्तम</td><td>गच्छामि</td><td>गच्छावः</td><td>गच्छामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>गच्छतात् / गच्छतु</td><td>गच्छताम्</td><td>गच्छन्तु</td></tr><tr><td>मध्यम</td><td>गच्छ / गच्छतात्</td><td>गच्छतम्</td><td>गच्छत</td></tr><tr><td>उत्तम</td><td>गच्छानि</td><td>गच्छाव</td><td>गच्छाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>गमिष्यति</td><td>गमिष्यतः</td><td>गमिष्यन्ति</td></tr><tr><td>मध्यम</td><td>गमिष्यसि</td><td>गमिष्यथः</td><td>गमिष्यथ</td></tr><tr><td>उत्तम</td><td>गमिष्यामि</td><td>गमिष्यावः</td><td>गमिष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अगच्छत्</td><td>अगच्छताम्</td><td>अगच्छन्</td></tr><tr><td>मध्यम</td><td>अगच्छः</td><td>अगच्छतम्</td><td>अगच्छत</td></tr><tr><td>उत्तम</td><td>अगच्छम्</td><td>अगच्छाव</td><td>अगच्छाम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>गच्छेत्</td><td>गच्छेताम्</td><td>गच्छेयुः</td></tr><tr><td>मध्यम</td><td>गच्छेः</td><td>गच्छेतम्</td><td>गच्छेत</td></tr><tr><td>उत्तम</td><td>गच्छेयम्</td><td>गच्छेव</td><td>गच्छेम</td></tr></table></details>
+<details class="sub"><summary>पठ्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पठति</td><td>पठतः</td><td>पठन्ति</td></tr><tr><td>मध्यम</td><td>पठसि</td><td>पठथः</td><td>पठथ</td></tr><tr><td>उत्तम</td><td>पठामि</td><td>पठावः</td><td>पठामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पठतात् / पठतु</td><td>पठताम्</td><td>पठन्तु</td></tr><tr><td>मध्यम</td><td>पठ / पठतात्</td><td>पठतम्</td><td>पठत</td></tr><tr><td>उत्तम</td><td>पठानि</td><td>पठाव</td><td>पठाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पठिष्यति</td><td>पठिष्यतः</td><td>पठिष्यन्ति</td></tr><tr><td>मध्यम</td><td>पठिष्यसि</td><td>पठिष्यथः</td><td>पठिष्यथ</td></tr><tr><td>उत्तम</td><td>पठिष्यामि</td><td>पठिष्यावः</td><td>पठिष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अपठत्</td><td>अपठताम्</td><td>अपठन्</td></tr><tr><td>मध्यम</td><td>अपठः</td><td>अपठतम्</td><td>अपठत</td></tr><tr><td>उत्तम</td><td>अपठम्</td><td>अपठाव</td><td>अपठाम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पठेत्</td><td>पठेताम्</td><td>पठेयुः</td></tr><tr><td>मध्यम</td><td>पठेः</td><td>पठेतम्</td><td>पठेत</td></tr><tr><td>उत्तम</td><td>पठेयम्</td><td>पठेव</td><td>पठेम</td></tr></table></details>
+<details class="sub"><summary>पा (पिब्)</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पिबति</td><td>पिबतः</td><td>पिबन्ति</td></tr><tr><td>मध्यम</td><td>पिबसि</td><td>पिबथः</td><td>पिबथ</td></tr><tr><td>उत्तम</td><td>पिबामि</td><td>पिबावः</td><td>पिबामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पिबतात् / पिबतु</td><td>पिबताम्</td><td>पिबन्तु</td></tr><tr><td>मध्यम</td><td>पिब / पिबतात्</td><td>पिबतम्</td><td>पिबत</td></tr><tr><td>उत्तम</td><td>पिबानि</td><td>पिबाव</td><td>पिबाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पास्यति</td><td>पास्यतः</td><td>पास्यन्ति</td></tr><tr><td>मध्यम</td><td>पास्यसि</td><td>पास्यथः</td><td>पास्यथ</td></tr><tr><td>उत्तम</td><td>पास्यामि</td><td>पास्यावः</td><td>पास्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अपिबत्</td><td>अपिबताम्</td><td>अपिबन्</td></tr><tr><td>मध्यम</td><td>अपिबः</td><td>अपिबतम्</td><td>अपिबत</td></tr><tr><td>उत्तम</td><td>अपिबम्</td><td>अपिबाव</td><td>अपिबाम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पिबेत्</td><td>पिबेताम्</td><td>पिबेयुः</td></tr><tr><td>मध्यम</td><td>पिबेः</td><td>पिबेतम्</td><td>पिबेत</td></tr><tr><td>उत्तम</td><td>पिबेयम्</td><td>पिबेव</td><td>पिबेम</td></tr></table></details>
+<details class="sub"><summary>लभ्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>लभते</td><td>लभेते</td><td>लभन्ते</td></tr><tr><td>मध्यम</td><td>लभसे</td><td>लभेथे</td><td>लभध्वे</td></tr><tr><td>उत्तम</td><td>लभे</td><td>लभावहे</td><td>लभामहे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>लभताम्</td><td>लभेताम्</td><td>लभन्ताम्</td></tr><tr><td>मध्यम</td><td>लभस्व</td><td>लभेथाम्</td><td>लभध्वम्</td></tr><tr><td>उत्तम</td><td>लभै</td><td>लभावहै</td><td>लभामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>लभिष्यते</td><td>लभिष्येते</td><td>लभिष्यन्ते</td></tr><tr><td>मध्यम</td><td>लभिष्यसे</td><td>लभिष्येथे</td><td>लभिष्यध्वे</td></tr><tr><td>उत्तम</td><td>लभिष्ये</td><td>लभिष्यावहे</td><td>लभिष्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अलभत</td><td>अलभेताम्</td><td>अलभन्त</td></tr><tr><td>मध्यम</td><td>अलभथाः</td><td>अलभेथाम्</td><td>अलभध्वम्</td></tr><tr><td>उत्तम</td><td>अलभे</td><td>अलभावहि</td><td>अलभामहि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>लभेत</td><td>लभेयाताम्</td><td>लभेरन्</td></tr><tr><td>मध्यम</td><td>लभेथाः</td><td>लभेयाथाम्</td><td>लभेध्वम्</td></tr><tr><td>उत्तम</td><td>लभेय</td><td>लभेवहि</td><td>लभेमहि</td></tr></table></details>
+<details class="sub"><summary>हन्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>हन्ति</td><td>हतः</td><td>घ्नन्ति</td></tr><tr><td>मध्यम</td><td>हंसि</td><td>हथः</td><td>हथ</td></tr><tr><td>उत्तम</td><td>हन्मि</td><td>हन्वः</td><td>हन्मः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>हतात् / हन्तु</td><td>हताम्</td><td>घ्नन्तु</td></tr><tr><td>मध्यम</td><td>जहि / हतात्</td><td>हतम्</td><td>हत</td></tr><tr><td>उत्तम</td><td>हनानि</td><td>हनाव</td><td>हनाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>हनिष्यति</td><td>हनिष्यतः</td><td>हनिष्यन्ति</td></tr><tr><td>मध्यम</td><td>हनिष्यसि</td><td>हनिष्यथः</td><td>हनिष्यथ</td></tr><tr><td>उत्तम</td><td>हनिष्यामि</td><td>हनिष्यावः</td><td>हनिष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अहन्</td><td>अहताम्</td><td>अघ्नन्</td></tr><tr><td>मध्यम</td><td>अहन्</td><td>अहतम्</td><td>अहत</td></tr><tr><td>उत्तम</td><td>अहनम्</td><td>अहन्व</td><td>अहन्म</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>हन्यात्</td><td>हन्याताम्</td><td>हन्युः</td></tr><tr><td>मध्यम</td><td>हन्याः</td><td>हन्यातम्</td><td>हन्यात</td></tr><tr><td>उत्तम</td><td>हन्याम्</td><td>हन्याव</td><td>हन्याम</td></tr></table></details>
+<details class="sub"><summary>दुह्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दुग्धे / दोग्धि</td><td>दुग्धः / दुहाते</td><td>दुहते / दुहन्ति</td></tr><tr><td>मध्यम</td><td>धुक्षे / धोक्षि</td><td>दुग्धः / दुहाथे</td><td>दुग्ध / धुग्ध्वे</td></tr><tr><td>उत्तम</td><td>दुहे / दोह्मि</td><td>दुह्वः / दुह्वहे</td><td>दुह्मः / दुह्महे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दुग्धात् / दुग्धाम् / दोग्धु</td><td>दुग्धाम् / दुहाताम्</td><td>दुहताम् / दुहन्तु</td></tr><tr><td>मध्यम</td><td>दुग्धात् / दुग्धि / धुक्ष्व</td><td>दुग्धम् / दुहाथाम्</td><td>दुग्ध / धुग्ध्वम्</td></tr><tr><td>उत्तम</td><td>दोहानि / दोहै</td><td>दोहाव / दोहावहै</td><td>दोहाम / दोहामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>धोक्ष्यति / धोक्ष्यते</td><td>धोक्ष्यतः / धोक्ष्येते</td><td>धोक्ष्यन्ति / धोक्ष्यन्ते</td></tr><tr><td>मध्यम</td><td>धोक्ष्यसि / धोक्ष्यसे</td><td>धोक्ष्यथः / धोक्ष्येथे</td><td>धोक्ष्यथ / धोक्ष्यध्वे</td></tr><tr><td>उत्तम</td><td>धोक्ष्यामि / धोक्ष्ये</td><td>धोक्ष्यावः / धोक्ष्यावहे</td><td>धोक्ष्यामः / धोक्ष्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अदुग्ध / अधोक् / अधोग्</td><td>अदुग्धाम् / अदुहाताम्</td><td>अदुहत / अदुहन्</td></tr><tr><td>मध्यम</td><td>अदुग्धाः / अधोक् / अधोग्</td><td>अदुग्धम् / अदुहाथाम्</td><td>अदुग्ध / अधुग्ध्वम्</td></tr><tr><td>उत्तम</td><td>अदुहि / अदोहम्</td><td>अदुह्व / अदुह्वहि</td><td>अदुह्म / अदुह्महि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दुहीत / दुह्यात्</td><td>दुहीयाताम् / दुह्याताम्</td><td>दुहीरन् / दुह्युः</td></tr><tr><td>मध्यम</td><td>दुहीथाः / दुह्याः</td><td>दुहीयाथाम् / दुह्यातम्</td><td>दुहीध्वम् / दुह्यात</td></tr><tr><td>उत्तम</td><td>दुहीय / दुह्याम्</td><td>दुहीवहि / दुह्याव</td><td>दुहीमहि / दुह्याम</td></tr></table></details>
+<details class="sub"><summary>दा</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दत्ते / ददाति</td><td>दत्तः / ददाते</td><td>ददति / ददते</td></tr><tr><td>मध्यम</td><td>दत्से / ददासि</td><td>दत्थः / ददाथे</td><td>दत्थ / दद्ध्वे</td></tr><tr><td>उत्तम</td><td>ददामि / ददे</td><td>दद्वः / दद्वहे</td><td>दद्मः / दद्महे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दत्तात् / दत्ताम् / ददातु</td><td>दत्ताम् / ददाताम्</td><td>ददताम् / ददतु</td></tr><tr><td>मध्यम</td><td>दत्तात् / दत्स्व / देहि</td><td>दत्तम् / ददाथाम्</td><td>दत्त / दद्ध्वम्</td></tr><tr><td>उत्तम</td><td>ददानि / ददै</td><td>ददाव / ददावहै</td><td>ददाम / ददामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दास्यति / दास्यते</td><td>दास्यतः / दास्येते</td><td>दास्यन्ति / दास्यन्ते</td></tr><tr><td>मध्यम</td><td>दास्यसि / दास्यसे</td><td>दास्यथः / दास्येथे</td><td>दास्यथ / दास्यध्वे</td></tr><tr><td>उत्तम</td><td>दास्यामि / दास्ये</td><td>दास्यावः / दास्यावहे</td><td>दास्यामः / दास्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अदत्त / अददात्</td><td>अदत्ताम् / अददाताम्</td><td>अददत / अददुः</td></tr><tr><td>मध्यम</td><td>अदत्थाः / अददाः</td><td>अदत्तम् / अददाथाम्</td><td>अदत्त / अदद्ध्वम्</td></tr><tr><td>उत्तम</td><td>अददाम् / अददि</td><td>अदद्व / अदद्वहि</td><td>अदद्म / अदद्महि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>ददीत / दद्यात्</td><td>ददीयाताम् / दद्याताम्</td><td>ददीरन् / दद्युः</td></tr><tr><td>मध्यम</td><td>ददीथाः / दद्याः</td><td>ददीयाथाम् / दद्यातम्</td><td>ददीध्वम् / दद्यात</td></tr><tr><td>उत्तम</td><td>ददीय / दद्याम्</td><td>ददीवहि / दद्याव</td><td>ददीमहि / दद्याम</td></tr></table></details>
+<details class="sub"><summary>भी</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>बिभेति</td><td>बिभितः / बिभीतः</td><td>बिभ्यति</td></tr><tr><td>मध्यम</td><td>बिभेषि</td><td>बिभिथः / बिभीथः</td><td>बिभिथ / बिभीथ</td></tr><tr><td>उत्तम</td><td>बिभेमि</td><td>बिभिवः / बिभीवः</td><td>बिभिमः / बिभीमः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>बिभितात् / बिभीतात् / बिभेतु</td><td>बिभिताम् / बिभीताम्</td><td>बिभ्यतु</td></tr><tr><td>मध्यम</td><td>बिभितात् / बिभिहि / बिभीतात् / बिभीहि</td><td>बिभितम् / बिभीतम्</td><td>बिभित / बिभीत</td></tr><tr><td>उत्तम</td><td>बिभयानि</td><td>बिभयाव</td><td>बिभयाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>भेष्यति</td><td>भेष्यतः</td><td>भेष्यन्ति</td></tr><tr><td>मध्यम</td><td>भेष्यसि</td><td>भेष्यथः</td><td>भेष्यथ</td></tr><tr><td>उत्तम</td><td>भेष्यामि</td><td>भेष्यावः</td><td>भेष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अबिभेत्</td><td>अबिभिताम् / अबिभीताम्</td><td>अबिभयुः</td></tr><tr><td>मध्यम</td><td>अबिभेः</td><td>अबिभितम् / अबिभीतम्</td><td>अबिभित / अबिभीत</td></tr><tr><td>उत्तम</td><td>अबिभयम्</td><td>अबिभिव / अबिभीव</td><td>अबिभिम / अबिभीम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>बिभियात् / बिभीयात्</td><td>बिभियाताम् / बिभीयाताम्</td><td>बिभियुः / बिभीयुः</td></tr><tr><td>मध्यम</td><td>बिभियाः / बिभीयाः</td><td>बिभियातम् / बिभीयातम्</td><td>बिभियात / बिभीयात</td></tr><tr><td>उत्तम</td><td>बिभियाम् / बिभीयाम्</td><td>बिभियाव / बिभीयाव</td><td>बिभियाम / बिभीयाम</td></tr></table></details>
+<details class="sub"><summary>दिव्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दीव्यति</td><td>दीव्यतः</td><td>दीव्यन्ति</td></tr><tr><td>मध्यम</td><td>दीव्यसि</td><td>दीव्यथः</td><td>दीव्यथ</td></tr><tr><td>उत्तम</td><td>दीव्यामि</td><td>दीव्यावः</td><td>दीव्यामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दीव्यतात् / दीव्यतु</td><td>दीव्यताम्</td><td>दीव्यन्तु</td></tr><tr><td>मध्यम</td><td>दीव्य / दीव्यतात्</td><td>दीव्यतम्</td><td>दीव्यत</td></tr><tr><td>उत्तम</td><td>दीव्यानि</td><td>दीव्याव</td><td>दीव्याम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>देविष्यति</td><td>देविष्यतः</td><td>देविष्यन्ति</td></tr><tr><td>मध्यम</td><td>देविष्यसि</td><td>देविष्यथः</td><td>देविष्यथ</td></tr><tr><td>उत्तम</td><td>देविष्यामि</td><td>देविष्यावः</td><td>देविष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अदीव्यत्</td><td>अदीव्यताम्</td><td>अदीव्यन्</td></tr><tr><td>मध्यम</td><td>अदीव्यः</td><td>अदीव्यतम्</td><td>अदीव्यत</td></tr><tr><td>उत्तम</td><td>अदीव्यम्</td><td>अदीव्याव</td><td>अदीव्याम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>दीव्येत्</td><td>दीव्येताम्</td><td>दीव्येयुः</td></tr><tr><td>मध्यम</td><td>दीव्येः</td><td>दीव्येतम्</td><td>दीव्येत</td></tr><tr><td>उत्तम</td><td>दीव्येयम्</td><td>दीव्येव</td><td>दीव्येम</td></tr></table></details>
+<details class="sub"><summary>तुद्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>तुदति / तुदते</td><td>तुदतः / तुदेते</td><td>तुदन्ति / तुदन्ते</td></tr><tr><td>मध्यम</td><td>तुदसि / तुदसे</td><td>तुदथः / तुदेथे</td><td>तुदथ / तुदध्वे</td></tr><tr><td>उत्तम</td><td>तुदामि / तुदे</td><td>तुदावः / तुदावहे</td><td>तुदामः / तुदामहे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>तुदतात् / तुदताम् / तुदतु</td><td>तुदताम् / तुदेताम्</td><td>तुदन्ताम् / तुदन्तु</td></tr><tr><td>मध्यम</td><td>तुद / तुदतात् / तुदस्व</td><td>तुदतम् / तुदेथाम्</td><td>तुदत / तुदध्वम्</td></tr><tr><td>उत्तम</td><td>तुदानि / तुदै</td><td>तुदाव / तुदावहै</td><td>तुदाम / तुदामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>तोत्स्यति / तोत्स्यते</td><td>तोत्स्यतः / तोत्स्येते</td><td>तोत्स्यन्ति / तोत्स्यन्ते</td></tr><tr><td>मध्यम</td><td>तोत्स्यसि / तोत्स्यसे</td><td>तोत्स्यथः / तोत्स्येथे</td><td>तोत्स्यथ / तोत्स्यध्वे</td></tr><tr><td>उत्तम</td><td>तोत्स्यामि / तोत्स्ये</td><td>तोत्स्यावः / तोत्स्यावहे</td><td>तोत्स्यामः / तोत्स्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अतुदत / अतुदत्</td><td>अतुदताम् / अतुदेताम्</td><td>अतुदन् / अतुदन्त</td></tr><tr><td>मध्यम</td><td>अतुदः / अतुदथाः</td><td>अतुदतम् / अतुदेथाम्</td><td>अतुदत / अतुदध्वम्</td></tr><tr><td>उत्तम</td><td>अतुदम् / अतुदे</td><td>अतुदाव / अतुदावहि</td><td>अतुदाम / अतुदामहि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>तुदेत / तुदेत्</td><td>तुदेताम् / तुदेयाताम्</td><td>तुदेयुः / तुदेरन्</td></tr><tr><td>मध्यम</td><td>तुदेः / तुदेथाः</td><td>तुदेतम् / तुदेयाथाम्</td><td>तुदेत / तुदेध्वम्</td></tr><tr><td>उत्तम</td><td>तुदेय / तुदेयम्</td><td>तुदेव / तुदेवहि</td><td>तुदेम / तुदेमहि</td></tr></table></details>
+<details class="sub"><summary>रुध्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>रुणद्धि / रुन्द्धे / रुन्धे</td><td>रुन्द्धः / रुन्धः / रुन्धाते</td><td>रुन्धते / रुन्धन्ति</td></tr><tr><td>मध्यम</td><td>रुणत्सि / रुन्त्से</td><td>रुन्द्धः / रुन्धः / रुन्धाथे</td><td>रुन्द्ध / रुन्द्ध्वे / रुन्ध / रुन्ध्वे</td></tr><tr><td>उत्तम</td><td>रुणध्मि / रुन्धे</td><td>रुन्ध्वः / रुन्ध्वहे</td><td>रुन्ध्मः / रुन्ध्महे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>रुणद्धु / रुन्द्धात् / रुन्द्धाम् / रुन्धात् / रुन्धाम्</td><td>रुन्द्धाम् / रुन्धाताम् / रुन्धाम्</td><td>रुन्धताम् / रुन्धन्तु</td></tr><tr><td>मध्यम</td><td>रुन्त्स्व / रुन्द्धात् / रुन्द्धि / रुन्धात् / रुन्धि</td><td>रुन्द्धम् / रुन्धम् / रुन्धाथाम्</td><td>रुन्द्ध / रुन्द्ध्वम् / रुन्ध / रुन्ध्वम्</td></tr><tr><td>उत्तम</td><td>रुणधानि / रुणधै</td><td>रुणधाव / रुणधावहै</td><td>रुणधाम / रुणधामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>रोत्स्यति / रोत्स्यते</td><td>रोत्स्यतः / रोत्स्येते</td><td>रोत्स्यन्ति / रोत्स्यन्ते</td></tr><tr><td>मध्यम</td><td>रोत्स्यसि / रोत्स्यसे</td><td>रोत्स्यथः / रोत्स्येथे</td><td>रोत्स्यथ / रोत्स्यध्वे</td></tr><tr><td>उत्तम</td><td>रोत्स्यामि / रोत्स्ये</td><td>रोत्स्यावः / रोत्स्यावहे</td><td>रोत्स्यामः / रोत्स्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अरुणत् / अरुन्द्ध / अरुन्ध</td><td>अरुन्द्धाम् / अरुन्धाताम् / अरुन्धाम्</td><td>अरुन्धत / अरुन्धन्</td></tr><tr><td>मध्यम</td><td>अरुणः / अरुणत् / अरुन्द्धाः / अरुन्धाः</td><td>अरुन्द्धम् / अरुन्धम् / अरुन्धाथाम्</td><td>अरुन्द्ध / अरुन्द्ध्वम् / अरुन्ध / अरुन्ध्वम्</td></tr><tr><td>उत्तम</td><td>अरुणधम् / अरुन्धि</td><td>अरुन्ध्व / अरुन्ध्वहि</td><td>अरुन्ध्म / अरुन्ध्महि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>रुन्धीत / रुन्ध्यात्</td><td>रुन्धीयाताम् / रुन्ध्याताम्</td><td>रुन्धीरन् / रुन्ध्युः</td></tr><tr><td>मध्यम</td><td>रुन्धीथाः / रुन्ध्याः</td><td>रुन्धीयाथाम् / रुन्ध्यातम्</td><td>रुन्धीध्वम् / रुन्ध्यात</td></tr><tr><td>उत्तम</td><td>रुन्धीय / रुन्ध्याम्</td><td>रुन्धीवहि / रुन्ध्याव</td><td>रुन्धीमहि / रुन्ध्याम</td></tr></table></details>
+<details class="sub"><summary>प्रच्छ्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पृच्छति</td><td>पृच्छतः</td><td>पृच्छन्ति</td></tr><tr><td>मध्यम</td><td>पृच्छसि</td><td>पृच्छथः</td><td>पृच्छथ</td></tr><tr><td>उत्तम</td><td>पृच्छामि</td><td>पृच्छावः</td><td>पृच्छामः</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पृच्छतात् / पृच्छतु</td><td>पृच्छताम्</td><td>पृच्छन्तु</td></tr><tr><td>मध्यम</td><td>पृच्छ / पृच्छतात्</td><td>पृच्छतम्</td><td>पृच्छत</td></tr><tr><td>उत्तम</td><td>पृच्छानि</td><td>पृच्छाव</td><td>पृच्छाम</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>प्रक्ष्यति</td><td>प्रक्ष्यतः</td><td>प्रक्ष्यन्ति</td></tr><tr><td>मध्यम</td><td>प्रक्ष्यसि</td><td>प्रक्ष्यथः</td><td>प्रक्ष्यथ</td></tr><tr><td>उत्तम</td><td>प्रक्ष्यामि</td><td>प्रक्ष्यावः</td><td>प्रक्ष्यामः</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अपृच्छत्</td><td>अपृच्छताम्</td><td>अपृच्छन्</td></tr><tr><td>मध्यम</td><td>अपृच्छः</td><td>अपृच्छतम्</td><td>अपृच्छत</td></tr><tr><td>उत्तम</td><td>अपृच्छम्</td><td>अपृच्छाव</td><td>अपृच्छाम</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>पृच्छेत्</td><td>पृच्छेताम्</td><td>पृच्छेयुः</td></tr><tr><td>मध्यम</td><td>पृच्छेः</td><td>पृच्छेतम्</td><td>पृच्छेत</td></tr><tr><td>उत्तम</td><td>पृच्छेयम्</td><td>पृच्छेव</td><td>पृच्छेम</td></tr></table></details>
+<details class="sub"><summary>ब्रू</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>आह / ब्रवीति / ब्रूते</td><td>आहतुः / ब्रुवाते / ब्रूतः</td><td>आहुः / ब्रुवते / ब्रुवन्ति</td></tr><tr><td>मध्यम</td><td>आत्थ / ब्रवीषि / ब्रूषे</td><td>आहथुः / ब्रुवाथे / ब्रूथः</td><td>ब्रूथ / ब्रूध्वे</td></tr><tr><td>उत्तम</td><td>ब्रवीमि / ब्रुवे</td><td>ब्रूवः / ब्रूवहे</td><td>ब्रूमः / ब्रूमहे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>ब्रवीतु / ब्रूतात् / ब्रूताम्</td><td>ब्रुवाताम् / ब्रूताम्</td><td>ब्रुवताम् / ब्रुवन्तु</td></tr><tr><td>मध्यम</td><td>ब्रूतात् / ब्रूष्व / ब्रूहि</td><td>ब्रुवाथाम् / ब्रूतम्</td><td>ब्रूत / ब्रूध्वम्</td></tr><tr><td>उत्तम</td><td>ब्रवाणि / ब्रवै</td><td>ब्रवाव / ब्रवावहै</td><td>ब्रवाम / ब्रवामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>वक्ष्यति / वक्ष्यते</td><td>वक्ष्यतः / वक्ष्येते</td><td>वक्ष्यन्ति / वक्ष्यन्ते</td></tr><tr><td>मध्यम</td><td>वक्ष्यसि / वक्ष्यसे</td><td>वक्ष्यथः / वक्ष्येथे</td><td>वक्ष्यथ / वक्ष्यध्वे</td></tr><tr><td>उत्तम</td><td>वक्ष्यामि / वक्ष्ये</td><td>वक्ष्यावः / वक्ष्यावहे</td><td>वक्ष्यामः / वक्ष्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अब्रवीत् / अब्रूत</td><td>अब्रुवाताम् / अब्रूताम्</td><td>अब्रुवत / अब्रुवन्</td></tr><tr><td>मध्यम</td><td>अब्रवीः / अब्रूथाः</td><td>अब्रुवाथाम् / अब्रूतम्</td><td>अब्रूत / अब्रूध्वम्</td></tr><tr><td>उत्तम</td><td>अब्रवम् / अब्रुवि</td><td>अब्रूव / अब्रूवहि</td><td>अब्रूम / अब्रूमहि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>ब्रुवीत / ब्रूयात्</td><td>ब्रुवीयाताम् / ब्रूयाताम्</td><td>ब्रुवीरन् / ब्रूयुः</td></tr><tr><td>मध्यम</td><td>ब्रुवीथाः / ब्रूयाः</td><td>ब्रुवीयाथाम् / ब्रूयातम्</td><td>ब्रुवीध्वम् / ब्रूयात</td></tr><tr><td>उत्तम</td><td>ब्रुवीय / ब्रूयाम्</td><td>ब्रुवीवहि / ब्रूयाव</td><td>ब्रुवीमहि / ब्रूयाम</td></tr></table></details>
+<details class="sub"><summary>चुर्</summary><div class="lk">लट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>चोरयति / चोरयते</td><td>चोरयतः / चोरयेते</td><td>चोरयन्ति / चोरयन्ते</td></tr><tr><td>मध्यम</td><td>चोरयसि / चोरयसे</td><td>चोरयथः / चोरयेथे</td><td>चोरयथ / चोरयध्वे</td></tr><tr><td>उत्तम</td><td>चोरयामि / चोरये</td><td>चोरयावः / चोरयावहे</td><td>चोरयामः / चोरयामहे</td></tr></table>
+<div class="lk">लोट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>चोरयतात् / चोरयताम् / चोरयतु</td><td>चोरयताम् / चोरयेताम्</td><td>चोरयन्ताम् / चोरयन्तु</td></tr><tr><td>मध्यम</td><td>चोरय / चोरयतात् / चोरयस्व</td><td>चोरयतम् / चोरयेथाम्</td><td>चोरयत / चोरयध्वम्</td></tr><tr><td>उत्तम</td><td>चोरयाणि / चोरयै</td><td>चोरयाव / चोरयावहै</td><td>चोरयाम / चोरयामहै</td></tr></table>
+<div class="lk">लृट्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>चोरयिष्यति / चोरयिष्यते</td><td>चोरयिष्यतः / चोरयिष्येते</td><td>चोरयिष्यन्ति / चोरयिष्यन्ते</td></tr><tr><td>मध्यम</td><td>चोरयिष्यसि / चोरयिष्यसे</td><td>चोरयिष्यथः / चोरयिष्येथे</td><td>चोरयिष्यथ / चोरयिष्यध्वे</td></tr><tr><td>उत्तम</td><td>चोरयिष्यामि / चोरयिष्ये</td><td>चोरयिष्यावः / चोरयिष्यावहे</td><td>चोरयिष्यामः / चोरयिष्यामहे</td></tr></table>
+<div class="lk">लङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>अचोरयत / अचोरयत्</td><td>अचोरयताम् / अचोरयेताम्</td><td>अचोरयन् / अचोरयन्त</td></tr><tr><td>मध्यम</td><td>अचोरयः / अचोरयथाः</td><td>अचोरयतम् / अचोरयेथाम्</td><td>अचोरयत / अचोरयध्वम्</td></tr><tr><td>उत्तम</td><td>अचोरयम् / अचोरये</td><td>अचोरयाव / अचोरयावहि</td><td>अचोरयाम / अचोरयामहि</td></tr></table>
+<div class="lk">विधिलिङ्</div>
+<table class="t"><tr><th>पुरुष</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथम</td><td>चोरयेत / चोरयेत्</td><td>चोरयेताम् / चोरयेयाताम्</td><td>चोरयेयुः / चोरयेरन्</td></tr><tr><td>मध्यम</td><td>चोरयेः / चोरयेथाः</td><td>चोरयेतम् / चोरयेयाथाम्</td><td>चोरयेत / चोरयेध्वम्</td></tr><tr><td>उत्तम</td><td>चोरयेय / चोरयेयम्</td><td>चोरयेव / चोरयेवहि</td><td>चोरयेम / चोरयेमहि</td></tr></table></details>
+<details class="sub"><summary>जनि (जायते) — दिवादि आत्मनेपदी, &quot;ज्ञाजनोर्जा&quot; से जा आदेश</summary><p><b>लट्</b> | प्रथम: जायते जायेते जायन्ते | मध्यम: जायसे जायेथे जायध्वे | उत्तम: जाये जायावहे जायामहे</p>
+<p><b>लोट्</b> | प्रथम: जायताम् जायेताम् जायन्ताम् | मध्यम: जायस्व जायेथाम् जायध्वम् | उत्तम: जायै जायावहै जायामहै</p>
+<p><b>लृट्</b> | प्रथम: जनिष्यते जनिष्येते जनिष्यन्ते | मध्यम: जनिष्यसे जनिष्येथे जनिष्यध्वे | उत्तम: जनिष्ये जनिष्यावहे जनिष्यामहे</p>
+<p><b>लङ्</b> | प्रथम: अजायत अजायेताम् अजायन्त | मध्यम: अजायथाः अजायेथाम् अजायध्वम् | उत्तम: अजाये अजायावहि अजायामहि</p>
+<p><b>विधिलिङ्</b> | प्रथम: जायेत जायेयाताम् जायेरन् | मध्यम: जायेथाः जायेयाथाम् जायेध्वम् | उत्तम: जायेय जायेवहि जायेमहि</p></details></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="dhatu">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-dhatu"></span></div>
+</details>
+<details class="card sec" data-sid="vachya"><summary><span class="st" id="st-vachya"></span><span class="tt">2. वाच्य — नियम</span></summary>
+<div class="why">वाच्य बदलने में धातु के रूप ही लगते हैं — इसलिए धातुरूप के साथ।</div>
+<div class="cnt"><ul><li>⭐ कर्तृ → कर्म: कर्ता तृतीया, कर्म प्रथमा, धातु + यक्, आत्मनेपद, क्रिया कर्म के अनुसार (रामः पुस्तकं पठति → रामेण पुस्तकं पठ्यते)</li><li>⭐ भाववाच्य: केवल अकर्मक, कर्ता तृतीया, क्रिया सदा प्रथम पुरुष एकवचन (बालकेन हस्यते)</li><li>पहचान: &quot;तेन पाठः पठ्यते&quot; = कर्मवाच्य</li></ul></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="vachya">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-vachya"></span></div>
+</details>
+<details class="card sec" data-sid="shukanas"><summary><span class="st" id="st-shukanas"></span><span class="tt">3. शुकनासोपदेश (कादम्बरी)</span></summary>
+<div class="why">मॉक 1: 5 में 2 सही।</div>
+<div class="cnt"><p class="note">अपनी किताब से पढ़ें — पात्र, घटनाएँ, मुख्य सूक्तियाँ। (किताब के पन्नों की फोटो आने पर यहाँ जुड़ेगा।)</p></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="shukanas">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-shukanas"></span></div>
+</details>
+<details class="card sec" data-sid="shivraj"><summary><span class="st" id="st-shivraj"></span><span class="tt">4. शिवराजविजय (निश्वास 1)</span></summary>
+<div class="why">मॉक 1: 4 में 2 सही।</div>
+<div class="cnt"><p class="note">अपनी किताब से पढ़ें — पात्र, घटनाएँ, कठिन शब्द। (पन्नों की फोटो आने पर यहाँ जुड़ेगा।)</p></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="shivraj">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-shivraj"></span></div>
+</details>
+<details class="card sec" data-sid="sahitya"><summary><span class="st" id="st-sahitya"></span><span class="tt">5. साहित्यदर्पण, छन्द व अलंकार</span></summary>
+<div class="why">मॉक 1: 3 में 1 सही।</div>
+<div class="cnt"><p class="note">अपनी किताब से — काव्य की परिभाषा (वाक्यं रसात्मकं काव्यम्), छन्दों के लक्षण, मुख्य अलंकार।</p></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="sahitya">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-sahitya"></span></div>
+</details>
+<details class="card sec" data-sid="raghu"><summary><span class="st" id="st-raghu"></span><span class="tt">6. रघुवंश — द्वितीय सर्ग (मूल पाठ)</span></summary>
+<div class="why">मॉक 1: 1 में 0।</div>
+<div class="cnt"><p class="note">यह पाठ एक छपे संस्करण से है — आपकी किताब से कहीं-कहीं अंतर हो सकता है; परीक्षा में किताब वाला पाठ मानें।</p><p class="v">अथ प्रजान्माम् अधिपः प्रभाते जायाप्रतिग्राहितगन्धमाल्याम्<br>वनाय पीतप्रतिबद्धवत्सां यशोधनो धेनुम् ऋषेर् मुमोच ॥ 2.1 ॥</p>
+<p class="v">तस्याः खुरन्यासपवित्रपांसुम् अपांसुलानां धुरि कीर्तनीया<br>मार्गं मनुष्येश्वरधर्मपत्नी श्रुतेर् इवार्थं स्मृतिर् अन्वगच्छत् ॥ 2.2 ॥</p>
+<p class="v">निवर्त्य राजा दयितां दयालुस् तां सौरभेयीं सुरभिर् यशोभिः<br>पयोधरीभूतचतुःसमुद्रां जुगोप गोरूपधराम् इवोर्वीम् ॥ 2.3 ॥</p>
+<p class="v">व्रताय तेनानुचरेण धेनोर् न्यषेधि शेषो ऽप्य् अनुयायिवर्गः<br>न चान्यतस् तस्य शरीररक्षा स्ववीर्यगुप्ता हि मनोः प्रसूतिः ॥ 2.4 ॥</p>
+<p class="v">आस्वादवद्भिः कवलैस् तृणानं कण्डूयनैर् दंशनिवार्णैश् च<br>अव्याहतैः स्वैरगतैः स तस्याः सम्राट् समाराधन्तत्परो ऽभूत् ॥ 2.5 ॥</p>
+<p class="v">स्थितः स्थिताम् उच्चलितः प्रयातां निषेदुषीम् आसनबन्ध धीरः<br>जलाभिलाषी जलम् आदधानां छावेय तां भूपति अन्वगच्छत् ॥ 2.6 ॥</p>
+<p class="v">स न्यस्तचिह्नाम् अपि राजलक्ष्मीं तेजोविशेषानुमितां दधानः<br>आसीद् अनाविष्कृतदानराजिर् अन्तर्मदावस्थ इव द्विपेन्द्रः ॥ 2.7 ॥</p>
+<p class="v">लताप्रतानोद्ग्रथितैः स किशैर् अधिजय्धन्वा विचचार दावम्<br>रक्षापदेशान् मुनिहोमधेनोर् वन्यान् विनेष्यन्न् इव दुष्टसत्त्वान् ॥ 2.8 ॥</p>
+<p class="v">विषृष्टपार्श्वानुचरस्य तस्य पार्श्वद्रुमाः पाशभृता समस्य<br>उदीरयाम् आसुर् इवोन्मदानाम् आलोकशब्दं वयसां विरावैः ॥ 2.9 ॥</p>
+<p class="v">मरुत्प्रयुक्ताश् च मरुत्सखाभं तम् अर्च्यम् आराद् अभिवर्तमानम्<br>अवाकिरन् बाललताः प्रसूनैर् आलोकशब्दं वयसां विरावैः ॥ 2.10 ॥</p>
+<p class="v">धनुर्भृतो ऽप्य् अस्य दयार्द्रभावम् आख्यातम् अन्तःकरणैर् विशङ्कैः<br>विलोकयन्त्यो वपुर् आपुर् अक्ष्णां प्रकामविस्तारफलं हरिण्यः ॥ 2.11 ॥</p>
+<p class="v">स कीचकैर् मारुतपूर्णरन्ध्रैः कूजद्भिर् आपादितवंश्कृत्यम्<br>शुश्राव कुञ्जेषु यशः स्वम् उच्चैर् उद्गीयमानं वनदेवताभिः ॥ 2.12 ॥</p>
+<p class="v">ऋक्तस् तुशारैर् गिरिनिर्झराणाम् अनोकहाकम्प्तपुष्पगन्धी<br>तम् आतपक्लान्तम् अनातपत्रम् आचारपूतं पवनः सिषेवे ॥ 2.13 ॥</p>
+<p class="v">शशाम वृष्ट्यापि विना दवाग्निर् आसीद् विशेषा फलपुष्पवृद्धिः<br>ऊनं न सत्त्वेष्व् अधिको बबाधे तस्मिन् वनं गोपत्रि गाहमाने ॥ 2.14 ॥</p>
+<p class="v">संचारपूतानि दिगन्तराणि कृत्वा दिनान्ते निलयाय गन्तुम्<br>प्रचक्रमे पल्लवरागताम्रा तस्मिन् वनं गोपत्रि गाहमाने ॥ 2.15 ॥</p>
+<p class="v">तां देवतापित्रतिथिक्रियार्थाम् अन्वग् ययौ मध्यमलोकपालः<br>बभौ च सा तेन सतां मतेन श्रद्धेव साक्षाद् विधिनोपपन्ना ॥ 2.16 ॥</p>
+<p class="v">स पल्वलोत्तीर्णवराहयूथान्य् आवासवृक्षोन्मुखबर्हिणानि<br>ययौ मृगाध्यासितशाद्वलानि श्यामायमानानि वनानि पश्यन् ॥ 2.17 ॥</p>
+<p class="v">आपीनभारोद्वहनप्रयत्नाद् गृष्टिर् गुरुत्वाद् वपुषो नरेन्द्रः<br>उभाव् अलंचक्रतुर् अञ्चिताभ्यां तपोवनावृत्तिपथं गताभ्याम् ॥ 2.18 ॥</p>
+<p class="v">वसिष्ठधेनोर् अनुयानिनं तम् आवर्तमानं वनिता वनान्तात्<br>पपौ निमेषालसपक्ष्मपङ्क्तिर् उपोषिताभ्याम् इव लोचनाभ्याम् ॥ 2.19 ॥</p>
+<p class="v">पुरस्कृता वर्त्मनि पार्थिवेन प्रत्युद्गता पार्थिवधर्म्पत्न्या<br>तदन्तरे सा विरराज धेनुर् दिनक्षपामध्यगतेव संध्या ॥ 2.20 ॥</p>
+<p class="v">प्रदक्षिणीकृत्य पयस्विनीं तां सुदक्षिणा साक्षतपात्रहस्ता<br>प्रणम्य चानर्च विशालम् अस्याः शृङ्गान्तरं द्वारम् इवार्थसिद्धेः ॥ 2.21 ॥</p>
+<p class="v">वत्सोत्सुकापि स्तिमिता सपर्यां प्रत्यग्रहीत् सेति ननन्दतुस् तौ<br>भक्त्योपपन्नेषु हि तविधानां प्रसादचिह्नानि पुरःफलानि ॥ 2.22 ॥</p>
+<p class="v">गुरोः सदारस्य निपीड्य पादौ समाप्य सांध्यं च विधिं दिलीपः<br>दोहावसाने पुनर् एव दोग्ध्रीं भेजे भुजोच्छिन्नरिपुर् निषण्णाम् ॥ 2.23 ॥</p>
+<p class="v">ताम् अन्तिकन्यस्तबलिप्रदीपाम् अन्वास्य गोप्ता गृहिणीसहायः<br>क्रमेण सुप्ताम् अनु संविवेश सुप्तोत्थितां प्रातर् अन्ऽ(?)ऊदतिष्ठत् ॥ 2.24 ॥</p>
+<p class="v">इत्थं व्रतं धारयतः प्रजार्थं समं महिष्या महनीयकीर्तेः<br>सप्त व्यतीयुस् त्रिगुणानि तस्य दिनानि दीनोद्धरणोचितस्य ॥ 2.25 ॥</p>
+<p class="v">अन्येद्युर् आत्मानुचरस्य भावं जिज्ञासमाना मुनिहोमधेनुः<br>गङ्गाप्रपातान्तविरूढशष्पं गौरीगुरोर् गह्वरम् आविवेष ॥ 2.26 ॥</p>
+<p class="v">इत्य् अद्रिषोभाप्रहितेक्षणेन इत्य् अद्रिषोभाप्रहितेक्षणेन<br>अलक्षिताभ्युत्पतनो नृपेण प्रसह्य सिंहः किल तां चकर्ष ॥ 2.27 ॥</p>
+<p class="v">तदीयम् आक्रन्दितम् आर्तसाधोर् गुहानिबद्धप्रतिशब्ददीर्घम्<br>रश्मिष्व् इवादाय नगेन्द्रसक्तां निवर्तयाम् आस नृपस्य दृष्टिम् ॥ 2.28 ॥</p>
+<p class="v">स पाटलायां गवि तस्थिवांसं धनुर्धरः केसरिणं ददर्श<br>अधित्यकायाम् इव धातुमय्यां लोध्रद्रुमं सानुमतः प्रफुल्लम् ॥ 2.29 ॥</p>
+<p class="v">ततो मृगेन्द्रस्य मृगेन्द्रगामी वधाय वध्यस्य शरं शरण्यः<br>जाताभिषङ्गो नृपतिर् निषङ्गाद् उद्धर्तुम् ऐच्छत् प्रसभोद्धृतारिः ॥ 2.30 ॥</p>
+<p class="v">वामेतरस् तस्य करः प्रहर्तुर् नखप्रभाभूषितकङ्कपत्त्रे<br>सक्ताङ्गुलिः सायकपुङ्ख एव चित्रार्पितारम्भ इन्वावतस्थे ॥ 2.31 ॥</p>
+<p class="v">बाहुप्रतिष्टम्भविवृद्धमन्युर् अभ्यर्णम् आगस्कृतम् अस्पृशद्भिः<br>राजा स्वतेजोभिर् अदह्यतान्तर् भोगीव मन्त्रौषधिरुद्धवीर्यः ॥ 2.32 ॥</p>
+<p class="v">तम् आर्यगृह्यं निगृहीतधेनुर् मनुष्यवाचा मनुवंशकेतुम्<br>विस्माययन् विस्मितम् आत्मवृत्तौ सिंहोरुसत्त्वं निजगाद सिंहः ॥ 2.33 ॥</p>
+<p class="v">अलं महीपाल तव श्रमेण प्रयुक्तम् अप्य् अस्त्रम् इतो वृथा स्यात्<br>न पादपोन्मूलनशक्ति रंहः शिलोच्चये मूर्छति मारुतस्य ॥ 2.34 ॥</p>
+<p class="v">कैलासगौरं वम् आरुरुक्षोः पादार्पणानुग्रहपूतपृष्टम्<br>अवेहि मां किंकरम् अष्टमूर्तेः कुम्भोदरं नाम निकुम्भमित्रम् ॥ 2.35 ॥</p>
+<p class="v">अमुं पुरः पश्यसि देवदारुं पुत्रीकृतो ऽसौ वृषभध्वजेन<br>यो हेमकुम्भस्तननिःसृतानां स्कन्दस्य मातुः पयसां रसज्ञः ॥ 2.36 ॥</p>
+<p class="v">कण्डूयमानेन कटं कदाचिद् वन्यद्विपेनोन्मथिता त्वग् अस्य<br>अथैनम् अद्रेस् तनया शुशोच सेनान्यम् आलीढम् इवासुरास्त्रैः ॥ 2.37 ॥</p>
+<p class="v">तदा प्रभृत्य् एव वनद्विपानां त्रासार्थम् अस्मिन्न् अहम् अदिकुक्षौ<br>व्यापारितः शूलभृता विधाय सिंहत्वम् अङ्कागतसत्त्ववृत्ति ॥ 2.38 ॥</p>
+<p class="v">तस्यालम् एषा क्षुधितस्य तृप्त्यै प्रदिष्टकाला परमेश्वरेण<br>उपस्थिता शोणितपारणा मे सुरद्विषश् चान्द्रमसी सुधेव ॥ 2.39 ॥</p>
+<p class="v">स त्वं निवर्तस्व विहाय लज्जां गुरोर् भवान् दर्शितशिष्यभक्तिः<br>शस्त्रेण रक्ष्यं यद् अशक्यरक्षं न तद् यशः शस्त्रभृतां क्षिणोति ॥ 2.40 ॥</p>
+<p class="v">इति प्रगल्भं पुरुसाधिराजो मृगाधिराजस्य वचो निशम्य<br>प्रत्याहतास्त्रो गिरिशप्रभावाद् आत्मन्य् अवज्ञां शिथिलीचकार ॥ 2.41 ॥</p>
+<p class="v">प्रत्यब्रवीच् चैनम् इषुप्रयोगे तत्पूर्वसङ्गे वितथप्रयत्नः<br>जडीकृतस् त्र्यम्बकविक्षणेन वज्रं मुमुक्षन्न् इव वज्रपाणिः ॥ 2.42 ॥</p>
+<p class="v">प्रत्याह वैनं शरमोक्षवन्ध्यो मा पत्त्रपर्वात् स्वरभेदम् आप्तः<br>प्रहीणपूर्वध्वनिनाधिरूढस् तुलाम् असारेन शरद्घनेन // [Rअघ्_२।४२*] ॥ 2.42 ॥</p>
+<p class="v">संरुद्धचेष्टस्य हेतुः हास्यं वचस् तद् यद् अहं विवक्षुः<br>अन्तर्गतं प्राणभृतां हि वेद सर्वं भवान् भावम् अतो ऽभिधास्ये ॥ 2.43 ॥</p>
+<p class="v">मान्यः स मे स्थावरजङ्गमानां सर्गस्थितिप्रत्यवहारहेतुः<br>गुरोर् अपीदं धनम् आहिताग्नेर् नश्यत् पुरस्ताद् अनुपेक्षणीयम् ॥ 2.44 ॥</p>
+<p class="v">स त्वं मदीयेन शरीरवृत्तिं देहेन निर्वर्तयितुं प्रसीद<br>दिनावसानोत्सुकबालवत्सा विसृज्यतां धेनुर् इयं महर्षेः ॥ 2.45 ॥</p>
+<p class="v">अथान्धकारं गिरिगह्वराणां दंष्ट्रामयूखैः शकलानि कुर्वन्<br>भूयः स भूतेश्वरपार्श्ववर्ती किंचिद् विहस्यार्थपतिं बभाषे ॥ 2.46 ॥</p>
+<p class="v">एकातपत्रं जगतः प्रभुत्वं नवं ययः कान्तम् इदं वपुश् च<br>अल्पस्य हेतोर् बहु हातुम् इच्छन् विचारमूधः प्रतिभासि मे त्वम् ॥ 2.47 ॥</p>
+<p class="v">भूतानुकम्पा तव चेद् इयं गौर् एका भवेत् स्वस्तिमती त्वदन्ते<br>जीवन् पुनः शश्वद् उपप्लवेभ्यः प्रजाः प्रजानाथ पितेव पासि ॥ 2.48 ॥</p>
+<p class="v">अथैकधेनोर् अपराधचण्डाद् गुरोः कृषानुप्रतिमाद् बिभेषि<br>शक्यो ऽस्य मन्युर् भवता विनेतुं गाः कोटिशः स्पर्शयता घटोध्नीः ॥ 2.49 ॥</p>
+<p class="v">तद् रक्ष कल्याणपरंपराणां भोक्तारम् ऊर्जस्वलम् आत्मदेहम्<br>महीतलस्पर्शनमात्रभिन्नम् ऋद्धं हि राज्यं पदम् ऐन्द्रम् आहुः ॥ 2.50 ॥</p>
+<p class="v">एतावद् उक्त्वा विरते मृगेन्द्रे प्रतिस्वनेनास्य गुहागतेन<br>शिलोच्चयो ऽपि क्षितिपालम् उच्चैः प्रीत्या तम् एवार्थम् अभाषतेव ॥ 2.51 ॥</p>
+<p class="v">निशम्य देवानुचरस्य वाचं मनुष्यदेवः पुनर् अप्य् उवाच<br>धेन्वा तदध्यासितकातराक्ष्या निरीक्ष्यमाणः सुतरां दयालुः ॥ 2.52 ॥</p>
+<p class="v">क्षतात् किल त्रायत इत्य् उदग्रः क्षत्रस्य शब्दो भुवनेषु रूढः<br>राज्येन किं तद्विपरीतवृत्तेः प्राणैर् उपक्रोशमलीमसैर् वा ॥ 2.53 ॥</p>
+<p class="v">कथं नु शक्यो ऽनुनयो महर्षेर् विश्राणनाच् चान्यपयस्विनीनाम्<br>इमाम् अनूनां सुरभेर् अवेहि रुद्रौजसा तु पहृतं त्वयास्याम् ॥ 2.54 ॥</p>
+<p class="v">सेयं स्वदेहार्पणनिष्क्रयेण न्याय्या मया मोचयितुं भवत्तः<br>न पारणा स्याद् विहता तवैवं भवेद् अलुप्तश् च मुनेः क्रियार्थः ॥ 2.55 ॥</p>
+<p class="v">भवान् अपीदं परवान् अवैति महान् हि यत्नस् तव देवदारौ<br>स्थातुं नियोक्तुर् न हि शक्यम् अग्रे विनाश्य रक्ष्यं स्वयम् अक्षतेन ॥ 2.56 ॥</p>
+<p class="v">किम् अप्य् अहिंस्यस् तव चेन् मतो ऽहं यशःशरीरे भव मे दयालुः<br>एकान्तविधंसिषु मद्विधानां पिण्डेष्व् अनास्था खलु भौतिकेषु ॥ 2.57 ॥</p>
+<p class="v">संबन्धम् आभाषणपूर्वम् आहुर् वृत्तः स नौ संगतयोर् वनान्ते<br>तद् भूतनाथानुग नार्हसि त्वं संबन्धिनो मे प्रणयं विहन्तुम् ॥ 2.58 ॥</p>
+<p class="v">तथेति गाम् उक्तवते दिलीपः सद्यः प्रतिष्टम्भविमुक्तबाहुः<br>स न्यस्त शस्त्रो हरये स्वदेहम् उपानयत् पिण्डम् इवामिषस्य ॥ 2.59 ॥</p>
+<p class="v">तस्मिन् क्षणे पालयितुः प्रजानाम् उत्पश्यतः सिंहनिपातम् उग्रम्<br>अवाङ्मुखस्य्ोपरि पुष्पवृष्टिः पपात विद्याधरहस्तमुक्ता ॥ 2.60 ॥</p>
+<p class="v">उत्तिष्ठ वत्सेत्य् अमृतायमानं वचो निशम्योत्थितम् उत्थितः सन्<br>ददर्श राजा जननीम् इव स्वां गाम् अग्रतः प्रस्रविणीं न सिंहम् ॥ 2.61 ॥</p>
+<p class="v">तं विस्मितं धेनुर् उवाच साधो मायां मयोध्भाव्य परीक्षितो ऽसि<br>ऋषिप्रभावान् मयि नान्तको ऽपि प्रभुः प्रहर्तुं किम् उतान्यहिंस्राः ॥ 2.62 ॥</p>
+<p class="v">भक्त्या गुरौ मय्य् अनुकम्पाय च प्रीतास्मि ते पुत्र वरं वृणीष्व<br>न केवलानां पयसां प्रसूतिम् अवेहि मां कामदुघां प्रसन्नाम् ॥ 2.63 ॥</p>
+<p class="v">ततः समानीय समानितार्थी हस्तौ स्वहस्तार्जितवीरशब्दः<br>वंशस्य कर्तारम् अनन्तकीर्तिं सुदक्षिणायां तनयं ययाचे ॥ 2.64 ॥</p>
+<p class="v">संतानकामाय तथेति कामं राज्ञे प्रतिश्रुत्य पयस्विनी सा<br>दुग्ध्वा पयः पत्त्रपुटे मदीयं पुत्र्ऽ; ओपभुङ्क्ष्व्ऽ एति तम् आदिदेश ॥ 2.65 ॥</p>
+<p class="v">वत्सस्य होमार्थविधेश् च शेषम् ऋषेर् अनुज्ञाम् अधिगम्य मातः<br>ऊधस्यम् इच्छामि तवोपभोक्तुम्यं षष्ठाम्शम् उर्व्या इव रक्षितायाः ॥ 2.66 ॥</p>
+<p class="v">इत्थं क्षितीशेन वसिष्ठधेनुर् विज्ञापिता प्रीततरा बभूव<br>तदन्विता हैमवताच् च कुक्षेः प्रत्याययाव् आश्रमम् अश्रमेण ॥ 2.67 ॥</p>
+<p class="v">तस्याः प्रसन्नेन्दुमुखः प्रसादं गुरुर् नृपाणां गुरवे निवेद्य<br>प्रहर्षचिह्नानुमितं प्रियायै शशंस वाचा पुनरुक्तयेव ॥ 2.68 ॥</p>
+<p class="v">स नन्दिनीस्तन्यम् अनिन्दितात्मा सद्वत्सलो वत्सहुतावशेषम्<br>पपौ वसिष्ठेन कृताभ्यनुज्ञः शुभ्रं यशो मूर्तम् इवातितृष्णः ॥ 2.69 ॥</p>
+<p class="v">प्रातर् यथोक्तव्रतपारणान्ते प्रास्थानिकं स्वस्त्ययनं प्रयुज<br>तौ दंपती स्वां प्रति राजधानीं प्रस्थापयाम् आस वशी वसिष्ठः ॥ 2.70 ॥</p>
+<p class="v">प्रदक्षिणीकृत्य हुतं हुताशम् अनन्तरं भर्तुर् अरुन्धतीं च<br>धेनुं सवत्सां च नृपः प्रतस्थे सन्मङ्गलोदग्रतरप्रभावः ॥ 2.71 ॥</p>
+<p class="v">श्रोताभिरामध्वनिना रथेन स धर्मपत्नीसहितः सहिष्णुः<br>ययाव् अनुद्घातसुखेन मार्गं स्वेनेव पूर्णेन मनोरथेन ॥ 2.72 ॥</p>
+<p class="v">तम् आहितौत्सुक्यम् अदर्शनेन प्रजाः प्रजार्थव्रतकर्शिताङ्गम्<br>नेत्रैः पपुस् तृप्तिम् अनाप्नुवद्भिर् नवोदयं नाथम् इवौषधीनाम् ॥ 2.73 ॥</p>
+<p class="v">पुरंदरश्रीः पुरम् उत्पताकं प्रविश्य पौरैर् अभिनन्द्यमानः<br>भुजे भंगेन्द्रसमानसारे भूयः स भूमेर् धुरम् आससञ्ज ॥ 2.74 ॥</p>
+<p class="v">अथ नयनसमुत्थं ज्योतिर् अत्रेर् इव द्यौः सुरसरिद् इव तेजो वह्निनिष्ठ्यूतम् ऐशम्<br>नरपतिकुलभूत्यै गर्भम् आधत्त राज्ञी गुरुभिर् अभिनिविष्टं लोकपालानुभावैः ॥ 2.75 ॥</p></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="raghu">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-raghu"></span></div>
+</details>
+<details class="card sec" data-sid="karak"><summary><span class="st" id="st-karak"></span><span class="tt">7. कारक व उपपद विभक्ति</span></summary>
+<div class="why">मॉक 1: 7 में 4 सही, 2 छोड़े।</div>
+<div class="cnt"><ul><li>⭐ कर्ता — स्वतन्त्रः कर्ता · कर्म — कर्तुरीप्सिततमं कर्म, तथायुक्तं चानीप्सितम्</li><li>⭐ अकथितं च (द्विकर्मक): गां दोग्धि पयः, बलिं याचते वसुधाम्, माणवकं पन्थानं पृच्छति</li><li>⭐ अधिशीङ्स्थासां कर्म (वैकुण्ठम् अधिशेते) · अभिनिविशश्च · उपान्वध्याङ्वसः (ग्रामम् उपवसति)</li><li>⭐ करण — साधकतमं करणम् (बाणेन हन्ति)</li><li>⭐ सम्प्रदान — कर्मणा यमभिप्रैति (विप्राय गां ददाति) · रुच्यर्थानां प्रीयमाणः (हरये रोचते भक्तिः) · क्रुधद्रुह… (हरये क्रुध्यति) · स्पृहेरीप्सितः (पुष्पेभ्यः स्पृहयति) · धारेरुत्तमर्णः (भक्ताय धारयति मोक्षम्)</li><li>⭐ अपादान — ध्रुवमपायेऽपादानम् (वृक्षात् पत्रं पतति) · भीत्रार्थानां भयहेतुः (चौराद् बिभेति) · आख्यातोपयोगे (उपाध्यायादधीते) · जनिकर्तुः प्रकृतिः (ब्रह्मणः प्रजाः प्रजायन्ते) · भुवः प्रभवः (हिमवतो गङ्गा प्रभवति) · वारणार्थानामीप्सितः (यवेभ्यो गां वारयति)</li><li>⭐ अधिकरण — आधारोऽधिकरणम्; 3 आधार: औपश्लेषिक (कटे आस्ते), वैषयिक (मोक्षे इच्छास्ति), अभिव्यापक (तिलेषु तैलम्)</li><li>द्वितीया उपपद: अभितः परितः समया निकषा हा प्रति · अन्तरा अन्तरेण</li><li>⭐ तृतीया उपपद: सहयुक्तेऽप्रधाने (रामेण सह सीता) · येनाङ्गविकारः (अक्ष्णा काणः) · इत्थंभूतलक्षणे (जटाभिस्तापसः) · हेतौ (पुण्येन दृष्टो हरिः) · अपवर्गे तृतीया</li><li>चतुर्थी उपपद: नमःस्वस्तिस्वाहास्वधालंवषड्योगाच्च (हरये नमः, प्रजाभ्यः स्वस्ति)</li><li>पञ्चमी उपपद: अन्यारादितरर्ते… (ऋते ज्ञानात्, ग्रामात् पूर्वम्) · पृथग्विनानानाभिः</li><li>⭐ षष्ठी — षष्ठी शेषे · षष्ठी चानादरे (रुदतः प्राव्राजीत्) · यतश्च निर्धारणम् (कवीनां कविषु वा कालिदासः श्रेष्ठः)</li><li>सप्तमी — यस्य च भावेन भावलक्षणम् (गोषु दुह्यमानासु गतः) · साधुनिपुणाभ्याम् अर्चायां… (मातरि साधुः)</li></ul></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="karak">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-karak"></span></div>
+</details>
+<details class="card sec" data-sid="shabd"><summary><span class="st" id="st-shabd"></span><span class="tt">8. शब्दरूप (दोहराने के लिए)</span></summary>
+<div class="why">मॉक 1 में 7/7 — मज़बूत; बस कभी-कभी देख लें।</div>
+<div class="cnt"><details class="sub"><summary>राम — अकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>रामः</td><td>रामौ</td><td>रामाः</td></tr><tr><td>द्वितीया</td><td>रामम्</td><td>रामौ</td><td>रामान्</td></tr><tr><td>तृतीया</td><td>रामेण</td><td>रामाभ्याम्</td><td>रामैः</td></tr><tr><td>चतुर्थी</td><td>रामाय</td><td>रामाभ्याम्</td><td>रामेभ्यः</td></tr><tr><td>पञ्चमी</td><td>रामात्</td><td>रामाभ्याम्</td><td>रामेभ्यः</td></tr><tr><td>षष्ठी</td><td>रामस्य</td><td>रामयोः</td><td>रामाणाम्</td></tr><tr><td>सप्तमी</td><td>रामे</td><td>रामयोः</td><td>रामेषु</td></tr><tr><td>सम्बोधन</td><td>राम</td><td>रामौ</td><td>रामाः</td></tr></table></details>
+<details class="sub"><summary>बालक — अकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>बालकः</td><td>बालकौ</td><td>बालकाः</td></tr><tr><td>द्वितीया</td><td>बालकम्</td><td>बालकौ</td><td>बालकान्</td></tr><tr><td>तृतीया</td><td>बालकेन</td><td>बालकाभ्याम्</td><td>बालकैः</td></tr><tr><td>चतुर्थी</td><td>बालकाय</td><td>बालकाभ्याम्</td><td>बालकेभ्यः</td></tr><tr><td>पञ्चमी</td><td>बालकात्</td><td>बालकाभ्याम्</td><td>बालकेभ्यः</td></tr><tr><td>षष्ठी</td><td>बालकस्य</td><td>बालकयोः</td><td>बालकानाम्</td></tr><tr><td>सप्तमी</td><td>बालके</td><td>बालकयोः</td><td>बालकेषु</td></tr><tr><td>सम्बोधन</td><td>बालक</td><td>बालकौ</td><td>बालकाः</td></tr></table></details>
+<details class="sub"><summary>फल — अकारान्त नपुंसकलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>फलम्</td><td>फले</td><td>फलानि</td></tr><tr><td>द्वितीया</td><td>फलम्</td><td>फले</td><td>फलानि</td></tr><tr><td>तृतीया</td><td>फलेन</td><td>फलाभ्याम्</td><td>फलैः</td></tr><tr><td>चतुर्थी</td><td>फलाय</td><td>फलाभ्याम्</td><td>फलेभ्यः</td></tr><tr><td>पञ्चमी</td><td>फलात्</td><td>फलाभ्याम्</td><td>फलेभ्यः</td></tr><tr><td>षष्ठी</td><td>फलस्य</td><td>फलयोः</td><td>फलानाम्</td></tr><tr><td>सप्तमी</td><td>फले</td><td>फलयोः</td><td>फलेषु</td></tr><tr><td>सम्बोधन</td><td>फल</td><td>फले</td><td>फलानि</td></tr></table></details>
+<details class="sub"><summary>हरि — इकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>हरिः</td><td>हरी</td><td>हरयः</td></tr><tr><td>द्वितीया</td><td>हरिम्</td><td>हरी</td><td>हरीन्</td></tr><tr><td>तृतीया</td><td>हरिणा</td><td>हरिभ्याम्</td><td>हरिभिः</td></tr><tr><td>चतुर्थी</td><td>हरये</td><td>हरिभ्याम्</td><td>हरिभ्यः</td></tr><tr><td>पञ्चमी</td><td>हरेः</td><td>हरिभ्याम्</td><td>हरिभ्यः</td></tr><tr><td>षष्ठी</td><td>हरेः</td><td>हर्योः</td><td>हरीणाम्</td></tr><tr><td>सप्तमी</td><td>हरौ</td><td>हर्योः</td><td>हरिषु</td></tr><tr><td>सम्बोधन</td><td>हरे</td><td>हरी</td><td>हरयः</td></tr></table></details>
+<details class="sub"><summary>कवि — इकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>कविः</td><td>कवी</td><td>कवयः</td></tr><tr><td>द्वितीया</td><td>कविम्</td><td>कवी</td><td>कवीन्</td></tr><tr><td>तृतीया</td><td>कविना</td><td>कविभ्याम्</td><td>कविभिः</td></tr><tr><td>चतुर्थी</td><td>कवये</td><td>कविभ्याम्</td><td>कविभ्यः</td></tr><tr><td>पञ्चमी</td><td>कवेः</td><td>कविभ्याम्</td><td>कविभ्यः</td></tr><tr><td>षष्ठी</td><td>कवेः</td><td>कव्योः</td><td>कवीनाम्</td></tr><tr><td>सप्तमी</td><td>कवौ</td><td>कव्योः</td><td>कविषु</td></tr><tr><td>सम्बोधन</td><td>कवे</td><td>कवी</td><td>कवयः</td></tr></table></details>
+<details class="sub"><summary>पति — इकारान्त पुंल्लिङ्ग (विशेष)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>पतिः</td><td>पती</td><td>पतयः</td></tr><tr><td>द्वितीया</td><td>पतिम्</td><td>पती</td><td>पतीन्</td></tr><tr><td>तृतीया</td><td>पत्या</td><td>पतिभ्याम्</td><td>पतिभिः</td></tr><tr><td>चतुर्थी</td><td>पत्ये</td><td>पतिभ्याम्</td><td>पतिभ्यः</td></tr><tr><td>पञ्चमी</td><td>पत्युः</td><td>पतिभ्याम्</td><td>पतिभ्यः</td></tr><tr><td>षष्ठी</td><td>पत्युः</td><td>पत्योः</td><td>पतीनाम्</td></tr><tr><td>सप्तमी</td><td>पत्यौ</td><td>पत्योः</td><td>पतिषु</td></tr><tr><td>सम्बोधन</td><td>पते</td><td>पती</td><td>पतयः</td></tr></table></details>
+<details class="sub"><summary>मति — इकारान्त स्त्रीलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>मतिः</td><td>मती</td><td>मतयः</td></tr><tr><td>द्वितीया</td><td>मतिम्</td><td>मती</td><td>मतीः</td></tr><tr><td>तृतीया</td><td>मत्या</td><td>मतिभ्याम्</td><td>मतिभिः</td></tr><tr><td>चतुर्थी</td><td>मतये / मत्यै</td><td>मतिभ्याम्</td><td>मतिभ्यः</td></tr><tr><td>पञ्चमी</td><td>मतेः / मत्याः</td><td>मतिभ्याम्</td><td>मतिभ्यः</td></tr><tr><td>षष्ठी</td><td>मतेः / मत्याः</td><td>मत्योः</td><td>मतीनाम्</td></tr><tr><td>सप्तमी</td><td>मतौ / मत्याम्</td><td>मत्योः</td><td>मतिषु</td></tr><tr><td>सम्बोधन</td><td>मते</td><td>मती</td><td>मतयः</td></tr></table></details>
+<details class="sub"><summary>वारि — इकारान्त नपुंसकलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>वारि</td><td>वारिणी</td><td>वारीणि</td></tr><tr><td>द्वितीया</td><td>वारि</td><td>वारिणी</td><td>वारीणि</td></tr><tr><td>तृतीया</td><td>वारिणा</td><td>वारिभ्याम्</td><td>वारिभिः</td></tr><tr><td>चतुर्थी</td><td>वारिणे</td><td>वारिभ्याम्</td><td>वारिभ्यः</td></tr><tr><td>पञ्चमी</td><td>वारिणः</td><td>वारिभ्याम्</td><td>वारिभ्यः</td></tr><tr><td>षष्ठी</td><td>वारिणः</td><td>वारिणोः</td><td>वारीणाम्</td></tr><tr><td>सप्तमी</td><td>वारिणि</td><td>वारिणोः</td><td>वारिषु</td></tr><tr><td>सम्बोधन</td><td>वारे / वारि</td><td>वारिणी</td><td>वारीणि</td></tr></table></details>
+<details class="sub"><summary>गुरु — उकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>गुरुः</td><td>गुरू</td><td>गुरवः</td></tr><tr><td>द्वितीया</td><td>गुरुम्</td><td>गुरू</td><td>गुरून्</td></tr><tr><td>तृतीया</td><td>गुरुणा</td><td>गुरुभ्याम्</td><td>गुरुभिः</td></tr><tr><td>चतुर्थी</td><td>गुरवे</td><td>गुरुभ्याम्</td><td>गुरुभ्यः</td></tr><tr><td>पञ्चमी</td><td>गुरोः</td><td>गुरुभ्याम्</td><td>गुरुभ्यः</td></tr><tr><td>षष्ठी</td><td>गुरोः</td><td>गुर्वोः</td><td>गुरूणाम्</td></tr><tr><td>सप्तमी</td><td>गुरौ</td><td>गुर्वोः</td><td>गुरुषु</td></tr><tr><td>सम्बोधन</td><td>गुरो</td><td>गुरू</td><td>गुरवः</td></tr></table></details>
+<details class="sub"><summary>भानु — उकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>भानुः</td><td>भानू</td><td>भानवः</td></tr><tr><td>द्वितीया</td><td>भानुम्</td><td>भानू</td><td>भानून्</td></tr><tr><td>तृतीया</td><td>भानुना</td><td>भानुभ्याम्</td><td>भानुभिः</td></tr><tr><td>चतुर्थी</td><td>भानवे</td><td>भानुभ्याम्</td><td>भानुभ्यः</td></tr><tr><td>पञ्चमी</td><td>भानोः</td><td>भानुभ्याम्</td><td>भानुभ्यः</td></tr><tr><td>षष्ठी</td><td>भानोः</td><td>भान्वोः</td><td>भानूनाम्</td></tr><tr><td>सप्तमी</td><td>भानौ</td><td>भान्वोः</td><td>भानुषु</td></tr><tr><td>सम्बोधन</td><td>भानो</td><td>भानू</td><td>भानवः</td></tr></table></details>
+<details class="sub"><summary>धेनु — उकारान्त स्त्रीलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>धेनुः</td><td>धेनू</td><td>धेनवः</td></tr><tr><td>द्वितीया</td><td>धेनुम्</td><td>धेनू</td><td>धेनूः</td></tr><tr><td>तृतीया</td><td>धेन्वा</td><td>धेनुभ्याम्</td><td>धेनुभिः</td></tr><tr><td>चतुर्थी</td><td>धेनवे / धेन्वै</td><td>धेनुभ्याम्</td><td>धेनुभ्यः</td></tr><tr><td>पञ्चमी</td><td>धेनोः / धेन्वाः</td><td>धेनुभ्याम्</td><td>धेनुभ्यः</td></tr><tr><td>षष्ठी</td><td>धेनोः / धेन्वाः</td><td>धेन्वोः</td><td>धेनूनाम्</td></tr><tr><td>सप्तमी</td><td>धेनौ / धेन्वाम्</td><td>धेन्वोः</td><td>धेनुषु</td></tr><tr><td>सम्बोधन</td><td>धेनो</td><td>धेनू</td><td>धेनवः</td></tr></table></details>
+<details class="sub"><summary>मधु — उकारान्त नपुंसकलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>मधु</td><td>मधुनी</td><td>मधूनि</td></tr><tr><td>द्वितीया</td><td>मधु</td><td>मधुनी</td><td>मधूनि</td></tr><tr><td>तृतीया</td><td>मधुना</td><td>मधुभ्याम्</td><td>मधुभिः</td></tr><tr><td>चतुर्थी</td><td>मधुने</td><td>मधुभ्याम्</td><td>मधुभ्यः</td></tr><tr><td>पञ्चमी</td><td>मधुनः</td><td>मधुभ्याम्</td><td>मधुभ्यः</td></tr><tr><td>षष्ठी</td><td>मधुनः</td><td>मधुनोः</td><td>मधूनाम्</td></tr><tr><td>सप्तमी</td><td>मधुनि</td><td>मधुनोः</td><td>मधुषु</td></tr><tr><td>सम्बोधन</td><td>मधो / मधु</td><td>मधुनी</td><td>मधूनि</td></tr></table></details>
+<details class="sub"><summary>पितृ — ऋकारान्त पुंल्लिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>पिता</td><td>पितरौ</td><td>पितरः</td></tr><tr><td>द्वितीया</td><td>पितरम्</td><td>पितरौ</td><td>पितॄन्</td></tr><tr><td>तृतीया</td><td>पित्रा</td><td>पितृभ्याम्</td><td>पितृभिः</td></tr><tr><td>चतुर्थी</td><td>पित्रे</td><td>पितृभ्याम्</td><td>पितृभ्यः</td></tr><tr><td>पञ्चमी</td><td>पितुः</td><td>पितृभ्याम्</td><td>पितृभ्यः</td></tr><tr><td>षष्ठी</td><td>पितुः</td><td>पित्रोः</td><td>पितॄणाम्</td></tr><tr><td>सप्तमी</td><td>पितरि</td><td>पित्रोः</td><td>पितृषु</td></tr><tr><td>सम्बोधन</td><td>पितः</td><td>पितरौ</td><td>पितरः</td></tr></table></details>
+<details class="sub"><summary>दातृ — ऋकारान्त पुंल्लिङ्ग (तृच्-प्रत्ययान्त — &quot;अप्तृन्तृच्स्वसृ…&quot; से उपधा दीर्घ: दातारौ/दातारः; पितृ में नहीं)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>दाता</td><td>दातारौ</td><td>दातारः</td></tr><tr><td>द्वितीया</td><td>दातारम्</td><td>दातारौ</td><td>दातॄन्</td></tr><tr><td>तृतीया</td><td>दात्रा</td><td>दातृभ्याम्</td><td>दातृभिः</td></tr><tr><td>चतुर्थी</td><td>दात्रे</td><td>दातृभ्याम्</td><td>दातृभ्यः</td></tr><tr><td>पञ्चमी</td><td>दातुः</td><td>दातृभ्याम्</td><td>दातृभ्यः</td></tr><tr><td>षष्ठी</td><td>दातुः</td><td>दात्रोः</td><td>दातॄणाम्</td></tr><tr><td>सप्तमी</td><td>दातरि</td><td>दात्रोः</td><td>दातृषु</td></tr><tr><td>सम्बोधन</td><td>दातः</td><td>दातारौ</td><td>दातारः</td></tr></table></details>
+<details class="sub"><summary>मातृ — ऋकारान्त स्त्रीलिङ्ग</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>माता</td><td>मातरौ</td><td>मातरः</td></tr><tr><td>द्वितीया</td><td>मातरम्</td><td>मातरौ</td><td>मातॄः</td></tr><tr><td>तृतीया</td><td>मात्रा</td><td>मातृभ्याम्</td><td>मातृभिः</td></tr><tr><td>चतुर्थी</td><td>मात्रे</td><td>मातृभ्याम्</td><td>मातृभ्यः</td></tr><tr><td>पञ्चमी</td><td>मातुः</td><td>मातृभ्याम्</td><td>मातृभ्यः</td></tr><tr><td>षष्ठी</td><td>मातुः</td><td>मात्रोः</td><td>मातॄणाम्</td></tr><tr><td>सप्तमी</td><td>मातरि</td><td>मात्रोः</td><td>मातृषु</td></tr><tr><td>सम्बोधन</td><td>मातः</td><td>मातरौ</td><td>मातरः</td></tr></table></details>
+<details class="sub"><summary>लता — आकारान्त स्त्रीलिङ्ग (पिछले पेपर में आया)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>लता</td><td>लते</td><td>लताः</td></tr><tr><td>द्वितीया</td><td>लताम्</td><td>लते</td><td>लताः</td></tr><tr><td>तृतीया</td><td>लतया</td><td>लताभ्याम्</td><td>लताभिः</td></tr><tr><td>चतुर्थी</td><td>लतायै</td><td>लताभ्याम्</td><td>लताभ्यः</td></tr><tr><td>पञ्चमी</td><td>लतायाः</td><td>लताभ्याम्</td><td>लताभ्यः</td></tr><tr><td>षष्ठी</td><td>लतायाः</td><td>लतयोः</td><td>लतानाम्</td></tr><tr><td>सप्तमी</td><td>लतायाम्</td><td>लतयोः</td><td>लतासु</td></tr><tr><td>सम्बोधन</td><td>लते</td><td>लते</td><td>लताः</td></tr></table></details>
+<details class="sub"><summary>नदी — ईकारान्त स्त्रीलिङ्ग (पिछले पेपर में आया)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>नदी</td><td>नद्यौ</td><td>नद्यः</td></tr><tr><td>द्वितीया</td><td>नदीम्</td><td>नद्यौ</td><td>नदीः</td></tr><tr><td>तृतीया</td><td>नद्या</td><td>नदीभ्याम्</td><td>नदीभिः</td></tr><tr><td>चतुर्थी</td><td>नद्यै</td><td>नदीभ्याम्</td><td>नदीभ्यः</td></tr><tr><td>पञ्चमी</td><td>नद्याः</td><td>नदीभ्याम्</td><td>नदीभ्यः</td></tr><tr><td>षष्ठी</td><td>नद्याः</td><td>नद्योः</td><td>नदीनाम्</td></tr><tr><td>सप्तमी</td><td>नद्याम्</td><td>नद्योः</td><td>नदीषु</td></tr><tr><td>सम्बोधन</td><td>नदि</td><td>नद्यौ</td><td>नद्यः</td></tr></table></details>
+<details class="sub"><summary>सर्व (पुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>सर्वः</td><td>सर्वौ</td><td>सर्वे</td></tr><tr><td>द्वितीया</td><td>सर्वम्</td><td>सर्वौ</td><td>सर्वान्</td></tr><tr><td>तृतीया</td><td>सर्वेण</td><td>सर्वाभ्याम्</td><td>सर्वैः</td></tr><tr><td>चतुर्थी</td><td>सर्वस्मै</td><td>सर्वाभ्याम्</td><td>सर्वेभ्यः</td></tr><tr><td>पञ्चमी</td><td>सर्वस्मात्</td><td>सर्वाभ्याम्</td><td>सर्वेभ्यः</td></tr><tr><td>षष्ठी</td><td>सर्वस्य</td><td>सर्वयोः</td><td>सर्वेषाम्</td></tr><tr><td>सप्तमी</td><td>सर्वस्मिन्</td><td>सर्वयोः</td><td>सर्वेषु</td></tr><tr><td>सम्बोधन</td><td>सर्व</td><td>सर्वौ</td><td>सर्वे</td></tr></table></details>
+<details class="sub"><summary>सर्व (स्त्री.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>सर्वा</td><td>सर्वे</td><td>सर्वाः</td></tr><tr><td>द्वितीया</td><td>सर्वाम्</td><td>सर्वे</td><td>सर्वाः</td></tr><tr><td>तृतीया</td><td>सर्वया</td><td>सर्वाभ्याम्</td><td>सर्वाभिः</td></tr><tr><td>चतुर्थी</td><td>सर्वस्यै</td><td>सर्वाभ्याम्</td><td>सर्वाभ्यः</td></tr><tr><td>पञ्चमी</td><td>सर्वस्याः</td><td>सर्वाभ्याम्</td><td>सर्वाभ्यः</td></tr><tr><td>षष्ठी</td><td>सर्वस्याः</td><td>सर्वयोः</td><td>सर्वासाम्</td></tr><tr><td>सप्तमी</td><td>सर्वस्याम्</td><td>सर्वयोः</td><td>सर्वासु</td></tr><tr><td>सम्बोधन</td><td>सर्वे</td><td>सर्वे</td><td>सर्वाः</td></tr></table></details>
+<details class="sub"><summary>सर्व (नपुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>सर्वम्</td><td>सर्वे</td><td>सर्वाणि</td></tr><tr><td>द्वितीया</td><td>सर्वम्</td><td>सर्वे</td><td>सर्वाणि</td></tr><tr><td>तृतीया</td><td>सर्वेण</td><td>सर्वाभ्याम्</td><td>सर्वैः</td></tr><tr><td>चतुर्थी</td><td>सर्वस्मै</td><td>सर्वाभ्याम्</td><td>सर्वेभ्यः</td></tr><tr><td>पञ्चमी</td><td>सर्वस्मात्</td><td>सर्वाभ्याम्</td><td>सर्वेभ्यः</td></tr><tr><td>षष्ठी</td><td>सर्वस्य</td><td>सर्वयोः</td><td>सर्वेषाम्</td></tr><tr><td>सप्तमी</td><td>सर्वस्मिन्</td><td>सर्वयोः</td><td>सर्वेषु</td></tr><tr><td>सम्बोधन</td><td>सर्व</td><td>सर्वे</td><td>सर्वाणि</td></tr></table></details>
+<details class="sub"><summary>यद् (पुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>यः</td><td>यौ</td><td>ये</td></tr><tr><td>द्वितीया</td><td>यम्</td><td>यौ</td><td>यान्</td></tr><tr><td>तृतीया</td><td>येन</td><td>याभ्याम्</td><td>यैः</td></tr><tr><td>चतुर्थी</td><td>यस्मै</td><td>याभ्याम्</td><td>येभ्यः</td></tr><tr><td>पञ्चमी</td><td>यस्मात्</td><td>याभ्याम्</td><td>येभ्यः</td></tr><tr><td>षष्ठी</td><td>यस्य</td><td>ययोः</td><td>येषाम्</td></tr><tr><td>सप्तमी</td><td>यस्मिन्</td><td>ययोः</td><td>येषु</td></tr><tr><td>सम्बोधन</td><td>य</td><td>यौ</td><td>ये</td></tr></table></details>
+<details class="sub"><summary>यद् (स्त्री.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>या</td><td>ये</td><td>याः</td></tr><tr><td>द्वितीया</td><td>याम्</td><td>ये</td><td>याः</td></tr><tr><td>तृतीया</td><td>यया</td><td>याभ्याम्</td><td>याभिः</td></tr><tr><td>चतुर्थी</td><td>यस्यै</td><td>याभ्याम्</td><td>याभ्यः</td></tr><tr><td>पञ्चमी</td><td>यस्याः</td><td>याभ्याम्</td><td>याभ्यः</td></tr><tr><td>षष्ठी</td><td>यस्याः</td><td>ययोः</td><td>यासाम्</td></tr><tr><td>सप्तमी</td><td>यस्याम्</td><td>ययोः</td><td>यासु</td></tr><tr><td>सम्बोधन</td><td>ये</td><td>ये</td><td>याः</td></tr></table></details>
+<details class="sub"><summary>यद् (नपुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>यत्</td><td>ये</td><td>यानि</td></tr><tr><td>द्वितीया</td><td>यत्</td><td>ये</td><td>यानि</td></tr><tr><td>तृतीया</td><td>येन</td><td>याभ्याम्</td><td>यैः</td></tr><tr><td>चतुर्थी</td><td>यस्मै</td><td>याभ्याम्</td><td>येभ्यः</td></tr><tr><td>पञ्चमी</td><td>यस्मात्</td><td>याभ्याम्</td><td>येभ्यः</td></tr><tr><td>षष्ठी</td><td>यस्य</td><td>ययोः</td><td>येषाम्</td></tr><tr><td>सप्तमी</td><td>यस्मिन्</td><td>ययोः</td><td>येषु</td></tr><tr><td>सम्बोधन</td><td>यत्</td><td>ये</td><td>यानि</td></tr></table></details>
+<details class="sub"><summary>किम् (पुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>कः</td><td>कौ</td><td>के</td></tr><tr><td>द्वितीया</td><td>कम्</td><td>कौ</td><td>कान्</td></tr><tr><td>तृतीया</td><td>केन</td><td>काभ्याम्</td><td>कैः</td></tr><tr><td>चतुर्थी</td><td>कस्मै</td><td>काभ्याम्</td><td>केभ्यः</td></tr><tr><td>पञ्चमी</td><td>कस्मात्</td><td>काभ्याम्</td><td>केभ्यः</td></tr><tr><td>षष्ठी</td><td>कस्य</td><td>कयोः</td><td>केषाम्</td></tr><tr><td>सप्तमी</td><td>कस्मिन्</td><td>कयोः</td><td>केषु</td></tr><tr><td>सम्बोधन</td><td>क</td><td>कौ</td><td>के</td></tr></table></details>
+<details class="sub"><summary>किम् (स्त्री.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>का</td><td>के</td><td>काः</td></tr><tr><td>द्वितीया</td><td>काम्</td><td>के</td><td>काः</td></tr><tr><td>तृतीया</td><td>कया</td><td>काभ्याम्</td><td>काभिः</td></tr><tr><td>चतुर्थी</td><td>कस्यै</td><td>काभ्याम्</td><td>काभ्यः</td></tr><tr><td>पञ्चमी</td><td>कस्याः</td><td>काभ्याम्</td><td>काभ्यः</td></tr><tr><td>षष्ठी</td><td>कस्याः</td><td>कयोः</td><td>कासाम्</td></tr><tr><td>सप्तमी</td><td>कस्याम्</td><td>कयोः</td><td>कासु</td></tr><tr><td>सम्बोधन</td><td>के</td><td>के</td><td>काः</td></tr></table></details>
+<details class="sub"><summary>किम् (नपुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>किम्</td><td>के</td><td>कानि</td></tr><tr><td>द्वितीया</td><td>किम्</td><td>के</td><td>कानि</td></tr><tr><td>तृतीया</td><td>केन</td><td>काभ्याम्</td><td>कैः</td></tr><tr><td>चतुर्थी</td><td>कस्मै</td><td>काभ्याम्</td><td>केभ्यः</td></tr><tr><td>पञ्चमी</td><td>कस्मात्</td><td>काभ्याम्</td><td>केभ्यः</td></tr><tr><td>षष्ठी</td><td>कस्य</td><td>कयोः</td><td>केषाम्</td></tr><tr><td>सप्तमी</td><td>कस्मिन्</td><td>कयोः</td><td>केषु</td></tr><tr><td>सम्बोधन</td><td>किम्</td><td>के</td><td>कानि</td></tr></table></details>
+<details class="sub"><summary>इदम् (पुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>अयम्</td><td>इमौ</td><td>इमे</td></tr><tr><td>द्वितीया</td><td>इमम्</td><td>इमौ</td><td>इमान्</td></tr><tr><td>तृतीया</td><td>अनेन</td><td>आभ्याम्</td><td>एभिः</td></tr><tr><td>चतुर्थी</td><td>अस्मै</td><td>आभ्याम्</td><td>एभ्यः</td></tr><tr><td>पञ्चमी</td><td>अस्मात्</td><td>आभ्याम्</td><td>एभ्यः</td></tr><tr><td>षष्ठी</td><td>अस्य</td><td>अनयोः</td><td>एषाम्</td></tr><tr><td>सप्तमी</td><td>अस्मिन्</td><td>अनयोः</td><td>एषु</td></tr><tr><td>सम्बोधन</td><td>अयम्</td><td>इमौ</td><td>इमे</td></tr></table></details>
+<details class="sub"><summary>इदम् (स्त्री.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>इयम्</td><td>इमे</td><td>इमाः</td></tr><tr><td>द्वितीया</td><td>इमाम्</td><td>इमे</td><td>इमाः</td></tr><tr><td>तृतीया</td><td>अनया</td><td>आभ्याम्</td><td>आभिः</td></tr><tr><td>चतुर्थी</td><td>अस्यै</td><td>आभ्याम्</td><td>आभ्यः</td></tr><tr><td>पञ्चमी</td><td>अस्याः</td><td>आभ्याम्</td><td>आभ्यः</td></tr><tr><td>षष्ठी</td><td>अस्याः</td><td>अनयोः</td><td>आसाम्</td></tr><tr><td>सप्तमी</td><td>अस्याम्</td><td>अनयोः</td><td>आसु</td></tr><tr><td>सम्बोधन</td><td>इयम्</td><td>इमे</td><td>इमाः</td></tr></table></details>
+<details class="sub"><summary>इदम् (नपुं.) — सर्वनाम</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>इदम्</td><td>इमे</td><td>इमानि</td></tr><tr><td>द्वितीया</td><td>इदम्</td><td>इमे</td><td>इमानि</td></tr><tr><td>तृतीया</td><td>अनेन</td><td>आभ्याम्</td><td>एभिः</td></tr><tr><td>चतुर्थी</td><td>अस्मै</td><td>आभ्याम्</td><td>एभ्यः</td></tr><tr><td>पञ्चमी</td><td>अस्मात्</td><td>आभ्याम्</td><td>एभ्यः</td></tr><tr><td>षष्ठी</td><td>अस्य</td><td>अनयोः</td><td>एषाम्</td></tr><tr><td>सप्तमी</td><td>अस्मिन्</td><td>अनयोः</td><td>एषु</td></tr><tr><td>सम्बोधन</td><td>इदम्</td><td>इमे</td><td>इमानि</td></tr></table></details>
+<details class="sub"><summary>युष्मद् — सर्वनाम (तीनों लिङ्ग समान)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>त्वम्</td><td>युवाम्</td><td>यूयम्</td></tr><tr><td>द्वितीया</td><td>त्वाम्</td><td>युवाम्</td><td>युष्मान्</td></tr><tr><td>तृतीया</td><td>त्वया</td><td>युवाभ्याम्</td><td>युष्माभिः</td></tr><tr><td>चतुर्थी</td><td>तुभ्यम्</td><td>युवाभ्याम्</td><td>युष्मभ्यम्</td></tr><tr><td>पञ्चमी</td><td>त्वत्</td><td>युवाभ्याम्</td><td>युष्मत्</td></tr><tr><td>षष्ठी</td><td>तव</td><td>युवयोः</td><td>युष्माकम्</td></tr><tr><td>सप्तमी</td><td>त्वयि</td><td>युवयोः</td><td>युष्मासु</td></tr></table></details>
+<details class="sub"><summary>अस्मद् — सर्वनाम (तीनों लिङ्ग समान)</summary><table class="t"><tr><th>विभक्ति</th><th>एकवचन</th><th>द्विवचन</th><th>बहुवचन</th></tr><tr><td>प्रथमा</td><td>अहम्</td><td>आवाम्</td><td>वयम्</td></tr><tr><td>द्वितीया</td><td>माम्</td><td>आवाम्</td><td>अस्मान्</td></tr><tr><td>तृतीया</td><td>मया</td><td>आवाभ्याम्</td><td>अस्माभिः</td></tr><tr><td>चतुर्थी</td><td>मह्यम्</td><td>आवाभ्याम्</td><td>अस्मभ्यम्</td></tr><tr><td>पञ्चमी</td><td>मत्</td><td>आवाभ्याम्</td><td>अस्मत्</td></tr><tr><td>षष्ठी</td><td>मम</td><td>आवयोः</td><td>अस्माकम्</td></tr><tr><td>सप्तमी</td><td>मयि</td><td>आवयोः</td><td>अस्मासु</td></tr></table></details></div>
+<div class="done-row"><button class="btn g" data-act="done" data-sid="shabd">✓ आज पढ़ लिया</button><span class="cnt-n" id="n-shabd"></span></div>
+</details>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+  function g(k, fb) { try { var r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch (_) { return fb; } }
+  function s(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
+  var uid = g('tgt_gk_active_user_v1', 'm') === 'p' ? 'p' : 'm';
+  var KEY = 'tgt_sk_padhai_v1_' + uid;
+  var st = g(KEY, null) || { done: {} }; if (!st.done) st.done = {};
+  var z = Number(g('tgt_gk_zoom_pct_v1', 100)); if (z >= 75 && z <= 150) document.documentElement.style.fontSize = (16 * z / 100) + 'px';
+  document.body.style.fontSize = '1rem';
+  function today() { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  var MON = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुला', 'अग', 'सितं', 'अक्टू', 'नवं', 'दिसं'];
+  function pretty(t) { var p = t.split('-'); return Number(p[2]) + ' ' + MON[Number(p[1]) - 1]; }
+  function paint() {
+    var els = document.querySelectorAll('[data-sid]');
+    for (var i = 0; i < els.length; i++) {
+      var id = els[i].getAttribute('data-sid'); if (els[i].tagName !== 'DETAILS') continue;
+      var arr = st.done[id] || [], b = document.getElementById('st-' + id), n = document.getElementById('n-' + id);
+      if (b) { b.className = 'st' + (arr.length ? ' ok' : ''); b.textContent = arr.length ? '✓' : ''; }
+      if (n) n.textContent = arr.length ? ('पढ़ा: ' + arr.length + ' बार · आख़िरी ' + pretty(arr[arr.length - 1])) : '';
+      var btn = els[i].querySelector('[data-act="done"]');
+      if (btn) btn.textContent = (arr.indexOf(today()) >= 0) ? '✓ आज पढ़ लिया (हो गया)' : '✓ आज पढ़ लिया';
+    }
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-act="done"]') : null; if (!t) return;
+    var id = t.getAttribute('data-sid'), arr = st.done[id] || [];
+    if (arr.indexOf(today()) < 0) arr.push(today());
+    st.done[id] = arr; st.t = Date.now(); s(KEY, st); paint();
+    try { if (window.tgtSync) window.tgtSync(true, 'padhai'); } catch (_) {}
+  });
+  paint();
+})();
+</script>
+<script src="./sync.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
+</body>
+</html>

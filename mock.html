@@ -207,6 +207,7 @@ function submit(auto) {
   s.attempts.push({ at: Date.now(), used: Math.round(Math.min(s.run.used, m.minutes * 60)), ans: s.run.ans, mark: s.run.mark,
     score: r.score, max: r.max, r: r.r, w: r.w, s: r.s, auto: !!auto });
   s.run = null; save(); stopTick();
+  try { if (window.tgtSync) window.tgtSync(true, 'mock-jama'); } catch (_) {}  /* 27 Nov: natija turant Claude tak (sync.js) */
   st.view = 'result'; st.rvAt = s.attempts.length - 1; st.rvF = 'wrong'; st.modal = ''; st.palOpen = false; st.toast = '';
   if (auto) st.toast = '⏰ समय समाप्त — मॉक अपने-आप जमा हो गया';
   render();
@@ -395,6 +396,7 @@ document.addEventListener('click', (e) => {
 save();
 render();
 </script>
+<script src="./sync.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}</script>
 </body>
 </html>
