@@ -367,6 +367,12 @@
   .tm-lbtn { flex: 1; border: 2px solid #7C3AED; background: #F5F3FF; color: #5B21B6; border-radius: 12px; padding: 9px 6px; font: inherit; font-size: 14.5px; font-weight: 800; cursor: pointer; }
   .tm-lbtn small { font-size: 11px; font-weight: 700; }
   .tm-lbtn[disabled] { opacity: .42; cursor: default; }
+  .tm-hint-ask { margin-top: 8px; font-size: 13px; color: #7C2D12; background: #FFEDD5; border-radius: 9px; padding: 6px 9px; }
+  .tm-ud { background: linear-gradient(90deg, #FDE68A, #FBBF24); color: #78350F; border-radius: 12px; padding: 10px 12px; font-size: 15px; font-weight: 800; margin-bottom: 10px; text-align: center; animation: tmPop .5s ease; }
+  .tm-ud-ok { background: #FEF9C3; border: 2px solid #FACC15; color: #713F12; border-radius: 12px; padding: 9px; font-size: 15px; font-weight: 800; text-align: center; margin: 6px 0; }
+  .tm-ud-no { background: #F1F5F9; border: 1px dashed #94A3B8; color: #334155; border-radius: 12px; padding: 8px; font-size: 13.5px; font-weight: 800; text-align: center; margin: 6px 0; }
+  .tm-streak { background: #FFF7ED; border: 1.5px solid #FDBA74; color: #9A3412; border-radius: 12px; padding: 9px 11px; font-size: 13.5px; font-weight: 700; line-height: 1.55; margin-top: 8px; }
+  .tm-streak.big { font-size: 15px; text-align: center; margin-top: 10px; }
   .tm-life-note { font-size: 11.5px; font-weight: 700; color: #6D28D9; text-align: center; margin: -4px 0 8px; }
   .tm-hint { background: #FFFBEB; border: 1.5px solid #FCD34D; color: #78350F; border-radius: 12px; padding: 10px 12px; font-size: 14.5px; font-weight: 700; line-height: 1.6; margin-bottom: 10px; }
   .tm-opt.tm-gone { opacity: .28; filter: grayscale(1); }
@@ -2499,6 +2505,7 @@ async function createDuelRoom(soloDirect) {
     mode: d.mode === 'team' ? 'team' : 'duel',  /* TEAM_MODE_V1 */
     tq: 0,
     ph: 'main',
+    ud: (function () { try { return localStorage.getItem('tgt_gk_udhaar_v1') === '0' ? 0 : 1; } catch (_) { return 1; } })(),  /* TEAM_MODE_V2 */
     qRefs,
     p: {
       [pid]: { name: nm, who: app.userId, role: 'host', pts: 0, k: 0, ok: 0, wr: 0, sk: 0, fin: 0, ans: {} }
@@ -2643,13 +2650,15 @@ async function startDuelRoom(allowSingle) {
   }
   if (ps.length < 2) d.soloPractice = true;
   await sendPresence(true);
+  const udx = (d.room && d.room.mode === 'team' && ps.length >= 2) ? await teamUdhaarPrep() : {};  /* TEAM_MODE_V2 */
+  if (udx.qRefs) { d.room.qRefs = udx.qRefs; d.room.count = udx.count; d.room.uq = udx.uq; d.qRefs = udx.qRefs; d.qs = resolveDuelQuestions(udx.qRefs); d.count = udx.count; } else if (d.room) { delete d.room.uq; }
   const goTime = Math.round(serverNow() + 3200);
   d.room.st = 'go';
   d.room.go = goTime;
   d.stage = 'count';
   render();
   runDuelCountdown();
-  await fbReq('rooms/' + d.code, 'PATCH', { st: 'go', go: goTime });
+  await fbReq('rooms/' + d.code, 'PATCH', Object.assign({ st: 'go', go: goTime }, udx.qRefs ? udx : { uq: null }));  /* TEAM_MODE_V2 */
   await fbReq('activeInvite', 'PATCH', { status: 'started' });
 }
 
@@ -2796,7 +2805,7 @@ async function rematchDuelRoom() {
     scopeTitle,
     count: qRefs.length,
     qRefs,
-    tq: 0, tm: null, ph: 'main', rq: null, rt: 0, rm: null  /* TEAM_MODE_V1 */
+    tq: 0, tm: null, ph: 'main', rq: null, rt: 0, rm: null, uq: null  /* TEAM_MODE_V1 */
   };
   const myPid = duelPid();
   duelPlayers().forEach(p => {
@@ -2825,7 +2834,7 @@ async function rematchDuelRoom() {
     d.room.round = nextRound;
     d.room.qRefs = qRefs;
     d.room.count = qRefs.length;
-    d.room.tq = 0; d.room.ph = 'main'; d.room.rt = 0; delete d.room.tm; delete d.room.rq; delete d.room.rm;  /* TEAM_MODE_V1 */
+    d.room.tq = 0; d.room.ph = 'main'; d.room.rt = 0; delete d.room.tm; delete d.room.rq; delete d.room.rm; delete d.room.uq;  /* TEAM_MODE_V1 */
   }
   d.team = null;
   render();
@@ -3340,7 +3349,12 @@ function renderDuelSolView() {
    Team mode: dono phone ek hi sawaal par · tap = sirf "chuna" (jawab band) · dono ek hi chunein to apne-aap khule ·
    alag chunein to "👀 उत्तर खोलें" + 👑 kiski baat sahi · koi bhi "अगला" dabaye to dono aage (timer nahi) ·
    ✂️ 50-50 + 💡 सुराग (har 20 sawaal par 5-5, team ke) · aakhir me galat sawaalon ka ⚡ रिवीज़न राउंड · जोड़ी रिपोर्ट (haar-jeet nahi).
-   Room me: mode:'team', ph:'main'|'revask'|'rev'|'done', tq, tm/{i}:{c:{pid:opt}, ff:[a,b], h:1, o:1}, rq:[i..], rt, rm/{i}:{c:{..}, o:1} */
+   Room me: mode:'team', ph:'main'|'revask'|'rev'|'done', tq, tm/{i}:{c:{pid:opt}, ff:[a,b], h:1, o:1}, rq:[i..], rt, rm/{i}:{c:{..}, o:1}
+   TEAM_MODE_V2 (28 Nov ~10 PM, Nitesh ka bheja design + "teri taraf se bhi jodna ho to"):
+   · 🤫 आधी-आधी पर्ची — सुराग दोनों फ़ोन पर बँटा: ek ko "जाल-काट", doosre ko "छुपा इशारा" (har sawaal par baari badalti) — dono ko ek-doosre ko sunana padega
+   · 🔔 कल का उधार सवाल — team-galat sawaal Firebase /udhaar me; agle khel me (lobby switch ✅/❌) beech me max 2; sahi hote hi "उधार चुकता" aur list se hata
+   · 🔥 जोड़ी की लड़ी (Claude ka idea) — lagataar kitne din saath khelin; aaj na khele to "lad़i toot jayegi" yaad
+   Room me naya: ud (0/1), uq:[i..] (udhaar sawaal kis number par) */
 function isTeamMode() { const d = app.duel; return !!(d.room && d.room.mode === 'team') && !d.soloPractice; }
 function teamFresh() { return { applied: {}, sig: '', pend: [], ffFix: {} }; }
 function teamPh() { const r = app.duel.room || {}; return r.ph || 'main'; }
@@ -3398,6 +3412,121 @@ function teamStreak() {
   for (let k = 0; k < n; k++) { if (!teamIsOpen(k, false)) break; if (teamQStat(k, false).team) st++; else st = 0; }
   return st;
 }
+function teamUq() { return teamArr((app.duel.room || {}).uq); }
+function teamIsUd(i) { return teamUq().indexOf(i) >= 0; }
+function teamUdKey(q) { return (String(q._chId || '') + '_' + String(q.id)).replace(/[.#$\[\]\/]/g, '_'); }
+async function teamUdhaarPrep() {   /* host: shuru karte waqt pichhle common galat (max 2, sabse purane pehle) beech me daalo */
+  const d = app.duel; const r = d.room || {};
+  if (r.mode !== 'team' || r.ud === 0 || duelPlayers().length < 2) return {};
+  const list = await fbReq('udhaar', 'GET');
+  if (!list || typeof list !== 'object') return {};
+  const refs = (r.qRefs ? (Array.isArray(r.qRefs) ? r.qRefs : Object.values(r.qRefs)) : (d.qRefs || [])).slice();
+  const have = new Set(refs.map(x => x.chId + '_' + x.qId));
+  const items = Object.keys(list).map(k => list[k])
+    .filter(x => x && x.c && x.q !== undefined && CHAPTER_BANK[x.c] && !have.has(x.c + '_' + x.q) && CHAPTER_BANK[x.c].questions.some(qq => qq.id === x.q))
+    .sort((a, b) => (a.t || 0) - (b.t || 0)).slice(0, 2);
+  if (!items.length) return {};
+  const n = refs.length;
+  const pos = items.length === 1 ? [Math.round(n * 0.3)] : [Math.round(n * 0.3), Math.round(n * 0.7) + 1];
+  const uq = [];
+  items.forEach((x, k) => { const p = Math.min(refs.length, Math.max(1, pos[k], k ? uq[0] + 1 : 0)); refs.splice(p, 0, { chId: x.c, qId: x.q }); uq.push(p); });
+  return { qRefs: refs, count: refs.length, uq };
+}
+function teamMaskTokens(txt, q) {   /* sahi jawab ke "kaam ke" shabd [ …? ] se chhupao; jo shabd sab vikalpon me hai wo dikhne do (usse kuch pata nahi chalta) */
+  let s = String(txt || '');
+  const M = '[ …? ]';
+  const ans = String(q.opts[q.ans] || '').trim();
+  const STOP = ['का', 'की', 'के', 'और', 'में', 'से', 'है', 'हैं', 'एवं', 'तथा', 'या', 'को', 'ने', 'पर', 'भी', 'एक', 'व', 'वाले', 'वाली', 'वाला', 'जाने', 'किए', 'किया', 'द्वारा', 'लिए', 'कर', 'होता', 'होती', 'नहीं', 'सभी', 'यह', 'वह', 'इस', 'उस', 'the', 'of', 'and', 'in'];
+  const wrongTxt = q.opts.filter((_, k) => k !== q.ans).map(String);
+  const inAll = (t) => wrongTxt.length && wrongTxt.every(w => w.indexOf(t) >= 0);
+  const toks = [];
+  ans.split(/[\s,()—–\-:;/।‘’“”"'=+]+/).forEach(t => { t = t.trim(); if (t && STOP.indexOf(t) < 0 && !inAll(t) && (t.length >= 2 || /\d/.test(t))) toks.push(t); });
+  const esc2 = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  (ans.match(/\d+/g) || []).forEach(dg => { if (!inAll(dg) && toks.indexOf(dg) < 0) toks.push(dg); });
+  [ans].concat(toks.sort((a, b) => b.length - a.length)).forEach(t => {
+    if (!t) return;
+    if (!/^\d+$/.test(t) && t.length >= 3) { s = s.split(t).join(M); return; }   /* lamba shabd: kisi bhi shabd ke andar ho to bhi chhupao (वेदव्यास → वेद[ …? ]) */
+    try { s = s.replace(new RegExp('(?<![\\p{L}\\p{M}\\p{N}])' + esc2(t) + (/^\d+$/.test(t) ? '(?!\\d)' : ''), 'gu'), M); }
+    catch (_) { s = s.split(t).join(M); }
+  });
+  const longT = toks.filter(t => t.length >= 4 && !/^\d+$/.test(t));
+  const pre = (a, b) => { let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k; };
+  try {   /* aadha shabd bhi chhupao: jawab "बोधना" ho to "बोध" bhi [ …? ] */
+    s = s.replace(/[\p{L}\p{M}\p{N}]+/gu, w => (longT.some(t => { const L = pre(w, t); return L >= 3 && L >= 0.6 * Math.min(w.length, t.length); }) ? M : w));
+  } catch (_) {}
+  const words = s.split(/\s+/).filter(w => /[\p{L}\p{N}]/u.test(w.split(M).join('')) || w.indexOf(M) >= 0);
+  const masked = words.filter(w => w.indexOf(M) >= 0).length;
+  const left = s.split(M).join('').replace(/[\s।,.;:—–\-()'"‘’“”=+\[\]…?]/g, '').length;
+  return { s, ok: words.length > 0 && masked / words.length <= 0.4 && left >= 18 };
+}
+function teamWrongOrder(q, i) {
+  const wr = q.opts.map((_, k) => k).filter(k => k !== q.ans && teamFf(i).indexOf(k) < 0);
+  wr.sort((a, b) => teamHash(app.duel.code + ':h:' + i + ':' + a) - teamHash(app.duel.code + ':h:' + i + ':' + b));
+  return wr;
+}
+function teamCutTxt(q, k) { return 'विकल्प (' + (k + 1) + ') “' + q.opts[k] + '” गलत है — इसे हटा दो।'; }
+function teamParchiPlan(q, i) {   /* दोनों पर्चियाँ एक साथ तय — ताकि दोनों एक ही विकल्प न काटें */
+  const wr = teamWrongOrder(q, i); let used = 0;
+  let A, B;
+  const ex = String(q.exp || ''); const j = ex.indexOf('जाल');
+  const ja = (j >= 0) ? teamMaskTokens(ex.slice(j).replace(/^जाल\s*:?\s*/, ''), q) : null;
+  const jaalTxt = (j >= 0) ? ex.slice(j) : '';
+  const named = q.opts.filter((o, k) => k !== q.ans && (function () { const w = String(o).trim(); const h = w.split(/[\s(]/)[0]; return jaalTxt.indexOf(w) >= 0 || (h.length >= 3 && jaalTxt.indexOf(h) >= 0); })()).length;
+  if (ja && ja.ok && named <= 1) A = 'जाल-काट पर्ची: ' + ja.s;   /* 2-3 galat vikalp ek saath naam le to jawab hi khul jaata — tab sirf ek kaato */
+  else if (wr.length > used) A = 'जाल-काट पर्ची: ' + teamCutTxt(q, wr[used++]);
+  else A = 'जाल-काट पर्ची: इस सवाल में काटने लायक विकल्प नहीं बचा।';
+  let tb = q.trick ? teamMaskTokens(q.trick, q) : null;
+  if (!(tb && tb.ok)) {
+    let e2 = (j >= 0) ? ex.slice(0, j) : ex;
+    e2 = e2.replace(/^\s*सही उत्तर\s*:?[^।]*।?/, '');
+    tb = teamMaskTokens(e2, q);
+    if (tb.ok && tb.s.length > 230) tb.s = tb.s.slice(0, 230) + '…';
+  }
+  if (tb && tb.ok) B = 'छुपा इशारा पर्ची: ' + tb.s;
+  else if (wr.length > used) B = 'छुपा इशारा पर्ची: ' + teamCutTxt(q, wr[used++]);
+  else B = 'छुपा इशारा पर्ची: अब बस दो विकल्प बचे — दिमाग़ लगाओ!';
+  return { A, B };
+}
+function teamParchiA(q, i) { return teamParchiPlan(q, i).A; }
+function teamParchiB(q, i) { return teamParchiPlan(q, i).B; }
+function teamMyParchiRole(i) {   /* har sawaal par baari badle: sawaal 1 par मंजू = जाल-काट, sawaal 2 par मंजू = छुपा इशारा ... */
+  const ps = duelPlayers().slice().sort((a, b) => (a.who === b.who ? (a.id < b.id ? -1 : 1) : (a.who === 'm' ? -1 : 1)));
+  const idx = Math.max(0, ps.findIndex(p => p.id === duelPid()));
+  return ((i + idx) % 2 === 0) ? 'A' : 'B';
+}
+function teamDayKey(ts) { const x = new Date(ts); return x.getFullYear() + '-' + (x.getMonth() + 1) + '-' + x.getDate(); }
+function teamDayStreak() {
+  const hist = Array.isArray(app.userData.duelHistory) ? app.userData.duelHistory : [];
+  const days = new Set(hist.filter(h => h && h.mode === 'team' && h.ts).map(h => teamDayKey(h.ts)));
+  const now = new Date(); const cur = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const today = days.has(teamDayKey(cur.getTime()));
+  if (!today) cur.setDate(cur.getDate() - 1);
+  let n = 0; while (days.has(teamDayKey(cur.getTime()))) { n++; cur.setDate(cur.getDate() - 1); }
+  return { n, today };
+}
+function teamStreakHtml() {
+  const s = teamDayStreak(); let txt;
+  if (s.today) txt = '🔥 जोड़ी की लड़ी: <b>' + s.n + ' दिन</b> लगातार — आज की लड़ी पक्की ✅';
+  else if (s.n) txt = '🔥 जोड़ी की लड़ी: <b>' + s.n + ' दिन</b> — आज खेलकर <b>' + (s.n + 1) + '</b> करो, वरना लड़ी टूट जाएगी!';
+  else txt = '🔥 जोड़ी की लड़ी आज से शुरू करो — रोज़ साथ खेलो, लड़ी बढ़ाओ!';
+  return '<div class="tm-streak" id="teamStreak">' + txt + '</div>';
+}
+function teamUdSwitchHtml() {
+  const d = app.duel; const r = d.room || {};
+  if (r.mode !== 'team') return '';
+  const on = r.ud !== 0;
+  if (!isDuelHost()) return '<div class="tm-sw-note" style="text-align:center;">' + (on ? '🔔 पिछले गलत सवाल भी बीच में आएँगे (अधिकतम 2)' : '🔕 आज सिर्फ़ नए सवाल') + '</div>';
+  const key = d.code + ':' + Number(r.round || 0);
+  if (d.udFor !== key) {
+    d.udFor = key;
+    fbReq('udhaar', 'GET').then(l => { d.udCnt = (l && typeof l === 'object') ? Object.keys(l).length : 0; if (d.stage === 'lobby') render(); });
+  }
+  const cnt = d.udCnt;
+  const cntTxt = (cnt === undefined) ? '' : (cnt ? ' (उधार-सूची में ' + cnt + ')' : ' (अभी कोई उधार नहीं)');
+  return '<div style="font-size:12px;font-weight:800;color:#475569;">🔔 पिछले गलत सवाल बीच में पूछें?' + esc(cntTxt) + '</div>' +
+    '<div class="tm-sw"><button type="button" class="tm-sw-b ' + (on ? 'on tm' : '') + '" data-act="t-ud" data-v="1">✅ हाँ<small>अधिकतम 2 बोनस</small></button>' +
+    '<button type="button" class="tm-sw-b ' + (!on ? 'on' : '') + '" data-act="t-ud" data-v="0">❌ नहीं<small>सिर्फ़ नए</small></button></div>';
+}
 function teamOpenCount() { let c = 0; for (let k = 0; k < app.duel.qs.length; k++) if (teamIsOpen(k, false)) c++; return c; }
 function teamNames() {
   const meP = duelMePlayer() || { name: (app.duel.customName || defaultPlayerName()), who: app.userId };
@@ -3448,7 +3577,9 @@ function teamReportData() {
   }
   let fixed = 0;
   teamRq().forEach(i => { if (teamIsOpen(i, true) && teamQStat(i, true).team) fixed++; });
-  return { n, score, after: Math.min(n, score + fixed), fixed, unison, saveMe, saveOp, trap, miss, none, trapList, wrongList,
+  const uq = teamUq(); let udPaid = 0;
+  uq.forEach(i => { if (teamIsOpen(i, false) && teamQStat(i, false).team) udPaid++; });
+  return { n, score, after: Math.min(n, score + fixed), fixed, unison, saveMe, saveOp, trap, miss, none, trapList, wrongList, udN: uq.length, udPaid,
     meName: nm.meNm, opName: nm.opNm, ffUsed: teamLifeUsed('ff'), hUsed: teamLifeUsed('h') };
 }
 
@@ -3545,6 +3676,10 @@ function teamApplyReveal(i, rev) {
     }
     saveUserData(app.userId, app.userData);
     pushMyDuelProgress(false);
+    /* TEAM_MODE_V2: उधार — team-galat = suchi me; udhaar sawaal sahi = suchi se bahar (dono phone same likhte hain, koi farak nahi) */
+    const uk = teamUdKey(q);
+    if (teamIsUd(i)) { if (s.team) { fbReq('udhaar/' + uk, 'DELETE'); setTimeout(() => showToast('🎉 उधार चुकता!'), 500); } }
+    else if (!s.team && s.kind !== 'none' && q._chId) { fbReq('udhaar/' + uk, 'PUT', { c: q._chId, q: q.id, t: Date.now() }); }
   }
   if (s.team) { teamBeep('ok'); teamConfetti(); } else teamBeep('bad');
   if (!rev) {
@@ -3597,7 +3732,7 @@ async function teamHintUse() {
   if (teamPh() !== 'main') return;
   const d = app.duel; const i = teamCurIdx();
   if (teamIsOpen(i, false) || teamEntry(i, false).h || teamFf(i).length) return;
-  if (teamLifeUsed('h') >= teamLifeMax(d.qs.length)) { showToast('💡 सुराग इस राउंड में ख़त्म हो गए'); return; }
+  if (teamLifeUsed('h') >= teamLifeMax(d.qs.length)) { showToast('🤫 पर्चियाँ इस राउंड में ख़त्म हो गईं'); return; }
   teamBeep('life');
   await teamWrite('tm/' + i, { h: 1 });
 }
@@ -3623,18 +3758,18 @@ async function teamEnd() {
 }
 
 /* ---- dikhana ---- */
-function teamModeSwitchHtml(modeNow) {
+function teamModeSwitchHtml(modeNow, withStreak) {
   const t = modeNow === 'team';
   return '<div class="tm-sw">' +
       '<button type="button" class="tm-sw-b ' + (!t ? 'on' : '') + '" data-act="d-mode" data-v="duel">⚔️ मुक़ाबला<small>अलग-अलग</small></button>' +
       '<button type="button" class="tm-sw-b ' + (t ? 'on tm' : '') + '" data-act="d-mode" data-v="team">🤝 साथ-साथ<small>टीम मोड</small></button>' +
     '</div>' +
-    (t ? '<div class="tm-sw-note">🤝 दोनों फ़ोन पर एक ही सवाल · दोनों एक ही चुनें तो उत्तर अपने-आप खुलेगा · ✂️ 50-50 और 💡 सुराग · आख़िर में गलत सवालों का रिवीज़न</div>' : '');
+    (t ? '<div class="tm-sw-note">🤝 दोनों फ़ोन पर एक ही सवाल · दोनों एक ही चुनें तो उत्तर अपने-आप खुलेगा · ✂️ 50-50 और 🤫 आधी-आधी पर्ची · पिछले गलत सवालों का 🔔 उधार · आख़िर में ⚡ रिवीज़न</div>' + (withStreak ? teamStreakHtml() : '') : '');
 }
 function teamLobbyModeHtml() {
   const r = app.duel.room || {};
-  if (isDuelHost()) return '<div style="font-size:12px;font-weight:800;color:#475569;">खेल का तरीका</div>' + teamModeSwitchHtml(r.mode === 'team' ? 'team' : 'duel');
-  return '<div class="tm-sw-note" style="text-align:center;font-size:14px;">' + (r.mode === 'team' ? '🤝 साथ-साथ (टीम मोड) — दोनों मिलकर खेलेंगी' : '⚔️ मुक़ाबला — अलग-अलग') + '</div>';
+  if (isDuelHost()) return '<div style="font-size:12px;font-weight:800;color:#475569;">खेल का तरीका</div>' + teamModeSwitchHtml(r.mode === 'team' ? 'team' : 'duel', false) + teamUdSwitchHtml();
+  return '<div class="tm-sw-note" style="text-align:center;font-size:14px;">' + (r.mode === 'team' ? '🤝 साथ-साथ (टीम मोड) — दोनों मिलकर खेलेंगी' : '⚔️ मुक़ाबला — अलग-अलग') + '</div>' + teamUdSwitchHtml();
 }
 function teamShell(titleExtra, bodyHtml, footHtml) {
   const d = app.duel; const z = app.zoomPct || 100;
@@ -3695,9 +3830,19 @@ function renderTeamLiveView() {
       '<button type="button" class="star-btn ' + (isStar ? 'is-star' : '') + '" data-act="d-star"><span class="st-ic">' + (isStar ? '★' : '☆') + '</span><span>स्टार</span></button></div>';
   const life = (!rev && !open) ? '<div class="tm-life">' +
       '<button type="button" class="tm-lbtn" data-act="t-ff"' + ((ffLeft <= 0 || ff.length || e.h) ? ' disabled' : '') + '>✂️ 50-50 <small>(' + ffLeft + ' बचे)</small></button>' +
-      '<button type="button" class="tm-lbtn" data-act="t-hint"' + ((hLeft <= 0 || e.h || ff.length) ? ' disabled' : '') + '>💡 सुराग <small>(' + hLeft + ' बचे)</small></button>' +
+      '<button type="button" class="tm-lbtn" data-act="t-hint"' + ((hLeft <= 0 || e.h || ff.length) ? ' disabled' : '') + '>🤫 आधी-आधी पर्ची <small>(' + hLeft + ' बचे)</small></button>' +
     '</div>' + ((ff.length || e.h) ? '<div class="tm-life-note">एक सवाल पर एक ही मदद</div>' : '') : '';
-  const hint = (e.h && !rev) ? '<div class="tm-hint" id="teamHint">' + esc(teamHintText(q, i)) + '</div>' : '';
+  let hint = '';
+  if (e.h && !rev) {   /* TEAM_MODE_V2: आधी-आधी पर्ची */
+    if (!nm.opP) hint = '<div class="tm-hint" id="teamHint">🤫 ' + esc(teamParchiA(q, i)) + '<br><br>🤫 ' + esc(teamParchiB(q, i)) + '</div>';
+    else {
+      const role = teamMyParchiRole(i);
+      const txt = role === 'A' ? teamParchiA(q, i) : teamParchiB(q, i);
+      hint = '<div class="tm-hint" id="teamHint">🤫 <b>आपकी पर्ची</b> — ' + esc(txt) +
+        '<div class="tm-hint-ask">📢 अपनी पर्ची ' + esc(nm.opNm) + ' को पढ़कर सुनाओ, और उनकी पर्ची (' + (role === 'A' ? 'छुपा इशारा' : 'जाल-काट') + ') पूछो!</div></div>';
+    }
+  }
+  const udStrip = (!rev && teamIsUd(i)) ? '<div class="tm-ud" id="teamUd">🔔 कल का उधार सवाल! पिछली बार दोनों से छूट गया था — आज चुकता करो!</div>' : '';
   const badge = (k) => {
     let h = '';
     if (myC === k) h += '<span class="tm-bdg me">' + playerAvatarHtml(nm.meP, 'av-xs') + esc(nm.meNm) + (open ? '' : ' ने चुना') + '</span>';
@@ -3739,6 +3884,7 @@ function renderTeamLiveView() {
     const pts = splitReadablePoints(q.exp);
     const kp = pts.length ? pts : ['सही उत्तर: ' + q.opts[q.ans]];
     reveal = '<div id="teamReveal" class="tm-crown ' + (s.team ? 'ok' : 'bad') + '">' + esc(crown) + '</div>' +
+      ((!rev && teamIsUd(i)) ? (s.team ? '<div class="tm-ud-ok">🎉 उधार चुकता! यह सवाल उधार-सूची से हट गया।</div>' : '<div class="tm-ud-no">🔁 उधार बाकी — अगली बार फिर आएगा।</div>') : '') +
       '<div style="margin-top:8px;">' +
         '<div class="ans-banner" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
           '<div style="flex:1;min-width:180px;">' +
@@ -3761,7 +3907,7 @@ function renderTeamLiveView() {
     : '';
   const body = bar + dots + sub +
     '<div class="body-scr scr quiz-body">' +
-      life + hint +
+      udStrip + life + hint +
       renderStemBlockHtml(q, 20) +
       '<div class="q-src" style="font-size:' + zPx(13.5) + ';">' + esc(q.src) + '</div>' +
       renderMatchTableHtml(q, 15.5) +
@@ -3787,8 +3933,10 @@ function renderTeamReportBody(rec, isLive) {
       (chips ? '<div class="tm-traps">' + chips + '</div>' : '') +
       (t.miss ? row('😅', 'राय अलग, दोनों गलत', t.miss, '') : '') +
       (t.none ? row('⏭', 'बिना जवाब छोड़े', t.none, '') : '') +
-      '<div class="tm-rep-life">✂️ 50-50: ' + (t.ffUsed || 0) + ' बार · 💡 सुराग: ' + (t.hUsed || 0) + ' बार</div>' +
+      (t.udN ? row('🔔', 'उधार चुकाए', (t.udPaid || 0) + ' / ' + t.udN, (t.udPaid === t.udN) ? 'पिछला सारा उधार साफ़! 🎉' : 'बाकी उधार अगली बार फिर आएगा') : '') +
+      '<div class="tm-rep-life">✂️ 50-50: ' + (t.ffUsed || 0) + ' बार · 🤫 पर्ची: ' + (t.hUsed || 0) + ' बार</div>' +
     '</div>' +
+    (isLive ? (function () { const st = teamDayStreak(); return '<div class="tm-streak big" id="teamStreakRep">🔥 जोड़ी की लड़ी: <b>' + st.n + ' दिन</b> लगातार' + ([3, 7, 14, 21].indexOf(st.n) >= 0 ? ' — 🏅 शाबाश, ' + st.n + ' दिन की लड़ी!' : ' — कल फिर साथ खेलकर ' + (st.n + 1) + ' करो!') + '</div>'; })() : '') +
     '<button type="button" class="btn-pri" style="width:100%;margin-top:10px;padding:12px;" data-act="open-dsol" data-mid="' + esc(rec.id) + '" data-f="all" data-i="0" data-live="' + (isLive ? '1' : '0') + '">📋 सभी सवाल व व्याख्या</button>' +
     (isLive ? '<div style="display:flex;gap:8px;margin-top:10px;"><button type="button" class="btn-grn" style="flex:1;padding:11px;" data-act="d-rematch">🔁 अगला राउंड (नए सवाल)</button><button type="button" class="btn-sec" style="flex:1;padding:11px;" data-act="d-lobby">🏠 होम</button></div>' : '');
 }
@@ -4086,7 +4234,7 @@ function renderDuelView() {
       : '';
 
     body = '<div style="display:flex;flex-direction:column;gap:11px;">' +
-      teamModeSwitchHtml(d.mode) +  /* TEAM_MODE_V1 */
+      teamModeSwitchHtml(d.mode, true) +  /* TEAM_MODE_V1 */
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border:1px solid #DCE5EC;border-radius:13px;padding:10px 12px;">' +
         '<div style="display:flex;align-items:center;gap:9px;"><span style="width:36px;height:36px;border-radius:10px;background:#7C3AED;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;">⚔</span><div><div style="font-size:15px;font-weight:800;">1v1 Challenge (JOD Lab)</div><div style="font-size:11px;color:#475569;font-weight:700;">समान सवाल · अपनी रफ़्तार · किया सवाल दोबारा नहीं</div></div></div>' +
         statusPill +
@@ -4905,6 +5053,12 @@ function handleAction(el, ev) {
     const d = app.duel; d.mode = v;
     try { localStorage.setItem('tgt_gk_duel_mode_v1', v); } catch (_) {}
     if (d.stage === 'lobby' && d.code && d.room && isDuelHost()) { d.room.mode = v; fbReq('rooms/' + d.code, 'PATCH', { mode: v }); }
+    render(); return;
+  }
+  if (act === 't-ud') {  /* TEAM_MODE_V2 */
+    const v = el.getAttribute('data-v') === '0' ? 0 : 1; const d = app.duel;
+    try { localStorage.setItem('tgt_gk_udhaar_v1', String(v)); } catch (_) {}
+    if (d.room && d.code && isDuelHost()) { d.room.ud = v; fbReq('rooms/' + d.code, 'PATCH', { ud: v }); }
     render(); return;
   }
   if (act === 't-pick') { teamPick(Number(el.getAttribute('data-i'))); return; }
