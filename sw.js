@@ -2,7 +2,8 @@
 /* v17 (27 Nov, Claude): संस्कृत मॉक — mock.html + data/sanskrit_mocks.js; mock.html apni alag cache key par (index.html ko na dhake) */
 /* v22 (27 Nov raat, Claude): sync.js — Mummy ka data Firebase /sync par (Claude padhega) */
 /* v23 (27 Nov raat, Claude): padhai.html — Mummy ki roz ki Sanskrit padhai (apni cache key par, index ko na dhake) */
-const C='tgtgk-v23';
+/* v24 (27 Nov ~10:10 PM, Claude): padhai.html me वाच्य + साहित्यदर्पण/छन्द/अलंकार bhare */
+const C='tgtgk-v24';
 const FILES=['./','./index.html','./mock.html','./padhai.html','./manifest.webmanifest','./data/avatars.js','./data/chapters_bundle.js','./data/sanskrit_mocks.js','./sync.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C&&k!=='tgtgk-kitab').map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
